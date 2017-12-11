@@ -78,7 +78,7 @@ import xbeast.core.util.Log;
  */
 // TODO: on windows allow installation on drive D: and pick up add-ons in drive C:
 @Description("Manage all BEAUti packages and list their dependencies")
-public class AddOnManager {
+public class PackageManager {
     public static final BEASTVersion2 beastVersion = new BEASTVersion2();
 
     public final static String[] IMPLEMENTATION_DIR = {"beast", "snap"};
@@ -572,7 +572,7 @@ public class AddOnManager {
     private static void closeClassLoader() {
     	try {
     		if (Utils.isWindows()) {
-    			URLClassLoader sysLoader = (URLClassLoader) AddOnManager.class.getClassLoader();
+    			URLClassLoader sysLoader = (URLClassLoader) PackageManager.class.getClassLoader();
     			sysLoader.close();
     		}
 		} catch (IOException e) {
@@ -1244,7 +1244,7 @@ public class AddOnManager {
      */
     public static void addURL(URL u) throws IOException {
         // ClassloaderUtil clu = new ClassloaderUtil();
-        AddOnManager clu = new AddOnManager();
+        PackageManager clu = new PackageManager();
         // URLClassLoader sysLoader = (URLClassLoader)
         // ClassLoader.getSystemClassLoader();
         URLClassLoader sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
@@ -1708,8 +1708,8 @@ public class AddOnManager {
             Log.debug.print("Getting list of packages ...");
             Map<String, Package> packageMap = new TreeMap<>(String::compareToIgnoreCase);
             try {
-                AddOnManager.addInstalledPackages(packageMap);
-                AddOnManager.addAvailablePackages(packageMap);
+                PackageManager.addInstalledPackages(packageMap);
+                PackageManager.addAvailablePackages(packageMap);
             } catch (PackageListRetrievalException e) {
             	Log.warning.println(e.getMessage());
                 if (e.getCause() instanceof IOException)
@@ -1735,7 +1735,7 @@ public class AddOnManager {
                             	String versionString = arguments.getStringOption("version");
                             	PackageVersion version = new PackageVersion(versionString);
                             	packagesToInstall.put(aPackage, version);
-                            	AddOnManager.useArchive = true;
+                            	PackageManager.useArchive = true;
                             } else {
                             	packagesToInstall.put(aPackage, aPackage.getLatestVersion());
                             }
@@ -1767,7 +1767,7 @@ public class AddOnManager {
                     if (aPackage.packageName.equals(name)) {
                         processed = true;
                         if (arguments.hasOption("version")) {
-                        	AddOnManager.useArchive = true;
+                        	PackageManager.useArchive = true;
                         	String versionString = arguments.getStringOption("version");
                         	PackageVersion version = new PackageVersion(versionString);
                             String dir = uninstallPackage(aPackage, version, useAppDir, customDir);

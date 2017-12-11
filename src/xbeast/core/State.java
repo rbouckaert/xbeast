@@ -631,25 +631,25 @@ public class State extends BEASTObject {
     } // calculateCalcNodePath
 
 
-    public double robustlyCalcPosterior(final Distribution posterior) {
-        store(-1);
-        setEverythingDirty(true);
-        //state.storeCalculationNodes();
-        checkCalculationNodesDirtiness();
-        final double logLikelihood = posterior.calculateLogP();
-        setEverythingDirty(false);
-        acceptCalculationNodes();
-        return logLikelihood;
-    }
-
-	public double robustlyCalcNonStochasticPosterior(Distribution posterior)  {
-        store(-1);
-        setEverythingDirty(true);
-        storeCalculationNodes();
-        checkCalculationNodesDirtiness();
-        final double logLikelihood = posterior.getNonStochasticLogP();
-        setEverythingDirty(false);
-        acceptCalculationNodes();
-        return logLikelihood;
-	}
+//    public double robustlyCalcPosterior(final Distribution posterior) {
+//        store(-1);
+//        setEverythingDirty(true);
+//        //state.storeCalculationNodes();
+//        checkCalculationNodesDirtiness();
+//        final double logLikelihood = posterior.calculateLogP();
+//        setEverythingDirty(false);
+//        acceptCalculationNodes();
+//        return logLikelihood;
+//    }
+//
+//	public double robustlyCalcNonStochasticPosterior(Distribution posterior)  {
+//        store(-1);
+//        setEverythingDirty(true);
+//        storeCalculationNodes();
+//        checkCalculationNodesDirtiness();
+//        final double logLikelihood = posterior.getNonStochasticLogP();
+//        setEverythingDirty(false);
+//        acceptCalculationNodes();
+//        return logLikelihood;
+//	}
 } // class State

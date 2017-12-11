@@ -41,17 +41,17 @@ import org.w3c.dom.NodeList;
 
 import xbeast.app.util.Utils;
 import xbeast.core.util.Log;
-import xbeast.util.AddOnManager;
+import xbeast.util.PackageManager;
 
 
 /**
- * launch applications specific to add-ons installed, for example utilities for
- * post-processing add-on specific data.
+ * launch applications specific to packages installed, for example utilities for
+ * post-processing package specific data.
  *
  * @author  Remco Bouckaert
  * @author  Walter Xie
  */
-public class AppStore {
+public class AppLauncher {
     public static final String DEFAULT_ICON = "beast/app/tools/images/utility.png";
 
     private final String ALL = "-all-";
@@ -61,7 +61,7 @@ public class AppStore {
     JButton launchButton = new JButton("Launch");
     JDialog mainDialog;
 
-    public AppStore() {
+    public AppLauncher() {
     }
 
     public JDialog launchGUI() {
@@ -248,7 +248,7 @@ public class AppStore {
 
     List<PackageApp> getPackageApps() {
         List<PackageApp> packageApps = new ArrayList<>();
-        List<String> dirs = AddOnManager.getBeastDirectories();
+        List<String> dirs = PackageManager.getBeastDirectories();
         for (String jarDirName : dirs) {
             File versionFile = new File(jarDirName + "/version.xml");
             if (versionFile.exists() && versionFile.isFile()) {
@@ -331,7 +331,7 @@ public class AppStore {
 
     public void runAppFromCMD(PackageApp packageApp, String[] additionalArgs) {
         try {
-            AddOnManager.loadExternalJars();
+            PackageManager.loadExternalJars();
 
             List<String> cmd = new ArrayList<>();
             if (System.getenv("JAVA_HOME") != null) {
@@ -433,7 +433,7 @@ public class AppStore {
     }
 
     public static void main(String[] args) {
-        AppStore appStore = new AppStore();
+        AppLauncher appStore = new AppLauncher();
 
         if (args.length == 0) {
         	Utils.loadUIManager();

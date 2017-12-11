@@ -18,7 +18,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import xbeast.core.util.Log;
-import xbeast.util.AddOnManager;
+import xbeast.util.PackageManager;
 
 /** Utils that work with Java6 **/
 public class Utils6 {
@@ -140,7 +140,7 @@ public class Utils6 {
 				      } else {
 				    	  java += "/bin/java";
 				      }
-				      String beastJar = AddOnManager.getPackageUserDir();
+				      String beastJar = PackageManager.getPackageUserDir();
 				      beastJar += "/" + "BEAST" + "/" + "lib" + "/" + "beast.jar";
 				      if (!new File(beastJar).exists()) {
 				    	  Log.debug.println("Could not find beast.jar, giving up testCudaStatusOnMac");

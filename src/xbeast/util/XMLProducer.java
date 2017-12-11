@@ -99,7 +99,7 @@ public class XMLProducer extends XMLParser {
     public String toXML(BEASTInterface beastObject, Collection<BEASTInterface> others) {
         try {
             StringBuffer buf = new StringBuffer();
-        	Set<String> requiredPacakges = AddOnManager.getPackagesAndVersions(beastObject);
+        	Set<String> requiredPacakges = PackageManager.getPackagesAndVersions(beastObject);
         	String required = requiredPacakges.toString();
         	required = required.substring(1, required.length() - 1);
         	required = required.replaceAll(", ", ":");

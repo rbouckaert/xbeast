@@ -29,7 +29,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import xbeast.core.util.Log;
-import xbeast.util.AddOnManager;
+import xbeast.util.PackageManager;
 
 /**
  * @author Andrew Rambaut
@@ -366,7 +366,7 @@ public class Utils {
 	 * Get value from beauti.properties file
 	 */
 	static public String getBeautiProperty(String key) {
-        File beastProps = new File(AddOnManager.getPackageUserDir() + "/beauti.properties");
+        File beastProps = new File(PackageManager.getPackageUserDir() + "/beauti.properties");
         if (beastProps.exists()) {
             Properties props = new Properties();
 
@@ -387,7 +387,7 @@ public class Utils {
 	 * if value == null, the property will be removed
 	 */
 	static public void saveBeautiProperty(String key, String value) {
-        File propsFile = new File(AddOnManager.getPackageUserDir() + "/beauti.properties");
+        File propsFile = new File(PackageManager.getPackageUserDir() + "/beauti.properties");
         Properties prop = new Properties();
 
         //Load or create properties file

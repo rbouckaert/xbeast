@@ -57,7 +57,7 @@ import xbeast.core.BEASTInterface;
 import xbeast.core.Input;
 import xbeast.core.Param;
 import xbeast.core.Runnable;
-import xbeast.core.State;
+//import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
 import xbeast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
@@ -154,7 +154,7 @@ public class XMLParser {
     public final static String MAP_ELEMENT = "map";
     
     Runnable m_runnable;
-    State m_state;
+    //State m_state;
     /**
      * DOM document representation of XML file *
      */
@@ -457,7 +457,7 @@ public class XMLParser {
         		if (i > 0) {
         			String pkgname = s.substring(0, i);
         			String pkgversion = s.substring(i+1);
-        			if (!AddOnManager.isInstalled(pkgname, pkgversion)) {
+        			if (!PackageManager.isInstalled(pkgname, pkgversion)) {
         				unavailablePacakges += s +", ";
         			}
         		}
@@ -775,9 +775,9 @@ public class XMLParser {
 		beastObject.setID(ID);
 
 		// hack required to make log-parsing easier
-		if (o instanceof State) {
-			m_state = (State) o;
-		}
+		//if (o instanceof State) {
+		//	m_state = (State) o;
+		//}
 
 		// process inputs for annotated constructors
 		for (NameValuePair pair : inputInfo) {

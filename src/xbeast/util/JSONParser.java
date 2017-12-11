@@ -53,7 +53,7 @@ import xbeast.core.Input;
 import xbeast.core.Input.Validate;
 import xbeast.core.Param;
 import xbeast.core.Runnable;
-import xbeast.core.State;
+//import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
 import xbeast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
@@ -67,7 +67,7 @@ public class JSONParser {
 	final static String RUNNABLE_CLASS = Runnable.class.getName();
 
 	Runnable runnable;
-	State state;
+	//State state;
 	/**
 	 * JSONObject document representation of JSON file *
 	 */
@@ -937,9 +937,9 @@ public class JSONParser {
 		beastObject.setID(ID);
 
 		// hack required to make log-parsing easier
-		if (o instanceof State) {
-			state = (State) o;
-		}
+		//if (o instanceof State) {
+		//	state = (State) o;
+		//}
 
 		// process inputs for annotated constructors
 		for (NameValuePair pair : inputInfo) {

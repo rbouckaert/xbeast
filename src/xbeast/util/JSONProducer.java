@@ -19,11 +19,8 @@ import org.xml.sax.SAXException;
 import xbeast.app.BEASTVersion2;
 import xbeast.core.BEASTInterface;
 import xbeast.core.Input;
-import xbeast.core.State;
-import xbeast.core.parameter.BooleanParameter;
-import xbeast.core.parameter.IntegerParameter;
+//import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
-import xbeast.core.parameter.RealParameter;
 
 
 
@@ -343,11 +340,12 @@ public class JSONProducer {
             		
             		// Parameters can use short hand notation if they are not in the state 
             		// Note this means lower and upper bounds are lost -- no problem for BEAST, but maybe for BEAUti
-            		if (value instanceof BooleanParameter || value instanceof IntegerParameter || value instanceof RealParameter) {
+//            		if (value instanceof BooleanParameter || value instanceof IntegerParameter || value instanceof RealParameter) {
+                	if (value instanceof Parameter<?>) {
             			Parameter.Base parameter = (Parameter.Base) value;
             			boolean isInState = false;
             			for (Object o : parameter.getOutputs()) {
-            				if (o instanceof State) {
+            				if (o.getClass().getName().equals("State")) {
             					isInState = true;
             					break;
             				}
