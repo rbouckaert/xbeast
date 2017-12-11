@@ -20,6 +20,7 @@ import java.net.URLDecoder;
 
 import javax.swing.JOptionPane;
 
+import xbeast.app.BEASTVersion;
 import xbeast.app.util.Utils6;
 
 
@@ -30,8 +31,8 @@ import xbeast.app.util.Utils6;
  * remainder of BEAST can be compiled against Java 1.8
  * **/
 public class AppStoreLauncher {
-	private static String getVersion() {return "2.4.7";}
-	private static String getMajorVersion() {return "2.4";}
+	private static String getVersion() {return new BEASTVersion().getVersion();}
+	private static String getMajorVersion() {return new BEASTVersion().getMajorVersion();}
 	
 	private static String pathDelimiter;
 

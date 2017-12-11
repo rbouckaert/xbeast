@@ -55,7 +55,6 @@ import xbeast.core.Param;
 import xbeast.core.Runnable;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
-import xbeast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
 import xbeast.util.XMLParser.NameValuePair;
 
@@ -711,7 +710,7 @@ public class JSONParser {
 		// parameter clutch
 		if (beastObject instanceof Parameter<?>) {
 			for (String nameSpace : nameSpaces) {
-				if ((nameSpace + className).equals(RealParameter.class.getName())) {
+				if ((nameSpace + className).equals("RealParameter")) {
 					return true;
 				}
 			}

@@ -35,7 +35,6 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-import xbeast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
 
 
@@ -630,22 +629,11 @@ public class Input<T> {
             return;
         }
         if (theClass.equals(Boolean.class)) {
-        	// RRB why the local parsing instead of using the Boolean c'tor?
-//            final String valueString2 = stringValue.toLowerCase();
-//            if (valueString2.equals("yes") || valueString2.equals("true")) {
-//                value = (T) Boolean.TRUE;
-//                return;
-//            } else if (valueString2.equals("no") || valueString2.equals("false")) {
-//                value = (T) Boolean.FALSE;
-//                return;
-//            }
         	value = (T) new Boolean(stringValue);
         	return;
         }
         if (theClass.equals(Function.class)) {
-            final RealParameter param = new RealParameter();
-            param.initByName("value", stringValue, "upper", 0.0, "lower", 0.0, "dimension", 1);
-            param.initAndValidate();
+            final Function.Constant param = new Function.Constant(stringValue);
             if (value != null && value instanceof List) {
                 ((List) value).add(param);
             } else {

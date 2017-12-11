@@ -1,12 +1,12 @@
 package xbeast.core;
 
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-import xbeast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
 
 @Description("Emulates the behaviour of an Input for constructors annotated with Param annotations.")
@@ -198,9 +198,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
             }
         }
         if (theClass.equals(Function.class)) {
-            final RealParameter param = new RealParameter();
-            param.initByName("value", valueString, "upper", 0.0, "lower", 0.0, "dimension", 1);
-            param.initAndValidate();
+        	final Function.Constant param = new Function.Constant(valueString);
         	setValue(param);
             param.getOutputs().add(beastObject);
             return;

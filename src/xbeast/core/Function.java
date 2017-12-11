@@ -37,4 +37,52 @@ public interface Function {
         }
         return values;
     }
+    
+    @Description("")
+    public class Constant extends BEASTObject implements Function {
+    	private double [] values;
+    	
+    	public Constant() {
+    		values = new double[1];
+    	}
+    	public Constant(@Param(name="value", description="Space delimited string of double values") String v) {
+    		setValue(v);
+    	}
+    	
+    	public void setValue(String v) {
+    		String [] strs = v.trim().split("\\s+");    		
+    		values = new double[strs.length];
+    		for (int i = 0; i < strs.length; i++) {
+    			values[i] = Double.parseDouble(strs[i]);
+    		}
+    	}
+
+    	public String getValue() {
+    		StringBuilder b = new StringBuilder();
+    		for (int i = 0; i < values.length; i++) {
+    			b.append(values[i] + " ");
+    		}
+    		return b.toString().trim();
+    	}
+    	
+		@Override
+		public int getDimension() {
+			return values.length;
+		}
+
+		@Override
+		public double getArrayValue() {
+			return values[0];
+		}
+
+		@Override
+		public double getArrayValue(int dim) {
+			return values[dim];
+		}
+		
+		@Override
+		public void initAndValidate() {
+		}
+    	
+    }
 }

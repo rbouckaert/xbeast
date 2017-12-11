@@ -59,7 +59,6 @@ import xbeast.core.Param;
 import xbeast.core.Runnable;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
-import xbeast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
 
 
@@ -613,7 +612,7 @@ public class XMLParser {
 			throw new XMLParserException(node, "Class not found:" + e.getMessage(), 444);
 		}
         // parameter clutch
-        if (className.equals(RealParameter.class.getName()) && beastObject instanceof Parameter<?>) {
+        if (className.equals("RealParameter") && beastObject instanceof Parameter<?>) {
             return true;
         }
         return false;
