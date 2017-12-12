@@ -24,6 +24,7 @@ import javax.swing.event.ChangeListener;
 
 import jam.html.SimpleLinkListener;
 import jam.panels.OptionsPanel;
+import xbeast.app.util.WholeNumberField;
 
 
 public class BeastDialog {

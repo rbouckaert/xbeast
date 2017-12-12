@@ -4,6 +4,8 @@ import java.io.PrintStream;
 
 import org.w3c.dom.Node;
 
+import beast.core.Operator;
+
 /**
  * This class represents a node of the state. Concrete classes include Parameters and Trees.
  * StateNodes differ from CalculationNodes in that they

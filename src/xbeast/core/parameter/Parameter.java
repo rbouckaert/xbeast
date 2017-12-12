@@ -114,9 +114,9 @@ public interface Parameter<T> extends Function {
         protected T m_fUpper;
         protected T m_fLower;
 
-        abstract T getMax();
+        abstract public T getMax();
 
-        abstract T getMin();
+        abstract public T getMin();
         /**
          * the actual values of this parameter
          */
@@ -404,7 +404,7 @@ public interface Parameter<T> extends Function {
          * @param upper upper bound
          * @param values values
          */
-        abstract void fromXML(int dimension, String lower, String upper, String[] values);
+        abstract public void fromXML(int dimension, String lower, String upper, String[] values);
 
         /**
          * matrix implementation *

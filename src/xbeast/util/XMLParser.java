@@ -1241,15 +1241,14 @@ public class XMLParser {
         }
         return false;
     }
+    public interface RequiredInputProvider {
+		Object createInput(BEASTInterface beastObject, Input<?> input, PartitionContext context);
+    }
 
-//    public interface RequiredInputProvider {
-//		Object createInput(BEASTInterface beastObject, Input<?> input, PartitionContext context);
-//    }
-//
-//    public void setRequiredInputProvider(final RequiredInputProvider provider, final PartitionContext context) {
-//        requiredInputProvider = provider;
-//        partitionContext = context;
-//    }
+    public void setRequiredInputProvider(final RequiredInputProvider provider, final PartitionContext context) {
+        requiredInputProvider = provider;
+        partitionContext = context;
+    }
 
     /**
      * parses file and formats it using the XMLProducer *

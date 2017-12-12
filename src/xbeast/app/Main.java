@@ -1,7 +1,9 @@
 package xbeast.app;
 
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -22,21 +24,13 @@ import org.xml.sax.SAXException;
 
 import beagle.BeagleFactory;
 import beagle.BeagleFlag;
-import beagle.BeagleInfo;
-import xbeast.util.JSONParser;
-import xbeast.util.XMLParser;
 import xbeast.app.BEASTVersion2;
 import xbeast.app.util.Arguments;
 import xbeast.app.util.ErrorLogHandler;
 import xbeast.app.util.MessageLogHandler;
-//import xbeast.app.BeastMCMC;
-//import xbeast.app.util.Arguments;
-//import xbeast.app.util.ErrorLogHandler;
-//import xbeast.app.util.MessageLogHandler;
 import xbeast.app.util.Utils;
-import xbeast.app.util.Version;
 import xbeast.core.util.Log;
-//import xbeast.util.Randomizer;
+import xbeast.util.PackageManager;
 import xbeast.util.XMLParserException;
 import jam.util.IconUtils;
 
@@ -243,6 +237,37 @@ public class Main {
         Log.info.println();
     }
 
+    static private void loadPackages(boolean useStrictVersions, File beastFile) throws IOException {
+	    if (useStrictVersions) {
+	    	// grab "required" attribute from beast spec
+	        if (beastFile.getPath().toLowerCase().endsWith(".json")) {
+	        	throw new IllegalArgumentException("The -strictversions flag is not implemented for JSON files yet (only XML files are supported).");
+	        } else {
+	            BufferedReader fin = new BufferedReader(new FileReader(beastFile));
+	            StringBuffer buf = new StringBuffer();
+	            String str = null;
+	            int lineCount = 0;
+	            while (fin.ready() && lineCount < 100) {
+	                str = fin.readLine();
+	                buf.append(str);
+	                buf.append(' ');
+	            }
+	            fin.close();
+	            str = buf.toString();
+	            int start = str.indexOf("required=");
+	            if (start < 0) {
+	            	throw new IllegalArgumentException("Could not find a 'required' attribute in the XML. Add the required attribute, or run without the -strictversions flag");
+	            }
+	            char c = str.charAt(start + 9);
+	            start += 10;
+	            int end = str.indexOf(c, start);
+	            String packages = str.substring(start, end);
+	            PackageManager.loadExternalJars(packages);
+	        }
+	    } else {
+	    	PackageManager.loadExternalJars();
+	    }
+	}
     public static void printUsage(final Arguments arguments) {
 
         arguments.printUsage("beast", "[<input-file-name>]");
@@ -430,6 +455,7 @@ public class Main {
         }
 
         BeastConsoleApp consoleApp = null;
+        boolean useStrictVersions = false;
 
         final String nameString = "BEAST " + version.getVersionString();
 
@@ -517,7 +543,8 @@ public class Main {
                 System.exit(1);
             }
             if (dialog.useStrictVersions()) {
-            	runningArgs.add("-strictversions");
+            	useStrictVersions = true;
+            	//runningArgs.add("-strictversions");
             }
 
         } else {
@@ -531,7 +558,8 @@ public class Main {
         }
 
         if (arguments.hasOption("strictversions")) {
-        	runningArgs.add("-strictversions");
+        	useStrictVersions = true;
+        	//runningArgs.add("-strictversions");
         }
         
         if (beagleShowInfo) {
@@ -642,8 +670,12 @@ public class Main {
         Log.info.println();
 
         try {
-	        // Construct the beast object
 	        File beastFile = new File(args[args.length - 1]);
+
+	        // load packages
+        	loadPackages(useStrictVersions, beastFile);
+	        
+        	// Construct the beast object
 	        Runnable runner;
 	        if (beastFile.getPath().toLowerCase().endsWith(".json")) {
 	        	runner = new xbeast.util.JSONParser().parseFile(beastFile);

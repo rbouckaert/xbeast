@@ -1,4 +1,4 @@
-package xbeast.app;
+package xbeast.app.util;
 
 import java.awt.Toolkit;
 import java.awt.event.FocusEvent;

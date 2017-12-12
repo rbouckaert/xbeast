@@ -59,6 +59,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import xbeast.app.BEASTVersion2;
+import xbeast.app.Main;
 import xbeast.app.util.Arguments;
 //import xbeast.app.beastapp.BeastMain;
 //import xbeast.app.util.Arguments;
@@ -699,7 +700,7 @@ public class PackageManager {
         if (System.getProperty("beast.install.dir") != null)
             return System.getProperty("beast.install.dir");
 
-        URL u = BeastMain.class.getProtectionDomain().getCodeSource().getLocation();
+        URL u = Main.class.getProtectionDomain().getCodeSource().getLocation();
 		String s = u.getPath();
         File beastJar = new File(s);
         Log.trace.println("BeastMain found in " + beastJar.getPath());
