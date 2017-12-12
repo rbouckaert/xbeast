@@ -59,6 +59,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import xbeast.app.BEASTVersion2;
+import xbeast.app.util.Arguments;
 //import xbeast.app.beastapp.BeastMain;
 //import xbeast.app.util.Arguments;
 import xbeast.app.util.Utils;
@@ -1658,7 +1659,7 @@ public class PackageManager {
     }
 
 
-    private static void printUsageAndExit(/*Arguments arguments*/) {
+    private static void printUsageAndExit(Arguments arguments) {
         arguments.printUsage("addonmanager", "");
         Log.info.println("\nExamples:");
         Log.info.println("addonmanager -list");

@@ -1,5 +1,6 @@
 package xbeast.core;
 
+import java.util.Random;
 
 @Description("Entry point for running a Beast task, for instance an MCMC or other probabilistic " +
         "analysis, a simulation, etc.")
@@ -42,4 +43,11 @@ public abstract class Runnable extends BEASTObject {
      * indicate whether this runnable distinguishes partitions, like MCMC, or not 
      * **/
     public boolean hasPartitions() {return true;}
+    
+    
+    /**
+     * process arguments
+     * @param args
+     */
+	public void parseArgs(String[] args) {}
 }

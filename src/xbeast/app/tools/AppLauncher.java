@@ -390,7 +390,7 @@ public class AppLauncher {
     
 	private String sanitise(String property) {
 		// sanitise for windows
-		if (xbeast.app.util.Utils.isWindows()) {
+		if (xbeast.app.util.Utils6.isWindows()) {
 			String cwd = System.getProperty("user.dir");
 			cwd = cwd.replace("\\", "/");
 			property = property.replaceAll(";\\.", ";" +  cwd + ".");
