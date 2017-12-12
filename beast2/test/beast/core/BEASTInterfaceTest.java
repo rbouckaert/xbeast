@@ -102,7 +102,7 @@ public class BEASTInterfaceTest extends TestCase {
 		System.err.println("test getOutputs");
 		assertEquals(1, beasti2.getOutputs().size());
 		
-		String description = beasti.getDescription();
+		String description = beasti.getDescriptionString();
 		assertEquals("class that impements BEASTInterface but is not a BEASTObject", description);
 		
 		List<BEASTInterface> predecessors = new ArrayList<BEASTInterface>();

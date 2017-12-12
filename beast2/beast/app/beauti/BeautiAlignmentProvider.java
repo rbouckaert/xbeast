@@ -141,7 +141,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
 					// let user choose an importer
 					List<String> descriptions = new ArrayList<>();
 					for (AlignmentImporter i : availableImporters) {
-						descriptions.add(((BEASTInterface)i).getDescription());
+						descriptions.add(((BEASTInterface)i).getDescriptionString());
 					}
 					String option = (String)JOptionPane.showInputDialog(null, "Which importer is appropriate", "Option",
 		                    JOptionPane.WARNING_MESSAGE, null, descriptions.toArray(), descriptions.get(0));

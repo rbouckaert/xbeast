@@ -668,7 +668,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
 
         @Override
 		public void actionPerformed(ActionEvent ae) {
-            String citations = doc.mcmc.get().getCitations();
+            String citations = doc.mcmc.get().getCitationString();
             try {
                 StringSelection stringSelection = new StringSelection(
                         citations);

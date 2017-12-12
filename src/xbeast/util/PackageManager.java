@@ -970,7 +970,7 @@ public class PackageManager {
         	loadPacakge(jarDirName);
         }
         externalJarsLoaded = true;
-        Alignment.findDataTypes();
+        //Alignment.findDataTypes();
     } // loadExternalJars
     
 	public static void loadExternalJars(String packagesString) throws IOException {
@@ -1023,7 +1023,7 @@ public class PackageManager {
         	}
         }
         externalJarsLoaded = true;
-        Alignment.findDataTypes();
+        //Alignment.findDataTypes();
     } // loadExternalJars
 
     private static void loadPacakge(String jarDirName) {

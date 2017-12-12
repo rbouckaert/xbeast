@@ -134,7 +134,7 @@ public class MCMC extends xbeast.core.Runnable {
     public void initAndValidate() {
         Log.info.println("===============================================================================");
         Log.info.println("Citations for this model:");
-        Log.info.println(getCitations());
+        Log.info.println(getCitationString());
         Log.info.println("===============================================================================");
 
         operatorSchedule = operatorScheduleInput.get();

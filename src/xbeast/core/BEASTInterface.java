@@ -125,7 +125,7 @@ public interface BEASTInterface {
     /**
      * @return description from @Description annotation
      */
-	default public String getDescription() {
+	default public String getDescriptionString() {
         final Annotation[] classAnnotations = this.getClass().getAnnotations();
         for (final Annotation annotation : classAnnotations) {
             if (annotation instanceof Description) {
@@ -177,7 +177,7 @@ public interface BEASTInterface {
     /**
      * @return references for this plug in and all its inputs *
      */
-    default public String getCitations() {
+    default public String getCitationString() {
         return getCitations(new HashSet<>(), new HashSet<>());
     }
 

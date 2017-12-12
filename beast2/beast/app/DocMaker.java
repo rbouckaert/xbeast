@@ -143,7 +143,7 @@ public class DocMaker {
         for (String beastObjectName : m_beastObjectNames) {
             try {
                 BEASTObject beastObject = (BEASTObject) Class.forName(beastObjectName).newInstance();
-                Log.info.println(beastObjectName + ":@description:" + beastObject.getDescription());
+                Log.info.println(beastObjectName + ":@description:" + beastObject.getDescriptionString());
                 for (Input<?> input : beastObject.listInputs()) {
                     Log.info.println(beastObjectName + ":" + input.getName() + ":" + input.getTipText());
                 }

@@ -53,6 +53,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import beast.app.beauti.PartitionContext;
 import xbeast.core.BEASTInterface;
 import xbeast.core.Input;
 import xbeast.core.Param;
@@ -211,7 +212,8 @@ public class XMLParser {
      * when parsing XML, missing inputs can be assigned default values through
      * a RequiredInputProvider
      */
-    //RequiredInputProvider requiredInputProvider = null;
+    RequiredInputProvider requiredInputProvider = null;
+    PartitionContext partitionContext = null;
 
     public XMLParser() {
         beastObjectsWaitingToInit = new ArrayList<>();
