@@ -877,7 +877,9 @@ public class XMLParser {
 		    				// deal with the case where the Input type has a String constructor
 		    				// and the args[i] is a String -- we need to invoke the String constructor 
 		    				if (args[i].getClass().equals(String.class) && types[i] != String.class) {
-		    					if (types[i].getDeclaredConstructors().length > 0) {
+		    					if (types[i].isEnum()) {		    						
+		    						args[i] = Enum.valueOf((Class<Enum>) types[i], args[i].toString());
+		    					} else if (types[i].getDeclaredConstructors().length > 0) {
 			    				    for (Constructor<?> argctor : types[i].getDeclaredConstructors()) {
 			    				    	Class<?>[] argtypes  = argctor.getParameterTypes();
 			    				    	if (argtypes.length == 1 && argtypes[0] == String.class) {
@@ -886,7 +888,7 @@ public class XMLParser {
 			    				    		break;
 			    				    	}
 			    				    }
-		    					} else if (types[i].isPrimitive()){
+		    					} else if (types[i].isPrimitive()) {
 		    						// convert from a primitive type
 		    						if (types[i].equals(Integer.TYPE)) {
 		    							args[i] = (int) new Integer(args[i].toString());
@@ -928,6 +930,7 @@ public class XMLParser {
 				    	try {
 							Object o = ctor.newInstance(args);
 							BEASTInterface beastObject = (BEASTInterface) o;
+							beastObject.setID(_id);
 							register(node, beastObject);
 							return beastObject;
 				    	} catch (IllegalAccessException e) {
