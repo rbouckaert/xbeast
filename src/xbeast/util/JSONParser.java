@@ -1108,47 +1108,8 @@ public class JSONParser {
 			throw new IllegalArgumentException();
 		}
 
-		// try using a String constructor of the default value
-        Constructor<?> ctor;
         String value = param.defaultValue();
         return value;
-//        Object v = value; 
-//        if (clazz.isPrimitive()) {
-//			// convert from a primitive type
-//			if (clazz.equals(Integer.TYPE)) {
-//				return (int) new Integer(value.toString());
-//			} else if (clazz.equals(Long.TYPE)) {
-//				return (long) new Long(value.toString());
-//			} else if (clazz.equals(Short.TYPE)) {
-//				return (short) new Short(value.toString());
-//			} else if (clazz.equals(Float.TYPE)) {
-//				return (float) new Float(value.toString());
-//			} else if (clazz.equals(Double.TYPE)) {
-//				return (double) new Double(value.toString());
-//			} else if (clazz.equals(Boolean.TYPE)) {
-//				return (boolean) new Boolean(value.toString());
-//			} else if (clazz.equals(Byte.TYPE)) {
-//				return (byte) new Byte(value.toString());
-//			} else if (clazz.equals(Character.TYPE)) {
-//				if (value.toString().length() == 1) {
-//					return value.toString().charAt(0);
-//				} else {
-//					throw new IllegalArgumentException("expected character, but got string of length " + value.toString().length());
-//				}
-//			}
-//        } else if (clazz.isEnum()) {
-//        	return Enum.valueOf((Class<Enum>) clazz, value);
-//        } else {
-//        try {
-//        	ctor = clazz.getDeclaredConstructor(String.class);
-//        } catch (NoSuchMethodException e) {
-//        	return null;
-//        }
-//        ctor.setAccessible(true);
-//        final Object o = ctor.newInstance(v);
-//        return o;
-//        }
-//        return null;
 	}
 
 	List<NameValuePair> parseInputs(JSONObject node, String className) throws JSONParserException {

@@ -13,12 +13,17 @@ public class PrimitiveBeastObject extends BEASTObject {
 
 	public PrimitiveBeastObject() {
 	}
+	
 	public PrimitiveBeastObject(@Param(name="i", description="input of primitive type") int i,
 			@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
 		this.i = i;
 		this.e = e;
 	}
 
+
+	public PrimitiveBeastObject(@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
+		this(0, e);
+	}
 
 	@Override
 	public void initAndValidate() {

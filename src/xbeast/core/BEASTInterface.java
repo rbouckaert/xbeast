@@ -32,6 +32,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -216,12 +218,19 @@ public interface BEASTInterface {
     default public List<Input<?>> listInputs() { 
         final List<Input<?>> inputs = new ArrayList<>();
         
+        Map<String, Input> inputNames = new LinkedHashMap<>();
+        
         // First, collect all Inputs
         final Field[] fields = getClass().getFields();
         for (final Field field : fields) {
             if (field.getType().isAssignableFrom(Input.class)) {
             	try {
             		final Input<?> input = (Input<?>) field.get(this);
+            		if (inputNames.keySet().contains(input.getName())) {
+            			throw new RuntimeException("Programmer error: multiple inputs with name " + input.getName() + "  found (perhaps in sub and super classes)\n"
+            					+ "Classes should have unique input names");
+            		}
+            		inputNames.put(input.getName(), input);
             		inputs.add(input);
             	} catch (IllegalAccessException e) {
             		// not a publicly accessible input, ignore
@@ -287,7 +296,19 @@ public interface BEASTInterface {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-	    				inputs.add(t);
+	            		if (inputNames.keySet().contains(t.getName())) {
+	            			Input input = inputNames.get(t.getName());
+	            			if (!(input instanceof InputForAnnotatedConstructor)) {
+	                			throw new RuntimeException("Programmer error: multiple inputs with name " + input.getName() + "  found (perhaps in sub and super classes)\n"
+	                					+ "Classes should have unique input names");	            				
+	            			}
+	            			if (!input.equals(t)) {
+	            				throw new RuntimeException("Programmer error: @Param inputs with same name should be equal to previously used annotations");
+	            			}
+	            		} else {
+	            			inputNames.put(t.getName(), t);
+	            			inputs.add(t);
+	            		}
 	    			} else {
 	    				InputForAnnotatedConstructor<?> t = null;
 						try {
@@ -296,7 +317,20 @@ public interface BEASTInterface {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-	    				inputs.add(t);
+	            		if (inputNames.keySet().contains(t.getName())) {
+	            			Input input = inputNames.get(t.getName());
+	            			if (!(input instanceof InputForAnnotatedConstructor)) {
+	                			throw new RuntimeException("Programmer error: multiple inputs with name " + input.getName() + "  found (perhaps in sub and super classes)\n"
+	                					+ "Classes should have unique input names");	            				
+	            			}
+	            			if (!(input.defaultValue != null && input.defaultValue.toString().equals(t.defaultValue.toString())) ||
+	            				!input.getTipText().equals(t.getTipText())) {
+	            				throw new RuntimeException("Programmer error: @Param inputs with same name should be equal to previously used annotations");
+	            			}
+	            		} else {
+	            			inputNames.put(t.getName(), t);
+	            			inputs.add(t);
+	            		}
 	    			}
 	    		}
 	    	}

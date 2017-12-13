@@ -61,6 +61,7 @@ import xbeast.core.Runnable;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
 import xbeast.core.util.Log;
+import xbeast.util.XMLParser.NameValuePair;
 
 
 /**
@@ -841,14 +842,21 @@ public class XMLParser {
 			// cannot get here, since we checked the class existed before
 			e.printStackTrace();
 		}
+		
+		// try to find a constructor that has Param annotations where all values of inputInfo can be matched
 	    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
 	    for (Constructor<?> ctor : allConstructors) {
 	    	Annotation[][] annotations = ctor.getParameterAnnotations();
 	    	List<Param> paramAnnotations = new ArrayList<>();
+	    	int optionals = 0;
 	    	for (Annotation [] a0 : annotations) {
 		    	for (Annotation a : a0) {
 		    		if (a instanceof Param) {
-		    			paramAnnotations.add((Param) a);
+		    			Param param = (Param) a;
+		    			paramAnnotations.add(param);
+		    			if (param.optional()) {
+		    				optionals++;
+		    			}
 		    		}
 	    		}
 	    	}
@@ -859,7 +867,7 @@ public class XMLParser {
 
 	    	Class<?>[] types  = ctor.getParameterTypes();
     		//Type[] gtypes = ctor.getGenericParameterTypes();
-	    	if (types.length > 0 && paramAnnotations.size() == types.length) {
+	    	if (types.length > 0 && paramAnnotations.size() <= types.length + optionals) {
 		    	try {
 		    		Object [] args = new Object[types.length];
 		    		for (int i = 0; i < types.length; i++) {
@@ -870,50 +878,14 @@ public class XMLParser {
 		    					// no need to parameterise list due to type erasure
 		    					args[i] = new ArrayList();
 		    				}
-		    				List<Object> values = getListOfValues(param, inputInfo);
+		    				List<Object> values = XMLParser.getListOfValues(param, inputInfo);
 		    				((List)args[i]).addAll(values);
 		    			} else {
 		    				args[i] = getValue(param, types[i], inputInfo);
-		    				// deal with the case where the Input type has a String constructor
-		    				// and the args[i] is a String -- we need to invoke the String constructor 
-		    				if (args[i].getClass().equals(String.class) && types[i] != String.class) {
-		    					if (types[i].isEnum()) {		    						
-		    						args[i] = Enum.valueOf((Class<Enum>) types[i], args[i].toString());
-		    					} else if (types[i].getDeclaredConstructors().length > 0) {
-			    				    for (Constructor<?> argctor : types[i].getDeclaredConstructors()) {
-			    				    	Class<?>[] argtypes  = argctor.getParameterTypes();
-			    				    	if (argtypes.length == 1 && argtypes[0] == String.class) {
-			    				    		Object o = argctor.newInstance(args[i]);
-			    				    		args[i] = o;
-			    				    		break;
-			    				    	}
-			    				    }
-		    					} else if (types[i].isPrimitive()) {
-		    						// convert from a primitive type
-		    						if (types[i].equals(Integer.TYPE)) {
-		    							args[i] = (int) new Integer(args[i].toString());
-									} else if (type.equals(Long.TYPE)) {
-										args[i] = (long) new Long(args[i].toString());
-									} else if (type.equals(Short.TYPE)) {
-										args[i] = (short) new Short(args[i].toString());
-									} else if (type.equals(Float.TYPE)) {
-										args[i] = (float) new Float(args[i].toString());
-									} else if (type.equals(Double.TYPE)) {
-										args[i] = (double) new Double(args[i].toString());
-									} else if (type.equals(Boolean.TYPE)) {
-										args[i] = (boolean) new Boolean(args[i].toString());
-									} else if (type.equals(Byte.TYPE)) {
-										args[i] = (byte) new Byte(args[i].toString());
-									} else if (type.equals(Character.TYPE)) {
-										if (args[i].toString().length() == 1) {
-											args[i] = args[i].toString().charAt(0);
-										} else {
-											throw new XMLParserException(node, "expected character, but got string of length " + args[i].toString().length(), 1015);
-										}
-									}
-		    					} else {
-									throw new XMLParserException(node, "cannot match value for c'tor argument " + param.name(), 1016);
-		    					}
+		    				try {
+		    					args[i] = Input.fromString(args[i], types[i]);
+		    				} catch (InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
+		    					throw new XMLParserException(node, e.getMessage(), 1015);
 		    				}
 		    			}
 		    		}
@@ -924,6 +896,15 @@ public class XMLParser {
 			    		if (!pair.processed) {
 			    			allUsed= false;
 			    		}
+			    	}
+			    	
+			    	if (allUsed) {
+				    	// ensure all arguments are set
+				    	for (int i = 0; i < args.length; i++) {
+				    		if (args[i] == null) {
+				    			allUsed= false;
+				    		}
+				    	}
 			    	}
 
 			    	if (allUsed) {
@@ -938,7 +919,7 @@ public class XMLParser {
 									+ "(Perhaps a programmer error: the constructor or class may not be public)", 1014);
 						} catch (InstantiationException | IllegalArgumentException | InvocationTargetException e) {
 							throw new XMLParserException(node, "Could not create object: " + e.getMessage(), 1012);
-						}
+				    	}
 			    	}
 				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
@@ -955,49 +936,15 @@ public class XMLParser {
 		for (NameValuePair pair : inputInfo) {
 			if (pair.name.equals(param.name())) {
 				pair.processed = true;
-				if (type.isAssignableFrom(Integer.class)) {
-					return Integer.parseInt((String) pair.value);
-				}
-				if (type.isAssignableFrom(Double.class)) {
-					return Double.parseDouble((String) pair.value);
-				}
 				return pair.value;
 			}
 		}
-		
-		// could not find Param entry in inputInfo
 		
 		// check if this parameter is required or optional
 		if (!param.optional()) {
 			throw new IllegalArgumentException();
 		}
-
-		// try using a String constructor of the default value
-        Constructor<?> ctor;
-        String value = param.defaultValue();
-        Object v = value; 
-        try {
-        	ctor = type.getDeclaredConstructor(String.class);
-        } catch (NoSuchMethodException e) {
-        	// we get here if there is not String constructor
-        	// try integer constructor instead
-        	try {
-        		if (value.startsWith("0x")) {
-        			v = Integer.parseInt(value.substring(2), 16);
-        		} else {
-        			v = Integer.parseInt(value);
-        		}
-            	ctor = type.getDeclaredConstructor(int.class);
-            	
-        	} catch (NumberFormatException e2) {
-            	// could not parse as integer, try double instead
-        		v = Double.parseDouble(value);
-            	ctor = type.getDeclaredConstructor(double.class);
-        	}
-        }
-        ctor.setAccessible(true);
-        final Object o = ctor.newInstance(v);
-        return o;
+		return param.defaultValue();
 	}
 
 	static List<Object> getListOfValues(Param param, List<NameValuePair> inputInfo) {
@@ -1010,12 +957,6 @@ public class XMLParser {
 		}
 		return values;
 	}
-
-
-	@Deprecated // use XMLParserUtils.getLevenshteinDistance instead
-    public static int getLevenshteinDistance(final String s, final String t) {
-    	return XMLParserUtils.getLevenshteinDistance(s, t);
-    }
     
     private List<NameValuePair> parseInputs(Node node, String clazzName) throws XMLParserException {
     	List<NameValuePair> inputInfo = new ArrayList<>();
