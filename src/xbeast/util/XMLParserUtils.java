@@ -186,7 +186,7 @@ public class XMLParserUtils {
      * @throws NoSuchMethodException 
      * @throws IllegalArgumentException 
      */
-	public static List<InputType> listInputs(Class<?> clazz, BEASTInterface beastObject) throws InstantiationException , IllegalAccessException, IllegalArgumentException, NoSuchMethodException, SecurityException {
+	public static List<InputType> listInputs(Class<?> clazz, BEASTInterface beastObject) throws IllegalAccessException, IllegalArgumentException, NoSuchMethodException, SecurityException {
 		List<InputType> inputTypes = new ArrayList<>();
 
 		// First, collect Input members
@@ -237,21 +237,23 @@ public class XMLParserUtils {
 	    		}
 	    		for (int i = 0; i < paramAnnotations.size(); i++) {
 	    			Param param = paramAnnotations.get(i);
-	    			Type type = types[i + offset];
+	    			Class<?> type = types[i + offset];
 	    			Class<?> clazz2 = null;
-					try {
-						clazz2 = Class.forName(type.getTypeName());
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	    			if (clazz2.isAssignableFrom(List.class)) {
+	    			if (!type.isPrimitive()) {
+						try {
+							clazz2 = Class.forName(type.getTypeName());
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	    			}
+	    			if (!type.isPrimitive() && clazz2.isAssignableFrom(List.class)) {
                         Type[] genericTypes2 = ((ParameterizedType) gtypes[i + offset]).getActualTypeArguments();
                         Class<?> theClass = (Class<?>) genericTypes2[0];
 	    				InputType t = new InputType(param.name(), theClass, false, param.defaultValue());
 	    				inputTypes.add(t);
 	    			} else {
-	    				InputType t = new InputType(param.name(), types[i + offset], false, param.defaultValue());
+	    				InputType t = new InputType(param.name(), type, false, param.defaultValue());
 	    				inputTypes.add(t);
 	    			}
 	    		}

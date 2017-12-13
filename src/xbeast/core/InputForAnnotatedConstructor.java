@@ -63,6 +63,17 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 			Log.err.println("Programmer error: when getting here an InputType was identified, but no setter for Param annotation found");
 			throw e;
 		}
+		
+		if (param.optional()) {
+			String defaultValue = param.defaultValue();
+			try {
+				this.defaultValue = (T) fromString(defaultValue, this.theClass);
+			} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+				e.printStackTrace();
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
+		
 	}
 	
 	@Override

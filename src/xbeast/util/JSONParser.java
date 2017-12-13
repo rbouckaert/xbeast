@@ -405,6 +405,13 @@ public class JSONParser {
 		throw new RuntimeException("How did we get here?");
 	} // unrollPlate
 	
+    public List<Object> parseBareFragment(String json, final boolean initialise) throws JSONParserException, JSONException {
+		IDMap = new HashMap<>();
+		likelihoodMap = new HashMap<>();
+		IDNodeMap = new HashMap<>();
+    	json = "{version:'2.0',beast:[" + json + "]}";
+    	return parseFragment(json, initialise);
+    }
 
 	 /**
 	 * Parse an JSON fragment representing a list of BEASTObjects
@@ -993,15 +1000,21 @@ public class JSONParser {
 			// cannot get here, since we checked the class existed before
 			e.printStackTrace();
 		}
+		
+		// try to find a constructor that has Param annotations where all values of inputInfo can be matched
 	    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
 	    for (Constructor<?> ctor : allConstructors) {
-	    	// collect Param annotations on constructor parameters
 	    	Annotation[][] annotations = ctor.getParameterAnnotations();
 	    	List<Param> paramAnnotations = new ArrayList<>();
+	    	int optionals = 0;
 	    	for (Annotation [] a0 : annotations) {
 		    	for (Annotation a : a0) {
 		    		if (a instanceof Param) {
-		    			paramAnnotations.add((Param) a);
+		    			Param param = (Param) a;
+		    			paramAnnotations.add(param);
+		    			if (param.optional()) {
+		    				optionals++;
+		    			}
 		    		}
 	    		}
 	    	}
@@ -1009,12 +1022,11 @@ public class JSONParser {
 	    	for (NameValuePair pair : inputInfo) {
 	    		pair.processed = false;
 	    	}
-	    	
-	    	Class<?>[] types  = ctor.getParameterTypes();	    	
-	    	if (types.length > 0 && paramAnnotations.size() == types.length) {
-				try {
-			    	// if all constructor parameters have Param annotations, try to call constructor
-		    		// first, build up argument list, then create object
+
+	    	Class<?>[] types  = ctor.getParameterTypes();
+    		//Type[] gtypes = ctor.getGenericParameterTypes();
+	    	if (types.length > 0 && paramAnnotations.size() <= types.length + optionals) {
+		    	try {
 		    		Object [] args = new Object[types.length];
 		    		for (int i = 0; i < types.length; i++) {
 		    			Param param = paramAnnotations.get(i);
@@ -1025,12 +1037,17 @@ public class JSONParser {
 		    					args[i] = new ArrayList();
 		    				}
 		    				List<Object> values = XMLParser.getListOfValues(param, inputInfo);
-		    				((List<Object>) args[i]).addAll(values);
+		    				((List)args[i]).addAll(values);
 		    			} else {
-		    				args[i] = getValue(param, (Class<?>) type, inputInfo);
+		    				args[i] = getValue(param, types[i], inputInfo);
+		    				try {
+		    					args[i] = Input.fromString(args[i], types[i]);
+		    				} catch (InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
+		    					throw new JSONParserException(node, e.getMessage(), 1015);
+		    				}
 		    			}
 		    		}
-		    		
+
 		    		// ensure all inputs are used
 		    		boolean allUsed = true;
 			    	for (NameValuePair pair : inputInfo) {
@@ -1038,23 +1055,36 @@ public class JSONParser {
 			    			allUsed= false;
 			    		}
 			    	}
-	
-			    	// if all inputs are used, call the constructor, otherwise, look for another constructor
+			    	
 			    	if (allUsed) {
-			    		try {
+				    	// ensure all arguments are set
+				    	for (int i = 0; i < args.length; i++) {
+				    		if (args[i] == null) {
+				    			allUsed= false;
+				    		}
+				    	}
+			    	}
+
+			    	if (allUsed) {
+				    	try {
 							Object o = ctor.newInstance(args);
 							BEASTInterface beastObject = (BEASTInterface) o;
+							beastObject.setID(_id);
 							register(node, beastObject);
 							return beastObject;
-						} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				    	} catch (IllegalAccessException e) {
+							throw new JSONParserException(node, "Could not create object: " + e.getMessage() + "\n"
+									+ "(Perhaps a programmer error: the constructor or class may not be public)", 1014);
+						} catch (InstantiationException | IllegalArgumentException | InvocationTargetException e) {
 							throw new JSONParserException(node, "Could not create object: " + e.getMessage(), 1012);
-						}
+				    	}
 			    	}
 				} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 					// we get here when a param value cannot be constructed from a default value
 					// let's try the next constructor (if any)
 				}
+
 	    	}
 		}
 		return null;
@@ -1081,29 +1111,44 @@ public class JSONParser {
 		// try using a String constructor of the default value
         Constructor<?> ctor;
         String value = param.defaultValue();
-        Object v = value; 
-        try {
-        	ctor = clazz.getDeclaredConstructor(String.class);
-        } catch (NoSuchMethodException e) {
-        	// we get here if there is not String constructor
-        	// try integer constructor instead
-        	try {
-        		if (value.startsWith("0x")) {
-        			v = Integer.parseInt(value.substring(2), 16);
-        		} else {
-        			v = Integer.parseInt(value);
-        		}
-            	ctor = clazz.getDeclaredConstructor(int.class);
-            	
-        	} catch (NumberFormatException e2) {
-            	// could not parse as integer, try double instead
-        		v = Double.parseDouble(value);
-            	ctor = clazz.getDeclaredConstructor(double.class);
-        	}
-        }
-        ctor.setAccessible(true);
-        final Object o = ctor.newInstance(v);
-        return o;
+        return value;
+//        Object v = value; 
+//        if (clazz.isPrimitive()) {
+//			// convert from a primitive type
+//			if (clazz.equals(Integer.TYPE)) {
+//				return (int) new Integer(value.toString());
+//			} else if (clazz.equals(Long.TYPE)) {
+//				return (long) new Long(value.toString());
+//			} else if (clazz.equals(Short.TYPE)) {
+//				return (short) new Short(value.toString());
+//			} else if (clazz.equals(Float.TYPE)) {
+//				return (float) new Float(value.toString());
+//			} else if (clazz.equals(Double.TYPE)) {
+//				return (double) new Double(value.toString());
+//			} else if (clazz.equals(Boolean.TYPE)) {
+//				return (boolean) new Boolean(value.toString());
+//			} else if (clazz.equals(Byte.TYPE)) {
+//				return (byte) new Byte(value.toString());
+//			} else if (clazz.equals(Character.TYPE)) {
+//				if (value.toString().length() == 1) {
+//					return value.toString().charAt(0);
+//				} else {
+//					throw new IllegalArgumentException("expected character, but got string of length " + value.toString().length());
+//				}
+//			}
+//        } else if (clazz.isEnum()) {
+//        	return Enum.valueOf((Class<Enum>) clazz, value);
+//        } else {
+//        try {
+//        	ctor = clazz.getDeclaredConstructor(String.class);
+//        } catch (NoSuchMethodException e) {
+//        	return null;
+//        }
+//        ctor.setAccessible(true);
+//        final Object o = ctor.newInstance(v);
+//        return o;
+//        }
+//        return null;
 	}
 
 	List<NameValuePair> parseInputs(JSONObject node, String className) throws JSONParserException {
@@ -1135,7 +1180,7 @@ public class JSONParser {
 		}
 		
 		return inputInfo;
-	} // setInputs
+	} // parseInputs
 
 	
 	private void processInput(String name, JSONObject node, List<NameValuePair> map, List<InputType> inputs) throws JSONParserException, JSONException {
@@ -1203,6 +1248,8 @@ public class JSONParser {
 			// already set before
 			// for list inputs this is always true.
 			if (input.get() == input.defaultValue) {
+				beastObject.setInputValue(name, value);
+			} else if (input.getType().isPrimitive() && input.defaultValue == null) {
 				beastObject.setInputValue(name, value);
 			} else {
 				throw new IOException("Multiple entries for non-list input " + input.getName());

@@ -908,7 +908,7 @@ public class XMLParser {
 										if (args[i].toString().length() == 1) {
 											args[i] = args[i].toString().charAt(0);
 										} else {
-											throw new XMLParserException(node, "expeted character, but got string of length " + args[i].toString().length(), 1015);
+											throw new XMLParserException(node, "expected character, but got string of length " + args[i].toString().length(), 1015);
 										}
 									}
 		    					} else {

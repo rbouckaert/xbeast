@@ -6,13 +6,15 @@ import xbeast.core.Param;
 
 @Description("Class to test the behaviour of primitive inputs")
 public class PrimitiveBeastObject extends BEASTObject {
-	public enum Enumeration {one, two};
+	public enum Enumeration {none, one, two};
 	
 	private int i;
-	private Enumeration e = Enumeration.one;
+	private Enumeration e = Enumeration.none;
 
+	public PrimitiveBeastObject() {
+	}
 	public PrimitiveBeastObject(@Param(name="i", description="input of primitive type") int i,
-			@Param(name="e", description="input of primitive type", defaultValue="one") Enumeration e) {
+			@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
 		this.i = i;
 		this.e = e;
 	}
