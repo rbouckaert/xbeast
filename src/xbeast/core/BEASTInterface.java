@@ -255,8 +255,27 @@ public interface BEASTInterface {
 					try {
 						clazz = Class.forName(type.getTypeName());
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						// it's probably a primitive
+						if (type.equals(Integer.TYPE)) {
+							clazz = int.class;
+						} else if (type.equals(Long.TYPE)) {
+							clazz = long.class;
+						} else if (type.equals(Short.TYPE)) {
+							clazz = short.class;
+						} else if (type.equals(Float.TYPE)) {
+							clazz = float.class;
+						} else if (type.equals(Double.TYPE)) {
+							clazz = double.class;
+						} else if (type.equals(Boolean.TYPE)) {
+							clazz = boolean.class;
+						} else if (type.equals(Byte.TYPE)) {
+							clazz = byte.class;							
+						} else if (type.equals(Character.TYPE)) {
+							clazz = char.class;							
+						} else {
+							e.printStackTrace();
+							throw new RuntimeException("Cannot find type " + e.getMessage());
+						}
 					}
 	    			if (clazz.isAssignableFrom(List.class)) {
                         Type[] genericTypes2 = ((ParameterizedType) gtypes[i + offset]).getActualTypeArguments();

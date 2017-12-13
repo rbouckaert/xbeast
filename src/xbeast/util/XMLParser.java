@@ -877,14 +877,41 @@ public class XMLParser {
 		    				// deal with the case where the Input type has a String constructor
 		    				// and the args[i] is a String -- we need to invoke the String constructor 
 		    				if (args[i].getClass().equals(String.class) && types[i] != String.class) {
-		    				    for (Constructor<?> argctor : types[i].getDeclaredConstructors()) {
-		    				    	Class<?>[] argtypes  = argctor.getParameterTypes();
-		    				    	if (argtypes.length == 1 && argtypes[0] == String.class) {
-		    				    		Object o = argctor.newInstance(args[i]);
-		    				    		args[i] = o;
-		    				    		break;
-		    				    	}
-		    				    }
+		    					if (types[i].getDeclaredConstructors().length > 0) {
+			    				    for (Constructor<?> argctor : types[i].getDeclaredConstructors()) {
+			    				    	Class<?>[] argtypes  = argctor.getParameterTypes();
+			    				    	if (argtypes.length == 1 && argtypes[0] == String.class) {
+			    				    		Object o = argctor.newInstance(args[i]);
+			    				    		args[i] = o;
+			    				    		break;
+			    				    	}
+			    				    }
+		    					} else if (types[i].isPrimitive()){
+		    						// convert from a primitive type
+		    						if (types[i].equals(Integer.TYPE)) {
+		    							args[i] = (int) new Integer(args[i].toString());
+									} else if (type.equals(Long.TYPE)) {
+										args[i] = (long) new Long(args[i].toString());
+									} else if (type.equals(Short.TYPE)) {
+										args[i] = (short) new Short(args[i].toString());
+									} else if (type.equals(Float.TYPE)) {
+										args[i] = (float) new Float(args[i].toString());
+									} else if (type.equals(Double.TYPE)) {
+										args[i] = (double) new Double(args[i].toString());
+									} else if (type.equals(Boolean.TYPE)) {
+										args[i] = (boolean) new Boolean(args[i].toString());
+									} else if (type.equals(Byte.TYPE)) {
+										args[i] = (byte) new Byte(args[i].toString());
+									} else if (type.equals(Character.TYPE)) {
+										if (args[i].toString().length() == 1) {
+											args[i] = args[i].toString().charAt(0);
+										} else {
+											throw new XMLParserException(node, "expeted character, but got string of length " + args[i].toString().length(), 1015);
+										}
+									}
+		    					} else {
+									throw new XMLParserException(node, "cannot match value for c'tor argument " + param.name(), 1016);
+		    					}
 		    				}
 		    			}
 		    		}
@@ -903,7 +930,10 @@ public class XMLParser {
 							BEASTInterface beastObject = (BEASTInterface) o;
 							register(node, beastObject);
 							return beastObject;
-						} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				    	} catch (IllegalAccessException e) {
+							throw new XMLParserException(node, "Could not create object: " + e.getMessage() + "\n"
+									+ "(Perhaps a programmer error: the constructor or class may not be public)", 1014);
+						} catch (InstantiationException | IllegalArgumentException | InvocationTargetException e) {
 							throw new XMLParserException(node, "Could not create object: " + e.getMessage(), 1012);
 						}
 			    	}

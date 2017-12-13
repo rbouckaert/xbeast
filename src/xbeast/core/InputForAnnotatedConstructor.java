@@ -122,7 +122,26 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
                 }
                 setValue(value);
             } else {
-                throw new RuntimeException("Input 102: type mismatch for input " + getName());
+            	// check whether this has a primitive type
+            	if (theClass.equals(Integer.TYPE) && Integer.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Long.TYPE) && Long.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Short.TYPE) && Short.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Float.TYPE) && Float.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Double.TYPE) && Double.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Boolean.TYPE) && Boolean.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Byte.TYPE) && Byte.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else if (theClass.equals(Character.TYPE) && Character.class.isAssignableFrom(value.getClass())) {
+					setValue(value);
+				} else {
+					throw new RuntimeException("Input 102: type mismatch for input " + getName());
+				}
             }
         }
 	}
