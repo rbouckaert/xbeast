@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -596,126 +597,48 @@ public class Input<T> {
         if (value instanceof List<?>) {
             List list = (List) value;
             list.clear();
-            // remove start and end spaces
-            String stringValue2 = stringValue.replaceAll("^\\s+", "");
-            stringValue2 = stringValue2.replaceAll("\\s+$", "");
-            // split into space-separated bits
-            String[] stringValues = stringValue2.split("\\s+");
-            for (int i = 0; i < stringValues.length; i++) {
-                if (theClass.equals(Integer.class)) {
-                    list.add(new Integer(stringValues[i % stringValues.length]));
-                } else if (theClass.equals(Double.class)) {
-                    list.add(new Double(stringValues[i % stringValues.length]));
-                } else if (theClass.equals(Boolean.class)) {
-                    String str = stringValues[i % stringValues.length].toLowerCase();
-                    list.add(str.equals("1") || str.equals("true") || str.equals("yes"));
-                } else if (theClass.equals(String.class)) {
-                    list.add(new String(stringValues[i % stringValues.length]));
-                }
-            }
+            setStringValue(list, stringValue, theClass);
             return;
         }
 
-    try {
-        final Object o = fromString(stringValue, theClass);
-        if (value != null && value instanceof List) {
-            ((List) value).add(o);
-        } else {
-            value = (T) o;
-        }
-    } catch (Exception e) {
-    	throw new IllegalArgumentException("Input 103: type mismatch, cannot initialize input '" + getName() +
-              "' with value '" + stringValue + "'.\nExpected something of type " + getType().getName() +
-              ". " + (e.getMessage() != null ? e.getMessage() : ""));
-    }
+	    try {
+	        final Object o = fromString(stringValue, theClass);
+	        if (value != null && value instanceof List) {
+	            ((List) value).add(o);
+	        } else {
+	            value = (T) o;
+	        }
+	    } catch (Exception e) {
+	    	throw new IllegalArgumentException("Input 103: type mismatch, cannot initialize input '" + getName() +
+	              "' with value '" + stringValue + "'.\nExpected something of type " + getType().getName() +
+	              ". " + (e.getMessage() != null ? e.getMessage() : ""));
+	    }
 
-//        value = (T) fromString(stringValue, theClass);
-//
-//        if (theClass.equals(Integer.class)) {
-//            value = (T) new Integer(stringValue);
-//            return;
-//        }
-//        if (theClass.equals(Long.class)) {
-//            value = (T) new Long(stringValue);
-//            return;
-//        }
-//        if (theClass.equals(Double.class)) {
-//            value = (T) new Double(stringValue);
-//            return;
-//        }
-//        if (theClass.equals(Float.class)) {
-//            value = (T) new Float(stringValue);
-//            return;
-//        }
-//        if (theClass.equals(Boolean.class)) {
-//        	value = (T) new Boolean(stringValue);
-//        	return;
-//        }
-//        if (theClass.equals(Function.class)) {
-//            final Function.Constant param = new Function.Constant(stringValue);
-//            if (value != null && value instanceof List) {
-//                ((List) value).add(param);
-//            } else {
-//                value = (T) param;
-//            }
-//            param.getOutputs().add(beastObject);
-//            return;
-//        }
-//
-//        if (theClass.isEnum()) {
-//        	if (possibleValues == null) {
-//        		possibleValues = (T[]) theClass.getDeclaringClass().getEnumConstants();
-//        	}
-//            for (final T t : possibleValues) {
-//                if (stringValue.equals(t.toString())) {
-//                    value = t;
-//                    return;
-//                }
-//            }
-//            throw new IllegalArgumentException("Input 104: value " + stringValue + " not found. Select one of " + Arrays.toString(possibleValues));
-//        }
-//
-//        // call a string constructor of theClass
-//        try {
-//            Constructor ctor;
-//            Object v = stringValue;
-//            try {
-//            	ctor = theClass.getDeclaredConstructor(String.class);
-//            } catch (NoSuchMethodException e) {
-//            	// we get here if there is not String constructor
-//            	// try integer constructor instead
-//            	try {
-//            		if (stringValue.startsWith("0x")) {
-//            			v = Integer.parseInt(stringValue.substring(2), 16);
-//            		} else {
-//            			v = Integer.parseInt(stringValue);
-//            		}
-//                	ctor = theClass.getDeclaredConstructor(int.class);
-//                	
-//            	} catch (NumberFormatException e2) {
-//                	// could not parse as integer, try double instead
-//            		v = Double.parseDouble(stringValue);
-//                	ctor = theClass.getDeclaredConstructor(double.class);
-//            	}
-//            }
-//            ctor.setAccessible(true);
-//            final Object o = ctor.newInstance(v);
-//            if (value != null && value instanceof List) {
-//                ((List) value).add(o);
-//            } else {
-//                value = (T) o;
-//            }
-//            if (o instanceof BEASTInterface) {
-//                ((BEASTInterface) o).getOutputs().add(beastObject);
-//            }
-//        } catch (Exception e) {
-//            throw new IllegalArgumentException("Input 103: type mismatch, cannot initialize input '" + getName() +
-//                    "' with value '" + stringValue + "'.\nExpected something of type " + getType().getName() +
-//                    ". " + (e.getMessage() != null ? e.getMessage() : ""));
-//        }
     } // setStringValue
 
-    /**
+    @SuppressWarnings("rawtypes")
+    private static void setStringValue( List list, String stringValue, Class<?> theClass) {
+        // remove start and end spaces
+        String stringValue2 = stringValue.replaceAll("^\\s+", "");
+        stringValue2 = stringValue2.replaceAll("\\s+$", "");
+        // split into space-separated bits
+        String[] stringValues = stringValue2.split("\\s+");
+        for (int i = 0; i < stringValues.length; i++) {
+        	list.add(fromString(stringValues[i % stringValues.length], theClass));
+//            if (theClass.equals(Integer.class)) {
+//                list.add(new Integer(stringValues[i % stringValues.length]));
+//            } else if (theClass.equals(Double.class)) {
+//                list.add(new Double(stringValues[i % stringValues.length]));
+//            } else if (theClass.equals(Boolean.class)) {
+//                String str = stringValues[i % stringValues.length].toLowerCase();
+//                list.add(str.equals("1") || str.equals("true") || str.equals("yes"));
+//            } else if (theClass.equals(String.class)) {
+//                list.add(new String(stringValues[i % stringValues.length]));
+//            }
+        }		
+	}
+
+	/**
      * validate input according to validation rule *
      *
      */
@@ -780,17 +703,29 @@ public class Input<T> {
 
 
 
-	public static Object fromString(Object arg, Class<?> type) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static Object fromString(Object arg, Class<?> type) { 
 		// deal with the case where the Input type has a String constructor
 		// and the args[i] is a String -- we need to invoke the String constructor 
-		if (arg.getClass().equals(String.class) && type != String.class) {
+		if (arg instanceof String && type != String.class) {
 			if (type.isEnum()) {		    						
 				arg = Enum.valueOf((Class<Enum>) type, arg.toString());
+			} else if (type.isArray()) {
+				Class<?> componentType = type.getComponentType();				
+				List list = new ArrayList();
+				setStringValue(list, (String) arg, componentType);
+				return list.toArray();
 			} else if (type.getDeclaredConstructors().length > 0) {
 			    for (Constructor<?> argctor : type.getDeclaredConstructors()) {
 			    	Class<?>[] argtypes  = argctor.getParameterTypes();
 			    	if (argtypes.length == 1 && argtypes[0] == String.class) {
-			    		Object o = argctor.newInstance(arg);
+			    		Object o;
+						try {
+							o = argctor.newInstance(arg);
+						} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+								| InvocationTargetException e) {
+							e.printStackTrace();
+							throw new RuntimeException("User ofString constructor failed: " + e.getMessage());
+						}
 			    		arg = o;
 			    		break;
 			    	}

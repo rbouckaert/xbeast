@@ -6,7 +6,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -188,7 +190,21 @@ public class XMLParserUtils {
      */
 	public static List<InputType> listInputs(Class<?> clazz, BEASTInterface beastObject) throws IllegalAccessException, IllegalArgumentException, NoSuchMethodException, SecurityException {
 		List<InputType> inputTypes = new ArrayList<>();
-
+		if (beastObject == null) {
+			try {
+				beastObject = (BEASTInterface) clazz.newInstance();
+			} catch (InstantiationException e) {
+			// this can happen if there is no constructor without arguments, 
+			// e.g. when there are annotated constructors only
+			}
+		}
+		List<Input<?>> inputs = beastObject.listInputs();
+		for (Input<?> input : inputs) {
+			inputTypes.add(new InputType(input.getName(), input.getType(), true, input.defaultValue));
+		}
+		return inputTypes;
+		
+/*
 		// First, collect Input members
 		try {
 			if (beastObject == null) {
@@ -238,15 +254,15 @@ public class XMLParserUtils {
 	    		for (int i = 0; i < paramAnnotations.size(); i++) {
 	    			Param param = paramAnnotations.get(i);
 	    			Class<?> type = types[i + offset];
-	    			Class<?> clazz2 = null;
-	    			if (!type.isPrimitive()) {
-						try {
-							clazz2 = Class.forName(type.getTypeName());
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	    			}
+	    			Class<?> clazz2 = type;
+//	    			if (!type.isPrimitive()) {
+//						try {
+//							clazz2 = Class.forName(type.getTypeName());
+//						} catch (ClassNotFoundException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//	    			}
 	    			if (!type.isPrimitive() && clazz2.isAssignableFrom(List.class)) {
                         Type[] genericTypes2 = ((ParameterizedType) gtypes[i + offset]).getActualTypeArguments();
                         Class<?> theClass = (Class<?>) genericTypes2[0];
@@ -261,6 +277,7 @@ public class XMLParserUtils {
 		}
 		
 		return inputTypes;
+*/
 	}
 
 //	/** get value of the input of a beast object with name specified in input **/

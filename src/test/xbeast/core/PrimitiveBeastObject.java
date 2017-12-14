@@ -10,6 +10,7 @@ public class PrimitiveBeastObject extends BEASTObject {
 	
 	private int i;
 	private Enumeration e = Enumeration.none;
+	double [] a = null;
 
 	public PrimitiveBeastObject() {
 	}
@@ -23,6 +24,10 @@ public class PrimitiveBeastObject extends BEASTObject {
 
 	public PrimitiveBeastObject(@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
 		this(0, e);
+	}
+
+	public PrimitiveBeastObject(@Param(name="a", description="input of primitive type") double [] a) {
+		this.a = a.clone();
 	}
 
 	@Override
@@ -40,6 +45,14 @@ public class PrimitiveBeastObject extends BEASTObject {
 	}
 	public void setE(Enumeration e) {
 		this.e = e;
+	}
+
+	public double[] getA() {
+		return a.clone();
+	}
+
+	public void setA(double[] a) {
+		this.a = a.clone();
 	}
 
 }

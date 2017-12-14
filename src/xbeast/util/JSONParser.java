@@ -1040,11 +1040,11 @@ public class JSONParser {
 		    				((List)args[i]).addAll(values);
 		    			} else {
 		    				args[i] = getValue(param, types[i], inputInfo);
-		    				try {
+		    				//try {
 		    					args[i] = Input.fromString(args[i], types[i]);
-		    				} catch (InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
-		    					throw new JSONParserException(node, e.getMessage(), 1015);
-		    				}
+		    				//} catch (InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
+		    				//	throw new JSONParserException(node, e.getMessage(), 1015);
+		    				//}
 		    			}
 		    		}
 

@@ -259,29 +259,35 @@ public interface BEASTInterface {
 	    		}
 	    		for (int i = 0; i < paramAnnotations.size(); i++) {
 	    			Param param = paramAnnotations.get(i);
-	    			Type type = types[i + offset];
-	    			Class<?> clazz = null;
-					try {
-						clazz = Class.forName(type.getTypeName());
-					} catch (ClassNotFoundException e) {
+	    			Class<?> type = types[i + offset];
+	    			Class<?> clazz = type;
+					if (type.isArray()) {
+						// nothing to do
+					} else if (type.isPrimitive()) {
+						// nothing to do
+						
 						// it's probably a primitive
-						if (type.equals(Integer.TYPE)) {
-							clazz = int.class;
-						} else if (type.equals(Long.TYPE)) {
-							clazz = long.class;
-						} else if (type.equals(Short.TYPE)) {
-							clazz = short.class;
-						} else if (type.equals(Float.TYPE)) {
-							clazz = float.class;
-						} else if (type.equals(Double.TYPE)) {
-							clazz = double.class;
-						} else if (type.equals(Boolean.TYPE)) {
-							clazz = boolean.class;
-						} else if (type.equals(Byte.TYPE)) {
-							clazz = byte.class;							
-						} else if (type.equals(Character.TYPE)) {
-							clazz = char.class;							
-						} else {
+//						if (type.equals(Integer.TYPE)) {
+//							clazz = int.class;
+//						} else if (type.equals(Long.TYPE)) {
+//							clazz = long.class;
+//						} else if (type.equals(Short.TYPE)) {
+//							clazz = short.class;
+//						} else if (type.equals(Float.TYPE)) {
+//							clazz = float.class;
+//						} else if (type.equals(Double.TYPE)) {
+//							clazz = double.class;
+//						} else if (type.equals(Boolean.TYPE)) {
+//							clazz = boolean.class;
+//						} else if (type.equals(Byte.TYPE)) {
+//							clazz = byte.class;							
+//						} else if (type.equals(Character.TYPE)) {
+//							clazz = char.class;							
+//						}
+					} else {
+						try {
+							clazz = Class.forName(type.getTypeName());
+						} catch (ClassNotFoundException e) {
 							e.printStackTrace();
 							throw new RuntimeException("Cannot find type " + e.getMessage());
 						}

@@ -66,12 +66,12 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 		
 		if (param.optional()) {
 			String defaultValue = param.defaultValue();
-			try {
+//			try {
 				this.defaultValue = (T) fromString(defaultValue, this.theClass);
-			} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-				e.printStackTrace();
-				throw new IllegalArgumentException(e.getMessage());
-			}
+//			} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+//				e.printStackTrace();
+//				throw new IllegalArgumentException(e.getMessage());
+//			}
 		}
 		
 	}

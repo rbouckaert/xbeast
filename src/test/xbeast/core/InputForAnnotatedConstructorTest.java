@@ -24,8 +24,14 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		
 		// test type
 		List<Input<?>> inputs = o.listInputs();
-		assertEquals(2, inputs.size());
-		Input<?> input = inputs.get(0).getName().equals("i") ? inputs.get(0) : inputs.get(1);		
+		assertEquals(3, inputs.size());
+		Input<?> input = null;
+		for (Input i : inputs) {
+			if (i.getName().equals("i")) {
+				input = i;
+				break;
+			}
+		}
 		assertEquals("int", input.getType().toGenericString());
 		
 		// test value
@@ -63,10 +69,24 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		assertEquals("two", o2.getE().toString());
 	}
 	
+	@Test
+	public void testArrayInput() {
+		double [] a = new double[] {1.0, 3.0};
+		PrimitiveBeastObject o3 = new PrimitiveBeastObject(a);
+		assertEquals(1.0, o3.getA()[0]);
+		assertEquals(3.0, o3.getA()[1]);
+		a[0] = 5; 
+		a[1] = 9;
+		assertEquals(1.0, o3.getA()[0]);
+		assertEquals(3.0, o3.getA()[1]);
+		o3.setA(a);
+		assertEquals(5.0, o3.getA()[0]);
+		assertEquals(9.0, o3.getA()[1]);
+	}
 	
 	@Test
 	public void testXML() throws XMLParserException {
-		String xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' i='3' e='two'/>";
+		String xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' e='two' i='3'/>";
 		String  xml2;
 		XMLParser parser = new XMLParser();
 		XMLProducer producer = new XMLProducer();
@@ -107,7 +127,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		JSONProducer producer = new JSONProducer();
 		String json2 = producer.toJSON(po);
 		json2 = json2.substring(json2.indexOf('[') + 1, json2.indexOf(']')).trim();
-		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", i: \"3\", e: \"two\" }", json2);
+		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"two\", i: \"3\" }", json2);
 		
 		json = "{id: testObject, spec: test.xbeast.core.PrimitiveBeastObject, i: 2}";
 		parser = new JSONParser();
