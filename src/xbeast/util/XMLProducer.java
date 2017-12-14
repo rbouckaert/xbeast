@@ -995,6 +995,18 @@ public class XMLProducer extends XMLParser {
                     }
                 }
                 return;
+            } else if (value.getClass().isArray()) {
+                if (isShort) {
+	            	StringBuilder buf2 = new StringBuilder();
+	            	buf2.append(" " + input.getName() + "=\"");
+	            	for (Object o : (Object []) value) {
+	            		buf2.append(o + " ");
+	            	}
+	            	buf2.deleteCharAt(buf2.length() - 1);
+	            	buf2.append("\"");
+	            	buf.append(buf2);
+                }
+            	return;
             } else if (value instanceof BEASTInterface) {
             	if (!value.equals(input.defaultValue)) {
                     if (isShort && isDone.contains(value)) {

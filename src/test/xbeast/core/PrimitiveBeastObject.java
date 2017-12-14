@@ -48,6 +48,9 @@ public class PrimitiveBeastObject extends BEASTObject {
 	}
 
 	public double[] getA() {
+		if (a == null) {
+			return null;
+		}
 		return a.clone();
 	}
 
