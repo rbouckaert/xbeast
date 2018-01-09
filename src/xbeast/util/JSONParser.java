@@ -1041,60 +1041,7 @@ public class JSONParser {
 		    			} else {
 		    				args[i] = getValue(param, types[i], inputInfo);
 	    					args[i] = Input.fromString(args[i], types[i]);
-	    					if (types[i].isArray() && types[i].getComponentType().isPrimitive()) {
-	    						// have to convert objects to primitives
-	    		            	Class componentType = types[i].getComponentType();
-	    		            	Object [] objectArray = (Object[]) args[i];
-    		            		if (componentType.equals(Integer.TYPE)) {
-    		            			int [] array = new int[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (int) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Long.TYPE)) {
-    		            			long [] array = new long[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (long) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Short.TYPE)) {
-    		            			short [] array = new short[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (short) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Float.TYPE)) {
-    		            			float [] array = new float[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (float) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Double.TYPE)) {
-    		            			double [] array = new double[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (double) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Boolean.TYPE)) {
-    		            			boolean [] array = new boolean[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (boolean) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Byte.TYPE)) {
-    		            			byte [] array = new byte[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (byte) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-    		                    } else if (componentType.equals(Character.TYPE)) {
-    		            			char [] array = new char[objectArray.length];
-    				            	for (int k = 0; k < array.length; k++) {
-    				            		array[k] = (char) objectArray[k];
-    				            	}
-    				            	args[i] = array;
-	    		            	}
-	    					}
+
 		    			}
 		    		}
 

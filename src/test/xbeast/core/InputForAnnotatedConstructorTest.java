@@ -90,6 +90,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 	
 	@Test
 	public void testXML() throws XMLParserException {
+
 		String xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' e='two' i='3'/>";
 		String  xml2;
 		XMLParser parser = new XMLParser();
@@ -99,6 +100,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		
 		o = parser.parseBareFragment(xml, false);
 		po = (PrimitiveBeastObject) o;
+
 		assertEquals(3, po.getI());
 		assertEquals(Enumeration.two, po.getE());
 		
@@ -113,6 +115,18 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		
 		po.setE(Enumeration.one);
 		xml2 = producer.toRawXML(po).trim();
+		assertEquals(xml, xml2);
+
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' a='1.0 15.0 17.0'/>";
+		o = parser.parseBareFragment(xml, false);
+		po = (PrimitiveBeastObject) o;
+		assertEquals(3, po.getA().length);
+		assertEquals(1.0, po.getA()[0]);
+		assertEquals(15.0, po.getA()[1]);
+		assertEquals(17.0, po.getA()[2]);
+
+		xml2 = producer.toRawXML(po).trim();
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' a=\"1.0 15.0 17.0\" e='none' i='0'/>";
 		assertEquals(xml, xml2);
 	}	
 	
