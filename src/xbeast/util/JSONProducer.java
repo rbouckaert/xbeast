@@ -338,49 +338,50 @@ public class JSONProducer {
             } else if (value.getClass().isArray()) {
                 if (!isShort) {
 	            	StringBuilder buf2 = new StringBuilder();
-	            	buf2.append(indent + " " + input.getName() + ": \"");
+	            	buf2.append(indent + " " + input.getName() + ": [");
 	            	Class type = value.getClass().getComponentType();
 	            	if (type.isPrimitive()) {
 	            		if (type.equals(Integer.TYPE)) {
 			            	for (int o : (int []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Long.TYPE)) {
 			            	for (long o : (long []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Short.TYPE)) {
 			            	for (short o : (short []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Float.TYPE)) {
 			            	for (float o : (float []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Double.TYPE)) {
 			            	for (double o : (double []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Boolean.TYPE)) {
 			            	for (boolean o : (boolean []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Byte.TYPE)) {
 			            	for (byte o : (byte []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 	                    } else if (type.equals(Character.TYPE)) {
 			            	for (char o : (char []) value) {
-			            		buf2.append(o + " ");
+			            		buf2.append(o + ", ");
 			            	}
 		            	}	            		
 	            	} else {
 		            	for (Object o : (Object []) value) {
-		            		buf2.append(o + " ");
+		            		buf2.append(o + ", ");
 		            	}
 	                }
 	            	buf2.deleteCharAt(buf2.length() - 1);
-	            	buf2.append("\"");
+	            	buf2.deleteCharAt(buf2.length() - 1);
+	            	buf2.append("]");
 	            	buf.append(buf2);
                 }
             	return;

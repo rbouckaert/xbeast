@@ -1025,7 +1025,8 @@ public class JSONParser {
 
 	    	Class<?>[] types  = ctor.getParameterTypes();
     		//Type[] gtypes = ctor.getGenericParameterTypes();
-	    	if (types.length > 0 && paramAnnotations.size() <= types.length + optionals) {
+	    	if (types.length > 0 && //paramAnnotations.size() == types.length &&
+	    			paramAnnotations.size() <= types.length + optionals) {
 		    	try {
 		    		Object [] args = new Object[types.length];
 		    		int offset = 0;
@@ -1185,6 +1186,8 @@ public class JSONParser {
 					// childElements++;
 				} else if (o instanceof JSONArray) {
 					JSONArray list = (JSONArray) o;
+					
+					List<Object> r = new ArrayList<>();
 					for (int i = 0; i < list.length(); i++) {
 						Object o2 = list.get(i);
 						if (o2 instanceof JSONObject) {
@@ -1192,14 +1195,15 @@ public class JSONParser {
 							String className = getClassName(child, name, inputs);
 							BEASTInterface childItem = createObject(child, className);
 							if (childItem != null) {
-								map.add(new NameValuePair(name, childItem));
+								r.add(childItem);
 								//setInput(node, parent, name, childItem);
 							}
 						} else {
-							map.add(new NameValuePair(name, o2));
+							r.add(o2);
 							//parent.setInputValue(name, o2);									
 						}
 					}
+					map.add(new NameValuePair(name, r));
 				} else {
 					throw new RuntimeException("Developer error: Don't know how to handle this JSON construction");
 				}

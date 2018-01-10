@@ -713,66 +713,8 @@ public class Input<T> {
 			} else if (type.isArray()) {
 				Class<?> componentType = type.getComponentType();				
 				List list = new ArrayList();
-				setStringValue(list, (String) arg, componentType);				
-				if (componentType.isPrimitive()) {
-					// have to convert objects to primitives
-	            	Object [] objectArray = (Object[]) list.toArray();
-            		if (componentType.equals(Integer.TYPE)) {
-            			int [] array = new int[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (int) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Long.TYPE)) {
-            			long [] array = new long[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (long) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Short.TYPE)) {
-            			short [] array = new short[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (short) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Float.TYPE)) {
-            			float [] array = new float[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (float) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Double.TYPE)) {
-            			double [] array = new double[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (double) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Boolean.TYPE)) {
-            			boolean [] array = new boolean[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (boolean) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Byte.TYPE)) {
-            			byte [] array = new byte[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (byte) objectArray[k];
-		            	}
-		            	return array;
-                    } else if (componentType.equals(Character.TYPE)) {
-            			char [] array = new char[objectArray.length];
-		            	for (int k = 0; k < array.length; k++) {
-		            		array[k] = (char) objectArray[k];
-		            	}
-		            	return array;
-	            	}
-				}
-				// convert list to array of type componentType
-				Object array = java.lang.reflect.Array.newInstance(componentType, list.size());
-				for (int i = 0; i < list.size(); i++) {
-					Array.set(array, i, list.get(i));
-				}
-				return array;
+				setStringValue(list, (String) arg, componentType);
+				arg = list;
 			} else if (type.getDeclaredConstructors().length > 0) {
 			    for (Constructor<?> argctor : type.getDeclaredConstructors()) {
 			    	Class<?>[] argtypes  = argctor.getParameterTypes();
@@ -815,6 +757,69 @@ public class Input<T> {
 			} else {
 				throw new IllegalArgumentException("cannot match value for c'tor");
 			}
+		}
+		if (type.isArray() && arg instanceof List) {
+			List list = (List) arg;
+			Class<?> componentType = type.getComponentType();				
+			if (componentType.isPrimitive()) {
+				// have to convert objects to primitives
+            	Object [] objectArray = (Object[]) list.toArray();
+        		if (componentType.equals(Integer.TYPE)) {
+        			int [] array = new int[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (int) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Long.TYPE)) {
+        			long [] array = new long[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (long) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Short.TYPE)) {
+        			short [] array = new short[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (short) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Float.TYPE)) {
+        			float [] array = new float[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (float) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Double.TYPE)) {
+        			double [] array = new double[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (double) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Boolean.TYPE)) {
+        			boolean [] array = new boolean[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (boolean) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Byte.TYPE)) {
+        			byte [] array = new byte[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (byte) objectArray[k];
+	            	}
+	            	return array;
+                } else if (componentType.equals(Character.TYPE)) {
+        			char [] array = new char[objectArray.length];
+	            	for (int k = 0; k < array.length; k++) {
+	            		array[k] = (char) objectArray[k];
+	            	}
+	            	return array;
+            	}
+			}
+			// convert list to array of type componentType
+			Object array = java.lang.reflect.Array.newInstance(componentType, list.size());
+			for (int i = 0; i < list.size(); i++) {
+				Array.set(array, i, list.get(i));
+			}
+			return array;
 		}
 		return arg;
 	}
