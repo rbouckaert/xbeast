@@ -1031,9 +1031,11 @@ public class JSONParser {
 		    		int offset = 0;
 		    		if (clazz.isMemberClass()) {
 						Class<?> enclosingClass = clazz.getEnclosingClass();
-						Object enclosingInstance = enclosingClass.newInstance();
-		    			args[0] = enclosingInstance;
-		    			offset = 1;
+						if (!enclosingClass.isInterface()) {
+							Object enclosingInstance = enclosingClass.newInstance();
+			    			args[0] = enclosingInstance;
+			    			offset = 1;
+						}
 		    		}
 		    		for (int i = offset; i < types.length; i++) {
 		    			Param param = paramAnnotations.get(i - offset);

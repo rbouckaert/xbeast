@@ -27,6 +27,7 @@ package xbeast.core;
 
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -766,7 +767,12 @@ public class Input<T> {
 		            	return array;
 	            	}
 				}
-				return list.toArray();
+				// convert list to array of type componentType
+				Object array = java.lang.reflect.Array.newInstance(componentType, list.size());
+				for (int i = 0; i < list.size(); i++) {
+					Array.set(array, i, list.get(i));
+				}
+				return array;
 			} else if (type.getDeclaredConstructors().length > 0) {
 			    for (Constructor<?> argctor : type.getDeclaredConstructors()) {
 			    	Class<?>[] argtypes  = argctor.getParameterTypes();

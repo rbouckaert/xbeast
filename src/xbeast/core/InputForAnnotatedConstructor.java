@@ -279,7 +279,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
         } catch (Exception e) {
             throw new IllegalArgumentException("Input 103: type mismatch, cannot initialize input '" + getName() +
                     "' with value '" + valueString + "'.\nExpected something of type " + getType().getName() +
-                    ". " + (e.getMessage() != null ? e.getMessage() : ""));
+                    ".\n" + (e.getMessage() != null ? e.getMessage() : ""));
         }
     } // setStringValue
 

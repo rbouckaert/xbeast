@@ -195,9 +195,13 @@ public class XMLParserUtils {
 			try {
 				if (clazz.isMemberClass()) {
 					Class<?> enclosingClass = clazz.getEnclosingClass();
-					Object enclosingInstance = enclosingClass.newInstance();
-					Constructor<?> ctor = clazz.getDeclaredConstructor(enclosingClass);
-					beastObject = (BEASTInterface) ctor.newInstance(enclosingInstance);
+					if (enclosingClass.isInterface()) {
+						beastObject = (BEASTInterface) clazz.newInstance();
+					} else {
+						Object enclosingInstance = enclosingClass.newInstance();
+						Constructor<?> ctor = clazz.getDeclaredConstructor(enclosingClass);
+						beastObject = (BEASTInterface) ctor.newInstance(enclosingInstance);
+					}
 				} else {
 					beastObject = (BEASTInterface) clazz.newInstance();
 				}

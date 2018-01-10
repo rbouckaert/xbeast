@@ -8,6 +8,7 @@ import org.junit.Test;
 import junit.framework.TestCase;
 import test.xbeast.core.PrimitiveBeastObject.Enumeration;
 import test.xbeast.core.PrimitiveBeastObject.InnerClass;
+import test.xbeast.core.PrimitiveInterface.InterfaceInnerClass;
 import xbeast.core.Input;
 import xbeast.util.JSONParser;
 import xbeast.util.JSONParserException;
@@ -25,7 +26,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		
 		// test type
 		List<Input<?>> inputs = o.listInputs();
-		assertEquals(3, inputs.size());
+		assertEquals(4, inputs.size());
 		Input<?> input = null;
 		for (Input i : inputs) {
 			if (i.getName().equals("i")) {
@@ -93,59 +94,103 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		InnerClass inner = new PrimitiveBeastObject().new InnerClass(a);
 		assertEquals(1.0, inner.getA()[0]);
 		assertEquals(3.0, inner.getA()[1]);	
-
-		JSONProducer producer = new JSONProducer();
-		String json2 = producer.toJSON(inner);
-		System.out.println(json2);
 	}
 	
-//	@Test
-//	public void testXML() throws XMLParserException {
-//
-//		String xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' e='two' i='3'/>";
-//		String  xml2;
-//		XMLParser parser = new XMLParser();
-//		XMLProducer producer = new XMLProducer();
-//		Object o;
-//		PrimitiveBeastObject po;
-//		
-//		o = parser.parseBareFragment(xml, false);
-//		po = (PrimitiveBeastObject) o;
-//
-//		assertEquals(3, po.getI());
-//		assertEquals(Enumeration.two, po.getE());
-//		
-//		xml2 = producer.toRawXML(po).trim();
-//		assertEquals(xml, xml2);
-//
-//		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' i='2'/>";
-//		o = parser.parseBareFragment(xml, false);
-//		po = (PrimitiveBeastObject) o;
-//		assertEquals(2, po.getI());
-//		assertEquals(Enumeration.one, po.getE());
-//		
-//		po.setE(Enumeration.one);
-//		xml2 = producer.toRawXML(po).trim();
-//		assertEquals(xml, xml2);
-//
-//		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' a='1.0 15.0 17.0'/>";
-//		o = parser.parseBareFragment(xml, false);
-//		po = (PrimitiveBeastObject) o;
-//		assertEquals(3, po.getA().length);
-//		assertEquals(1.0, po.getA()[0]);
-//		assertEquals(15.0, po.getA()[1]);
-//		assertEquals(17.0, po.getA()[2]);
-//
-//		xml2 = producer.toRawXML(po).trim();
-//		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' a=\"1.0 15.0 17.0\" e='none' i='0'/>";
-//		assertEquals(xml, xml2);
-//	}	
-//	
+	@Test
+	public void testInterfaceInnerClass() throws JSONException, XMLParserException {
+		InterfaceInnerClass inner = new PrimitiveInterface.InterfaceInnerClass(3);
+		assertEquals(3, inner.getI());
+
+	}
+
+	@Test
+	public void testXML() throws XMLParserException {
+
+		// test enum & int c'tor
+		String xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' e='two' i='3'/>";
+		String  xml2;
+		XMLParser parser = new XMLParser();
+		XMLProducer producer = new XMLProducer();
+		Object o;
+		PrimitiveBeastObject po;
+		
+		o = parser.parseBareFragment(xml, false);
+		po = (PrimitiveBeastObject) o;
+
+		assertEquals(3, po.getI());
+		assertEquals(Enumeration.two, po.getE());
+		
+		xml2 = producer.toRawXML(po).trim();
+		assertEquals(xml, xml2);
+
+		// test int c'tor and default value
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' i='2'/>";
+		o = parser.parseBareFragment(xml, false);
+		po = (PrimitiveBeastObject) o;
+		assertEquals(2, po.getI());
+		assertEquals(Enumeration.one, po.getE());
+		
+		po.setE(Enumeration.one);
+		xml2 = producer.toRawXML(po).trim();
+		assertEquals(xml, xml2);
+
+		// test primitive array c'tor
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' a='1.0 15.0 17.0'/>";
+		o = parser.parseBareFragment(xml, false);
+		po = (PrimitiveBeastObject) o;
+		assertEquals(3, po.getA().length);
+		assertEquals(1.0, po.getA()[0]);
+		assertEquals(15.0, po.getA()[1]);
+		assertEquals(17.0, po.getA()[2]);
+
+		xml2 = producer.toRawXML(po).trim();
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' a=\"1.0 15.0 17.0\" e='none' i='0'/>";
+		assertEquals(xml, xml2);
+
+
+		// test object array c'tor
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' b='1.0 15.0 17.0'/>";
+		o = parser.parseBareFragment(xml, false);
+		po = (PrimitiveBeastObject) o;
+		assertEquals(3, po.getB().length);
+		assertEquals(1.0, po.getB()[0]);
+		assertEquals(15.0, po.getB()[1]);
+		assertEquals(17.0, po.getB()[2]);
+
+		xml2 = producer.toRawXML(po).trim();
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject' b=\"1.0 15.0 17.0\" e='none' i='0'/>";
+		assertEquals(xml, xml2);
+		
+		// test inner class inside base class
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject$InnerClass' a='2.0 5.0 7.0'/>";
+		o = parser.parseBareFragment(xml, false);
+		po = (PrimitiveBeastObject) o;
+		assertEquals(3, po.getA().length);
+		assertEquals(2.0, po.getA()[0]);
+		assertEquals(5.0, po.getA()[1]);
+		assertEquals(7.0, po.getA()[2]);
+
+		xml2 = producer.toRawXML(po).trim();
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveBeastObject$InnerClass' a=\"2.0 5.0 7.0\" e='none' i='0'/>";
+		assertEquals(xml, xml2);
+
+		// test inner class inside interface 
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveInterface$InterfaceInnerClass' i='7'/>";
+		o = parser.parseBareFragment(xml, false);
+		InterfaceInnerClass iio = (InterfaceInnerClass) o;
+		assertEquals(7, iio.getI());
+
+		xml2 = producer.toRawXML(iio).trim();
+		xml = "<input id='testObject' spec='test.xbeast.core.PrimitiveInterface$InterfaceInnerClass' i='7'/>";
+		assertEquals(xml, xml2);
+	}	
+	
 	@Test
 	public void testJSON() throws JSONParserException, JSONException {
 		List<Object> o;
 		PrimitiveBeastObject po = null;
 		
+		// test c'tor with primitive int and enum
 		String json = "{id: testObject, spec: test.xbeast.core.PrimitiveBeastObject, i: 3, e: two }";
 		JSONParser parser = new JSONParser();
 		o = parser.parseBareFragment(json, false);
@@ -158,6 +203,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		json2 = json2.substring(json2.indexOf('[') + 1, json2.indexOf(']')).trim();
 		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"two\", i: \"3\" }", json2);
 		
+		// test int c'tor and default value
 		json = "{id: testObject, spec: test.xbeast.core.PrimitiveBeastObject, i: 2}";
 		parser = new JSONParser();
 		o = parser.parseBareFragment(json, false);
@@ -170,6 +216,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", i: \"2\" }", json2);
 
 	
+		// test array of primitive values
 		json = "{id: testObject, spec: test.xbeast.core.PrimitiveBeastObject, a: \"1.0 15.0 17.0\"}";
 		parser = new JSONParser();
 		o = parser.parseBareFragment(json, false);
@@ -183,6 +230,21 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		json2 = json2.substring(json2.indexOf('[') + 1, json2.indexOf(']')).trim();
 		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", a: \"1.0 15.0 17.0\" }", json2);
 
+		// test array of object values
+		json = "{id: testObject, spec: test.xbeast.core.PrimitiveBeastObject, b: \"1.0 15.0 17.0\"}";
+		parser = new JSONParser();
+		o = parser.parseBareFragment(json, false);
+		po = (PrimitiveBeastObject) o.get(0);
+		assertEquals(3, po.getB().length);
+		assertEquals(1.0, po.getB()[0]);
+		assertEquals(15.0, po.getB()[1]);
+		assertEquals(17.0, po.getB()[2]);
+
+		json2 = producer.toJSON(po);
+		json2 = json2.substring(json2.indexOf('[') + 1, json2.indexOf(']')).trim();
+		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", b: \"1.0 15.0 17.0\" }", json2);
+
+		// test inner class inside base class
 		InnerClass io = null;
 		json = "{spec: \"test.xbeast.core.PrimitiveBeastObject$InnerClass\", a: \"1.0 3.0\" }";
 		parser = new JSONParser();
@@ -194,5 +256,15 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		json2 = json2.substring(json2.indexOf('[') + 1, json2.indexOf(']')).trim();
 		assertEquals("{spec: \"test.xbeast.core.PrimitiveBeastObject$InnerClass\", e: \"none\", i: \"0\", a: \"1.0 3.0\" }", json2);
 
+		// test inner class inside interface
+		InterfaceInnerClass iio = null;
+		json = "{spec: \"test.xbeast.core.PrimitiveInterface$InterfaceInnerClass\", i: 5 }";
+		parser = new JSONParser();
+		o = parser.parseBareFragment(json, false);
+		iio = (InterfaceInnerClass) o.get(0);
+		assertEquals(5, iio.getI());
+		json2 = producer.toJSON(iio);
+		json2 = json2.substring(json2.indexOf('[') + 1, json2.indexOf(']')).trim();
+		assertEquals("{spec: \"test.xbeast.core.PrimitiveInterface$InterfaceInnerClass\", i: \"5\" }", json2);
 	}	
 }

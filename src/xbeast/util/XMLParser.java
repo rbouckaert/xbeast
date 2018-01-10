@@ -870,8 +870,17 @@ public class XMLParser {
 	    	if (types.length > 0 && paramAnnotations.size() <= types.length + optionals) {
 		    	try {
 		    		Object [] args = new Object[types.length];
-		    		for (int i = 0; i < types.length; i++) {
-		    			Param param = paramAnnotations.get(i);
+		    		int offset = 0;
+		    		if (clazz.isMemberClass()) {
+						Class<?> enclosingClass = clazz.getEnclosingClass();
+						if (!enclosingClass.isInterface()) {
+							Object enclosingInstance = enclosingClass.newInstance();
+			    			args[0] = enclosingInstance;
+			    			offset = 1;
+						}
+		    		}
+		    		for (int i = offset; i < types.length; i++) {
+		    			Param param = paramAnnotations.get(i - offset);
 		    			Type type = types[i];
 		    			if (type.getTypeName().equals("java.util.List")) {
 		    				if (args[i] == null) {
@@ -882,11 +891,8 @@ public class XMLParser {
 		    				((List)args[i]).addAll(values);
 		    			} else {
 		    				args[i] = getValue(param, types[i], inputInfo);
-		    				//try {
-		    					args[i] = Input.fromString(args[i], types[i]);
-		    				//} catch (InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
-		    				//	throw new XMLParserException(node, e.getMessage(), 1015);
-		    				//}
+	    					args[i] = Input.fromString(args[i], types[i]);
+
 		    			}
 		    		}
 

@@ -11,6 +11,7 @@ public class PrimitiveBeastObject extends BEASTObject {
 	private int i;
 	private Enumeration e = Enumeration.none;
 	double [] a = null;
+	Double [] b = null;
 
 	public PrimitiveBeastObject() {
 	}
@@ -26,8 +27,12 @@ public class PrimitiveBeastObject extends BEASTObject {
 		this(0, e);
 	}
 
-	public PrimitiveBeastObject(@Param(name="a", description="input of primitive type") double [] a) {
+	public PrimitiveBeastObject(@Param(name="a", description="input of array of primitive type") double [] a) {
 		this.a = a.clone();
+	}
+
+	public PrimitiveBeastObject(@Param(name="b", description="input of array of objects") Double [] b) {
+		this.b = b.clone();
 	}
 
 	@Override
@@ -58,6 +63,16 @@ public class PrimitiveBeastObject extends BEASTObject {
 		this.a = a.clone();
 	}
 
+	public Double[] getB() {
+		if (b == null) {
+			return null;
+		}
+		return b.clone();
+	}
+
+	public void setB(Double[] b) {
+		this.b = b.clone();
+	}
 	
 	public class InnerClass extends PrimitiveBeastObject {
 
