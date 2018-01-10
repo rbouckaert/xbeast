@@ -1028,8 +1028,15 @@ public class JSONParser {
 	    	if (types.length > 0 && paramAnnotations.size() <= types.length + optionals) {
 		    	try {
 		    		Object [] args = new Object[types.length];
-		    		for (int i = 0; i < types.length; i++) {
-		    			Param param = paramAnnotations.get(i);
+		    		int offset = 0;
+		    		if (clazz.isMemberClass()) {
+						Class<?> enclosingClass = clazz.getEnclosingClass();
+						Object enclosingInstance = enclosingClass.newInstance();
+		    			args[0] = enclosingInstance;
+		    			offset = 1;
+		    		}
+		    		for (int i = offset; i < types.length; i++) {
+		    			Param param = paramAnnotations.get(i - offset);
 		    			Type type = types[i];
 		    			if (type.getTypeName().equals("java.util.List")) {
 		    				if (args[i] == null) {
@@ -1044,6 +1051,7 @@ public class JSONParser {
 
 		    			}
 		    		}
+			    		
 
 		    		// ensure all inputs are used
 		    		boolean allUsed = true;

@@ -58,4 +58,22 @@ public class PrimitiveBeastObject extends BEASTObject {
 		this.a = a.clone();
 	}
 
+	
+	public class InnerClass extends PrimitiveBeastObject {
+
+		public InnerClass() {}
+		
+		public InnerClass(@Param(name="i", description="input of primitive type") int i,
+				@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
+			super(i, e);
+		}
+
+		public InnerClass(@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
+			this(0, e);
+		}
+
+		public InnerClass(@Param(name="a", description="input of primitive type") double[] a) {
+			super(a);
+		}
+	}
 }
