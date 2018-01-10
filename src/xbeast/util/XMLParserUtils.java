@@ -3,6 +3,7 @@ package xbeast.util;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -192,10 +193,20 @@ public class XMLParserUtils {
 		List<InputType> inputTypes = new ArrayList<>();
 		if (beastObject == null) {
 			try {
-				beastObject = (BEASTInterface) clazz.newInstance();
+				if (clazz.isMemberClass()) {
+					Class<?> enclosingClass = clazz.getEnclosingClass();
+					Object enclosingInstance = enclosingClass.newInstance();
+					Constructor<?> ctor = clazz.getDeclaredConstructor(enclosingClass);
+					beastObject = (BEASTInterface) ctor.newInstance(enclosingInstance);
+				} else {
+					beastObject = (BEASTInterface) clazz.newInstance();
+				}
 			} catch (InstantiationException e) {
 			// this can happen if there is no constructor without arguments, 
 			// e.g. when there are annotated constructors only
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		List<Input<?>> inputs = beastObject.listInputs();
