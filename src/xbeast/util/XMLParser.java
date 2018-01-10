@@ -867,16 +867,16 @@ public class XMLParser {
 
 	    	Class<?>[] types  = ctor.getParameterTypes();
     		//Type[] gtypes = ctor.getGenericParameterTypes();
-	    	if (types.length > 0 && paramAnnotations.size() <= types.length + optionals) {
+    		int offset = clazz.isMemberClass() && !clazz.getEnclosingClass().isInterface() ? 1 : 0;
+	    	if (types.length > 0 && paramAnnotations.size() == types.length - offset &&
+	    			paramAnnotations.size() <= types.length + optionals) {
 		    	try {
 		    		Object [] args = new Object[types.length];
-		    		int offset = 0;
 		    		if (clazz.isMemberClass()) {
 						Class<?> enclosingClass = clazz.getEnclosingClass();
 						if (!enclosingClass.isInterface()) {
 							Object enclosingInstance = enclosingClass.newInstance();
 			    			args[0] = enclosingInstance;
-			    			offset = 1;
 						}
 		    		}
 		    		for (int i = offset; i < types.length; i++) {

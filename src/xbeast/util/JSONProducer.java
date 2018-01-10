@@ -211,6 +211,7 @@ public class JSONProducer {
             // process inputs of this beastObject
             // first, collect values as attributes
             List<Input<?>> inputs = beastObject.listInputs();
+            Collections.sort(inputs, (a,b) -> {return a.getName().compareTo(b.getName());});
             //List<InputType> inputs = XMLParserUtils.listInputs(beastObject.getClass(), beastObject);
             for (Input<?> input : inputs) {
             	StringBuffer buf2 = new StringBuffer();

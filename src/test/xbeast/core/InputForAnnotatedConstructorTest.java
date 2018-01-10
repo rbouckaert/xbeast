@@ -120,7 +120,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		JSONProducer producer = new JSONProducer();
         String json2 = producer.toJSON(po);
 		json2 = json2.substring(json2.indexOf('[') + 1, json2.lastIndexOf(']')).trim();
-		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", i: \"0\", e: \"none\", s: [John, Peter] }", json2);
+		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", s: [John, Peter] }", json2);
 
 	}
 	
@@ -264,7 +264,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		json2 = producer.toJSON(po);
 		json2 = json2.substring(json2.indexOf('[') + 1, json2.lastIndexOf(']')).trim();
 		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", b: [1.0, 15.0, 17.0] }", json2);
-
+		
 		// test inner class inside base class
 		InnerClass io = null;
 		json = "{spec: \"test.xbeast.core.PrimitiveBeastObject$InnerClass\", a: [1.0, 3.0] }";

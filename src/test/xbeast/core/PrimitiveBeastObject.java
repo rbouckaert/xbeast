@@ -17,6 +17,16 @@ public class PrimitiveBeastObject extends BEASTObject {
 	public PrimitiveBeastObject() {
 	}
 	
+	// add un-annotated c'tor to confuse JSON/XML parsers
+	public PrimitiveBeastObject(int i, Enumeration e, double [] a, Double [] b, String [] s) {
+		setI(i);
+		setE(e);
+		setA(a);
+		setB(b);
+		setS(s);
+	}
+
+	
 	public PrimitiveBeastObject(@Param(name="i", description="input of primitive type") int i,
 			@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
 		this.i = i;

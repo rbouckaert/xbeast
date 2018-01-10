@@ -880,6 +880,7 @@ public class XMLProducer extends XMLParser {
             // process inputs of this beast object
             // first, collect values as attributes
             List<Input<?>> inputs = beastObject.listInputs();
+            Collections.sort(inputs, (a,b) -> {return a.getName().compareTo(b.getName());});
             for (Input<?> input : inputs) {
             	Object value = input.get();
                 inputToXML(input, value, beastObject, buf, true);
