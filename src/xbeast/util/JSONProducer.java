@@ -376,13 +376,23 @@ public class JSONProducer {
 			            	}
 		            	}	            		
 	            	} else {
-		            	for (Object o : (Object []) value) {
-		            		buf2.append(o + ", ");
-		            	}
+	                    for (Object o2 : (Object []) value) {
+	                    	StringBuffer buf3 = new StringBuffer();
+	                    	if (o2 instanceof BEASTInterface) {
+	                    		beastObjectToJSON((BEASTInterface) o2, input.getType(), buf3, null, false);
+		                        buf2.append("\n" + buf3 + ", ");
+	                    	} else {
+	                    		buf2.append(o2.toString() + ", ");
+	                    	}
+	                    }
 	                }
 	            	buf2.deleteCharAt(buf2.length() - 1);
 	            	buf2.deleteCharAt(buf2.length() - 1);
-	            	buf2.append("]");
+	            	if (BEASTInterface.class.isAssignableFrom(type)) {
+                    	buf2.append("\n" + indent + "    ]");
+	            	} else {
+	            		buf2.append("]");
+	            	}
 	            	buf.append(buf2);
                 }
             	return;

@@ -47,6 +47,10 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import xbeast.core.BEASTInterface;
 import xbeast.core.Input;
@@ -1123,35 +1127,45 @@ public class JSONParser {
 		List<NameValuePair> inputInfo = new ArrayList<>();
 
 		if (node.keySet() != null) {
-			try {
-				// parse inputs in occurrence of inputs in the parent object
-				// this determines the order in which initAndValidate is called
-				List<InputType> inputs = XMLParserUtils.listInputs(Class.forName(className), null);
-				Set<String> done = new HashSet<>();
-				for (InputType input : inputs) {
-					String name = input.name;
-					processInput(name, node, inputInfo, inputs);
-					done.add(name);
+//			try {
+//				// parse inputs in occurrence of inputs in the parent object
+//				// this determines the order in which initAndValidate is called
+//				List<InputType> inputs = XMLParserUtils.listInputs(Class.forName(className), null);
+//				Set<String> done = new HashSet<>();
+//				for (InputType input : inputs) {
+//					String name = input.name;
+//					processInput(name, node, inputInfo, inputs);
+//					done.add(name);
+//				}
+//				
+//				for (String name : node.keySet()) {
+//					if (!done.contains(name)) {
+//						// this can happen with Maps
+//						processInput(name, node, inputInfo, inputs);
+//					}
+//				}
+//			} catch (JSONParserException e) {
+//				throw e;
+//			} catch (Exception e) {
+//				throw new JSONParserException(node, e.getMessage(), 1005);
+//			}
+
+   		    // first, process attributes
+			for (String name : node.keySet()) {
+				try {
+					processInput(name, node, inputInfo);
+				} catch (JSONException e) {
+					throw new JSONParserException(node, e.getMessage(), 1005);
 				}
-				
-				for (String name : node.keySet()) {
-					if (!done.contains(name)) {
-						// this can happen with Maps
-						processInput(name, node, inputInfo, inputs);
-					}
-				}
-			} catch (JSONParserException e) {
-				throw e;
-			} catch (Exception e) {
-				throw new JSONParserException(node, e.getMessage(), 1005);
-			}
+            }
 		}
+
 		
 		return inputInfo;
 	} // parseInputs
 
 	
-	private void processInput(String name, JSONObject node, List<NameValuePair> map, List<InputType> inputs) throws JSONParserException, JSONException {
+	private void processInput(String name, JSONObject node, List<NameValuePair> map) /*, List<InputType> inputs)*/ throws JSONParserException, JSONException {
 		if (node.has(name)) {
 			if (!(name.equals("id") || name.equals("idref") || name.equals("spec") || name.equals("name"))) {
 				Object o = node.get(name);
@@ -1176,7 +1190,7 @@ public class JSONParser {
 					//parent.setInputValue(name, o);
 				} else if (o instanceof JSONObject) {
 					JSONObject child = (JSONObject) o;
-					String className = getClassName(child, name, inputs);
+					String className = getClassName(child, name);//, inputs);
 					BEASTInterface childItem = createObject(child, className);
 					if (childItem != null) {
 						map.add(new NameValuePair(name, childItem));
@@ -1191,7 +1205,7 @@ public class JSONParser {
 						Object o2 = list.get(i);
 						if (o2 instanceof JSONObject) {
 							JSONObject child = (JSONObject) o2;
-							String className = getClassName(child, name, inputs);
+							String className = getClassName(child, name);//, inputs);
 							BEASTInterface childItem = createObject(child, className);
 							if (childItem != null) {
 								r.add(childItem);
@@ -1333,26 +1347,12 @@ public class JSONParser {
 		return className;
 	}
 
-	private String getClassName(JSONObject child, String name, List<InputType> inputs) {
+	private String getClassName(JSONObject child, String name) { //, List<InputType> inputs) {
 		String className = getAttribute(child, "spec");
-		if (className == null) {
-			// derive type from Input
-			for (InputType input : inputs) {
-				if (input.name.equals(name)) {
-					Class<?> type = input.type;
-					if (type == null) {
-						throw new RuntimeException("Programmer error: inputs should have their type set");
-					}
-					//if (type.isAssignableFrom(List.class)) {
-					//	System.err.println("XX");
-					//}
-					className = type.getName();
-				}
-			}
-		}
 		if (element2ClassMap.containsKey(className)) {
 			className = element2ClassMap.get(className);
 		}
+		className = XMLParserUtils.resolveClass(className, nameSpaces);
 		return className;
 	}
 

@@ -26,7 +26,7 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		
 		// test type
 		List<Input<?>> inputs = o.listInputs();
-		assertEquals(5, inputs.size());
+		assertEquals(7, inputs.size());
 		Input<?> input = null;
 		for (Input i : inputs) {
 			if (i.getName().equals("i")) {
@@ -123,6 +123,47 @@ public class InputForAnnotatedConstructorTest extends TestCase {
 		assertEquals("{id: \"testObject\", spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", s: [John, Peter] }", json2);
 
 	}
+	
+	@Test
+	public void testBEASTObjectInput() throws JSONException, XMLParserException {
+		double [] a = new double[] {1.0, 3.0};
+		PrimitiveBeastObject inner0 = new PrimitiveBeastObject(a);
+		a = new double[] {3.0, 4.0};
+		PrimitiveBeastObject inner1 = new PrimitiveBeastObject(a);
+		PrimitiveBeastObject [] array = new PrimitiveBeastObject[]{inner0, inner1};
+
+		// can we create the object?
+		PrimitiveBeastObject pi3 = new PrimitiveBeastObject(array);
+		
+		// can we produce String json?
+		String json = "{spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\",\n" + 
+		"	 p: [\n" + 
+		"		 {spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", a: [1.0, 3.0] }, \n" +  
+		"		 {spec: \"test.xbeast.core.PrimitiveBeastObject\", e: \"none\", i: \"0\", a: [3.0, 4.0] }\n" + 
+		"	    ]\n" + 
+		"	}";
+		JSONProducer producer = new JSONProducer();
+        String json2 = producer.toJSON(pi3);
+		json2 = json2.substring(json2.indexOf('[') + 1, json2.lastIndexOf(']')).trim();
+        System.out.println(json2);
+        assertEquals(json, json2);
+
+		
+		String json3 = "{spec: \"test.xbeast.core.PrimitiveBeastObject\",\n" + 
+		"	 p: [\n" + 
+		"		 {spec: \"test.xbeast.core.PrimitiveBeastObject\", a: [1.0, 3.0] }, \n" +  
+		"		 {spec: \"test.xbeast.core.PrimitiveBeastObject\", a: [3.0, 4.0] }\n" + 
+		"	    ]\n" + 
+		"	}";
+        // can we parse String json?
+		JSONParser parser = new JSONParser();
+		List<Object> o = parser.parseBareFragment(json3, false);
+		pi3 = (PrimitiveBeastObject) o.get(0);		
+        json2 = producer.toJSON(pi3);
+		json2 = json2.substring(json2.indexOf('[') + 1, json2.lastIndexOf(']')).trim();
+        assertEquals(json, json2);
+	}
+
 	
 	@Test
 	public void testXML() throws XMLParserException {

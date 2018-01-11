@@ -683,7 +683,7 @@ public class XMLParser {
         
 		String clazzName = null;
 		// determine clazzName from specName, taking name spaces in account
-		clazzName = resolveClass(specClass);
+		clazzName = XMLParserUtils.resolveClass(specClass, nameSpaces);
 		if (clazzName == null) {
 			// try to create the old-fashioned way by creating the class
             boolean isDone = false;
@@ -1016,7 +1016,7 @@ public class XMLParser {
                 }                
                 String classname = null;
         		// determine clazzName from specName, taking name spaces in account
-                classname = resolveClass(specClass);
+                classname = XMLParserUtils.resolveClass(specClass, nameSpaces);
         		if (classname == null) {
         			classname = specClass;
         		}
@@ -1072,25 +1072,7 @@ public class XMLParser {
         return inputInfo;
     } // setInputs
     
-    private String resolveClass(String specClass) {
-		for (String nameSpace : nameSpaces) {
-			if (XMLParserUtils.beastObjectNames.contains(nameSpace + specClass)) {
-				String clazzName = nameSpace + specClass;
-				return clazzName;
-			}
-		}
-		for (String nameSpace : nameSpaces) {
-            try {
-				if (Class.forName(nameSpace + specClass) != null) {
-					String clazzName = nameSpace + specClass;
-					return clazzName;
-				}
-			} catch (ClassNotFoundException e) {
-				// ignore
-			}
-		}
-		return null;
-	}
+    
 
     void setInput(final Node node, final BEASTInterface beastObject, final String name, final BEASTInterface beastObject2) throws XMLParserException {
         try {

@@ -329,7 +329,7 @@ public interface BEASTInterface {
 	                			throw new RuntimeException("Programmer error: multiple inputs with name " + input.getName() + "  found (perhaps in sub and super classes)\n"
 	                					+ "Classes should have unique input names");	            				
 	            			}
-	            			if (!(input.defaultValue != null && input.defaultValue.toString().equals(t.defaultValue.toString())) ||
+	            			if ((input.defaultValue != null && !input.defaultValue.toString().equals(t.defaultValue.toString())) ||
 	            				!input.getTipText().equals(t.getTipText())) {
 	            				throw new RuntimeException("Programmer error: @Param inputs with same name should be equal to previously used annotations");
 	            			}

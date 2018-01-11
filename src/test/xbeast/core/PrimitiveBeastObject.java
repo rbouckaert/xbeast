@@ -1,11 +1,12 @@
 package test.xbeast.core;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Param;
+
+import xbeast.core.*;
 
 @Description("Class to test the behaviour of primitive inputs")
 public class PrimitiveBeastObject extends BEASTObject {
+	public Input<Boolean> input = new Input<>("plaininput", "classic BEAST2 style input for testing listing inputs", true);
+	
 	public enum Enumeration {none, one, two};
 	
 	private int i;
@@ -13,7 +14,8 @@ public class PrimitiveBeastObject extends BEASTObject {
 	double [] a = null;
 	Double [] b = null;
 	String [] s = null;
-
+	PrimitiveBeastObject [] p = null;
+	
 	public PrimitiveBeastObject() {
 	}
 	
@@ -33,21 +35,32 @@ public class PrimitiveBeastObject extends BEASTObject {
 		this.e = e;
 	}
 
+	public PrimitiveBeastObject(@Param(name="i", description="input of primitive type") int i,
+			@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e,
+			@Param(name="a", description="input of array of primitive type") double [] a) {
+		this.i = i;
+		this.e = e;
+		setA(a);
+	}
 
 	public PrimitiveBeastObject(@Param(name="e", description="input of primitive type", optional=true, defaultValue="one") Enumeration e) {
 		this(0, e);
 	}
 
 	public PrimitiveBeastObject(@Param(name="a", description="input of array of primitive type") double [] a) {
-		this.a = a.clone();
+		setA(a);
 	}
 
 	public PrimitiveBeastObject(@Param(name="b", description="input of array of objects") Double [] b) {
-		this.b = b.clone();
+		setB(b);
 	}
 
 	public PrimitiveBeastObject(@Param(name="s", description="input of array of string objects") String [] s) {
-		this.s = s.clone();
+		setS(s);
+	}
+
+	public PrimitiveBeastObject(@Param(name="p", description="input of array of BEAST objects") PrimitiveBeastObject [] p) {
+		setP(p);
 	}
 
 	@Override
@@ -60,11 +73,23 @@ public class PrimitiveBeastObject extends BEASTObject {
 	public void setI(int i) {
 		this.i = i;
 	}
+
 	public Enumeration getE() {
 		return e;
 	}
 	public void setE(Enumeration e) {
 		this.e = e;
+	}
+	
+	public PrimitiveBeastObject [] getP() {
+		if (p == null) {
+			return null;
+		}
+		return p.clone();
+	}
+	
+	public void setP(PrimitiveBeastObject [] p) {
+		this.p = p.clone();
 	}
 
 	public double[] getA() {
