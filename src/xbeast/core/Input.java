@@ -708,8 +708,17 @@ public class Input<T> {
 		// deal with the case where the Input type has a String constructor
 		// and the args[i] is a String -- we need to invoke the String constructor 
 		if (arg instanceof String && type != String.class) {
-			if (type.isEnum()) {		    						
-				arg = Enum.valueOf((Class<Enum>) type, arg.toString());
+			if (type.isEnum()) {
+				try {
+					arg = Enum.valueOf((Class<Enum>) type, arg.toString());
+				} catch (IllegalArgumentException e) {
+					Object[] possibleValues = type.getEnumConstants();
+					for (Object o :possibleValues) {
+						if (o.toString().equals(arg.toString())) {
+							return o;
+						}
+					}
+				}
 			} else if (type.isArray()) {
 				Class<?> componentType = type.getComponentType();				
 				List list = new ArrayList();

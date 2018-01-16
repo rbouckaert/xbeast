@@ -160,7 +160,6 @@ public class JSONParser {
 		
 		IDMap = new HashMap<>();
 		likelihoodMap = new HashMap<>();
-		IDNodeMap = new HashMap<>();
 
 		parse();
 		// assert m_runnable == null || m_runnable instanceof Runnable;
@@ -410,9 +409,6 @@ public class JSONParser {
 	} // unrollPlate
 	
     public List<Object> parseBareFragment(String json, final boolean initialise) throws JSONParserException, JSONException {
-		IDMap = new HashMap<>();
-		likelihoodMap = new HashMap<>();
-		IDNodeMap = new HashMap<>();
     	json = "{version:'2.0',beast:[" + json + "]}";
     	return parseFragment(json, initialise);
     }
@@ -421,7 +417,10 @@ public class JSONParser {
 	 * Parse an JSON fragment representing a list of BEASTObjects
 	 */
     public List<Object> parseFragment(final String json, final boolean initialise) throws JSONParserException, JSONException {
-        this.initialise = initialise;
+		IDMap = new HashMap<>();
+		likelihoodMap = new HashMap<>();
+
+		this.initialise = initialise;
 		doc = new JSONObject(json);
 
 		// find top level beast element
@@ -552,6 +551,9 @@ public class JSONParser {
 	 * @throws JSONParserException
 	 */
 	void initIDNodeMap(JSONObject node) throws JSONParserException {
+		if (IDNodeMap == null) {
+			IDNodeMap = new HashMap<>();
+		}
 		String ID = getID(node);
 		if (ID != null) {
 			if (IDNodeMap.containsKey(ID)) {

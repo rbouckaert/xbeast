@@ -199,12 +199,12 @@ public class JSONProducer {
         String className = beastObject.getClass().getName();
         if (skipInputs == false) {
             // only add spec element if it cannot be deduced otherwise (i.e., by idref)
-        	if (defaultType != null && !defaultType.getName().equals(className)) {
+        	//if (defaultType != null && !defaultType.getName().equals(className)) {
 	        	buf.append((needsComma == true) ? ",\n" + indent + " " : ""); 
 	            //buf.append("\"spec\": \"" + className + "\"");
 	            buf.append("spec: \"" + className + "\"");
 	            needsComma = true;
-        	}
+        	//}
         }
 
         if (!skipInputs) {
