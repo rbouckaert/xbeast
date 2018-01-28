@@ -397,7 +397,7 @@ public class JSONProducer {
                 }
             	return;
             } else if (value instanceof BEASTInterface) {
-            	if (!value.equals(input.defaultValue)) {
+            	if (input.defaultValue == null || !value.equals(input.defaultValue)) {
             		
             		// Parameters can use short hand notation if they are not in the state 
             		// Note this means lower and upper bounds are lost -- no problem for BEAST, but maybe for BEAUti

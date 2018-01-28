@@ -95,6 +95,8 @@ abstract public class BEASTObject implements BEASTInterface{
         return this.getClass().getSimpleName().toLowerCase();
     }
     
-    
+	@Override
+	public void initAndValidate() {
+	}
     
 } // class BEASTObject
