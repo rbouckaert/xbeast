@@ -307,7 +307,7 @@ public class TreeSetParser {
 	private double lengthToHeight(Node node, double offSet) {
 		if (node.isLeaf()) {
 			node.setHeight(-offSet - node.getHeight());
-			node.setID(m_sLabels.get(node.getNr()));
+			node.setId(m_sLabels.get(node.getNr()));
 			return -node.getHeight();
 		} else {
 			double posY = offSet + node.getHeight();

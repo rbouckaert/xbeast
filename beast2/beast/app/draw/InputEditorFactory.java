@@ -233,7 +233,7 @@ public class InputEditorFactory {
                     if (o instanceof ArrayList) {
                         for (Object o2 : (ArrayList<?>) o) {
                             if (o2 instanceof BEASTInterface) {
-                                String id = ((BEASTInterface) o2).getID();
+                                String id = ((BEASTInterface) o2).getId();
                                 if (!ListInputEditor.g_initiallyCollapsedIDs.contains(id)) {
                                     ListInputEditor.g_initiallyCollapsedIDs.add(id);
                                     ListInputEditor.g_collapsedIDs.add(id);
@@ -241,7 +241,7 @@ public class InputEditorFactory {
                             }
                         }
                     } else if (o instanceof BEASTInterface) {
-                        String id = ((BEASTInterface) o).getID();
+                        String id = ((BEASTInterface) o).getId();
                         if (!ListInputEditor.g_initiallyCollapsedIDs.contains(id)) {
                             ListInputEditor.g_initiallyCollapsedIDs.add(id);
                             ListInputEditor.g_collapsedIDs.add(id);
@@ -283,7 +283,7 @@ public class InputEditorFactory {
         }
         if (!doc.isExpertMode()) {
             for (BEASTInterface beastObject : BEASTObjectPanel.listAscendants(parent, doc.pluginmap.values())) {
-                tabuList.add(beastObject.getID());
+                tabuList.add(beastObject.getId());
             }
         }
         //System.err.println(tabuList);
@@ -295,7 +295,7 @@ public class InputEditorFactory {
                 boolean isTabu = false;
                 if (tabuList != null) {
                     for (String tabu : tabuList) {
-                        if (tabu.equals(beastObject.getID())) {
+                        if (tabu.equals(beastObject.getId())) {
                             isTabu = true;
                         }
                     }
@@ -303,7 +303,7 @@ public class InputEditorFactory {
                 if (!isTabu) {
                     try {
                         if (input.canSetValue(beastObject, parent)) {
-                            beastObjectNames.add(beastObject.getID());
+                            beastObjectNames.add(beastObject.getId());
                         }
                     } catch (Exception e) {
                         // ignore

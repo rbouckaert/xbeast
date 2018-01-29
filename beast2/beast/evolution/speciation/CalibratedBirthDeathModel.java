@@ -351,7 +351,7 @@ public class CalibratedBirthDeathModel extends SpeciesTreeDistribution {
 
             final List<Node> sbs = new ArrayList<>();
             for (final int i : freeTaxa) {
-                final Node n = new Node(tree.getNode(i).getID());
+                final Node n = new Node(tree.getNode(i).getId());
                 n.setNr(++curLeaf);
                 n.setHeight(0.0);
                 sbs.add(n);
@@ -384,7 +384,7 @@ public class CalibratedBirthDeathModel extends SpeciesTreeDistribution {
 
         for (int k = 0; k < used.length; ++k) {
             if (!used[k]) {
-                final String tx = tree.getNode(k).getID();
+                final String tx = tree.getNode(k).getId();
                 final Node n = new Node(tx);
                 n.setHeight(0.0);
                 n.setNr(++curLeaf);
@@ -947,7 +947,7 @@ public class CalibratedBirthDeathModel extends SpeciesTreeDistribution {
     public static int getTaxonIndex(final TreeInterface tree, final String taxon) {
         for (int i = 0; i < tree.getNodeCount(); i++) {
             final Node node = tree.getNode(i);
-            if (node.isLeaf() && node.getID().equals(taxon)) {
+            if (node.isLeaf() && node.getId().equals(taxon)) {
                 return i;
             }
         }
@@ -996,10 +996,10 @@ public class CalibratedBirthDeathModel extends SpeciesTreeDistribution {
 
     @Override
     public void init(final PrintStream out) {
-        out.print(getID() + "\t");
+        out.print(getId() + "\t");
         if (calcCalibrations) {
             for (final CalibrationPoint cp : orderedCalibrations) {
-                out.print(cp.getID() + "\t");
+                out.print(cp.getId() + "\t");
             }
         }
     }

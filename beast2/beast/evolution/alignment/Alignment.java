@@ -383,7 +383,7 @@ public class Alignment extends Map<String> {
             if (from != excludefromInput.defaultValue || to != excludetoInput.defaultValue) {
             	Log.warning.println("WARNING: excludefrom or excludeto is specified, but 'ascertained' flag is not set to true");
             	Log.warning.println("WARNING: to suppress this warning, remove the excludefrom or excludeto attributes (if no astertainment correction is required)");
-            	Log.warning.println("WARNING: or set the 'ascertained' flag to true on element with id=" + getID());
+            	Log.warning.println("WARNING: or set the 'ascertained' flag to true on element with id=" + getId());
             }
         }
 
@@ -668,7 +668,7 @@ public class Alignment extends Map<String> {
     public String toString(boolean singleLine) {
         long totalWeight = getTotalWeight();
         StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getSimpleName() + "(" + getID() + ")");
+        builder.append(getClass().getSimpleName() + "(" + getId() + ")");
 
         if (singleLine) {
             builder.append(": [taxa, patterns, sites] = [" + getTaxonCount() + ", " + getPatternCount());

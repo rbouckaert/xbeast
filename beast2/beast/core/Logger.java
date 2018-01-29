@@ -158,8 +158,8 @@ public class Logger extends BEASTObject {
         	case alphabetic:
         		// sort loggers by id
         		Collections.sort(loggerList, (Loggable o1, Loggable o2) -> {
-						final String id1 = ((BEASTObject)o1).getID();
-						final String id2 = ((BEASTObject)o2).getID();  //was o1, probably a bug, found by intelliJ
+						final String id1 = ((BEASTObject)o1).getId();
+						final String id2 = ((BEASTObject)o2).getId();  //was o1, probably a bug, found by intelliJ
 						if (id1 == null || id2 == null) {return 0;}
 						return id1.compareTo(id2);
 					}
@@ -173,7 +173,7 @@ public class Logger extends BEASTObject {
         		final List<String> ids = new ArrayList<>();
         		final List<String> postfix = new ArrayList<>();
                 for (final Loggable aLoggerList : loggerList) {
-                    String id = ((BEASTInterface) aLoggerList).getID();
+                    String id = ((BEASTInterface) aLoggerList).getId();
                     if (id == null) {
                         id = "";
                     }
@@ -355,7 +355,7 @@ public class Logger extends BEASTObject {
             	String treeName = "tree";
             	for (final Loggable logger : loggerList) {
             		if (logger instanceof BEASTObject) {
-            			final String id = ((BEASTObject) logger).getID();
+            			final String id = ((BEASTObject) logger).getId();
             			if (id.indexOf(".t:") > 0) {
             				treeName = id.substring(id.indexOf(".t:") + 3); 
             			}

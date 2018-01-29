@@ -156,9 +156,9 @@ public class TreeParserTest {
 
         TreeParser treeParser = new TreeParser(newick,false, true, isLabeled, 0, false);
 
-        Assert.assertTrue(treeParser.getNode(0).getID().equals("knw"));
-        Assert.assertTrue(treeParser.getNode(1).getID().equals("xmr"));
-        Assert.assertTrue(treeParser.getNode(0).getParent().getID().equals("ctm"));
-        Assert.assertTrue(treeParser.getNode(1).getParent().getID() == null);
+        Assert.assertTrue(treeParser.getNode(0).getId().equals("knw"));
+        Assert.assertTrue(treeParser.getNode(1).getId().equals("xmr"));
+        Assert.assertTrue(treeParser.getNode(0).getParent().getId().equals("ctm"));
+        Assert.assertTrue(treeParser.getNode(1).getParent().getId() == null);
     }
 }

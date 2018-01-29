@@ -171,9 +171,9 @@ public class Document {
         for (Shape shape : m_objects) {
             if (shape instanceof Arrow) {
                 Arrow arrow = (Arrow) shape;
-                arrow.m_sHeadID = arrow.m_headShape.getID();
+                arrow.m_sHeadID = arrow.m_headShape.getId();
                 ;
-                arrow.m_sTailID = arrow.m_tailShape.getID();
+                arrow.m_sTailID = arrow.m_tailShape.getId();
                 ;
             }
         }
@@ -229,7 +229,7 @@ public class Document {
 
     boolean containsID(String id, List<Shape> objects, List<String> tabulist) {
         for (Shape shape : m_objects) {
-            if (shape.getID().equals(id)) {
+            if (shape.getId().equals(id)) {
                 return true;
             }
 //            if (shape instanceof Group) {
@@ -261,7 +261,7 @@ public class Document {
     }
 
     void setPluginID(BEASTObjectShape shape) {
-        if (shape.m_beastObject.getID() != null && shape.m_beastObject.getID().length() > 0) {
+        if (shape.m_beastObject.getId() != null && shape.m_beastObject.getId().length() > 0) {
             return;
         }
         BEASTInterface beastObject = shape.m_beastObject;
@@ -270,12 +270,12 @@ public class Document {
         while (containsID(base + _id, m_objects, null)) {
             _id++;
         }
-        beastObject.setID(base + _id);
+        beastObject.setId(base + _id);
     }
 
     Shape getShapeByID(String id) {
         for (Shape shape : m_objects) {
-            if (shape.getID().equals(id)) {
+            if (shape.getId().equals(id)) {
                 return shape;
             }
         }
@@ -283,11 +283,11 @@ public class Document {
     }
 
     public void addNewShape(Shape shape) {
-        if (shape.getID() == null ||
-                shape.getID().equals("") ||
-                containsID(shape.getID(), m_objects, null)) {
+        if (shape.getId() == null ||
+                shape.getId().equals("") ||
+                containsID(shape.getId(), m_objects, null)) {
             if (shape instanceof Arrow) {
-                ((Arrow) shape).setID(getNewID(null));
+                ((Arrow) shape).setId(getNewID(null));
             }
             if (shape instanceof BEASTObjectShape) {
                 setPluginID((BEASTObjectShape) shape);
@@ -391,7 +391,7 @@ public class Document {
     public void deleteShapes(List<Integer> selection) {
         List<String> ids = new ArrayList<>();
         for (int j = 0; j < selection.size(); j++) {
-            ids.add(m_objects.get(selection.get(j).intValue()).getID());
+            ids.add(m_objects.get(selection.get(j).intValue()).getId());
 
         }
         selection = getConnectedArrows(ids, selection);
@@ -401,17 +401,17 @@ public class Document {
     } // deleteShape
 
     void ensureUniqueID(Shape shape, List<String> tabulist) {
-        if (shape.getID() == null ||
-                shape.getID().equals("") ||
-                containsID(shape.getID(), m_objects, tabulist)) {
+        if (shape.getId() == null ||
+                shape.getId().equals("") ||
+                containsID(shape.getId(), m_objects, tabulist)) {
             if (shape instanceof Arrow) {
-                ((Arrow) shape).setID(getNewID(tabulist));
+                ((Arrow) shape).setId(getNewID(tabulist));
             }
             if (shape instanceof BEASTObjectShape) {
                 setPluginID((BEASTObjectShape) shape);
             }
         }
-        tabulist.add(shape.getID());
+        tabulist.add(shape.getId());
     } // ensureUniqueID
 
     public void pasteShape(String xml) {
@@ -422,10 +422,10 @@ public class Document {
         List<Integer> positions = new ArrayList<>();
         for (Shape shape : shapes) {
             if (shape instanceof Arrow) {
-                ((Arrow) shape).setID(getNewID(null));
+                ((Arrow) shape).setId(getNewID(null));
             }
             if (shape instanceof BEASTObjectShape) {
-                ((BEASTObjectShape) shape).m_beastObject.setID(null);
+                ((BEASTObjectShape) shape).m_beastObject.setId(null);
                 setPluginID((BEASTObjectShape) shape);
                 // ensure the new shape does not overlap exactly with an existing shape
                 int offset = 0;
@@ -505,10 +505,10 @@ public class Document {
         for (Shape shape : m_objects) {
             if (shape instanceof Arrow) {
                 Arrow arrow = (Arrow) shape;
-                if (arrow.m_sHeadID.equals(ellipse.getID())) {
+                if (arrow.m_sHeadID.equals(ellipse.getId())) {
                     String tailID = arrow.m_sTailID;
                     for (int i = 0; i < m_objects.size(); i++) {
-                        if (m_objects.get(i).getID().equals(tailID)) {
+                        if (m_objects.get(i).getId().equals(tailID)) {
                             selection.add(i);
                         }
                     }
@@ -598,10 +598,10 @@ public class Document {
         shape.setY2(y);
     }
 
-    public void setID(String id, int object) {
+    public void setId(String id, int object) {
         addUndoAction(new UndoAction(object, UndoAction.SET_LABEL_ACTION));
         Shape shape = m_objects.get(object);
-        ((BEASTObjectShape) shape).m_beastObject.setID(id);
+        ((BEASTObjectShape) shape).m_beastObject.setId(id);
     }
 
     public void toggleFilled(int object) {
@@ -1361,7 +1361,7 @@ public class Document {
     InputShape getInputShapeWithID(String label) {
         for (Shape shape : m_objects) {
             if (shape instanceof InputShape) {
-                if (shape.getID() != null && shape.getID().equals(label)) {
+                if (shape.getId() != null && shape.getId().equals(label)) {
                     return (InputShape) shape;
                 }
             }
@@ -1374,7 +1374,7 @@ public class Document {
 
     void addInput(BEASTObjectShape shape, Object o2, int depth, String input) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         if (o2 instanceof BEASTInterface) {
-            BEASTObjectShape shape2 = getPluginShapeWithLabel(((BEASTInterface) o2).getID());
+            BEASTObjectShape shape2 = getPluginShapeWithLabel(((BEASTInterface) o2).getId());
             if (shape2 == null) {
                 shape2 = new BEASTObjectShape((BEASTInterface) o2, this);
                 shape2.m_x = depth * DX;
@@ -1584,13 +1584,13 @@ public class Document {
     Shape findObjectWithID(String id) {
         if (m_tmpobjects != null) {
             for (int i = 0; i < m_tmpobjects.size(); i++) {
-                if (m_tmpobjects.get(i).getID().equals(id)) {
+                if (m_tmpobjects.get(i).getId().equals(id)) {
                     return m_tmpobjects.get(i);
                 }
             }
         }
         for (int i = 0; i < m_objects.size(); i++) {
-            if (m_objects.get(i).getID().equals(id)) {
+            if (m_objects.get(i).getId().equals(id)) {
                 return m_objects.get(i);
             }
         }
@@ -1750,9 +1750,9 @@ public class Document {
 
             if (shape instanceof Arrow) {
                 Arrow arrow = (Arrow) shape;
-                String id = arrow.m_tailShape.getID();
+                String id = arrow.m_tailShape.getId();
                 if (arrow.m_headShape instanceof InputShape) {
-                    String id2 = arrow.m_headShape.m_beastObjectShape.getID();
+                    String id2 = arrow.m_headShape.m_beastObjectShape.getId();
                     if (degreeMap.containsKey(id)) {
                         degreeMap.put(id, degreeMap.get(id) + 1);
                     } else {
@@ -1790,8 +1790,8 @@ public class Document {
 
                     double f = 1.0 / 3.0 * (desiredLen - len) / len;
 
-                    int degree1 = degreeMap.get(source.getID());
-                    int degree2 = degreeMap.get(target.getID());
+                    int degree1 = degreeMap.get(source.getId());
+                    int degree2 = degreeMap.get(target.getId());
 
 
                     f = f * Math.pow(0.99, (degree1 + degree2 - 2));
@@ -1911,7 +1911,7 @@ public class Document {
                                 BEASTObjectShape tailShape = map.get(input.get());
                                 try {
 	                                Arrow arrow = new Arrow(tailShape, headShape, input.getName());
-	                                arrow.setID(getNewID(null));
+	                                arrow.setId(getNewID(null));
 	                                m_objects.add(arrow);
                                 } catch (Exception e) {
 									// ignore, can happen when not all inputs are to be shown
@@ -1923,7 +1923,7 @@ public class Document {
                                         BEASTObjectShape tailShape = map.get(o);
                                         try {
 	                                        Arrow arrow = new Arrow(tailShape, headShape, input.getName());
-	                                        arrow.setID(getNewID(null));
+	                                        arrow.setId(getNewID(null));
 	                                        m_objects.add(arrow);
                                         } catch (Exception e) {
         									// ignore, can happen when not all inputs are to be shown

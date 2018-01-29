@@ -119,7 +119,7 @@ public class NexusParser {
                 final String lower = str.toLowerCase();
                 if (lower.matches("^\\s*begin\\s+data;\\s*$") || lower.matches("^\\s*begin\\s+characters;\\s*$")) {
                     m_alignment = parseDataBlock(fin);
-                    m_alignment.setID(id);
+                    m_alignment.setId(id);
                 } else if (lower.matches("^\\s*begin\\s+calibration;\\s*$")) {
                     traitSet = parseCalibrationsBlock(fin);
                 } else if (lower.matches("^\\s*begin\\s+assumptions;\\s*$") ||
@@ -335,7 +335,7 @@ public class NexusParser {
      */
     protected TraitSet parseCalibrationsBlock(final BufferedReader fin) throws IOException {
         final TraitSet traitSet = new TraitSet();
-        traitSet.setID("traitsetDate");
+        traitSet.setId("traitsetDate");
         traitSet.traitNameInput.setValue("date", traitSet);
         String str;
         do {
@@ -724,7 +724,7 @@ public class NexusParser {
 //            } else {
 	            final Sequence sequence = new Sequence();
 	            sequence.init(totalCount, taxon, data);
-	            sequence.setID(generateSequenceID(taxon));
+	            sequence.setId(generateSequenceID(taxon));
 	            alignment.sequenceInput.setValue(sequence, alignment);
 //            }
         }
@@ -751,7 +751,7 @@ public class NexusParser {
 
     private boolean taxonListContains(String taxon) {
     	for (Taxon t : taxonList) {
-    		if (t.getID().equals(taxon)) {
+    		if (t.getId().equals(taxon)) {
     			return true;
     		}
     	}
@@ -805,7 +805,7 @@ public class NexusParser {
                 }
                 rangeString = rangeString.trim().replace(' ', ',');
                 final FilteredAlignment alignment = new FilteredAlignment();
-                alignment.setID(id);
+                alignment.setId(id);
                 alignment.alignmentInput.setValue(m_alignment, alignment);
                 alignment.filterInput.setValue(rangeString, alignment);
                 alignment.initAndValidate();
@@ -856,7 +856,7 @@ public class NexusParser {
             		for (String taxon : taxonNames) {
             			taxonset.taxonsetInput.get().add(new Taxon(taxon.replaceAll("'\"", "")));
             		}
-            		taxonset.setID(taxonSetName.replaceAll("'\"", ""));
+            		taxonset.setId(taxonSetName.replaceAll("'\"", ""));
             		taxonsets.add(taxonset);
             	}
             } else if (str.toLowerCase().matches("^\\s*calibrate\\s.*")) {
@@ -879,16 +879,16 @@ public class NexusParser {
             		String taxonSetName = strs2[1].replaceAll("'\"", "");
             		TaxonSet taxonset = null;
             		for (Taxon t : taxonsets) {
-            			if (t.getID().equals(taxonSetName) && t instanceof TaxonSet) {
+            			if (t.getId().equals(taxonSetName) && t instanceof TaxonSet) {
             				taxonset = (TaxonSet) t;
             			}
             		}
             		if (taxonset == null) {
             			// perhaps it is a singleton
             			for (Taxon t : taxonList) {
-            				if (t.getID().equals(taxonSetName)) {
+            				if (t.getId().equals(taxonSetName)) {
             					taxonset = new TaxonSet();
-            					taxonset.setID(t.getID() + ".leaf");
+            					taxonset.setId(t.getId() + ".leaf");
             					taxonset.taxonsetInput.setValue(t, taxonset);
             				}
             			}
@@ -904,7 +904,7 @@ public class NexusParser {
             		for (int i = 1; i < strs3.length; i++) {
             			try {
             				param[i] = new RealParameter(strs3[i]);
-            				param[i].setID("param." + i);
+            				param[i].setId("param." + i);
             			} catch (Exception  e) {
 							// ignore parsing errors
 						}
@@ -914,43 +914,43 @@ public class NexusParser {
             		case "normal":
             			distr = new Normal();
             			distr.initByName("mean", param[1], "sigma", param[2]);
-            			distr.setID("Normal.0");
+            			distr.setId("Normal.0");
             			break;
             		case "uniform":
             			distr = new Uniform();
             			distr.initByName("lower", strs3[1], "upper", strs3[2]);
-            			distr.setID("Uniform.0");
+            			distr.setId("Uniform.0");
             			break;
             		case "fixed":
             			// uniform with lower == upper
             			distr = new Normal();
             			distr.initByName("mean", param[1], "sigma", "+Infinity");
-            			distr.setID("Normal.0");
+            			distr.setId("Normal.0");
             			break;
             		case "offsetlognormal":
             			distr = new LogNormalDistributionModel();
             			distr.initByName("offset", strs3[1], "M", param[2], "S", param[3], "meanInRealSpace", true);
-            			distr.setID("LogNormalDistributionModel.0");
+            			distr.setId("LogNormalDistributionModel.0");
             			break;
             		case "lognormal":
             			distr = new LogNormalDistributionModel();
             			distr.initByName("M", param[1], "S", param[2], "meanInRealSpace", true);
-            			distr.setID("LogNormalDistributionModel.0");
+            			distr.setId("LogNormalDistributionModel.0");
             			break;
             		case "offsetexponential":
             			distr = new Exponential();
             			distr.initByName("offset", strs3[1], "mean", param[2]);
-            			distr.setID("Exponential.0");
+            			distr.setId("Exponential.0");
             			break;
             		case "gamma":
             			distr = new Gamma();
             			distr.initByName("alpha", param[1], "beta", param[2]);
-            			distr.setID("Gamma.0");
+            			distr.setId("Gamma.0");
             			break;
             		case "offsetgamma":
             			distr = new Gamma();
             			distr.initByName("offset", strs3[1], "alpha", param[2], "beta", param[3]);
-            			distr.setID("Gamma.0");
+            			distr.setId("Gamma.0");
             			break;
             		default:
             			throw new RuntimeException("Unknwon distribution "+ strs3[0] +"in calibration: " + str);
@@ -959,7 +959,7 @@ public class NexusParser {
             		prior.isMonophyleticInput.setValue(true, prior);
             		prior.distInput.setValue(distr, prior);
             		prior.taxonsetInput.setValue(taxonset, prior);
-            		prior.setID(taxonset.getID() + ".prior");
+            		prior.setId(taxonset.getId() + ".prior");
             		// should set Tree before initialising, but we do not know the tree yet...
             		if (calibrations == null) {
             			calibrations = new ArrayList<>();
@@ -988,7 +988,7 @@ public class NexusParser {
         		MRCAPrior prior = new MRCAPrior();
         		prior.isMonophyleticInput.setValue(true, prior);
         		prior.taxonsetInput.setValue(taxonset, prior);
-        		prior.setID(taxonset.getID() + ".prior");
+        		prior.setId(taxonset.getId() + ".prior");
         		// should set Tree before initialising, but we do not know the tree yet...
         		if (calibrations == null) {
         			calibrations = new ArrayList<>();
@@ -1030,7 +1030,7 @@ public class NexusParser {
             		for (String taxon : taxonNames) {
             			taxonset.taxonsetInput.get().add(new Taxon(taxon.replaceAll("'\"", "")));
             		}
-            		taxonset.setID(taxonSetName.replaceAll("'\"", ""));
+            		taxonset.setId(taxonSetName.replaceAll("'\"", ""));
             		taxonsets.add(taxonset);
             	}
             }

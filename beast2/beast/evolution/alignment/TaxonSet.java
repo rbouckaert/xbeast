@@ -40,7 +40,7 @@ public class TaxonSet extends Taxon {
 
     // for testing purposes (Huw)
     public TaxonSet(final String id, final List<Taxon> taxa) {
-        setID(id);
+        setId(id);
         taxonsetInput.setValue(taxa, this);
         initAndValidate();
     }
@@ -50,16 +50,16 @@ public class TaxonSet extends Taxon {
         taxonList = taxonsetInput.get();
         if (alignmentInput.get() != null) {
             if (taxonList.size() > 0) {
-                throw new IllegalArgumentException("Only one of taxon and alignment should be specified, not both (id=" + getID() + ").");
+                throw new IllegalArgumentException("Only one of taxon and alignment should be specified, not both (id=" + getId() + ").");
             }
             taxaNames = alignmentInput.get().taxaNames;
         } else {
             if (taxonList.size() == 0) {
-                throw new IllegalArgumentException(getID() + ": Either taxon or alignment should be specified (id=" + getID() + ").");
+                throw new IllegalArgumentException(getId() + ": Either taxon or alignment should be specified (id=" + getId() + ").");
             }
             taxaNames = new ArrayList<>();
             for (final Taxon taxon : taxonList) {
-            	taxaNames.add(taxon.getID());
+            	taxaNames.add(taxon.getId());
             }
         }
     }
@@ -167,7 +167,7 @@ public class TaxonSet extends Taxon {
     @Override
 	protected String toString(String indent) {
 		final StringBuilder buf = new StringBuilder();
-		buf.append(indent).append(getID()).append("\n");
+		buf.append(indent).append(getId()).append("\n");
 		indent += "\t";
 		for (final Taxon taxon : taxonsetInput.get()) {
 			buf.append(taxon.toString(indent));

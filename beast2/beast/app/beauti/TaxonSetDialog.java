@@ -55,7 +55,7 @@ public class TaxonSetDialog extends JDialog {
         // initialize state
         this.taxonSet = taxonSet;
         this.doc = doc;
-        id = taxonSet.getID();
+        id = taxonSet.getId();
         // create components
         box = Box.createVerticalBox();
         box.add(createIDBox());
@@ -66,7 +66,7 @@ public class TaxonSetDialog extends JDialog {
 
         // initialise lists
         List<Taxon> taxonset = taxonSet.taxonsetInput.get();
-        Comparator<Taxon> comparator = (o1, o2) -> o1.getID().compareTo(o2.getID());
+        Comparator<Taxon> comparator = (o1, o2) -> o1.getId().compareTo(o2.getId());
         Collections.sort(taxonset, comparator);
         _candidates = new ArrayList<>();
         _candidates.addAll(candidates);
@@ -110,7 +110,7 @@ public class TaxonSetDialog extends JDialog {
         }
         isOK =  (result != JOptionPane.CANCEL_OPTION);
         if (isOK) {
-            taxonSet.setID(id);
+            taxonSet.setId(id);
             List<Taxon> taxa = taxonSet.taxonsetInput.get();
             while (taxa.size() > 0) {
                 taxa.remove(0);
@@ -166,7 +166,7 @@ public class TaxonSetDialog extends JDialog {
 
         listModel1.clear();
         for (Taxon taxon : _candidates) {
-            if (taxon.getID().matches(filter)) {
+            if (taxon.getId().matches(filter)) {
                 listModel1.addElement(taxon);
             }
         }
@@ -211,7 +211,7 @@ public class TaxonSetDialog extends JDialog {
 		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
 			JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-			label.setText(((Taxon)value).getID());
+			label.setText(((Taxon)value).getId());
 			return label;
 		}
 	}
@@ -276,7 +276,7 @@ public class TaxonSetDialog extends JDialog {
         JButton okButton = new JButton("Ok");
         okButton.setName("OK");
         okButton.addActionListener(e -> {
-                taxonSet.setID(id);
+                taxonSet.setId(id);
                 List<Taxon> taxa = taxonSet.taxonsetInput.get();
                 while (taxa.size() > 0) {
                     taxa.remove(0);

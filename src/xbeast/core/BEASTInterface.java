@@ -48,8 +48,8 @@ public interface BEASTInterface {
     public void initAndValidate();
 
 	/** identifiable **/
-	public String getID();
-	public void setID(String ID);
+	public String getId();
+	public void setId(String ID);
 	
 	/** return set of Outputs, that is Objects for which this object is an Input **/
 	public Set<BEASTInterface> getOutputs();
@@ -184,11 +184,11 @@ public interface BEASTInterface {
     }
 
     default String getCitations(final HashSet<String> citations, final HashSet<String> IDs) {
-        if (getID() != null) {
-            if (IDs.contains(getID())) {
+        if (getId() != null) {
+            if (IDs.contains(getId())) {
                 return "";
             }
-            IDs.add(getID());
+            IDs.add(getId());
         }
         final StringBuilder buf = new StringBuilder();
         // only add citation if it is not already processed
@@ -451,7 +451,7 @@ public interface BEASTInterface {
         for (final Input<?> input : listInputs()) {
             inputNames += input.getName() + ",";
         }
-        throw new IllegalArgumentException("This BEASTInterface (" + (this.getID() == null ? this.getClass().getName() : this.getID()) + ") has no input with name " + name + ". " +
+        throw new IllegalArgumentException("This BEASTInterface (" + (this.getId() == null ? this.getClass().getName() : this.getId()) + ") has no input with name " + name + ". " +
                 "Choose one of these inputs:" + inputNames.substring(0, inputNames.length() - 1));
     } // getInput
 

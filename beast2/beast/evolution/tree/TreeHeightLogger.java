@@ -25,10 +25,10 @@ public class TreeHeightLogger extends CalculationNode implements Loggable, Funct
     @Override
     public void init(PrintStream out) {
         final Tree tree = treeInput.get();
-        if (getID() == null || getID().matches("\\s*")) {
-            out.print(tree.getID() + ".height\t");
+        if (getId() == null || getId().matches("\\s*")) {
+            out.print(tree.getId() + ".height\t");
         } else {
-            out.print(getID() + "\t");
+            out.print(getId() + "\t");
         }
     }
 

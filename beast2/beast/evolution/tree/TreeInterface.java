@@ -7,7 +7,7 @@ import java.util.List;
 import beast.evolution.alignment.TaxonSet;
 
 public interface TreeInterface {
-    String getID();
+    String getId();
 
     int getLeafNodeCount();
 	int getInternalNodeCount();

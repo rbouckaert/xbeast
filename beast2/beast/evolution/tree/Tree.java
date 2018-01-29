@@ -56,7 +56,7 @@ public class Tree extends StateNode implements TreeInterface {
 
     /**
      * array of taxa names for the nodes in the tree
-     * such that m_sTaxaNames[node.getNr()] == node.getID()*
+     * such that m_sTaxaNames[node.getNr()] == node.getId()*
      */
     protected String[] m_sTaxaNames = null;
 
@@ -110,8 +110,8 @@ public class Tree extends StateNode implements TreeInterface {
         String [] taxa = getTaxaNames();
         for (int i = 0; i < getNodeCount() && i < taxa.length; i++) {
             if( taxa[i] != null ) {
-                if( m_nodes[i].getID() == null ) {
-                    m_nodes[i].setID(taxa[i]);
+                if( m_nodes[i].getId() == null ) {
+                    m_nodes[i].setId(taxa[i]);
                 }
             }
         }
@@ -123,12 +123,12 @@ public class Tree extends StateNode implements TreeInterface {
         Node left = newNode();
         left.labelNr = 0;
         left.height = 0;
-        left.setID(taxa.get(0));
+        left.setId(taxa.get(0));
         for (int i = 1; i < taxa.size(); i++) {
             final Node right = newNode();
             right.labelNr = i;
             right.height = 0;
-            right.setID(taxa.get(i));
+            right.setId(taxa.get(i));
             final Node parent = newNode();
             parent.labelNr = taxa.size() + i - 1;
             parent.height = minInternalHeight + i * step;
@@ -156,7 +156,7 @@ public class Tree extends StateNode implements TreeInterface {
     protected void processTraits(List<TraitSet> traitList) {
         for (TraitSet traitSet : traitList) {
             for (Node node : getExternalNodes()) {
-            	String id = node.getID();
+            	String id = node.getId();
             	if (id != null) {
                     node.setMetaData(traitSet.getTraitName(), traitSet.getValue(id));
             	}
@@ -374,12 +374,12 @@ public class Tree extends StateNode implements TreeInterface {
     }
 
     void collectTaxaNames(final Node node) {
-        if (node.getID() != null) {
-            m_sTaxaNames[node.getNr()] = node.getID();
+        if (node.getId() != null) {
+            m_sTaxaNames[node.getNr()] = node.getId();
         }
         if (node.isLeaf()) {
-            if (node.getID() == null) {
-            	node.setID("node" + node.getNr());
+            if (node.getId() == null) {
+            	node.setId("node" + node.getNr());
             }
         } else {
         	for (Node child : node.getChildren()) {
@@ -512,7 +512,7 @@ public class Tree extends StateNode implements TreeInterface {
     @Override
     public Tree copy() {
         Tree tree = new Tree();
-        tree.setID(getID());
+        tree.setId(getId());
         tree.index = index;
         tree.root = root.copy();
         tree.nodeCount = nodeCount;
@@ -529,7 +529,7 @@ public class Tree extends StateNode implements TreeInterface {
         final Tree tree = (Tree) other;
         final Node[] nodes = new Node[nodeCount];
         listNodes(tree.root, nodes);
-        tree.setID(getID());
+        tree.setId(getId());
         //tree.index = index;
         root.assignTo(nodes);
         tree.root = nodes[root.getNr()];
@@ -548,7 +548,7 @@ public class Tree extends StateNode implements TreeInterface {
         for (int i = 0; i < tree.getNodeCount(); i++) {
             nodes[i] = newNode();
         }
-        setID(tree.getID());
+        setId(tree.getId());
         //index = tree.index;
         root = nodes[tree.root.getNr()];
         root.assignFrom(nodes, tree.root);
@@ -681,7 +681,7 @@ public class Tree extends StateNode implements TreeInterface {
     static void printTranslate(Node node, List<String> translateLines, int nodeCount) {
         if (node.isLeaf()) {
             final String nr = (node.getNr() + taxaTranslationOffset) + "";
-            String line = "\t\t" + "    ".substring(nr.length()) + nr + " " + node.getID();
+            String line = "\t\t" + "    ".substring(nr.length()) + nr + " " + node.getId();
             if (node.getNr() < nodeCount) {
                 line += ",";
             }

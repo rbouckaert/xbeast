@@ -168,7 +168,7 @@ public class SequenceSimulator extends xbeast.core.Runnable {
 
         Alignment alignment = new Alignment();
         alignment.userDataTypeInput.setValue(m_data.get().getDataType(), alignment);
-        alignment.setID("SequenceSimulator");
+        alignment.setId("SequenceSimulator");
 
         traverse(root, seq, category, alignment);
 

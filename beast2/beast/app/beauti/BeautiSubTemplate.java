@@ -271,7 +271,7 @@ public class BeautiSubTemplate extends BEASTObject {
         }
 
         // find template that created this beastObject
-        String id = beastObject.getID();
+        String id = beastObject.getId();
         //String partition = BeautiDoc.parsePartition(id);
         id = id.substring(0, id.indexOf("."));
         BeautiSubTemplate template = null;
@@ -282,7 +282,7 @@ public class BeautiSubTemplate extends BEASTObject {
             }
         }
         if (template == null) {
-            throw new RuntimeException("Cannot find template for removing " + beastObject.getID());
+            throw new RuntimeException("Cannot find template for removing " + beastObject.getId());
         }
         PartitionContext context = doc.getContextFor(beastObject);
         removeSubNet(template, context);
@@ -323,7 +323,7 @@ public class BeautiSubTemplate extends BEASTObject {
 
 
     BEASTInterface createSubNet(Alignment data, BeautiDoc doc, boolean init) {
-        String partition = data.getID();
+        String partition = data.getId();
         HashMap<String, BEASTInterface> idMap = doc.pluginmap;//new HashMap<>();
         idMap.put(partition, data);
         return createSubNet(new PartitionContext(partition), idMap, init);
@@ -450,7 +450,7 @@ public class BeautiSubTemplate extends BEASTObject {
 	            	while (data instanceof FilteredAlignment) {
 	            		data = ((FilteredAlignment) data).alignmentInput.get();
 	            	}
-	            	fileName = data.getID() + fileName.substring(5);
+	            	fileName = data.getId() + fileName.substring(5);
 	            	try {
 						logger.fileNameInput.setValue(fileName, logger);
 					} catch (Exception e) {
@@ -472,7 +472,7 @@ public class BeautiSubTemplate extends BEASTObject {
 
     @Override
     public String toString() {
-        String id = getID();
+        String id = getId();
         id = id.replaceAll("([a-z])([A-Z])", "$1 $2");
         return id;
     }

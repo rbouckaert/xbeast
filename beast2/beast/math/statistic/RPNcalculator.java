@@ -62,7 +62,7 @@ public class RPNcalculator extends CalculationNode implements Loggable, Function
 
                 variables = new HashMap<>();
 
-                variables.put(p.getID(), p.getValues());
+                variables.put(p.getId(), p.getValues());
             }
         }
 
@@ -77,12 +77,12 @@ public class RPNcalculator extends CalculationNode implements Loggable, Function
                     if (values == null) {
                     	String ids = "";
                         for (final Parameter<?> p : parametersInput.get()) {
-                    		ids += p.getID() +", ";
+                    		ids += p.getId() +", ";
                     	}
                     	if (parametersInput.get().size() > 0) {
                     		ids = ids.substring(0, ids.length() - 2);
                     	}
-                    	throw new RuntimeException("Something went wront with the RPNCalculator with id=" + getID() +".\n"
+                    	throw new RuntimeException("Something went wront with the RPNCalculator with id=" + getId() +".\n"
                     			+ "There might be a typo on the expression.\n" +
                     			"It should only contain these: " + ids +"\n"
                     					+ "but contains " + name);
@@ -110,7 +110,7 @@ public class RPNcalculator extends CalculationNode implements Loggable, Function
     private void updateValues() {
         for (Parameter<?> p : parametersInput.get()) {
             for (int i = 0; i < p.getDimension(); i++) {
-                variables.put(p.getID(), p.getValues());
+                variables.put(p.getId(), p.getValues());
             }
         }
     }
@@ -148,10 +148,10 @@ public class RPNcalculator extends CalculationNode implements Loggable, Function
     @Override
     public void init(final PrintStream out) {
         if (dim == 1)
-            out.print(this.getID() + "\t");
+            out.print(this.getId() + "\t");
         else
             for (int i = 0; i < dim; i++)
-                out.print(this.getID() + "_" + i + "\t");
+                out.print(this.getId() + "_" + i + "\t");
     }
 
     @Override
@@ -168,7 +168,7 @@ public class RPNcalculator extends CalculationNode implements Loggable, Function
     public List<String> getArguments() {
         final List<String> arguments = new ArrayList<>();
         for (final Parameter<?> par : parametersInput.get()) {
-            arguments.add(par.getID());
+            arguments.add(par.getId());
         }
         return arguments;
     }

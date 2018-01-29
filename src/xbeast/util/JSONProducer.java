@@ -174,13 +174,13 @@ public class JSONProducer {
         if (isDone.contains(beastObject)) {
             // JSON is already produced, we can idref it
         	buf.append((needsComma == true) ? ",\n" + indent + " " : ""); 
-            buf.append("idref: \"" + beastObject.getID() + "\" ");
+            buf.append("idref: \"" + beastObject.getId() + "\" ");
             needsComma = true;
             skipInputs = true;
         } else {
             // see whether a reasonable id can be generated
-            if (beastObject.getID() != null && !beastObject.getID().equals("")) {
-                String id = beastObject.getID();
+            if (beastObject.getId() != null && !beastObject.getId().equals("")) {
+                String id = beastObject.getId();
                 // ensure ID is unique
                 if (IDs.contains(id)) {
                     int k = 1;
@@ -425,7 +425,7 @@ public class JSONProducer {
             		}
             		
                     if (isShort && isDone.contains(value)) {
-                        buf.append(" " + input.getName() + ": \"@" + ((BEASTInterface) value).getID() + "\"");
+                        buf.append(" " + input.getName() + ": \"@" + ((BEASTInterface) value).getId() + "\"");
                         if (!isInputsDone.containsKey(beastObject)) {
                         	isInputsDone.put(beastObject, new HashSet<>());
                         }

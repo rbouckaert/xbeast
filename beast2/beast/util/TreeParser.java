@@ -163,13 +163,13 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
         if (sortNodesAlphabetically) {
 	        // correct for node ordering: ensure order is alphabetical
 	        for (int i = 0; i < getNodeCount() && i < labels.size(); i++) {
-	       		m_nodes[i].setID(labels.get(i));
+	       		m_nodes[i].setId(labels.get(i));
 	        }
 
 	        Node [] nodes = new Node[labels.size()];
             System.arraycopy(m_nodes, 0, nodes, 0, labels.size());
 
-	        Arrays.sort(nodes, (o1, o2) -> o1.getID().compareTo(o2.getID()));
+	        Arrays.sort(nodes, (o1, o2) -> o1.getId().compareTo(o2.getId()));
 	        for (int i = 0; i < labels.size(); i++) {
 	        	m_nodes[i] = nodes[i];
 	        	nodes[i].setNr(i);
@@ -399,7 +399,7 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
     public void translateLeafIds(final Map<String, String> translationMap) {
 
         for (final Node leaf : getExternalNodes()) {
-            String id = leaf.getID();
+            String id = leaf.getId();
 
             if (id == null || !integerLeafLabels) {
                 id = Integer.toString(leaf.getNr() + 1);
@@ -407,7 +407,7 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
 
             final String newId = translationMap.get(id);
             if (newId != null) {
-                leaf.setID(newId);
+                leaf.setId(newId);
             }
         }
     }
@@ -558,7 +558,7 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
 
             node.setNr(-1);
             if (postCtx.label() != null) {
-                node.setID(postCtx.label().getText());
+                node.setId(postCtx.label().getText());
 
                 if (postCtx.label().number() == null
                         || postCtx.label().number().INT() == null)

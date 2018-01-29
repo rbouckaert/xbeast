@@ -94,7 +94,7 @@ public class DeltaExchangeOperator extends Operator {
             	for (int i = 0; i < intparameterInput.get().size(); i++) {
             		for (int j = i + 1; j < intparameterInput.get().size(); j++) {
             			if (intparameterInput.get().get(i) == intparameterInput.get().get(j)) {
-            				throw new RuntimeException("Duplicate intparameter (" + intparameterInput.get().get(j).getID() + ") found in operator " + getID());
+            				throw new RuntimeException("Duplicate intparameter (" + intparameterInput.get().get(j).getId() + ") found in operator " + getId());
             			}
             		}
             	}
@@ -107,7 +107,7 @@ public class DeltaExchangeOperator extends Operator {
             	for (int i = 0; i < parameterInput.get().size(); i++) {
             		for (int j = i + 1; j < parameterInput.get().size(); j++) {
             			if (parameterInput.get().get(i) == parameterInput.get().get(j)) {
-            				throw new RuntimeException("Duplicate intparameter (" + parameterInput.get().get(j).getID() + ") found in operator " + getID());
+            				throw new RuntimeException("Duplicate intparameter (" + parameterInput.get().get(j).getId() + ") found in operator " + getId());
             			}
             		}
             	}
@@ -129,7 +129,7 @@ public class DeltaExchangeOperator extends Operator {
         }
     	if (dim <= 1) {
     		Log.warning.println("WARNING: the dimension of the parameter is " + dim + " at the start of the run.\n"
-    				+ "         The operator " + getID() + " has no effect (if this does not change).");
+    				+ "         The operator " + getId() + " has no effect (if this does not change).");
     	}
 
     }

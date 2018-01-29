@@ -96,8 +96,8 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
                 setStringValue((String) value);
             } catch (Exception e) {
                 e.printStackTrace();
-            	Log.warning.println("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getID());
-                throw new RuntimeException("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getID());
+            	Log.warning.println("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getId());
+                throw new RuntimeException("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getId());
             }
         } else if (this.value != null && this.value instanceof List<?>) {
             if (theClass.isAssignableFrom(value.getClass())) {

@@ -28,12 +28,12 @@ public class BEASTInterfaceTest extends TestCase {
 		Map<String, Input<?>> inputs;
 
 		@Override
-		public String getID() {
+		public String getId() {
 			return ID;
 		}
 
 		@Override
-		public void setID(String ID) {
+		public void setId(String ID) {
 			this.ID = ID;
 		}
 

@@ -129,7 +129,7 @@ public class ThreadedTreeLikelihood extends GenericTreeLikelihood {
     	
     	if (threadCount <= 1) {    		
     		treelikelihood[0] = new TreeLikelihood();
-    		treelikelihood[0].setID(getID() + "0");
+    		treelikelihood[0].setId(getId() + "0");
     		treelikelihood[0].initByName("data", dataInput.get(), 
     				"tree", treeInput.get(), 
     				"siteModel", siteModelInput.get(), 
@@ -150,7 +150,7 @@ public class ThreadedTreeLikelihood extends GenericTreeLikelihood {
         			filterSpec += data.excludefromInput.get() + "-" + data.excludetoInput.get() + "," + filterSpec;
         		}
         		treelikelihood[i] = new TreeLikelihood();
-        		treelikelihood[i].setID(getID() + i);
+        		treelikelihood[i].setId(getId() + i);
         		treelikelihood[i].getOutputs().add(this);
         		likelihoodsInput.get().add(treelikelihood[i]);
 
@@ -192,7 +192,7 @@ public class ThreadedTreeLikelihood extends GenericTreeLikelihood {
     	BEASTInterface copy;
 		try {
 			copy = src.getClass().newInstance();
-        	copy.setID(src.getID() + "_" + i);
+        	copy.setId(src.getId() + "_" + i);
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Programmer error: every object in the model should have a default constructor that is publicly accessible: " + src.getClass().getName());
@@ -360,7 +360,7 @@ public class ThreadedTreeLikelihood extends GenericTreeLikelihood {
      */
     @Override
 	public List<String> getArguments() {
-        return Collections.singletonList(dataInput.get().getID());
+        return Collections.singletonList(dataInput.get().getId());
     }
 
     /**

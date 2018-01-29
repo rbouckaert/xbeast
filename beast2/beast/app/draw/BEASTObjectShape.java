@@ -76,12 +76,12 @@ public class BEASTObjectShape extends Shape {
             m_beastObject = (xbeast.core.BEASTInterface) Class.forName(className).newInstance();
         }
         m_inputs = new ArrayList<>();
-        if (m_beastObject.getID() == null) {
+        if (m_beastObject.getId() == null) {
         	String id = m_beastObject.getClass().getName();
         	id = id.substring(id.lastIndexOf('.') + 1);
-        	m_beastObject.setID(id);
+        	m_beastObject.setId(id);
         }
-        //System.err.println("\n>>>>" + m_beastObject.getID());        
+        //System.err.println("\n>>>>" + m_beastObject.getId());        
         List<Input<?>> inputs = m_beastObject.listInputs();
         for (Input<?> input_ : inputs) {
 			String longInputName = m_beastObject.getClass().getName() + "." + input_.getName(); 
@@ -177,7 +177,7 @@ public class BEASTObjectShape extends Shape {
                 String className = node.getAttributes().getNamedItem("class").getNodeValue();
                 try {
                     m_beastObject = (xbeast.core.BEASTInterface) Class.forName(className).newInstance();
-                    m_beastObject.setID(m_sID);
+                    m_beastObject.setId(m_sID);
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
@@ -210,7 +210,7 @@ public class BEASTObjectShape extends Shape {
         buf.append("'");
         buf.append(" inputids='");
         for (int i = 0; i < m_inputs.size(); i++) {
-            buf.append(m_inputs.get(i).getID());
+            buf.append(m_inputs.get(i).getId());
             buf.append(' ');
         }
         buf.append("'");
@@ -224,7 +224,7 @@ public class BEASTObjectShape extends Shape {
     @Override
     void assignFrom(Shape other) {
         super.assignFrom(other);
-        m_beastObject.setID(other.m_sID);
+        m_beastObject.setId(other.m_sID);
     }
 
     @Override
@@ -234,28 +234,28 @@ public class BEASTObjectShape extends Shape {
 
     @Override
     String getLabel() {
-        return getID();
+        return getId();
     }
 
     @Override
-    String getID() {
+    String getId() {
         if (m_beastObject == null) {
             return null;
         }
-        return m_beastObject.getID();
+        return m_beastObject.getId();
     }
 
     @Override
     void toSVG(PrintStream out) {
         out.println("<defs>");
-        out.println("  <linearGradient id='grad" + getID() + "' x1='0%' y1='0%' x2='100%' y2='100%'>");
+        out.println("  <linearGradient id='grad" + getId() + "' x1='0%' y1='0%' x2='100%' y2='100%'>");
         out.println("    <stop offset='0%' style='stop-color:rgb(255,255,255);stop-opacity:1' />");
         out.println("    <stop offset='100%' style='stop-color:rgb(" + m_fillcolor.getRed() + "," + m_fillcolor.getGreen() + "," + m_fillcolor.getBlue() + ");stop-opacity:1' />");
         out.println("  </linearGradient>");
         out.println("</defs>");
-        out.print("<path id='" + getID() + "' d='M " + m_x + " " + (m_y + m_h) + " l " + m_w / 2 + " 0 ");
+        out.print("<path id='" + getId() + "' d='M " + m_x + " " + (m_y + m_h) + " l " + m_w / 2 + " 0 ");
         out.print(" a " + m_w / 2 + " " + (-m_h / 2) + " 0 0,0 0," + (-m_h) + " l " + (-m_w / 2) + " 0 z'");
-        out.println(" fill='url(#grad" + getID() + ")' />");
+        out.println(" fill='url(#grad" + getId() + ")' />");
         drawSVGString(out, g_PluginFont, m_pencolor, "middle");
     }
 } // class Function

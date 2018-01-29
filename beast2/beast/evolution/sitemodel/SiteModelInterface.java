@@ -171,7 +171,7 @@ public interface SiteModelInterface {
 
             if (conditions == null) conditions = new ArrayList<>();
 
-            conditions.add(stateNode.get().getID());
+            conditions.add(stateNode.get().getId());
         }
 
         @Override

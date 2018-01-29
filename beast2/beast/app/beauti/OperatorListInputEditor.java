@@ -152,7 +152,7 @@ public class OperatorListInputEditor extends ListInputEditor {
         try {
             for (BEASTInterface beastObject2 : operator.listActiveBEASTObjects()) {
                 if (beastObject2 instanceof StateNode && ((StateNode) beastObject2).isEstimatedInput.get()) {
-                    name += beastObject2.getID() + " ";
+                    name += beastObject2.getId() + " ";
                 }
                 // issue https://github.com/CompEvol/beast2/issues/661
                 if (name.length() > 100) {
@@ -163,7 +163,7 @@ public class OperatorListInputEditor extends ListInputEditor {
         } catch (Exception e) {
             // ignore
         }
-        String tipText = getDoc().tipTextMap.get(operator.getID());
+        String tipText = getDoc().tipTextMap.get(operator.getId());
         if (tipText != null) {
             name += " " + tipText;
         }

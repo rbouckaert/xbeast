@@ -95,9 +95,9 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
      * NB: Should only be used for initialisation!
      */
     public void assignFromWithoutID(StateNode other) {
-        final String id = getID();
+        final String id = getId();
         assignFrom(other);
-        setID(id);
+        setId(id);
     }
 
     /**
@@ -111,7 +111,7 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
      * for storing a state *
      */
     final public void toXML(PrintStream out) {
-        out.print("<statenode id='" + normalise(getID()) + "'>");
+        out.print("<statenode id='" + normalise(getId()) + "'>");
         out.print(normalise(toString()));
         out.print("</statenode>\n");
     }
@@ -120,7 +120,7 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
      * stores a state node in XML format, to be restored by fromXML() *
      */
     final public String toXML() {
-        return "<statenode id='" + normalise(getID()) + "'>" +
+        return "<statenode id='" + normalise(getId()) + "'>" +
                 normalise(toString()) +
                 "</statenode>\n";
     }

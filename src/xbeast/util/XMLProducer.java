@@ -137,7 +137,7 @@ public class XMLProducer extends XMLParser {
             buf = new StringBuffer();
             if (others.size() > 0) {
                 for (BEASTInterface beastObject2 : others) {
-                    if (!IDs.contains(beastObject2.getID())) {
+                    if (!IDs.contains(beastObject2.getId())) {
                         beastObjectToXML(beastObject2, buf, null, false);
                     }
                 }
@@ -835,7 +835,7 @@ public class XMLProducer extends XMLParser {
         // open element
         buf.append("<").append(elementName);
         
-        if (beastObject.getID() == null) {
+        if (beastObject.getId() == null) {
         	String id = beastObject.getClass().getName();
         	if (id.contains(".")) {
         		id = id.substring(id.lastIndexOf('.') + 1);
@@ -847,19 +847,19 @@ public class XMLProducer extends XMLParser {
                 }
                 id = id + k;
             }
-            beastObject.setID(id);
+            beastObject.setId(id);
         }
 
         boolean skipInputs = false;
         // isDone.contains(beastObject) fails when BEASTObjects override equals(), so use a stream with == instead
         if (isDone.stream().anyMatch(x -> x == beastObject)) {
             // XML is already produced, we can idref it
-            buf.append(" idref='" + normalise(beastObject.getID()) + "'");
+            buf.append(" idref='" + normalise(beastObject.getId()) + "'");
             skipInputs = true;
         } else {
             // see whether a reasonable id can be generated
-            if (beastObject.getID() != null && !beastObject.getID().equals("")) {
-                String id = beastObject.getID();
+            if (beastObject.getId() != null && !beastObject.getId().equals("")) {
+                String id = beastObject.getId();
                 // ensure ID is unique, if not add index behind
                 uniqueID(id, buf);
             }
@@ -1048,7 +1048,7 @@ public class XMLProducer extends XMLParser {
             } else if (value instanceof BEASTInterface) {
             	if (input.defaultValue == null || !value.equals(input.defaultValue)) {
                     if (isShort && isDone.contains(value)) {
-                        buf.append(" " + input.getName() + "='@" + normalise( ((BEASTInterface) value).getID() ) + "'");
+                        buf.append(" " + input.getName() + "='@" + normalise( ((BEASTInterface) value).getId() ) + "'");
                         if (!isInputsDone.containsKey(beastObject)) {
                         	isInputsDone.put(beastObject, new HashSet<>());
                         }

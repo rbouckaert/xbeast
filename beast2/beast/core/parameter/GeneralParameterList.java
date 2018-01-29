@@ -465,7 +465,7 @@ public abstract class GeneralParameterList<T> extends StateNode {
     
     @Override
     public void init(PrintStream out) {
-        out.print(getID() + ".size\t");
+        out.print(getId() + ".size\t");
     }
 
     @Override
@@ -592,7 +592,7 @@ public abstract class GeneralParameterList<T> extends StateNode {
         }
 
         @Override
-        public String getID() {
+        public String getId() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 

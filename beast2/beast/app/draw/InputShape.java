@@ -137,7 +137,7 @@ public class InputShape extends Shape {
                 o instanceof Boolean) {
             return o.toString();
         } else if (o instanceof BEASTInterface) {
-            return ((BEASTInterface) o).getID();
+            return ((BEASTInterface) o).getId();
         }
         return "";
     }
@@ -152,7 +152,7 @@ public class InputShape extends Shape {
                     o instanceof Boolean) {
                 label += "=" + o.toString();
             } else if (o instanceof BEASTInterface) {
-                label += "=" + ((BEASTInterface) o).getID();
+                label += "=" + ((BEASTInterface) o).getId();
             } else if (o instanceof List<?>) {
                 label += "=[";
                 boolean needsComma = false;
@@ -170,9 +170,9 @@ public class InputShape extends Shape {
     }
 
     @Override
-    String getID() {
+    String getId() {
         if (m_beastObjectShape != null) {
-            return m_beastObjectShape.m_beastObject.getID() + "." + m_input.getName();
+            return m_beastObjectShape.m_beastObject.getId() + "." + m_input.getName();
         } else {
             return m_sID;
         }

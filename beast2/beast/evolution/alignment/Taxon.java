@@ -18,7 +18,7 @@ public class Taxon extends BEASTObject {
 //	public Input<String> m_sLabel = new Input<>("label", "name of the taxon", Validate.REQUIRED);
 
     public Taxon(final String id) {
-        setID(id);
+        setId(id);
         initAndValidate();
     }
 
@@ -31,7 +31,7 @@ public class Taxon extends BEASTObject {
     }
 
     protected String toString(final String indent) {
-    	return indent + getID() + "\n";
+    	return indent + getId() + "\n";
     }
 
     /**
@@ -61,7 +61,7 @@ public class Taxon extends BEASTObject {
 //        Collections.sort(taxa, new Comparator<>() {
 //            @Override // assumes IDs are not null
 //            public int compare(Taxon o1, Taxon o2) {
-//                return o1.getID().compareTo(o2.getID());
+//                return o1.getId().compareTo(o2.getId());
 //            }
 //        });
 //        return taxa;

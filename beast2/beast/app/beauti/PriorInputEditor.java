@@ -54,7 +54,7 @@ public class PriorInputEditor extends InputEditor.Base {
         JComboBox<BeautiSubTemplate> comboBox = new JComboBox<BeautiSubTemplate>(availableBEASTObjects.toArray(new BeautiSubTemplate[]{}));
         comboBox.setName(text+".distr");
 
-        String id = prior.distInput.get().getID();
+        String id = prior.distInput.get().getId();
         //Log.warning.println("id=" + id);
         id = id.substring(0, id.indexOf('.'));
         for (BeautiSubTemplate template : availableBEASTObjects) {
@@ -69,7 +69,7 @@ public class PriorInputEditor extends InputEditor.Base {
             List<?> list = (List<?>) m_input.get();
 
             BeautiSubTemplate template = (BeautiSubTemplate) comboBox1.getSelectedItem();
-            //String id = ((BEASTObject) list.get(item)).getID();
+            //String id = ((BEASTObject) list.get(item)).getId();
             //String partition = BeautiDoc.parsePartition(id);
             PartitionContext context = doc.getContextFor((BEASTInterface) list.get(itemNr));
             Prior prior1 = (Prior) list.get(itemNr);
@@ -129,8 +129,8 @@ public class PriorInputEditor extends InputEditor.Base {
         int fontsize = comboBox.getFont().getSize();
         comboBox.setMaximumSize(new Dimension(1024 * fontsize / 13, 24 * fontsize / 13));
 
-        String tipText = getDoc().tipTextMap.get(beastObject.getID());
-        //System.out.println(beastObject.getID());
+        String tipText = getDoc().tipTextMap.get(beastObject.getId());
+        //System.out.println(beastObject.getId());
         if (tipText != null) {
             JLabel tipTextLabel = new JLabel(" " + tipText);
             itemBox.add(tipTextLabel);

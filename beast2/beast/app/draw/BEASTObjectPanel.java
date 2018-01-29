@@ -98,7 +98,7 @@ public class BEASTObjectPanel extends JPanel {
             String id = getID(beastObject2);
             // ensure IDs are unique
             if (g_plugins.containsKey(id)) {
-                beastObject2.setID(null);
+                beastObject2.setId(null);
                 id = getID(beastObject2);
             }
             registerPlugin(getID(beastObject2), beastObject2, doc);
@@ -161,7 +161,7 @@ public class BEASTObjectPanel extends JPanel {
             for (Input<?> input : beastObject.listInputs()) {
                 m_beastObject.setInputValue(input.getName(), input.get());
             }
-            m_beastObject.setID(beastObject.getID());
+            m_beastObject.setId(beastObject.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,7 +170,7 @@ public class BEASTObjectPanel extends JPanel {
         //setModal(true);
         //m_beastObject = beastObject;
         m_beastObjectClass = _pluginClass;
-        //setTitle(m_beastObject.getID() + " Editor");
+        //setTitle(m_beastObject.getId() + " Editor");
 
         Box mainBox = Box.createVerticalBox();
         mainBox.add(Box.createVerticalStrut(5));
@@ -241,9 +241,9 @@ public class BEASTObjectPanel extends JPanel {
         JLabel label = new JLabel(m_beastObjectClass.getName().replaceAll(".*\\.", "") + ":");
         box.add(label);
 
-//        m_pluginButton = new JLabel(m_beastObject.getID());
-//        m_pluginButton.setToolTipText(m_beastObject.getID() + " is of type " + m_beastObject.getClass().getName() + " Click to change.");
-        label.setToolTipText(m_beastObject.getID() + " is of type " + m_beastObject.getClass().getName() + " Click to change.");
+//        m_pluginButton = new JLabel(m_beastObject.getId());
+//        m_pluginButton.setToolTipText(m_beastObject.getId() + " is of type " + m_beastObject.getClass().getName() + " Click to change.");
+        label.setToolTipText(m_beastObject.getId() + " is of type " + m_beastObject.getClass().getName() + " Click to change.");
 
 //		m_pluginButton.addActionListener(new ActionListener() {
 //			@Override
@@ -275,10 +275,10 @@ public class BEASTObjectPanel extends JPanel {
 //        box.add(m_pluginButton);
 
 
-        box.add(new JLabel(" " + m_beastObject.getID()));
+        box.add(new JLabel(" " + m_beastObject.getId()));
         
 //        m_identry = new JTextField();
-//        m_identry.setText(m_beastObject.getID());
+//        m_identry.setText(m_beastObject.getId());
 //        m_identry.setToolTipText("Name/ID that uniquely identifies this item");
 //
 //        m_identry.getDocument().addDocumentListener(new DocumentListener() {
@@ -310,9 +310,9 @@ public class BEASTObjectPanel extends JPanel {
     } // createPluginBox
 
     void processID() {
-//		PluginPanel.g_plugins.remove(m_beastObject.getID());
-//		m_beastObject.setID(m_identry.getText());
-//		PluginPanel.g_plugins.put(m_beastObject.getID(), m_beastObject);
+//		PluginPanel.g_plugins.remove(m_beastObject.getId());
+//		m_beastObject.setId(m_identry.getText());
+//		PluginPanel.g_plugins.put(m_beastObject.getId(), m_beastObject);
     }
 
 
@@ -420,15 +420,15 @@ public class BEASTObjectPanel extends JPanel {
      * return ID of beastObject, if no ID is specified, generate an appropriate ID first
      */
     public static String getID(BEASTInterface beastObject) {
-        if (beastObject.getID() == null || beastObject.getID().length() == 0) {
+        if (beastObject.getId() == null || beastObject.getId().length() == 0) {
             String id = beastObject.getClass().getName().replaceAll(".*\\.", "");
             int i = 0;
             while (g_plugins.containsKey(id + "." + i)) {
                 i++;
             }
-            beastObject.setID(id + "." + i);
+            beastObject.setId(id + "." + i);
         }
-        return beastObject.getID();
+        return beastObject.getId();
     }
 
     /**

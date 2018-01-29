@@ -15,11 +15,11 @@ public class OperatorScheduleTest extends TestCase {
 	
 	OperatorSchedule setUpSchedule() {
 		DeltaExchangeOperator operator1 = new DeltaExchangeOperator();
-		operator1.setID("deltaOperator");
+		operator1.setId("deltaOperator");
 		operator1.initByName("parameter", parameter, "weight", 1.0);
 
 		ScaleOperator operator2 = new ScaleOperator(); 
-		operator2.setID("scaleOperator");
+		operator2.setId("scaleOperator");
 		operator2.initByName("parameter", parameter, "weight", 3.0);
 
 		OperatorSchedule schedule = new OperatorSchedule();
@@ -52,7 +52,7 @@ public class OperatorScheduleTest extends TestCase {
 		double [] probs;
 		OperatorSchedule schedule = setUpSchedule();
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule.initByName("operator", operator3, "weight", 20.0, "weightIsPercentage", true, "operatorPattern", "^.*\\.Species$");
@@ -77,12 +77,12 @@ public class OperatorScheduleTest extends TestCase {
 		OperatorSchedule schedule = setUpSchedule();
 
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule = new OperatorSchedule();
 		ScaleOperator operator4 = new ScaleOperator(); 
-		operator4.setID("scaleOperator2.Species");
+		operator4.setId("scaleOperator2.Species");
 		operator4.initByName("parameter", parameter, "weight", 20.0);
 		subSchedule.initByName("operator", operator3, "operator", operator4, "weight", 20.0, "weightIsPercentage", true, "operatorPattern", "^.*\\.Species$");
 		schedule.subschedulesInput.get().clear();
@@ -109,7 +109,7 @@ public class OperatorScheduleTest extends TestCase {
 		double [] probs;
 		OperatorSchedule schedule = setUpSchedule();
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule.initByName(/*"operator", operator3,*/ "weight", 4.0, "operatorPattern", "^.*\\.Species$");
@@ -134,12 +134,12 @@ public class OperatorScheduleTest extends TestCase {
 		OperatorSchedule schedule = setUpSchedule();
 
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule = new OperatorSchedule();
 		ScaleOperator operator4 = new ScaleOperator(); 
-		operator4.setID("scaleOperator2.Species");
+		operator4.setId("scaleOperator2.Species");
 		operator4.initByName("parameter", parameter, "weight", 20.0);
 		subSchedule.initByName("operator", operator3, "operator", operator4, "weight", 4.0, "operatorPattern", "^.*\\.Species$");
 		schedule.subschedulesInput.get().clear();
@@ -167,13 +167,13 @@ public class OperatorScheduleTest extends TestCase {
 		OperatorSchedule schedule = setUpSchedule();
 		
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule.initByName("operator", operator3, "weight", 4.0, "operatorPattern", "^.*\\.Species$");
 		
 		ScaleOperator operator4 = new ScaleOperator(); 
-		operator4.setID("scaleOperator.Species2");
+		operator4.setId("scaleOperator.Species2");
 		operator4.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule2 = new OperatorSchedule();
 		subSchedule2.initByName("operator", operator4, "weight", 2.0, "operatorPattern", "^.*\\.Species2$");
@@ -205,7 +205,7 @@ public class OperatorScheduleTest extends TestCase {
 		OperatorSchedule schedule = setUpSchedule();
 		
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule.initByName("operator", operator3, "weight", 20.0, "weightIsPercentage", true, "operatorPattern", "^.*\\.Species$");
@@ -239,7 +239,7 @@ public class OperatorScheduleTest extends TestCase {
 		OperatorSchedule schedule = setUpSchedule();
 		
 		ScaleOperator operator3 = new ScaleOperator(); 
-		operator3.setID("scaleOperator.Species");
+		operator3.setId("scaleOperator.Species");
 		operator3.initByName("parameter", parameter, "weight", 20.0);
 		OperatorSchedule subSchedule = new OperatorSchedule();
 		subSchedule.initByName("operator", operator3, "weight", 4.0, "weightIsPercentage", false, "operatorPattern", "^.*\\.Species$");

@@ -410,7 +410,7 @@ public class Input<T> {
                 determineClass(beastObject);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new RuntimeException("Failed to determine class of beastobject id=" + beastObject.getID());
+                throw new RuntimeException("Failed to determine class of beastobject id=" + beastObject.getId());
             }
         }
         if (value instanceof String) {
@@ -418,8 +418,8 @@ public class Input<T> {
                 setStringValue((String) value, beastObject);
             } catch (Exception e) {
                 e.printStackTrace();
-            	Log.warning.println("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getID());
-                throw new RuntimeException("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getID());
+            	Log.warning.println("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getId());
+                throw new RuntimeException("Failed to set the string value to '" + value + "' for beastobject id=" + beastObject.getId());
             }
         } else if (this.value != null && this.value instanceof List<?>) {
             if (theClass.isAssignableFrom(value.getClass())) {
@@ -509,7 +509,7 @@ public class Input<T> {
             return false;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-            throw new RuntimeException("Illegal method access attempted on beastobject id=" + beastObject.getID());
+            throw new RuntimeException("Illegal method access attempted on beastobject id=" + beastObject.getId());
         }
     }
 

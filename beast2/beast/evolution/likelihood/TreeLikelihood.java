@@ -171,7 +171,7 @@ public class TreeLikelihood extends GenericTreeLikelihood {
 
         Alignment alignment = dataInput.get();
 
-        Log.info.println(className + "(" + getID() + ") uses " + likelihoodCore.getClass().getSimpleName());
+        Log.info.println(className + "(" + getId() + ") uses " + likelihoodCore.getClass().getSimpleName());
         Log.info.println("  " + alignment.toString(true));
         // print startup messages via Log.print*
 
@@ -264,7 +264,7 @@ public class TreeLikelihood extends GenericTreeLikelihood {
             Alignment data = dataInput.get();
             int i;
             int[] states = new int[patternCount];
-            int taxonIndex = getTaxonIndex(node.getID(), data);
+            int taxonIndex = getTaxonIndex(node.getId(), data);
             for (i = 0; i < patternCount; i++) {
                 int code = data.getPattern(taxonIndex, i);
                 int[] statesForCode = data.getDataType().getStatesForCode(code);
@@ -310,7 +310,7 @@ public class TreeLikelihood extends GenericTreeLikelihood {
             int states = data.getDataType().getStateCount();
             double[] partials = new double[patternCount * states];
             int k = 0;
-            int taxonIndex = getTaxonIndex(node.getID(), data);
+            int taxonIndex = getTaxonIndex(node.getId(), data);
             for (int patternIndex_ = 0; patternIndex_ < patternCount; patternIndex_++) {                
                 double[] tipLikelihoods = data.getTipLikelihoods(taxonIndex,patternIndex_);
                 if (tipLikelihoods != null) {
@@ -545,7 +545,7 @@ public class TreeLikelihood extends GenericTreeLikelihood {
      */
     @Override
 	public List<String> getArguments() {
-        return Collections.singletonList(dataInput.get().getID());
+        return Collections.singletonList(dataInput.get().getId());
     }
 
     /**

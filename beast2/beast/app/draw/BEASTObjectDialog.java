@@ -97,7 +97,7 @@ public class BEASTObjectDialog extends JDialog {
             	}
             	beastObject.setInputValue(input.getName(), input.get());
             }
-            beastObject.setID(m_panel.m_beastObject.getID());
+            beastObject.setId(m_panel.m_beastObject.getId());
             if (doc != null) {
             	doc.addPlugin(beastObject);
             }
@@ -113,7 +113,7 @@ public class BEASTObjectDialog extends JDialog {
 
         add(BorderLayout.CENTER, panel);
 
-        setTitle(panel.m_beastObject.getID() + " Editor");
+        setTitle(panel.m_beastObject.getId() + " Editor");
 
 
 //        /* add cancel and ok buttons at the bottom */
@@ -154,10 +154,10 @@ public class BEASTObjectDialog extends JDialog {
         //PluginDialog.m_position.x -= 30;
         //PluginDialog.m_position.y -= 30;
         if (m_bOK) {
-            String oldID = m_panel.m_beastObject.getID();
+            String oldID = m_panel.m_beastObject.getId();
             BEASTObjectPanel.g_plugins.remove(oldID);
-            m_panel.m_beastObject.setID(m_panel.m_identry.getText());
-            BEASTObjectPanel.registerPlugin(m_panel.m_beastObject.getID(), m_panel.m_beastObject, doc);
+            m_panel.m_beastObject.setId(m_panel.m_identry.getText());
+            BEASTObjectPanel.registerPlugin(m_panel.m_beastObject.getId(), m_panel.m_beastObject, doc);
         }
         return m_bOK;
     }

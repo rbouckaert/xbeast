@@ -27,17 +27,17 @@ public class MRCAPriorTest extends TestCase {
                 "IsLabelledNewick", true);
 
         Taxon human = new Taxon();
-        human.setID("human");
+        human.setId("human");
         Taxon bonobo = new Taxon();
-        bonobo.setID("bonobo");
+        bonobo.setId("bonobo");
         Taxon chimp = new Taxon();
-        chimp.setID("chimp");
+        chimp.setId("chimp");
         Taxon gorilla = new Taxon();
-        gorilla.setID("gorilla");
+        gorilla.setId("gorilla");
         Taxon orangutan = new Taxon();
-        orangutan.setID("orangutan");
+        orangutan.setId("orangutan");
         Taxon siamang = new Taxon();
-        siamang.setID("siamang");
+        siamang.setId("siamang");
 
         MRCAPrior prior = new MRCAPrior();
 
@@ -70,7 +70,7 @@ public class MRCAPriorTest extends TestCase {
         assertEquals(logP, Double.NEGATIVE_INFINITY, 0);
 
     
-        set.setID("test");
+        set.setId("test");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         prior.init(ps);
@@ -95,17 +95,17 @@ public class MRCAPriorTest extends TestCase {
                 "IsLabelledNewick", true);
 
         Taxon human = new Taxon();
-        human.setID("human");
+        human.setId("human");
         Taxon bonobo = new Taxon();
-        bonobo.setID("bonobo");
+        bonobo.setId("bonobo");
         Taxon chimp = new Taxon();
-        chimp.setID("chimp");
+        chimp.setId("chimp");
         Taxon gorilla = new Taxon();
-        gorilla.setID("gorilla");
+        gorilla.setId("gorilla");
         Taxon orangutan = new Taxon();
-        orangutan.setID("orangutan");
+        orangutan.setId("orangutan");
         Taxon siamang = new Taxon();
-        siamang.setID("siamang");
+        siamang.setId("siamang");
 
         MRCAPrior prior = new MRCAPrior();
 

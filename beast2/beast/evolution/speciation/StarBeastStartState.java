@@ -140,7 +140,7 @@ public class StarBeastStartState extends Tree implements StateNodeInitialiser {
 
         for (final Node n : nodes) {
             if (n.isLeaf()) {
-                tipsSpecies[n.getNr()].add(tipName2Species.get(n.getID()));
+                tipsSpecies[n.getNr()].add(tipName2Species.get(n.getId()));
             } else {
                 assert n.getChildCount() == 2;
                 @SuppressWarnings("unchecked")
@@ -206,7 +206,7 @@ public class StarBeastStartState extends Tree implements StateNodeInitialiser {
             final Taxon nx = taxonSets.get(k);
             final List<Taxon> taxa = ((TaxonSet) nx).taxonsetInput.get();
             for( final Taxon n : taxa ) {
-              geneTips2Species.put(n.getID(), k);
+              geneTips2Species.put(n.getId(), k);
             }
         }
         final double[] dg = new double[(speciesCount*(speciesCount-1))/2];
@@ -226,7 +226,7 @@ public class StarBeastStartState extends Tree implements StateNodeInitialiser {
                 	// distance between species-taxon 0 and the species-taxon with missing lineages,
                 	// so i < speciesCount - 1.
                 	// What if lineages for species-taxon 0 are missing? Then all entries will be 'infinite'.
-                	String id = (i < speciesCount - 1? stree.getExternalNodes().get(i+1).getID() : "unknown taxon");
+                	String id = (i < speciesCount - 1? stree.getExternalNodes().get(i+1).getId() : "unknown taxon");
                 	if (i == 0) {
                 		// test that all entries are 'infinite', which implies taxon 0 has lineages missing 
                 		boolean b = true;
@@ -235,10 +235,10 @@ public class StarBeastStartState extends Tree implements StateNodeInitialiser {
                 		}
                 		if (b) {
                 			// if all entries have 'infinite' distances, it is probably the first taxon that is at fault
-                			id = stree.getExternalNodes().get(0).getID();
+                			id = stree.getExternalNodes().get(0).getId();
                 		}
                 	}
-                	throw new RuntimeException("Gene tree " + g.getID() + " has no lineages for species taxon " + id + " ");
+                	throw new RuntimeException("Gene tree " + g.getId() + " has no lineages for species taxon " + id + " ");
                 }
             }
         }

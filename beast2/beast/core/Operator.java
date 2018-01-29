@@ -114,7 +114,7 @@ public abstract class Operator extends BEASTObject {
         if (className.startsWith(STANDARD_OPERATOR_PACKAGE)) {
             className = className.substring(STANDARD_OPERATOR_PACKAGE.length() + 1);
         }
-        return className + "(" + (getID() != null ? getID() : "") + ")";
+        return className + "(" + (getId() != null ? getId() : "") + ")";
     }
 
     /**
@@ -253,10 +253,10 @@ public abstract class Operator extends BEASTObject {
 	        JSONStringer json = new JSONStringer();
 	        json.object();
 	
-	        if (getID()==null)
-	           setID("unknown");
+	        if (getId()==null)
+	           setId("unknown");
 	
-	        json.key("id").value(getID());
+	        json.key("id").value(getId());
 	
 	        double p = getCoercableParameterValue();
 	        if (Double.isNaN(p)) {

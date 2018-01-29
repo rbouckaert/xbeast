@@ -379,7 +379,7 @@ public class State extends BEASTObject {
                 if (child.getNodeType() == Node.ELEMENT_NODE) {
                     final String id = child.getAttributes().getNamedItem("id").getNodeValue();
                     int stateNodeIndex = 0;
-                    while (!stateNode[stateNodeIndex].getID().equals(id)) {
+                    while (!stateNode[stateNodeIndex].getId().equals(id)) {
                         stateNodeIndex++;
                     }
                     final StateNode stateNode2 = stateNode[stateNodeIndex].copy();
@@ -417,8 +417,8 @@ public class State extends BEASTObject {
 	
 	                // An init node without ID - should not bring the house down, does it?
 	                // I have not checked if the state is restored correctly or not (JH)
-	                while (stateNode[stateNodeIndex].getID() != null &&
-	                        !stateNode[stateNodeIndex].getID().equals(id)) {
+	                while (stateNode[stateNodeIndex].getId() != null &&
+	                        !stateNode[stateNodeIndex].getId().equals(id)) {
 	                    stateNodeIndex++;
 	                    if (stateNodeIndex >= stateNode.length) {
 	                    	Log.warning.println("Cannot restore statenode id " + id + " -- item is ignored");
@@ -524,11 +524,11 @@ public class State extends BEASTObject {
                     if (beastObject instanceof CalculationNode) {
                         stateNodeOutputs[i].add((CalculationNode) beastObject);
                     } else {
-                        throw new RuntimeException("DEVELOPER ERROR: output of StateNode (" + stateNode[i].getID() + ") should be a CalculationNode, but " + beastObject.getClass().getName() + " is not.");
+                        throw new RuntimeException("DEVELOPER ERROR: output of StateNode (" + stateNode[i].getId() + ") should be a CalculationNode, but " + beastObject.getClass().getName() + " is not.");
                     }
                 }
             } else {
-                Log.warning.println("\nWARNING: StateNode (" + stateNode[i].getID() + ") found that has no effect on posterior!\n");
+                Log.warning.println("\nWARNING: StateNode (" + stateNode[i].getId() + ") found that has no effect on posterior!\n");
             }
         }
     } // setPosterior

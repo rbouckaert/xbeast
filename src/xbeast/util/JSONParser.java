@@ -960,7 +960,7 @@ public class JSONParser {
 		
 		// set id
 		beastObject = (BEASTInterface) o;
-		beastObject.setID(ID);
+		beastObject.setId(ID);
 
 		// hack required to make log-parsing easier
 		//if (o instanceof State) {
@@ -1101,7 +1101,7 @@ public class JSONParser {
 				    	try {
 							Object o = ctor.newInstance(args);
 							BEASTInterface beastObject = (BEASTInterface) o;
-							beastObject.setID(_id);
+							beastObject.setId(_id);
 							register(node, beastObject);
 							return beastObject;
 				    	} catch (IllegalAccessException e) {

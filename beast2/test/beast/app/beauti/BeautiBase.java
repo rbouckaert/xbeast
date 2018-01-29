@@ -111,7 +111,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 		for (Object o : list) {
 			BEASTObject beastObject = (BEASTObject) o;
 			bf.append('"');
-			bf.append(beastObject.getID());
+			bf.append(beastObject.getId());
 			bf.append("\", ");
 		}
 		String str = bf.toString();
@@ -125,7 +125,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 		for (String id : ids) {
 			boolean found = false;
 			for (BEASTObject node : priors) {
-				if (node.getID().equals(id)) {
+				if (node.getId().equals(id)) {
 					found = true;
 				}
 			}
@@ -135,12 +135,12 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 		for (BEASTObject node : priors) {
 			boolean found = false;
 			for (String id : ids) {
-				if (node.getID().equals(id)) {
+				if (node.getId().equals(id)) {
 					found = true;
 				}
 			}
 			if (!found) {
-				extras.add(node.getID());
+				extras.add(node.getId());
 			}
 		}
 		if (extras.size() != 0) {
@@ -155,7 +155,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 			boolean found = false;
 			for (Object o: list) {
 				BEASTObject node = (BEASTObject) o;
-				if (node.getID().equals(id)) {
+				if (node.getId().equals(id)) {
 					found = true;
 					break;
 				}
@@ -166,7 +166,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 		Set<String> idsInList = new HashSet<String>();
 		Set<String> duplicates = new HashSet<String>();
 		for (Object o : list) {
-			String id = ((BEASTObject) o).getID();
+			String id = ((BEASTObject) o).getId();
 			if (idsInList.contains(id)) {
 				duplicates.add(id);
 			} else {
@@ -179,7 +179,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 			// list.size > ids.length, otherwise it would have been picked up above
 			List<String> extraIDs = new ArrayList<String>(); 
 			for (Object o : list) {
-				String id = ((BEASTObject) o).getID();
+				String id = ((BEASTObject) o).getId();
 				boolean found = false;
 				for (String id2 : ids) {
 					if (id2.equals(id)) {

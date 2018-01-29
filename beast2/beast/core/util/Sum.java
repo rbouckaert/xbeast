@@ -99,7 +99,7 @@ public class Sum extends CalculationNode implements Function, Loggable {
      */
     @Override
     public void init(PrintStream out) {
-        out.print("sum(" + ((BEASTObject) functionInput.get().get(0)).getID() + ")\t");
+        out.print("sum(" + ((BEASTObject) functionInput.get().get(0)).getId() + ")\t");
     }
 
     @Override

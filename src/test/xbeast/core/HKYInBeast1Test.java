@@ -59,9 +59,9 @@ public class HKYInBeast1Test extends TestCase {
 		Parameter.Default frequencyParameter = new Parameter.Default(new Double[]{0.25,0.25,0.25,0.25});
 		dr.evolution.datatype.DataType dataType = Nucleotides.INSTANCE;
 		FrequencyModel freqModel = new FrequencyModel(dataType, frequencyParameter);
-		freqModel.setID("frequencies");
+		freqModel.setId("frequencies");
 		HKY hky = new HKY(kappaParameter, freqModel);
-		hky.setID("HKY");
+		hky.setId("HKY");
 				
         Parameter mu = new Parameter.Default(1, 0.5);
         Parameter alpha = new Parameter.Default(1, 0.5);
@@ -85,7 +85,7 @@ public class HKYInBeast1Test extends TestCase {
         SimpleAlignment alignment = new SimpleAlignment(seqs, Nucleotides.INSTANCE);
         
         Patterns patternList = new Patterns(alignment);
-        patternList.setID("patterns");
+        patternList.setId("patterns");
         
         Parameter.Default popSizeParameter = new Parameter.Default(0.0001);
         
@@ -98,7 +98,7 @@ public class HKYInBeast1Test extends TestCase {
         
         
         TreeModel treeModel = new TreeModel("treeModel", coalescentSimulator);
-        treeModel.setID("tree");
+        treeModel.setId("tree");
         Parameter rootHeight = treeModel.getRootHeightParameter();        
         rootHeight.setId("rootHeight");
         Parameter internalNodes = treeModel.createNodeHeightsParameter(false, true, false);
@@ -140,7 +140,7 @@ public class HKYInBeast1Test extends TestCase {
         List<Likelihood> likelihoods = new ArrayList<>();
         likelihoods.add(treeLikelihood);
         CompoundLikelihood compoundLikelihood = new CompoundLikelihood(likelihoods);
-        compoundLikelihood.setID("likelihood");
+        compoundLikelihood.setId("likelihood");
         
         
 //        LogColumn likelihoodColumn = new CompoundLikelihood.LikelihoodColumn(likelihoods);
@@ -185,7 +185,7 @@ public class HKYInBeast1Test extends TestCase {
 		
 		
 		JSONProducer producer = new JSONProducer();
-		String json = producer.toJSON(screenLogger);
+		String json = producer.toJSON(mcmc);
 		System.err.println(json);
 		
 		JSONParser parser = new JSONParser();

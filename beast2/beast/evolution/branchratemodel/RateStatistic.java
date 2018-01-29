@@ -168,7 +168,7 @@ public class RateStatistic extends BEASTObject implements Loggable, Function {
 
     @Override
     public void init(final PrintStream out) {
-        String id = getID();
+        String id = getId();
         if (id == null) {
             id = "";
         }

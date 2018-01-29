@@ -76,12 +76,12 @@ abstract public class BEASTObject implements BEASTInterface{
     protected String ID;
 
 	@Override
-    public String getID() {
+    public String getId() {
         return ID;
     }
 
 	@Override
-    public void setID(final String ID) {
+    public void setId(final String ID) {
         this.ID = ID;
     }
 
@@ -89,8 +89,8 @@ abstract public class BEASTObject implements BEASTInterface{
     // a method in Object, so it needs to be in BEASTObject
 	@Override
     public String toString() {
-		if (getID() != null) {
-			return getID();
+		if (getId() != null) {
+			return getId();
 		}
         return this.getClass().getSimpleName().toLowerCase();
     }

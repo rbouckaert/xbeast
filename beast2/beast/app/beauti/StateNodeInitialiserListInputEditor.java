@@ -58,7 +58,7 @@ public class StateNodeInitialiserListInputEditor extends ListInputEditor {
 			sAvailablePlugins.remove(sAvailablePlugins.size() - 1);
 
 			comboBox = new JComboBox<>(sAvailablePlugins.toArray());
-			String sID = beastObject.getID();
+			String sID = beastObject.getId();
 			try {
 				sID = sID.substring(0, sID.indexOf('.'));
 			} catch (Exception e) {
@@ -101,10 +101,10 @@ public class StateNodeInitialiserListInputEditor extends ListInputEditor {
 
 		}
 
-		String name = beastObject.getID();
+		String name = beastObject.getId();
 		Object o = beastObject.getInput("initial").get();
 		if (o instanceof BEASTInterface) {
-			name = ((BEASTInterface) o).getID();
+			name = ((BEASTInterface) o).getId();
 		}
 
 		if (name == null || name.length() == 0) {
@@ -191,7 +191,7 @@ public class StateNodeInitialiserListInputEditor extends ListInputEditor {
         for (int i = 0; i < hasInitialiser.length; i++) {
         	if (!hasInitialiser[i]) {
         		for (BeautiSubTemplate tmp : doc.beautiConfig.subTemplates) {
-        			if (tmp.getID().equals("RandomTree")) {
+        			if (tmp.getId().equals("RandomTree")) {
         				PartitionContext partition = doc.getContextFor(trees.get(i));
         				Object o = tmp.createSubNet(partition, false);
         				inits.add((StateNodeInitialiser) o);

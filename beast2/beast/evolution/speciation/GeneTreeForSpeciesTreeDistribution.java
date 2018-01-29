@@ -77,7 +77,7 @@ public class GeneTreeForSpeciesTreeDistribution extends TreeDistribution {
         final int speciesCount = speciesTreeInput.get().getNodeCount();
 
 
-        if (speciesCount <= 1 && sptNodes[0].getID().equals("Beauti2DummyTaxonSet")) {
+        if (speciesCount <= 1 && sptNodes[0].getId().equals("Beauti2DummyTaxonSet")) {
             // we are in Beauti, don't initialise
             return;
         }
@@ -92,7 +92,7 @@ public class GeneTreeForSpeciesTreeDistribution extends TreeDistribution {
         // sanity check lineage nodes are all at height=0
         for (int i = 0; i < gtLineages; i++) {
             if (gtNodes[i].getHeight() != 0) {
-                throw new IllegalArgumentException("Cannot deal with taxon " + gtNodes[i].getID() +
+                throw new IllegalArgumentException("Cannot deal with taxon " + gtNodes[i].getId() +
                         ", which has non-zero height + " + gtNodes[i].getHeight());
             }
         }
@@ -101,13 +101,13 @@ public class GeneTreeForSpeciesTreeDistribution extends TreeDistribution {
 
         Arrays.fill(nrOfLineageToSpeciesMap, -1);
         for (int i = 0; i < gtLineages; i++) {
-            final String speciesID = getSetID(gtNodes[i].getID());
+            final String speciesID = getSetID(gtNodes[i].getId());
             // ??? can this be a startup check? can this happen during run due to tree change?
             if (speciesID == null) {
-                throw new IllegalArgumentException("Cannot find species for lineage " + gtNodes[i].getID());
+                throw new IllegalArgumentException("Cannot find species for lineage " + gtNodes[i].getId());
             }
             for (int species = 0; species < speciesCount; species++) {
-                if (speciesID.equals(sptNodes[species].getID())) {
+                if (speciesID.equals(sptNodes[species].getId())) {
                     nrOfLineageToSpeciesMap[i] = species;
                     break;
                 }
@@ -144,8 +144,8 @@ public class GeneTreeForSpeciesTreeDistribution extends TreeDistribution {
         for (final Taxon taxonSet : taxonSets) {
             final List<Taxon> taxa = ((TaxonSet) taxonSet).taxonsetInput.get();
             for (final Taxon aTaxa : taxa) {
-                if (aTaxa.getID().equals(lineageID)) {
-                    return taxonSet.getID();
+                if (aTaxa.getId().equals(lineageID)) {
+                    return taxonSet.getId();
                 }
             }
         }
@@ -165,7 +165,7 @@ public class GeneTreeForSpeciesTreeDistribution extends TreeDistribution {
         final Node[] speciesNodes = stree.getNodesAsArray();
 
         traverseLineageTree(speciesNodes, treeInput.get().getRoot());
-//		System.err.println(getID());
+//		System.err.println(getId());
 //		for (int i = 0; i < m_intervals.length; i++) {
 //			System.err.println(m_intervals[i]);
 //		}

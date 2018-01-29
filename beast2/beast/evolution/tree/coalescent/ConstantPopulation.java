@@ -70,7 +70,7 @@ public class ConstantPopulation extends PopulationFunction.Abstract {
 
     @Override
 	public List<String> getParameterIds() {
-        return Collections.singletonList(popSizeParameter.get().getID());
+        return Collections.singletonList(popSizeParameter.get().getId());
     }
 
     @Override

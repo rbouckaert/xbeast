@@ -57,7 +57,7 @@ public class MRCAPriorInputEditor extends InputEditor.Base {
         Box itemBox = Box.createHorizontalBox();
 
         MRCAPrior prior = (MRCAPrior) beastObject;
-        String text = prior.getID();
+        String text = prior.getId();
 
         JButton taxonButton = new JButton(text);
 //        taxonButton.setMinimumSize(Base.PREFERRED_SIZE);
@@ -82,13 +82,13 @@ public class MRCAPriorInputEditor extends InputEditor.Base {
 
                         prior2.taxonsetInput.setValue(dlg.taxonSet, prior2);
                         int i = 1;
-                        String id = dlg.taxonSet.getID();
-                        while (doc.pluginmap.containsKey(dlg.taxonSet.getID()) && doc.pluginmap.get(dlg.taxonSet.getID()) != dlg.taxonSet) {
-                        	dlg.taxonSet.setID(id + i);
+                        String id = dlg.taxonSet.getId();
+                        while (doc.pluginmap.containsKey(dlg.taxonSet.getId()) && doc.pluginmap.get(dlg.taxonSet.getId()) != dlg.taxonSet) {
+                        	dlg.taxonSet.setId(id + i);
                         	i++;
                         }
                         BEASTObjectPanel.addPluginToMap(dlg.taxonSet, doc);
-                        prior2.setID(dlg.taxonSet.getID() + ".prior");
+                        prior2.setId(dlg.taxonSet.getId() + ".prior");
 
                     }
                 } catch (Exception e1) {
@@ -114,7 +114,7 @@ public class MRCAPriorInputEditor extends InputEditor.Base {
         comboBox.setName(text+".distr");
 
         if (prior.distInput.get() != null) {
-            String id = prior.distInput.get().getID();
+            String id = prior.distInput.get().getId();
             //id = BeautiDoc.parsePartition(id);
             id = id.substring(0, id.indexOf('.'));
             for (BeautiSubTemplate template : availableBEASTObjects) {
@@ -307,7 +307,7 @@ public class MRCAPriorInputEditor extends InputEditor.Base {
     		operator = new TipDatesRandomWalker();
     		operator.initByName("tree", prior.treeInput.get(), "taxonset", taxonset, "windowSize", 1.0, "weight", 1.0);
     	}
-   		operator.setID("tipDatesSampler." + taxonset.getID());
+   		operator.setId("tipDatesSampler." + taxonset.getId());
    	    	
     	doc.mcmc.get().setInputValue("operator", operator);
 	}

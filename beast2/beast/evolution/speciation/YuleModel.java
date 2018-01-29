@@ -221,7 +221,7 @@ public class YuleModel extends SpeciesTreeDistribution {
 
         List<Node> activeLineages = new ArrayList<>();
         for (Node oldLeaf : tree.getExternalNodes()) {
-            Node newLeaf = new Node(oldLeaf.getID());
+            Node newLeaf = new Node(oldLeaf.getId());
             newLeaf.setNr(oldLeaf.getNr());
             newLeaf.setHeight(0.0);
             activeLineages.add(newLeaf);
@@ -259,7 +259,7 @@ public class YuleModel extends SpeciesTreeDistribution {
     @Override
     public List<String> getConditions() {
         List<String> conditions = new ArrayList<>();
-        conditions.add(birthDiffRateParameterInput.get().getID());
+        conditions.add(birthDiffRateParameterInput.get().getId());
 
         return conditions;
     }
@@ -267,7 +267,7 @@ public class YuleModel extends SpeciesTreeDistribution {
     @Override
     public List<String> getArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.add(treeInput.get().getID());
+        arguments.add(treeInput.get().getId());
 
         return arguments;
     }

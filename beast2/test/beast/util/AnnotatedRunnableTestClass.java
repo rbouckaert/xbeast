@@ -66,12 +66,12 @@ public class AnnotatedRunnableTestClass extends Runnable {
 	}
 
 	@Override
-	public String getID() {
+	public String getId() {
 		return "JSONTest";
 	}
 
 	@Override
-	public void setID(String ID) {
+	public void setId(String ID) {
 		// ignore
 	}
 

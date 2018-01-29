@@ -287,7 +287,7 @@ public class BeautiConfig extends BEASTObject {
     static BeautiSubTemplate NULL_TEMPLATE = new BeautiSubTemplate();
 
     public static BeautiSubTemplate getNullTemplate(BeautiDoc doc) {
-        NULL_TEMPLATE.setID("[none]");
+        NULL_TEMPLATE.setId("[none]");
         NULL_TEMPLATE._class = Object.class;
         NULL_TEMPLATE.doc = doc;
         return NULL_TEMPLATE;

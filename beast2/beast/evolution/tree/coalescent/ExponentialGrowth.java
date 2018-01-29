@@ -157,7 +157,7 @@ public class ExponentialGrowth extends PopulationFunction.Abstract {
 
     @Override
 	public List<String> getParameterIds() {
-        return Collections.singletonList(popSizeParameterInput.get().getID());
+        return Collections.singletonList(popSizeParameterInput.get().getId());
     }
 
 //    public int getNumArguments() {

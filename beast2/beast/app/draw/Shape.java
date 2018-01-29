@@ -57,7 +57,7 @@ abstract public class Shape {
 
     Document m_doc;
     
-    String getID() {
+    String getId() {
         return m_sID;
     }
 
@@ -169,7 +169,7 @@ abstract public class Shape {
     } // XMLnormalizeAtt
 
     String getAtts() {
-        return " id='" + getID() + "'" +
+        return " id='" + getId() + "'" +
                 " x='" + (m_x - 400) + "'" +
                 " y='" + (550 - m_y - m_h) + "'" +
                 " w='" + m_w + "'" +

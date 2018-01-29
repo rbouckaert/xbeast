@@ -54,11 +54,11 @@ public class TreeDistributionInputEditor extends InputEditor.Base {
         Box itemBox = Box.createHorizontalBox();
 
         TreeDistribution distr = (TreeDistribution) beastObject;
-        String text = ""/* beastObject.getID() + ": " */;
+        String text = ""/* beastObject.getId() + ": " */;
         if (distr.treeInput.get() != null) {
-            text += distr.treeInput.get().getID();
+            text += distr.treeInput.get().getId();
         } else {
-            text += distr.treeIntervalsInput.get().treeInput.get().getID();
+            text += distr.treeIntervalsInput.get().treeInput.get().getId();
         }
         JLabel label = new JLabel(text);
         Font font = label.getFont();
@@ -89,12 +89,12 @@ public class TreeDistributionInputEditor extends InputEditor.Base {
             }
         }
 
-        String id = distr.getID();
+        String id = distr.getId();
         try {
             // id = BeautiDoc.parsePartition(id);
             id = id.substring(0, id.indexOf('.'));
         } catch (Exception e) {
-            throw new RuntimeException("Improperly formatted ID: " + distr.getID());
+            throw new RuntimeException("Improperly formatted ID: " + distr.getId());
         }
         for (BeautiSubTemplate template : availableBEASTObjects) {
             if (template.matchesName(id)) { // getMainID().replaceAll(".\\$\\(n\\)",

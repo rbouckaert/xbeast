@@ -81,7 +81,7 @@ public class ClockModelListInputEditor extends ListInputEditor {
     	if (operator == null) {
     		operator = new DeltaExchangeOperator();
     		try {
-    			operator.setID("FixMeanRatesOperator");
+    			operator.setId("FixMeanRatesOperator");
 				operator.initByName("weight", 2.0, "delta", 0.75);
 			} catch (Exception e1) {
 				// ignore initAndValidate exception
@@ -147,7 +147,7 @@ public class ClockModelListInputEditor extends ListInputEditor {
 	    	}
 
 	    	IntegerParameter weightParameter = new IntegerParameter(weights);
-			weightParameter.setID("weightparameter");
+			weightParameter.setId("weightparameter");
 			weightParameter.isEstimatedInput.setValue(false, weightParameter);
 	    	operator.parameterWeightsInput.setValue(weightParameter, operator);
 	    	if (!isAllClocksAreEqual) {

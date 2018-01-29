@@ -37,7 +37,7 @@ public interface Parameter<T> extends Function {
 
     public T[] getValues();
 
-    public String getID();
+    public String getId();
 
     public int getMinorDimension1();
 
@@ -277,7 +277,7 @@ public interface Parameter<T> extends Function {
         @Override
         public String toString() {
             final StringBuilder buf = new StringBuilder();
-            buf.append(getID()).append("[").append(values.length);
+            buf.append(getId()).append("[").append(values.length);
             if (minorDimension > 0) {
                 buf.append(" ").append(minorDimension);
             }
@@ -307,7 +307,7 @@ public interface Parameter<T> extends Function {
         public void assignTo(final StateNode other) {
             @SuppressWarnings("unchecked")
             final Parameter.Base<T> copy = (Parameter.Base<T>) other;
-            copy.setID(getID());
+            copy.setId(getId());
             copy.index = index;
             copy.values = values.clone();
             //System.arraycopy(values, 0, copy.values, 0, values.length);
@@ -320,7 +320,7 @@ public interface Parameter<T> extends Function {
         public void assignFrom(final StateNode other) {
             @SuppressWarnings("unchecked")
             final Parameter.Base<T> source = (Parameter.Base<T>) other;
-            setID(source.getID());
+            setId(source.getId());
             values = source.values.clone();
             storedValues = source.storedValues.clone();
             System.arraycopy(source.values, 0, values, 0, values.length);
@@ -345,10 +345,10 @@ public interface Parameter<T> extends Function {
         public void init(final PrintStream out) {
             final int valueCount = getDimension();
             if (valueCount == 1) {
-                out.print(getID() + "\t");
+                out.print(getId() + "\t");
             } else {
                 for (int value = 0; value < valueCount; value++) {
-                    out.print(getID() + (value + 1) + "\t");
+                    out.print(getId() + (value + 1) + "\t");
                 }
             }
         }
@@ -364,7 +364,7 @@ public interface Parameter<T> extends Function {
         @Override
         public void fromXML(final Node node) {
             final NamedNodeMap atts = node.getAttributes();
-            setID(atts.getNamedItem("id").getNodeValue());
+            setId(atts.getNamedItem("id").getNodeValue());
             final String str = node.getTextContent();
             Pattern pattern = Pattern.compile(".*\\[(.*) (.*)\\].*\\((.*),(.*)\\): (.*) ");
             Matcher matcher = pattern.matcher(str);
