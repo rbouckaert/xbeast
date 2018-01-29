@@ -2,6 +2,7 @@ package test.xbeast.core;
 
 
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import dr.evomodel.operators.WilsonBalding;
 import dr.evomodel.siteratemodel.GammaSiteRateModel;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evomodel.substmodel.nucleotide.HKY;
+import dr.evomodel.tree.RootHeightLogger;
 import dr.evomodel.tree.TreeLogger;
 import dr.evomodel.tree.TreeModel;
 import dr.evomodel.treelikelihood.BeagleTreeLikelihood;
@@ -99,10 +101,10 @@ public class HKYInBeast1Test extends TestCase {
         
         TreeModel treeModel = new TreeModel("treeModel", coalescentSimulator);
         treeModel.setId("tree");
-        Parameter rootHeight = treeModel.getRootHeightParameter();        
-        rootHeight.setId("rootHeight");
-        Parameter internalNodes = treeModel.createNodeHeightsParameter(false, true, false);
-        Parameter allInternalNodeHeights = treeModel.createNodeHeightsParameter(true, true, false);
+        //Parameter rootHeight = treeModel.getRootHeightParameter();        
+        //rootHeight.setId("rootHeight");
+        //Parameter internalNodes = treeModel.createNodeHeightsParameter(false, true, false);
+        //Parameter allInternalNodeHeights = treeModel.createNodeHeightsParameter(true, true, false);
 
         
         BranchModel branchModel = new HomogeneousBranchModel(hky, freqModel);
@@ -119,8 +121,8 @@ public class HKYInBeast1Test extends TestCase {
                 true);
 
         ScaleOperator kappaScaleOperator = new ScaleOperator(kappaParameter, 0.5, CoercionMode.DEFAULT, 1.0);
-        ScaleOperator rootScaleOperator = new ScaleOperator(rootHeight, 0.5, CoercionMode.DEFAULT, 1.0);
-        UniformOperator internalNodeUniformOperator = new UniformOperator(internalNodes, 10);
+        ScaleOperator rootScaleOperator = new ScaleOperator(treeModel, 0.5, CoercionMode.DEFAULT, 1.0);
+        UniformOperator internalNodeUniformOperator = new UniformOperator(treeModel, 10);
         SubtreeSlideOperator subtreeSlideOperator = new SubtreeSlideOperator(treeModel, 5.0, 1.0);
         ExchangeOperator narrowExchangeOperator = new ExchangeOperator(0, treeModel, 1.0);        
         ExchangeOperator wideExchangeOperator = new ExchangeOperator(1, treeModel, 1.0);
@@ -151,16 +153,21 @@ public class HKYInBeast1Test extends TestCase {
 //        columns.add(rootHeightColumn);
 //        columns.add(kappaColumn);
         
+        
+        RootHeightLogger rootHeightLogger = new RootHeightLogger(treeModel);
+        rootHeightLogger.setId("rootHeightLogger");
+        
+        
         List<Loggable> screenLog = new ArrayList<>();
         screenLog.add(compoundLikelihood);
         screenLog.add(kappaParameter);
-        screenLog.add(rootHeight);
+        screenLog.add(rootHeightLogger);
         MCLogger screenLogger = new MCLogger(1000, screenLog);
         
         List<Loggable> traceLog = new ArrayList<>();
         traceLog.add(compoundLikelihood);
         traceLog.add(kappaParameter);
-        traceLog.add(rootHeight);
+        traceLog.add(rootHeightLogger);
         MCLogger traceLogger = new MCLogger("testMCMC.log", 1000, traceLog);
         
         TreeLogger treeLogger = new TreeLogger("testMCMC.trees", 1000, treeModel, true);
@@ -186,12 +193,22 @@ public class HKYInBeast1Test extends TestCase {
 		
 		JSONProducer producer = new JSONProducer();
 		String json = producer.toJSON(mcmc);
+		
+        FileWriter outfile = new FileWriter("/tmp/x.xml");
+        outfile.write(json);
+        outfile.close();
+
+		
 		System.err.println(json);
 		
 		JSONParser parser = new JSONParser();
 		List<Object> o = parser.parseFragment(json, false);
 		json = producer.toJSON((BEASTObject) o.get(0));
 		System.err.println(json);
-		
+
+		outfile = new FileWriter("/tmp/y.xml");
+        outfile.write(json);
+        outfile.close();
+
 	}
 }
