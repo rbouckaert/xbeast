@@ -37,6 +37,7 @@ import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -728,6 +729,9 @@ public class JSONParser {
 				}
 			}
 		}
+		if (className == null) {
+			return true;
+		}
 		if (className.equals(INPUT_CLASS)) {
 			return true;
 		}
@@ -939,9 +943,19 @@ public class JSONParser {
 		} catch (ClassNotFoundException e) {
 			// ignore -- class was found in beastObjectNames before
 		} catch (IllegalAccessException e) {
-			// T O D O Auto-generated catch block
-			e.printStackTrace();
-			throw new JSONParserException(node, "Cannot access class. Please check the spec attribute.", 1011);
+			// try to call static method clazzName.newInstance()
+			Class<?> c;
+			try {
+				c = Class.forName(clazzName);
+				Method newInstance;
+				newInstance = c.getDeclaredMethod("newInstance");
+				o = newInstance.invoke(null);
+			} catch (NullPointerException e1) { 
+				throw new JSONParserException(node, "Cannot access newInstance(). Perhaps the methods is not static?", 1111);
+			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+				e1.printStackTrace();
+				throw new JSONParserException(node, "Cannot access class. Please check the spec attribute.", 1011);
+			} 
 		}
 		
 		// set id
@@ -1005,6 +1019,11 @@ public class JSONParser {
 		} catch (ClassNotFoundException e) {
 			// cannot get here, since we checked the class existed before
 			e.printStackTrace();
+		}
+		
+		if (clazzName.contains("MCLogger")) {
+			int h = 3;
+			h++;
 		}
 		
 		// try to find a constructor that has Param annotations where all values of inputInfo can be matched

@@ -25,6 +25,7 @@
 package xbeast.util;
 
 
+
 import static xbeast.util.XMLParserUtils.processPlates;
 import static xbeast.util.XMLParserUtils.replaceVariable;
 
@@ -35,6 +36,7 @@ import java.io.StringReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +63,6 @@ import xbeast.core.Runnable;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
 import xbeast.core.util.Log;
-import xbeast.util.XMLParser.NameValuePair;
 
 
 /**
@@ -767,9 +768,19 @@ public class XMLParser {
 		} catch (ClassNotFoundException e) {
 			// ignore -- class was found in beastObjectNames before
 		} catch (IllegalAccessException e) {
-			// T O D O Auto-generated catch block
-			e.printStackTrace();
-			throw new XMLParserException(node, "Cannot access class. Please check the spec attribute.", 1011);
+			// try to call static method clazzName.newInstance()
+			Class<?> c;
+			try {
+				c = Class.forName(clazzName);
+				Method newInstance;
+				newInstance = c.getDeclaredMethod("newInstance");
+				o = newInstance.invoke(null);
+			} catch (NullPointerException e1) { 
+				throw new XMLParserException(node, "Cannot access newInstance(). Perhaps the methods is not static?", 1111);
+			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+				e1.printStackTrace();
+				throw new XMLParserException(node, "Cannot access class. Please check the spec attribute.", 1011);
+			} 
 		}
 		
 		// set id
@@ -957,7 +968,11 @@ public class XMLParser {
 		List<Object> values = new ArrayList<>();
 		for (NameValuePair pair : inputInfo) {
 			if (pair.name.equals(param.name())) {
-				values.add(pair.value);
+				if (pair.value instanceof List) {
+					values.addAll((List) pair.value);
+				} else {
+					values.add(pair.value);
+				}
 				pair.processed = true;
 			}
 		}

@@ -46,7 +46,9 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 		
 		String methodName = "get" + 
 		    	name.substring(0, 1).toUpperCase() +
-		    	name.substring(1);
+		    	name.substring(1)
+		    	// + "List"
+		    	;
 		try {
 			getter = beastObject.getClass().getMethod(methodName);
 		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
@@ -56,9 +58,11 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 
 		methodName = "set" + 
 		    	name.substring(0, 1).toUpperCase() +
-		    	name.substring(1);
+		    	name.substring(1)
+		    	//  + "List"
+		    	;
 		try {
-			setter = beastObject.getClass().getMethod(methodName, theClass);
+			setter = beastObject.getClass().getMethod(methodName, theClass /*List.class*/);
 		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
 			Log.err.println("Programmer error: when getting here an InputType was identified, but no setter for Param annotation found");
 			throw e;
@@ -302,4 +306,14 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 		return null;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof InputForAnnotatedConstructor)) {
+			return false;
+		}
+		InputForAnnotatedConstructor other = (InputForAnnotatedConstructor) obj;
+		return other.getName().equals(getName()) &&
+				other.tipText.equals(tipText) &&
+				other.getType().equals(getType());
+	}
 }

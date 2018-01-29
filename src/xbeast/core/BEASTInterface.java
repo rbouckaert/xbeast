@@ -309,7 +309,7 @@ public interface BEASTInterface {
 	                					+ "Classes should have unique input names");	            				
 	            			}
 	            			if (!input.equals(t)) {
-	            				throw new RuntimeException("Programmer error: @Param inputs with same name should be equal to previously used annotations");
+	            				throw new RuntimeException("Programmer error: @Param inputs with same name ("+ input.getName() +") should be equal to previously used annotations");
 	            			}
 	            		} else {
 	            			inputNames.put(t.getName(), t);

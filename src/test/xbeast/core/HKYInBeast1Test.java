@@ -47,7 +47,6 @@ import xbeast.core.BEASTObject;
 import xbeast.util.JSONParser;
 import xbeast.util.JSONParserException;
 import xbeast.util.JSONProducer;
-import xbeast.util.XMLProducer;
 
 public class HKYInBeast1Test extends TestCase {
 
@@ -86,6 +85,7 @@ public class HKYInBeast1Test extends TestCase {
         SimpleAlignment alignment = new SimpleAlignment(seqs, Nucleotides.INSTANCE);
         
         Patterns patternList = new Patterns(alignment);
+        patternList.setID("patterns");
         
         Parameter.Default popSizeParameter = new Parameter.Default(0.0001);
         
@@ -98,7 +98,8 @@ public class HKYInBeast1Test extends TestCase {
         
         
         TreeModel treeModel = new TreeModel("treeModel", coalescentSimulator);
-        Parameter rootHeight = treeModel.getRootHeightParameter();
+        treeModel.setID("tree");
+        Parameter rootHeight = treeModel.getRootHeightParameter();        
         rootHeight.setId("rootHeight");
         Parameter internalNodes = treeModel.createNodeHeightsParameter(false, true, false);
         Parameter allInternalNodeHeights = treeModel.createNodeHeightsParameter(true, true, false);
@@ -112,7 +113,7 @@ public class HKYInBeast1Test extends TestCase {
         		branchModel, // branchModel,
                 siteModel,
                 branchRateModel,
-                null, // tipStateModel
+                //null, // tipStateModel
                 false,
                 PartialsRescalingScheme.DEFAULT,
                 true);
@@ -139,6 +140,7 @@ public class HKYInBeast1Test extends TestCase {
         List<Likelihood> likelihoods = new ArrayList<>();
         likelihoods.add(treeLikelihood);
         CompoundLikelihood compoundLikelihood = new CompoundLikelihood(likelihoods);
+        compoundLikelihood.setID("likelihood");
         
         
 //        LogColumn likelihoodColumn = new CompoundLikelihood.LikelihoodColumn(likelihoods);
@@ -149,11 +151,11 @@ public class HKYInBeast1Test extends TestCase {
 //        columns.add(rootHeightColumn);
 //        columns.add(kappaColumn);
         
-        List<Loggable> columns = new ArrayList<>();
-        columns.add(compoundLikelihood);
-        columns.add(kappaParameter);
-        columns.add(rootHeight);
-        MCLogger screenLog = new MCLogger(1000, columns);
+        List<Loggable> screenLog = new ArrayList<>();
+        screenLog.add(compoundLikelihood);
+        screenLog.add(kappaParameter);
+        screenLog.add(rootHeight);
+        MCLogger screenLogger = new MCLogger(1000, screenLog);
         
         List<Loggable> traceLog = new ArrayList<>();
         traceLog.add(compoundLikelihood);
@@ -164,7 +166,7 @@ public class HKYInBeast1Test extends TestCase {
         TreeLogger treeLogger = new TreeLogger("testMCMC.trees", 1000, treeModel, true);
 
         List<MCLogger> loggers = new ArrayList<>();
-        loggers.add(screenLog);
+        loggers.add(screenLogger);
         loggers.add(traceLogger);
         loggers.add(treeLogger);
         
@@ -183,7 +185,7 @@ public class HKYInBeast1Test extends TestCase {
 		
 		
 		JSONProducer producer = new JSONProducer();
-		String json = producer.toJSON(treeLikelihood);
+		String json = producer.toJSON(screenLogger);
 		System.err.println(json);
 		
 		JSONParser parser = new JSONParser();
