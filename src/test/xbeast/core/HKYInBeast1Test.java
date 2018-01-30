@@ -45,17 +45,21 @@ import dr.inference.operators.ScaleOperator;
 import dr.inference.operators.SimpleOperatorSchedule;
 import dr.inference.operators.UniformOperator;
 import junit.framework.TestCase;
+import xbeast.core.BEASTInterface;
 import xbeast.core.BEASTObject;
 import xbeast.util.JSONParser;
 import xbeast.util.JSONParserException;
 import xbeast.util.JSONProducer;
+import xbeast.util.XMLParser;
+import xbeast.util.XMLParserException;
+import xbeast.util.XMLProducer;
 
 public class HKYInBeast1Test extends TestCase {
 
 	
 	
 	@Test
-	public void testHKYInBeast1() throws JSONParserException, JSONException, IOException {
+	public void testHKYInBeast1() throws JSONException, IOException, XMLParserException {
 		Parameter.Default kappaParameter = new Parameter.Default(2.0);
 		kappaParameter.setId("kappa");
 		Parameter.Default frequencyParameter = new Parameter.Default(new Double[]{0.25,0.25,0.25,0.25});
@@ -184,31 +188,42 @@ public class HKYInBeast1Test extends TestCase {
         
         
         
-//        XMLProducer xmlp = new XMLProducer();
-//		String xml = xmlp.toXML(treeModel);
-//		System.err.println(mcmc);
+        XMLProducer xmlp = new XMLProducer();
+		String xml = xmlp.toXML(mcmc);
+		System.err.println(xml);
         		
-
-		
-		
-		JSONProducer producer = new JSONProducer();
-		String json = producer.toJSON(mcmc);
-		
         FileWriter outfile = new FileWriter("/tmp/x.xml");
-        outfile.write(json);
+        outfile.write(xml);
         outfile.close();
 
-		
-		System.err.println(json);
-		
-		JSONParser parser = new JSONParser();
-		List<Object> o = parser.parseFragment(json, false);
-		json = producer.toJSON((BEASTObject) o.get(0));
-		System.err.println(json);
+		XMLParser parser = new XMLParser();
+		BEASTInterface o = parser.parseFragment(xml, false);
+		xml = xmlp.toXML((BEASTObject) o);
+		System.err.println(xml);
 
 		outfile = new FileWriter("/tmp/y.xml");
-        outfile.write(json);
+        outfile.write(xml);
         outfile.close();
+		
+		
+//		JSONProducer producer = new JSONProducer();
+//		String json = producer.toJSON(mcmc);
+//		
+//        FileWriter outfile = new FileWriter("/tmp/x.xml");
+//        outfile.write(json);
+//        outfile.close();
+//
+//		
+//		System.err.println(json);
+//		
+//		JSONParser parser = new JSONParser();
+//		List<Object> o = parser.parseFragment(json, false);
+//		json = producer.toJSON((BEASTObject) o.get(0));
+//		System.err.println(json);
+//
+//		outfile = new FileWriter("/tmp/y.xml");
+//        outfile.write(json);
+//        outfile.close();
 
 	}
 }

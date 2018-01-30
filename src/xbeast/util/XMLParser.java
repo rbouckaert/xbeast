@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -853,7 +854,12 @@ public class XMLParser {
 			// cannot get here, since we checked the class existed before
 			e.printStackTrace();
 		}
-		
+
+		if (clazzName.contains("MCMC")) {
+			int h = 3;
+			h++;
+		}
+
 		// try to find a constructor that has Param annotations where all values of inputInfo can be matched
 	    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
 	    for (Constructor<?> ctor : allConstructors) {
@@ -900,11 +906,30 @@ public class XMLParser {
 		    				}
 		    				List<Object> values = XMLParser.getListOfValues(param, inputInfo);
 		    				((List)args[i]).addAll(values);
-		    			} else {
-		    				args[i] = getValue(param, types[i], inputInfo);
-	    					args[i] = Input.fromString(args[i], types[i]);
+		    			} else if (type.getTypeName().endsWith("[]")) {
+							String typeName = type.getTypeName();
+							typeName = typeName.substring(0, typeName.length() - 2);
+							try {
+								if (BEASTInterface.class.isAssignableFrom(Class.forName(typeName))) {
+									List<Object> values = XMLParser.getListOfValues(param, inputInfo);
+									Object array = java.lang.reflect.Array.newInstance(Class.forName(typeName), values.size());
+									for (int k = 0; k < values.size(); k++) {
+										Array.set(array, k, values.get(k));
+									}
+									args[i] = array;
+								} else {
+									args[i] = getValue(param, types[i], inputInfo);
+									args[i] = Input.fromString(args[i], types[i]);
+								}
+							} catch (ClassNotFoundException | NegativeArraySizeException e) {
+								args[i] = getValue(param, types[i], inputInfo);
+								args[i] = Input.fromString(args[i], types[i]);
+							}
+						} else {
+							args[i] = getValue(param, types[i], inputInfo);
+							args[i] = Input.fromString(args[i], types[i]);
 
-		    			}
+						}
 		    		}
 
 		    		// ensure all inputs are used

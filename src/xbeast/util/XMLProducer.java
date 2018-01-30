@@ -1036,13 +1036,25 @@ public class XMLProducer extends XMLParser {
 			            	}
 		            	}	            		
 	            	} else {
-		            	for (Object o : (Object []) value) {
-		            		buf2.append(o + " ");
+		            	for (Object o2 : (Object []) value) {
+	                    	if (!(o2 instanceof BEASTInterface)) {
+	                    		buf2.append(o2.toString() + " ");
+	                    	} else {
+	                    		return;
+	                    	}
 		            	}
 	                }	            	
 	            	buf2.deleteCharAt(buf2.length() - 1);
 	            	buf2.append("\"");
 	            	buf.append(buf2);
+                } else {
+	            	for (Object o2 : (Object []) value) {
+                    	StringBuffer buf3 = new StringBuffer();
+                    	if (o2 instanceof BEASTInterface) {
+                    		beastObjectToXML((BEASTInterface) o2, buf3, input.getName(), false);
+	                        buf.append(buf3);
+                    	}
+	            	}
                 }
             	return;
             } else if (value instanceof BEASTInterface) {
