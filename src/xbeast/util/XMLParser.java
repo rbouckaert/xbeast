@@ -855,13 +855,15 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 
-		if (clazzName.contains("MCMC")) {
+		if (clazzName.contains("Taxon")) {
 			int h = 3;
 			h++;
 		}
 
 		// try to find a constructor that has Param annotations where all values of inputInfo can be matched
 	    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
+	    boolean hasID = false;
+	    boolean hasName = false;
 	    for (Constructor<?> ctor : allConstructors) {
 	    	Annotation[][] annotations = ctor.getParameterAnnotations();
 	    	List<Param> paramAnnotations = new ArrayList<>();
@@ -871,6 +873,14 @@ public class XMLParser {
 		    		if (a instanceof Param) {
 		    			Param param = (Param) a;
 		    			paramAnnotations.add(param);
+		    			if (param.name().equals("id") && !hasID) {
+		    				inputInfo.add(new NameValuePair("id", _id));
+		    				hasID = true;
+		    			}
+		    			if (param.name().equals("name") && !hasName) {
+		    				inputInfo.add(new NameValuePair("name", node.getAttributes().getNamedItem("name")));
+		    				hasName = true;
+		    			}
 		    			if (param.optional()) {
 		    				optionals++;
 		    			}

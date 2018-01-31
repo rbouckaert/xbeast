@@ -952,6 +952,7 @@ public class XMLProducer extends XMLParser {
     		//return;
     	//}
         if (value != null) {
+        	String name = input.getName();
             if (value instanceof Map) {
                 // distinguish between List, Map, BEASTInterface and primitive input types
             	if (isShort) {
@@ -975,7 +976,7 @@ public class XMLProducer extends XMLParser {
                 	}
                 }
             	return;
-            } else if (input.getName().startsWith("*")) {
+            } else if (name.startsWith("*") || name.equals("id") || name.equals("name")) {
         		// this can happen with private inputs, like in ThreadedTreeLikelihood
         		// and * is not a valid XML attribute name
         		return;

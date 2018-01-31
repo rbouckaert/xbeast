@@ -48,14 +48,9 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import xbeast.core.BEASTInterface;
 import xbeast.core.Input;
-import xbeast.core.Input.Validate;
 import xbeast.core.Param;
 import xbeast.core.Runnable;
 //import xbeast.core.State;
@@ -1020,14 +1015,11 @@ public class JSONParser {
 			// cannot get here, since we checked the class existed before
 			e.printStackTrace();
 		}
-		
-		if (clazzName.contains("MCLogger")) {
-			int h = 3;
-			h++;
-		}
-		
+				
 		// try to find a constructor that has Param annotations where all values of inputInfo can be matched
 	    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
+	    boolean hasID = false;
+	    boolean hasName = false;
 	    for (Constructor<?> ctor : allConstructors) {
 	    	Annotation[][] annotations = ctor.getParameterAnnotations();
 	    	List<Param> paramAnnotations = new ArrayList<>();
@@ -1037,6 +1029,19 @@ public class JSONParser {
 		    		if (a instanceof Param) {
 		    			Param param = (Param) a;
 		    			paramAnnotations.add(param);
+		    			if (param.name().equals("id") && !hasID) {
+		    				inputInfo.add(new NameValuePair("id", _id));
+		    				hasID = true;
+		    			}
+		    			if (param.name().equals("name") && !hasName) {
+		    				try {
+								inputInfo.add(new NameValuePair("name", node.get("name")));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		    				hasName = true;
+		    			}
 		    			if (param.optional()) {
 		    				optionals++;
 		    			}

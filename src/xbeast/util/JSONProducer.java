@@ -278,6 +278,7 @@ public class JSONProducer {
         if (value != null) {
         	
             // distinguish between Map, List, BEASTObject and primitive input types
+        	String name = input.getName();
             if (value instanceof Map) {
                 if (!isShort) {
                 	Map<String,?> map = (Map<String,?>) value;
@@ -306,7 +307,7 @@ public class JSONProducer {
                 	buf.append(buf2);
                 }
             	return;
-            } else if (input.getName().startsWith("*")) {
+            } else if (name.startsWith("*") || name.equals("id") || name.equals("name")) {
         		// this can happen with private inputs, like in ThreadedTreeLikelihood
         		// and * is not a valid XML attribute name
             	return;
