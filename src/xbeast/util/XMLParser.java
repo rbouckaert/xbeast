@@ -38,6 +38,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -775,9 +776,12 @@ public class XMLParser {
 				c = Class.forName(clazzName);
 				Method newInstance;
 				newInstance = c.getDeclaredMethod("newInstance");
+				if (!Modifier.isStatic(newInstance.getModifiers())) {
+					throw new XMLParserException(node, "Found method newInstance() but it is not static so it cannot be accessed", 1112);					
+				}
 				o = newInstance.invoke(null);
 			} catch (NullPointerException e1) { 
-				throw new XMLParserException(node, "Cannot access newInstance(). Perhaps the methods is not static?", 1111);
+				throw new XMLParserException(node, "Cannot access newInstance(). Perhaps the methods is not defined?", 1111);
 			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 				e1.printStackTrace();
 				throw new XMLParserException(node, "Cannot access class. Please check the spec attribute.", 1011);

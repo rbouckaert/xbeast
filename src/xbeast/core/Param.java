@@ -36,7 +36,7 @@ public @interface Param {
      * The description of this parameter. Must be specified and contain
      * at least 4 words to pass the unit tests.
      */
-    String description();
+    String description() default "";
 
     /**
      * @return the default value as a string. An attempt is made to 
