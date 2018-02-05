@@ -29,17 +29,23 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -57,15 +63,19 @@ import beast.app.beauti.BeautiDoc.ActionOnExit;
 import beast.app.beauti.BeautiDoc.DOC_STATUS;
 import beast.app.draw.BEASTObjectPanel;
 import beast.app.draw.HelpBrowser;
+import beast.app.draw.InputEditor;
 import beast.app.draw.ModelBuilder;
 import beast.app.draw.MyAction;
 import beast.app.tools.AppStore;
 import xbeast.app.util.Utils;
 import xbeast.core.BEASTInterface;
+import beast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
+import xbeast.util.PackageManager;
 import beast.evolution.alignment.Alignment;
 import beast.math.distributions.MRCAPrior;
-import xbeast.util.PackageManager;
+import beast.math.distributions.Prior;
+import beast.math.distributions.Uniform;
 import jam.framework.DocumentFrame;
 
 
@@ -184,6 +194,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
     Action a_citation = new ActionCitation();
     Action a_about = new ActionAbout();
     Action a_viewModel = new ActionViewModel();
+    Action a_viewDistribution = new ActionViewDistribution();
 
     @Override
     public void docHasChanged() throws NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -607,7 +618,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
 
         @Override
 		public void actionPerformed(ActionEvent ae) {
-            BEASTVersion2 version = new xbeast.app.BEASTVersion2();
+            BEASTVersion2 version = new BEASTVersion2();
             JOptionPane.showMessageDialog(null, version.getCredits(),
                     "About Beauti " + version.getVersionString(), JOptionPane.PLAIN_MESSAGE,
                     Utils.getIcon(BEAUTI_ICON));
@@ -713,6 +724,88 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
         }
     } // class ActionViewModel
 
+    class ActionViewDistribution extends MyAction {
+        private static final long serialVersionUID = -1;
+
+        public ActionViewDistribution() {
+            super("View distribution", "View parametric distribution and its graph", "distr", -1);
+        } // c'tor
+
+        @Override
+		public void actionPerformed(ActionEvent ae) {
+            JFrame frame = new JFrame("Parametric distribution");
+            // start with prior with uniform(0,1) distribution
+            final Prior prior = new Prior();
+            Uniform uniform = new Uniform();
+            uniform.setId("Uniform.0");
+            uniform.initByName("lower","0.0","upper","1.0");
+            prior.initByName("x", new RealParameter("0.0"), "distr", uniform);
+            prior.setId("Parametric.Distribution");
+            
+            // create panel with parametric distribution viewer
+            refreshDistributionPanel(frame, prior);
+
+            frame.setSize(800, 400);
+            frame.setVisible(true);
+        }
+
+		private void refreshDistributionPanel(JFrame frame, Prior prior) {
+			// clear frame content in case it is refreshed after change of distribution  
+			JRootPane p = (JRootPane) frame.getComponent(0);
+			JLayeredPane p1 = (JLayeredPane) p.getComponent(1);
+			JPanel p2 = (JPanel) p1.getComponent(0);
+			p2.removeAll();
+			
+            final JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+			
+            // add combobox with parametric distributions
+            List<BeautiSubTemplate> availableBEASTObjects = doc.getInputEditorFactory().getAvailableTemplates(prior.distInput, prior, null, doc);
+            JComboBox<BeautiSubTemplate> comboBox = new JComboBox<BeautiSubTemplate>(availableBEASTObjects.toArray(new BeautiSubTemplate[]{}));
+            panel.add(comboBox);
+            
+            String id = prior.distInput.get().getId();
+            id = id.substring(0, id.indexOf('.'));
+            for (BeautiSubTemplate template : availableBEASTObjects) {
+                if (template.classInput.get() != null && template.shortClassName.equals(id)) {
+                    comboBox.setSelectedItem(template);
+                }
+            }
+            
+            try {
+            	// add parametric input editor
+                final InputEditor editor = doc.inputEditorFactory.createInputEditor(prior.distInput, prior, doc);
+                panel.add((Component) editor);
+                comboBox.addActionListener(e -> {
+                    @SuppressWarnings("unchecked")
+        			JComboBox<BeautiSubTemplate> comboBox1 = (JComboBox<BeautiSubTemplate>) e.getSource();
+
+                    BeautiSubTemplate template = (BeautiSubTemplate) comboBox1.getSelectedItem();
+                    try {
+                        template.createSubNet(new PartitionContext(), prior, prior.distInput, true);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    refreshDistributionPanel(frame, prior);
+                });
+			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | InstantiationException
+					| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+            
+            // add close button
+            JButton closeButton = new JButton("Close");
+            closeButton.addActionListener(e -> {
+            	frame.setVisible(false);
+            	frame.dispose();
+            });
+            panel.add(closeButton);
+			
+            frame.add(panel);
+            frame.revalidate();
+		}
+    } // class ActionViewDistribution
+
     public void refreshPanel() {
         try {
             BeautiPanel panel = (BeautiPanel) getSelectedComponent();
@@ -786,6 +879,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
         helpMenu.add(a_msgs);
         helpMenu.add(a_citation);
         helpMenu.add(a_viewModel);
+        helpMenu.add(a_viewDistribution);
         if (!Utils.isMac()) {
             helpMenu.add(a_about);
         }
@@ -1402,6 +1496,18 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
 
     public static void main(String[] args) {
         main2(args);
+        
+        // check for new packages in the background
+        new Thread() {
+        	public void run() {
+        		String statuString = Utils.getBeautiProperty("package.update.status");
+        		if (statuString == null) {
+        			statuString = PackageManager.UpdateStatus.AUTO_CHECK_AND_ASK.toString(); 
+        		}
+        		PackageManager.UpdateStatus updateStatus = PackageManager.UpdateStatus.valueOf(statuString);
+        		PackageManager.updatePackages(updateStatus, true);
+        	};
+        }.start();
     }
 
 } // class Beauti

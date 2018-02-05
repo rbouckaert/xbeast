@@ -1,6 +1,5 @@
 package beast.app.beauti;
 
-
 import beast.app.draw.BEASTObjectInputEditor;
 import xbeast.core.BEASTInterface;
 import xbeast.core.Input;

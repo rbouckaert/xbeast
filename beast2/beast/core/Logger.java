@@ -42,11 +42,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.sun.org.glassfish.gmbal.Description;
+
+import xbeast.core.*;
 import xbeast.core.Input.Validate;
 import xbeast.core.util.Log;
 import beast.evolution.tree.Tree;
 import xbeast.util.XMLProducer;
-import xbeast.core.*;
 
 
 @Description("Logs results of a calculation processes on regular intervals.")

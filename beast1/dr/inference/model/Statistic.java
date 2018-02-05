@@ -90,10 +90,6 @@ public interface Statistic extends Attribute<double[]>, Identifiable, Loggable {
         }
         
         @Override
-        public void initAndValidate() {
-        }
-
-        @Override
         public String getStatisticName() {
             if (name != null) {
                 return name;

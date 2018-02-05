@@ -59,16 +59,14 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import xbeast.app.BEASTVersion2;
-import xbeast.app.Main;
+import beast.app.beastapp.BeastMain;
 import xbeast.app.util.Arguments;
-//import xbeast.app.beastapp.BeastMain;
-//import xbeast.app.util.Arguments;
 import xbeast.app.util.Utils;
-import xbeast.app.util.Utils6;
 import xbeast.core.BEASTInterface;
 import xbeast.core.Description;
 import xbeast.core.util.Log;
-//import xbeast.evolution.alignment.Alignment;
+import beast.evolution.alignment.Alignment;
+
 
 /**
  * This class is used to manage beast 2 add-ons, and can
@@ -82,6 +80,8 @@ import xbeast.core.util.Log;
 @Description("Manage all BEAUti packages and list their dependencies")
 public class PackageManager {
     public static final BEASTVersion2 beastVersion = new BEASTVersion2();
+
+    public enum UpdateStatus {AUTO_CHECK_AND_ASK, AUTO_UPDATE, DO_NOT_CHECK};
 
     public final static String[] IMPLEMENTATION_DIR = {"beast", "snap"};
     public final static String TO_DELETE_LIST_FILE = "toDeleteList";
@@ -700,7 +700,7 @@ public class PackageManager {
         if (System.getProperty("beast.install.dir") != null)
             return System.getProperty("beast.install.dir");
 
-        URL u = Main.class.getProtectionDomain().getCodeSource().getLocation();
+        URL u = BeastMain.class.getProtectionDomain().getCodeSource().getLocation();
 		String s = u.getPath();
         File beastJar = new File(s);
         Log.trace.println("BeastMain found in " + beastJar.getPath());
@@ -970,7 +970,7 @@ public class PackageManager {
         	loadPacakge(jarDirName);
         }
         externalJarsLoaded = true;
-        //Alignment.findDataTypes();
+        Alignment.findDataTypes();
     } // loadExternalJars
     
 	public static void loadExternalJars(String packagesString) throws IOException {
@@ -1023,7 +1023,7 @@ public class PackageManager {
         	}
         }
         externalJarsLoaded = true;
-        //Alignment.findDataTypes();
+        Alignment.findDataTypes();
     } // loadExternalJars
 
     private static void loadPacakge(String jarDirName) {
@@ -1681,6 +1681,8 @@ public class PackageManager {
                             new Arguments.Option("useAppDir", "Use application (system wide) installation directory. Note this requires writing rights to the application directory. If not specified, the user's BEAST directory will be used."),
                             new Arguments.StringOption("dir", "DIR", "Install/uninstall package in directory <DIR>. This overrides the useAppDir option"),
                             new Arguments.Option("help", "Show help"),
+                            new Arguments.Option("update", "Check for updates, and ask to install if available"),
+                            new Arguments.Option("updatenow", "Check for updates and install without asking"),
                     });
             try {
                 arguments.parseArguments(args);
@@ -1693,6 +1695,16 @@ public class PackageManager {
 
             if (args.length == 0 || arguments.hasOption("help")) {
                 printUsageAndExit(arguments);
+            }
+            
+            if (arguments.hasOption("update")) {
+            	updatePackages(UpdateStatus.AUTO_CHECK_AND_ASK, false);
+            	return;
+            }
+
+            if (arguments.hasOption("updatenow")) {
+            	updatePackages(UpdateStatus.AUTO_UPDATE, false);
+            	return;
             }
 
             boolean useAppDir = arguments.hasOption("useAppDir");
@@ -1856,4 +1868,126 @@ public class PackageManager {
 //			return false;
 //		}
 	}
+    
+    /** check whether there are new packages to install, and if so install them
+     * either after asking the user, or without asking (depending on updateStatus).
+     * @param updateStatus
+     */
+    public static void updatePackages(UpdateStatus updateStatus, boolean useGUI) {
+    	if (updateStatus == UpdateStatus.DO_NOT_CHECK) {
+    		return;
+    	}
+    	
+    	// find available and installed packages
+        TreeMap<String, Package> packageMap = new TreeMap<>((s1,s2)->{
+        	if (s1.equals(PackageManager.BEAST_PACKAGE_NAME)) {
+        		if (s2.equals(PackageManager.BEAST_PACKAGE_NAME)) {
+        			return 0;
+        		}
+        		return -1;
+        	}
+        	if (s2.equals(PackageManager.BEAST_PACKAGE_NAME)) {
+        		return 1;
+        	}
+        	return s1.compareToIgnoreCase(s2);
+        });
+        try {
+			addAvailablePackages(packageMap);
+		} catch (PackageListRetrievalException e) {
+			// cannot access list right now, so try again next time
+			return;
+		}
+        addInstalledPackages(packageMap);
+
+        // check whether any installed package has an update
+        Map<Package, PackageVersion> packagesToInstall = new LinkedHashMap<>();
+        for (String packageName : packageMap.keySet()) {
+        	Package _package = packageMap.get(packageName);
+        	if (_package.isInstalled()) {
+        		if (_package.getLatestVersion().compareTo(_package.getInstalledVersion()) > 0) {
+        			packagesToInstall.put(_package, _package.getLatestVersion());
+        		}
+        	}
+        }
+        
+        // do we need to ask before proceeding?
+    	if (updateStatus != UpdateStatus.AUTO_UPDATE) {
+    		if (useGUI) {
+	    		StringBuilder buf = new StringBuilder();
+	    		buf.append("<table><tr><td>Package name</td><td>New version</td><td>Installed</td></tr>");
+	    		for (Package _package : packagesToInstall.keySet()) {
+	    			buf.append("<tr><td>" + _package.packageName + "</td>"
+	    					+ "<td>" + _package.getLatestVersion()+ "</td>"
+	    					+ "<td>" + _package.getInstalledVersion() + "</td></tr>");
+	    		}
+	    		buf.append("</table>");
+	    		String [] options = new String[]{"No, never check again", "Not now", "Yes", "Always install without asking"};
+	    		int response = JOptionPane.showOptionDialog(null, "<html><h2>New pacakges are available to install:</h2>" +
+	    				buf.toString() + 
+	    				"Do you want to install?</html>", "Package Manager", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+	    		        null, options, options[2]);
+	    		switch (response) {
+	    		case 0: // No, never check again
+	                Utils.saveBeautiProperty("package.update.status", UpdateStatus.DO_NOT_CHECK.toString());
+	    			return;
+	    		case 1: // No, check later
+	                Utils.saveBeautiProperty("package.update.status", UpdateStatus.AUTO_CHECK_AND_ASK.toString());
+	    			return;
+	    		case 2: // Yes, ask next time
+	                Utils.saveBeautiProperty("package.update.status", UpdateStatus.AUTO_CHECK_AND_ASK.toString());
+	    			break;
+	    		case 3: // Always install automatically
+	                Utils.saveBeautiProperty("package.update.status", UpdateStatus.AUTO_UPDATE.toString());
+	    			break;
+	    		default: // e.g. escape-key gets us here
+	    			return;
+	    		}
+    		} else {
+    			Log.info("New pacakges are available to install:");
+	    		Log.info("Package name\tNew version\tInstalled");
+	    		for (Package _package : packagesToInstall.keySet()) {
+	    			Log.info(_package.packageName + "\t" + _package.getLatestVersion()+ "\t" + _package.getInstalledVersion());
+	    		}
+    			Log.info("Do you want to install (y/n)?");
+                Log.info.flush();
+                final BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));	                        
+                String msg = "n";
+				try {
+					msg = stdin.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+					return;
+				}
+                if (!msg.toLowerCase().equals("y")) {
+                	Log.info("Exiting now");
+                	return;
+                }
+    		}
+    	}
+        
+        // install packages that can be updated
+        try {
+			prepareForInstall(packagesToInstall, false, null);
+
+	        if (getToDeleteListFile().exists()) {
+	        	if (useGUI) {
+	        		JOptionPane.showMessageDialog(null,
+	                    "<html><body><p style='width: 200px'>Upgrading packages on your machine requires BEAUti " +
+	                            "to restart. Shutting down now.</p></body></html>");
+	        	} else {
+                    Log.info("Upgrading packages on your machine requires BEAUti to restart.");
+	        	}
+	            System.exit(0);
+	        }
+	
+	        Map<String,String> dirList = installPackages(packagesToInstall, false, null);
+	        for (String packageName : dirList.keySet()) {
+	        	Log.info("Installed " + packageName + " in " + dirList.get(packageName));
+	        }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
  }
