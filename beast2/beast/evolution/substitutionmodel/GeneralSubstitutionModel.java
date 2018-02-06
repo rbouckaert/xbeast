@@ -90,7 +90,7 @@ public class GeneralSubstitutionModel extends SubstitutionModel.Base {
      * @throws InstantiationException *
      */
     protected EigenSystem createEigenSystem() throws SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Constructor<?>[] ctors = Class.forName(eigenSystemClass.get()).getDeclaredConstructors();
+        Constructor<?>[] ctors = xbeast.util.PackageManager.forName(eigenSystemClass.get()).getDeclaredConstructors();
         Constructor<?> ctor = null;
         for (int i = 0; i < ctors.length; i++) {
             ctor = ctors[i];

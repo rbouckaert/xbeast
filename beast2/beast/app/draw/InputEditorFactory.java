@@ -62,7 +62,7 @@ public class InputEditorFactory {
         	// ignore inner classes, which are marked with $
         	if (!inputEditor.contains("$")) {
 	            try {
-	                Class<?> _class = Class.forName(inputEditor);
+	                Class<?> _class = xbeast.util.PackageManager.forName(inputEditor);
 	                
 	                
 	                Constructor<?> con = _class.getConstructor(BeautiDoc.class);
@@ -181,10 +181,10 @@ public class InputEditorFactory {
             if (listInputEditorMap.containsKey(inputClass)) {
                 // use custom list input editor
                 String inputEditorName = listInputEditorMap.get(inputClass);
-                Constructor<?> con = Class.forName(inputEditorName).getConstructor(BeautiDoc.class);
+                Constructor<?> con = xbeast.util.PackageManager.forName(inputEditorName).getConstructor(BeautiDoc.class);
                 inputEditor = (InputEditor) con.newInstance(doc);
 
-                //inputEditor = (InputEditor) Class.forName(inputEditor).newInstance();
+                //inputEditor = (InputEditor) xbeast.util.PackageManager.forName(inputEditor).newInstance();
             } else {
                 // otherwise, use generic list editor
                 inputEditor = new ListInputEditor(doc);
@@ -204,7 +204,7 @@ public class InputEditorFactory {
 	            // handle BEASTObject-input with custom input editors
 	            String inputEditorName = inputEditorMap.get(inputClass2);
 	            
-	            Constructor<?> con = Class.forName(inputEditorName).getConstructor(BeautiDoc.class);
+	            Constructor<?> con = xbeast.util.PackageManager.forName(inputEditorName).getConstructor(BeautiDoc.class);
 	            inputEditor = (InputEditor) con.newInstance(doc);
         	}
         }        	
@@ -212,9 +212,9 @@ public class InputEditorFactory {
 //            // handle BEASTObject-input with custom input editors
 //            String inputEditor = inputEditorMap.get(inputClass);
 //            
-//            Constructor<?> con = Class.forName(inputEditor).getConstructor(BeautiDoc.class);
+//            Constructor<?> con = xbeast.util.PackageManager.forName(inputEditor).getConstructor(BeautiDoc.class);
 //            inputEditor = (InputEditor) con.newInstance(doc);
-//            //inputEditor = (InputEditor) Class.forName(inputEditor).newInstance(doc);
+//            //inputEditor = (InputEditor) xbeast.util.PackageManager.forName(inputEditor).newInstance(doc);
 //            //} else if (inputClass.isEnum()) {
 //            //    inputEditor = new EnumInputEditor();
 //        } else {
@@ -316,7 +316,7 @@ public class InputEditorFactory {
             List<String> classes = PackageManager.find(input.getType(), "beast");
             for (String className : classes) {
                 try {
-                    Object o = Class.forName(className).newInstance();
+                    Object o = xbeast.util.PackageManager.forName(className).newInstance();
                     if (input.canSetValue(o, parent)) {
                         beastObjectNames.add("new " + className);
                     }

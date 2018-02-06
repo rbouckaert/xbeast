@@ -184,9 +184,9 @@ public class BEASTObjectDialog extends JDialog {
                 BEASTInterface beastObject = new xbeast.util.XMLParser().parseBareFragment(text.toString(), false);
                 dlg = new BEASTObjectDialog(new BEASTObjectPanel(beastObject, beastObject.getClass(), null), null);
             } else if (args.length == 1) {
-                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) Class.forName(args[0]).newInstance(), Class.forName(args[0]), null), null);
+                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[0]), null), null);
             } else if (args.length == 2) {
-                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) Class.forName(args[0]).newInstance(), Class.forName(args[1]), null), null);
+                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[1]), null), null);
             } else {
                 throw new IllegalArgumentException("Incorrect number of arguments");
             }

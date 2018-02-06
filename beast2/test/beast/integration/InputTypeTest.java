@@ -35,7 +35,7 @@ public class InputTypeTest extends TestCase {
 		List<String> failingInputs = new ArrayList<String>();
 		for (String beastObjectName : beastObjectNames) {
 			try {
-				BEASTObject beastObject = (BEASTObject) Class.forName(beastObjectName).newInstance();
+				BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
 				List<Input<?>> inputs = beastObject.listInputs();
 				for (Input<?> input : inputs) {
 					if (input.getType() == null) {
@@ -71,7 +71,7 @@ public class InputTypeTest extends TestCase {
 		List<String> failingInputs = new ArrayList<String>();
 		for (String beastObject : beastObjectNames) {
 			try {
-				Class<?> _class = Class.forName(beastObject);
+				Class<?> _class = xbeast.util.PackageManager.forName(beastObject);
 			    Constructor<?>[] allConstructors = _class.getDeclaredConstructors();
 			    for (Constructor<?> ctor : allConstructors) {
 			    	Annotation[][] annotations = ctor.getParameterAnnotations();
@@ -108,7 +108,7 @@ public class InputTypeTest extends TestCase {
 								case "double" : type = Double.class; break;
 								case "boolean" : type = Boolean.class; break;
 								default:
-									clazz = Class.forName(typeName);
+									clazz = xbeast.util.PackageManager.forName(typeName);
 					    			if (clazz.isAssignableFrom(List.class)) {
 				                        Type[] genericTypes2 = ((ParameterizedType) gtypes[i + offset]).getActualTypeArguments();
 				                        type = (Class<?>) genericTypes2[0];

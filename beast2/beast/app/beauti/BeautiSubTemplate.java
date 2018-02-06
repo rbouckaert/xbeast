@@ -73,7 +73,7 @@ public class BeautiSubTemplate extends BEASTObject {
     @Override
     public void initAndValidate() {
     	try {
-        _class = Class.forName(classInput.get());
+        _class = xbeast.util.PackageManager.forName(classInput.get());
         shortClassName = classInput.get().substring(classInput.get().lastIndexOf('.') + 1);
         instance = _class.newInstance();
         xml = xMLInput.get();//.m_sValue.get();

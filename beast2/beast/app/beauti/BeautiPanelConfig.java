@@ -223,7 +223,7 @@ public class BeautiPanelConfig extends BEASTObject {
                 }
             }
             if (typeInput.get() != null) {
-                type = Class.forName(typeInput.get());
+                type = xbeast.util.PackageManager.forName(typeInput.get());
             }
             // sanity check
             if (!isList && (hasPartitionsInput.get() == Partition.none) && beastObjects.size() > 1) {

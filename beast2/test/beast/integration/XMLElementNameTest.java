@@ -26,7 +26,7 @@ public class XMLElementNameTest extends TestCase {
         List<String> improperInputs = new ArrayList<String>();
         for (String beastObjectName : pluginNames) {
             try {
-                BEASTObject beastObject = (BEASTObject) Class.forName(beastObjectName).newInstance();
+                BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
                 List<Input<?>> inputs = beastObject.listInputs();
                 Set<String> names = new HashSet<String>();
                 for (Input<?> input : inputs) {
@@ -70,7 +70,7 @@ public class XMLElementNameTest extends TestCase {
         List<String> improperInputs = new ArrayList<String>();
         for (String beastObjectName : pluginNames) {
             try {
-                BEASTObject beastObject = (BEASTObject) Class.forName(beastObjectName).newInstance();
+                BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
                 // check each input
                 List<Input<?>> inputs = beastObject.listInputs();
                 for (Input<?> input : inputs) {

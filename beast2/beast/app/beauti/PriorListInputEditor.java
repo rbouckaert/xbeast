@@ -229,7 +229,7 @@ public class PriorListInputEditor extends ListInputEditor {
         for (String _class: importerClasses) {
         	try {
         		if (!_class.startsWith(this.getClass().getName())) {
-        			PriorProvider priorProvider = (PriorProvider) Class.forName(_class).newInstance();
+        			PriorProvider priorProvider = (PriorProvider) xbeast.util.PackageManager.forName(_class).newInstance();
 					priorProviders.add(priorProvider);
         		}
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {

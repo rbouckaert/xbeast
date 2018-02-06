@@ -574,8 +574,13 @@ public class PackageManager {
     private static void closeClassLoader() {
     	try {
     		if (Utils.isWindows()) {
-    			URLClassLoader sysLoader = (URLClassLoader) PackageManager.class.getClassLoader();
-    			sysLoader.close();
+    			if (PackageManager.class.getClassLoader() instanceof URLClassLoader) {
+    				URLClassLoader sysLoader = (URLClassLoader) PackageManager.class.getClassLoader();
+    				sysLoader.close();
+    			} else if (sysLoader != null) {
+    				sysLoader.close();
+    				sysLoader = null;
+    			}
     		}
 		} catch (IOException e) {
 			Log.warning.println("Could not close ClassLoader: " + e.getMessage());
@@ -1071,7 +1076,7 @@ public class PackageManager {
                                     className = className.substring(0, className.lastIndexOf('.'));
                                     try {
                                         /*Object o =*/
-                                        Class.forName(className);
+                                        forName(className);
                                         loadedClass = className;
                                     } catch (Exception e) {
                                         // TODO: handle exception
@@ -1238,6 +1243,8 @@ public class PackageManager {
         }
     }
 
+    
+    private static URLClassLoader sysLoader = null; 
     /**
      * Add URL to CLASSPATH
      *
@@ -1246,10 +1253,14 @@ public class PackageManager {
      */
     public static void addURL(URL u) throws IOException {
         // ClassloaderUtil clu = new ClassloaderUtil();
-        PackageManager clu = new PackageManager();
         // URLClassLoader sysLoader = (URLClassLoader)
         // ClassLoader.getSystemClassLoader();
-        URLClassLoader sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+        //URLClassLoader sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+        if (sysLoader == null) {
+            PackageManager clu = new PackageManager();
+        	sysLoader = URLClassLoader.newInstance(new URL[]{}, clu.getClass().getClassLoader());//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
+        	// sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+        }
         URL urls[] = sysLoader.getURLs();
         for (URL url : urls) {
             if (url.toString().toLowerCase().equals(u.toString().toLowerCase())) {
@@ -1439,7 +1450,7 @@ public class PackageManager {
         result = new ArrayList<>();
 
         try {
-            cls = Class.forName(classname);
+            cls = forName(classname);
             result = find(cls, pkgnames);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1463,7 +1474,7 @@ public class PackageManager {
         result = new ArrayList<>();
 
         try {
-            cls = Class.forName(classname);
+            cls = forName(classname);
             result = find(cls, pkgname);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1531,7 +1542,8 @@ public class PackageManager {
             if (className.startsWith(pkgname)) {
                 //Log.debug.println(className);
                 try {
-                    Class<?> clsNew = Class.forName(className);
+            		Class<?> clsNew = null;
+                	clsNew = forName(className);
 
                     // no abstract classes
                     if (!Modifier.isAbstract(clsNew.getModifiers()) &&
@@ -1570,6 +1582,20 @@ public class PackageManager {
     }
 
 
+    public static Class forName(String className) throws ClassNotFoundException {
+//    	try {
+//    		return Class.forName(className);
+//    	} catch (ClassNotFoundException e2) {
+//    		// ignore
+//    	}
+    	if (sysLoader == null) {
+            PackageManager clu = new PackageManager();
+        	sysLoader = URLClassLoader.newInstance(new URL[]{}, clu.getClass().getClassLoader());//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
+        	// sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+    	}
+		return Class.forName(className, true, sysLoader);
+    }
+    
     /*
      * Command-line interface code
      */
@@ -1671,7 +1697,10 @@ public class PackageManager {
     }
 
     public static void main(String[] args) {
+    	
         try {
+        	Log.setLevel(Log.Level.debug);
+        	loadExternalJars();
             Arguments arguments = new Arguments(
                     new Arguments.Option[]{
                             new Arguments.Option("list", "List available packages"),

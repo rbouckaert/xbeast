@@ -175,7 +175,7 @@ public class Tree extends StateNode implements TreeInterface {
      */
     protected Node newNode() {
         try {
-            return (Node) Class.forName(nodeTypeInput.get()).newInstance();
+            return (Node) xbeast.util.PackageManager.forName(nodeTypeInput.get()).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Cannot create node of type "
                     + nodeTypeInput.get() + ": " + e.getMessage());

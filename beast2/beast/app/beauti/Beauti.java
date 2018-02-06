@@ -1368,7 +1368,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
                     // ignore
                 }
                 try {
-                    Class<?> class_ = Class.forName("jam.maconly.OSXAdapter");
+                    Class<?> class_ = xbeast.util.PackageManager.forName("jam.maconly.OSXAdapter");
                     Method method = class_.getMethod("enablePrefs", boolean.class);
                     method.invoke(null, false);
                 } catch (java.lang.NoSuchMethodException e) {

@@ -64,7 +64,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
         for (String _class: importerClasses) {
         	try {
         		if (!_class.startsWith(this.getClass().getName())) {
-					AlignmentImporter importer = (AlignmentImporter) Class.forName(_class).newInstance();
+					AlignmentImporter importer = (AlignmentImporter) xbeast.util.PackageManager.forName(_class).newInstance();
 					importers.add(importer);
         		}
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {

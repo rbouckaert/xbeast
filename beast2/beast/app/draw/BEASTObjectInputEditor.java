@@ -374,7 +374,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                    	selected = availableBEASTObjects.get(i);                       
 //                        /* create new beastObject */
 //                        try {
-//                            beastObject = (BEASTObject) Class.forName(selected.substring(4)).newInstance();
+//                            beastObject = (BEASTObject) xbeast.util.PackageManager.forName(selected.substring(4)).newInstance();
 //                            PluginPanel.addPluginToMap(beastObject);
 //                            // tricky: try to connect up new inputs with old inputs of existing name
 //                            BEASTObject oldPlugin = (BEASTObject) m_input.get();

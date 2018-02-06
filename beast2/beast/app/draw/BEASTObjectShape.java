@@ -73,7 +73,7 @@ public class BEASTObjectShape extends Shape {
     public void init(String className, Document doc) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
     	m_doc = doc;
         if (m_beastObject == null) {
-            m_beastObject = (xbeast.core.BEASTInterface) Class.forName(className).newInstance();
+            m_beastObject = (xbeast.core.BEASTInterface) xbeast.util.PackageManager.forName(className).newInstance();
         }
         m_inputs = new ArrayList<>();
         if (m_beastObject.getId() == null) {
@@ -176,7 +176,7 @@ public class BEASTObjectShape extends Shape {
             if (node.getAttributes().getNamedItem("class") != null) {
                 String className = node.getAttributes().getNamedItem("class").getNodeValue();
                 try {
-                    m_beastObject = (xbeast.core.BEASTInterface) Class.forName(className).newInstance();
+                    m_beastObject = (xbeast.core.BEASTInterface) xbeast.util.PackageManager.forName(className).newInstance();
                     m_beastObject.setId(m_sID);
                 } catch (Exception e) {
                     // TODO: handle exception

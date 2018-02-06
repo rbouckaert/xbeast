@@ -81,7 +81,7 @@ public class BeastLauncher {
 		}
 		
 		// initialise beast.jar
-        Method method = Class.forName("beast.evolution.alignment.Alignment").getMethod("findDataTypes");
+        Method method = xbeast.util.PackageManager.forName("beast.evolution.alignment.Alignment").getMethod("findDataTypes");
         method.invoke(null);
 
 	}

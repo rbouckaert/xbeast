@@ -443,7 +443,7 @@ public class ListInputEditor extends InputEditor.Base {
         }
         /* create new beastObject */
         try {
-            BEASTInterface beastObject = (BEASTInterface) Class.forName(className.substring(4)).newInstance();
+            BEASTInterface beastObject = (BEASTInterface) xbeast.util.PackageManager.forName(className.substring(4)).newInstance();
             BEASTObjectPanel.addPluginToMap(beastObject, doc);
             selectedPlugins.add(beastObject);
             return selectedPlugins;

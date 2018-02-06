@@ -259,7 +259,7 @@ public class BEASTObjectPanel extends JPanel {
 //					return;
 //				}
 //				try {
-//					m_beastObject = (BEASTObject) Class.forName(className).newInstance();
+//					m_beastObject = (BEASTObject) xbeast.util.PackageManager.forName(className).newInstance();
 //					m_pluginButton.setText(className.replaceAll(".*\\.", ""));
 //					// TODO: replace InputEditors where appropriate.
 //					
@@ -454,9 +454,9 @@ public class BEASTObjectPanel extends JPanel {
                 BEASTInterface beastObject = new xbeast.util.XMLParser().parseBareFragment(text.toString(), false);
                 pluginPanel = new BEASTObjectPanel(beastObject, beastObject.getClass(), null);
             } else if (args.length == 1) {
-                pluginPanel = new BEASTObjectPanel((BEASTInterface) Class.forName(args[0]).newInstance(), Class.forName(args[0]), null);
+                pluginPanel = new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[0]), null);
             } else if (args.length == 2) {
-                pluginPanel = new BEASTObjectPanel((BEASTInterface) Class.forName(args[0]).newInstance(), Class.forName(args[1]), null);
+                pluginPanel = new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[1]), null);
             } else {
                 throw new IllegalArgumentException("Incorrect number of arguments");
             }

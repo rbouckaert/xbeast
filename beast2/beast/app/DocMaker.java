@@ -114,7 +114,7 @@ public class DocMaker {
         }
         for (String beastObjectName : m_beastObjectNames) {
             try {
-                Class<?> _class = Class.forName(beastObjectName);
+                Class<?> _class = xbeast.util.PackageManager.forName(beastObjectName);
                 BEASTObject beastObject = (BEASTObject) _class.newInstance();
                 String description = getInheritableDescription(beastObject.getClass());
                 Log.warning.println(beastObjectName + " => " + description);
@@ -142,7 +142,7 @@ public class DocMaker {
     void makeJavaDoc() {
         for (String beastObjectName : m_beastObjectNames) {
             try {
-                BEASTObject beastObject = (BEASTObject) Class.forName(beastObjectName).newInstance();
+                BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
                 Log.info.println(beastObjectName + ":@description:" + beastObject.getDescriptionString());
                 for (Input<?> input : beastObject.listInputs()) {
                     Log.info.println(beastObjectName + ":" + input.getName() + ":" + input.getTipText());
@@ -335,7 +335,7 @@ public class DocMaker {
         List<String> implementations = new ArrayList<>();
         for (String beastObjectName : m_beastObjectNames) {
             try {
-                if (!beastObjectName.equals(name) && beastObject.getClass().isAssignableFrom(Class.forName(beastObjectName))) {
+                if (!beastObjectName.equals(name) && beastObject.getClass().isAssignableFrom(xbeast.util.PackageManager.forName(beastObjectName))) {
                     implementations.add(beastObjectName);
                 }
             } catch (ClassNotFoundException e) {
@@ -399,7 +399,7 @@ public class DocMaker {
         buf.append("</head>\n");
         buf.append("<body>\n");
         buf.append("<h1>BEAST " + version.getVersionString() + " Documentation: " + beastObjectName + "</h1>\n");
-        BEASTObject beastObject = (BEASTObject) Class.forName(beastObjectName).newInstance();
+        BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
 
         // show all implementation of this plug-in
         String[] implementations = m_isa.get(beastObjectName);
@@ -514,7 +514,7 @@ public class DocMaker {
                             Class<?> _class = (Class<?>) genericTypes2[0];
                             Object o = null;
                             try {
-                                o = Class.forName(_class.getName()).newInstance();
+                                o = xbeast.util.PackageManager.forName(_class.getName()).newInstance();
                             } catch (Exception e) {
                             }
                             if (o != null && o instanceof BEASTObject) {
@@ -527,7 +527,7 @@ public class DocMaker {
                             Class<?> _class = genericType;
                             Object o = null;
                             try {
-                                o = Class.forName(_class.getName()).newInstance();
+                                o = xbeast.util.PackageManager.forName(_class.getName()).newInstance();
                             } catch (Exception e) {
                             }
                             if (o != null && o instanceof BEASTObject) {
