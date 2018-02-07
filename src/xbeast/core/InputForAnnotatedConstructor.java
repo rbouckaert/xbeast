@@ -1,9 +1,11 @@
 package xbeast.core;
 
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,14 +31,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 			throw new NullPointerException();
 		}
 		this.theClass = theClass;
-		
-		// TODO: handle defaultValue from Param annotations
-		// this.defaultValue = param.defaultValue();
-		if (param.description().trim().length() == 0) {
-			Log.warning.println("Param annotation found without proper description " + param.toString());
-		}
-		this.tipText = param.description();
-		
+				
 		if (name == null) {
 			throw new NullPointerException();
 		}
@@ -68,11 +63,42 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 			throw e;
 		}
 		
+		this.tipText = param.description().trim();
+		for (Annotation annotation :getter.getAnnotations()) {
+			if (annotation.annotationType() == Description.class) {
+				if (this.tipText.length() > 0) {
+					throw new RuntimeException("Programmer error: Double description found on @Param(" + name + ") and its getter method " + theClass.getName() + "." + getter.getName() +"()"); 
+				}
+				this.tipText = ((Description) annotation).value();
+			}
+		}
+		if (tipText.length() == 0) {
+			Log.warning.println("Param annotation found without proper description " + param.toString());
+		}
+
 		if (param.optional()) {
 			String defaultValue = param.defaultValue();
 //			try {
 				this.defaultValue = (T) fromString(defaultValue, this.theClass);
-//			} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+
+				methodName = "default" + 
+				    	name.substring(0, 1).toUpperCase() +
+				    	name.substring(1)
+				    	//  + "List"
+				    	;
+				try {
+					Method defaultValueMethod = beastObject.getClass().getMethod(methodName, theClass);
+					// check whether this is a static method
+					if (!Modifier.isStatic(defaultValueMethod.getModifiers())) {
+						throw new RuntimeException("Programmer error: method " + theClass.getName() + "." +  methodName + "() must be static");
+					}
+					this.defaultValue = (T) defaultValueMethod.invoke(null);
+				} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | 
+						InvocationTargetException | IllegalAccessException e) {
+					// ignore
+				}
+				
+				//			} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
 //				e.printStackTrace();
 //				throw new IllegalArgumentException(e.getMessage());
 //			}
