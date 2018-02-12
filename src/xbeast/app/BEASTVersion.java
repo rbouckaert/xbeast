@@ -152,4 +152,6 @@ public class BEASTVersion extends Version {
         return str;
     }
 
+    
+    public static BEASTVersion INSTANCE = new BEASTVersion();
 }

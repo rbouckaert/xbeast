@@ -1590,7 +1590,8 @@ public class PackageManager {
 //    	}
     	if (sysLoader == null) {
             PackageManager clu = new PackageManager();
-        	sysLoader = URLClassLoader.newInstance(new URL[]{}, clu.getClass().getClassLoader());//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
+            ClassLoader c = clu.getClass().getClassLoader();
+        	sysLoader = URLClassLoader.newInstance(new URL[]{}, c);//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
         	// sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
     	}
 		return Class.forName(className, true, sysLoader);
