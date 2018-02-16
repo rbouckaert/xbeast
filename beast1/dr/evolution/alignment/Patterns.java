@@ -28,6 +28,8 @@ package dr.evolution.alignment;
 import dr.evolution.datatype.DataType;
 import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,7 +44,7 @@ import java.util.Set;
  * @author Alexei Drummond
  * @version $Id: Patterns.java,v 1.10 2005/07/08 11:27:53 rambaut Exp $
  */
-public class Patterns implements PatternList {
+public class Patterns extends BEASTObject implements PatternList {
 
     public static final int COUNT_INCREMENT = 100;
 
@@ -89,10 +91,24 @@ public class Patterns implements PatternList {
     /**
      * Constructor
      */
-    public Patterns(SiteList siteList) {
-        addPatterns(siteList, 0, 0, 1);
+    public Patterns(@Param(name="siteList") SiteList siteList) {
+        addPatterns(siteList, 0, 0, 1);        
+        this.siteList = siteList;
     }
 
+    SiteList siteList;
+    public SiteList getSiteList() {
+    	return siteList;
+    }
+    
+    public void setSiteList(SiteList patternList) {
+        this.siteList = patternList;
+    	removeAllPatterns();
+    	for (int i = 0; i < patternList.getPatternCount(); i++) {
+    		addPattern(patternList.getPattern(i));
+    	}
+    }
+    
     /**
      * Constructor
      */

@@ -33,9 +33,11 @@ import dr.evolution.datatype.GeneralDataType;
 import dr.evolution.sequence.Sequence;
 import dr.evolution.sequence.Sequences;
 import dr.evolution.sequence.UncertainSequence;
+import dr.evolution.util.Taxa;
 import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
 import dr.util.NumberFormatter;
+import xbeast.core.Param;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,6 +92,16 @@ public class SimpleAlignment extends Sequences implements Alignment, dr.util.XHT
         }
     }
 
+    public SimpleAlignment(
+    		@Param(name="sequences") List<Sequence> sequences, 
+    		@Param(name="dataType") DataType dataType) {
+    	setDataType(dataType);
+    	
+    	for (Sequence seq : sequences) {
+    		addSequence(seq);
+    	}
+    }
+    
     public void setOutputType(OutputType out) {
         outputType = out;
     }
@@ -669,5 +681,18 @@ public class SimpleAlignment extends Sequences implements Alignment, dr.util.XHT
             }
             return null;
         }
+    }
+    
+    
+    public void setSequences(Sequence sequence) {
+		addSequence(sequence);
+    }
+    public void setSequences(List<Sequence> sequences) {
+    	while (getSequenceCount() > 0) {
+    		removeSequence(0);
+    	}
+    	for (Sequence sequence : sequences) {
+    		addSequence(sequence);
+    	}
     }
 }// END: class

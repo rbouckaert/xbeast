@@ -26,6 +26,8 @@
 package dr.evolution.util;
 
 import dr.util.Identifiable;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +42,7 @@ import java.util.List;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
-public class Taxa implements MutableTaxonList, Identifiable, Comparable<Taxa> {
+public class Taxa extends BEASTObject implements MutableTaxonList, Identifiable, Comparable<Taxa> {
 
 	private final ArrayList<MutableTaxonListListener> mutableTaxonListListeners = new ArrayList<MutableTaxonListListener>();
 	ArrayList<Taxon> taxa = new ArrayList<Taxon>();
@@ -59,6 +61,10 @@ public class Taxa implements MutableTaxonList, Identifiable, Comparable<Taxa> {
     }
 
     public Taxa(Collection<Taxon> taxa) {
+        addTaxa(taxa);
+    }
+
+    public Taxa(@Param(name="taxon") List<Taxon> taxa) {
         addTaxa(taxa);
     }
 
@@ -168,7 +174,7 @@ public class Taxa implements MutableTaxonList, Identifiable, Comparable<Taxa> {
     public List<Taxon> asList() {
         return new ArrayList<Taxon>(taxa);
     }
-
+    
     /**
      * returns whether the list contains this taxon
      * @param taxon
@@ -301,5 +307,18 @@ public class Taxa implements MutableTaxonList, Identifiable, Comparable<Taxa> {
     public boolean equals(final Object o) {
         if (!(o instanceof TaxonList)) return false;
         return Utils.areTaxaIdentical(this, (TaxonList)o);
+    }
+
+    public List<Taxon> getTaxon() {
+    	return asList();
+    }
+
+    public void setTaxon(List<Taxon> taxa) {
+    	this.taxa.clear();
+    	this.taxa.addAll(taxa);
+    }
+    
+    public void setTaxon(Taxon taxon) {
+    	this.taxa.add(taxon);
     }
 }

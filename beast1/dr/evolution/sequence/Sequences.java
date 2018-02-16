@@ -28,6 +28,7 @@ package dr.evolution.sequence;
 import dr.evolution.util.Taxon;
 import dr.util.Attributable;
 import dr.util.Identifiable;
+import xbeast.core.BEASTObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,7 +41,7 @@ import java.util.Vector;
  * @author Andrew Rambaut
  * @version $Id: Sequences.java,v 1.12 2005/05/24 20:25:56 rambaut Exp $
  */
-public class Sequences implements SequenceList, Attributable, Identifiable {
+public class Sequences extends BEASTObject implements SequenceList, Attributable, Identifiable {
 
     /**
      * Constructor.
@@ -288,4 +289,5 @@ public class Sequences implements SequenceList, Attributable, Identifiable {
     protected final Vector<Sequence> sequences = new Vector<Sequence>();
 
     private Attributable.AttributeHelper attributes = null;
+
 }

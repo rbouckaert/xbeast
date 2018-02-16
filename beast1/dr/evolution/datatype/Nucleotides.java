@@ -197,5 +197,9 @@ public class Nucleotides extends DataType {
 	public int getType() {
 		return TYPE;
 	}
+	
+	static public Nucleotides newInstance() {
+		return INSTANCE;
+	}
 
 }

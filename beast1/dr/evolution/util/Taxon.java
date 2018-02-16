@@ -27,6 +27,8 @@ package dr.evolution.util;
 
 import dr.util.Attributable;
 import dr.util.Identifiable;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,9 +41,9 @@ import java.util.Iterator;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
-public class Taxon implements Attributable, Identifiable, Comparable<Taxon> {
+public class Taxon extends BEASTObject implements Attributable, Identifiable, Comparable<Taxon> {
 
-    public Taxon(String id) {
+    public Taxon(@Param(name="id") String id) {
         setId(id);
     }
 
@@ -164,6 +166,9 @@ public class Taxon implements Attributable, Identifiable, Comparable<Taxon> {
 
     @Override
     public boolean equals(final Object o) {
+    	if (o == null) {
+    		return false;
+    	}
         return getId().equals(((Taxon)o).getId());
     }
 
@@ -208,5 +213,6 @@ public class Taxon implements Attributable, Identifiable, Comparable<Taxon> {
 
     private static dr.evolution.util.Date mostRecentDate = null;
     private static TimeScale timeScale = null;
+
 }
 

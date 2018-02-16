@@ -29,6 +29,8 @@ import dr.evolution.datatype.DataType;
 import dr.evolution.util.Taxon;
 import dr.util.Attributable;
 import dr.util.Identifiable;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.util.Iterator;
 
@@ -39,7 +41,7 @@ import java.util.Iterator;
  * @author Andrew Rambaut
  * @version $Id: Sequence.java,v 1.35 2005/05/25 09:35:28 rambaut Exp $
  */
-public class Sequence implements Identifiable, Attributable {
+public class Sequence extends BEASTObject implements Identifiable, Attributable {
 
     /**
      * Empty constructor.
@@ -74,7 +76,8 @@ public class Sequence implements Identifiable, Attributable {
      * @param taxon    the sequence's taxon
      * @param sequence the sequence's symbol string
      */
-    public Sequence(Taxon taxon, String sequence) {
+    public Sequence(@Param(name="taxon") Taxon taxon, 
+    		@Param(name="sequenceString") String sequence) {
         sequenceString = new StringBuffer();
         setTaxon(taxon);
         setSequenceString(sequence);
@@ -264,6 +267,7 @@ public class Sequence implements Identifiable, Attributable {
     protected Taxon taxon = null;
     protected StringBuffer sequenceString = null;
     protected DataType dataType = null;
+
 }
 
 
