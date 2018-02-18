@@ -27,6 +27,8 @@ package dr.inference.model;
 
 import dr.inference.parallel.MPIServices;
 import dr.xml.Reportable;
+import xbeast.core.Param;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -349,6 +351,15 @@ public interface Parameter extends Statistic, Variable<Double> {
             return copyOfValues;
         }
 
+        public void setValues(Double[] values) {
+        	if (values.length != getDimension()) {
+        		setDimension(values.length);
+        	}
+        	for (int i = 0; i < values.length; i++) {
+        		setValue(i, values[i]);
+        	}
+        }
+
         /**
          * @return the size of this variable - i.e. the length of the vector
          */
@@ -538,6 +549,15 @@ public interface Parameter extends Statistic, Variable<Double> {
         public Default(double[] values) {
             this.values = new double[values.length];
             System.arraycopy(values, 0, this.values, 0, values.length);
+        }
+
+        public Default() {
+        	this(0.0);
+        }
+        
+        public Default(@Param(name="values") Double[] values) {
+            this.values = new double[values.length];
+        	setValues(values);
         }
 
         public Default(String id, int dimension, double initialValue) {

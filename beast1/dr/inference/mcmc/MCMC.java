@@ -38,6 +38,8 @@ import dr.inference.operators.*;
 import dr.util.Identifiable;
 import dr.util.NumberFormatter;
 import dr.xml.Spawnable;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,12 +53,35 @@ import java.io.PrintStream;
  * @author Andrew Rambaut
  * @version $Id: MCMC.java,v 1.41 2005/07/11 14:06:25 rambaut Exp $
  */
-public class MCMC implements Identifiable, Spawnable, Loggable {
+public class MCMC extends BEASTObject implements Identifiable, Spawnable, Loggable {
 
     public MCMC(String id) {
         this.id = id;
     }
 
+
+    public MCMC(
+    		@Param(name="chainLength") long chainlength,
+    		@Param(name="likelihood") Likelihood likelihood,
+    		@Param(name="operators") MCMCOperator [] operators,
+    		@Param(name="log") Logger[] loggers) {
+    		init(chainlength, likelihood, operators, loggers);
+    }
+    
+    public void setChainLength(long chaingLength) {throw new RuntimeException("not implemented yet");}
+    public void setLikelihood(Likelihood likelihood) {throw new RuntimeException("not implemented yet");}
+    public MCMCOperator [] getOperators() {
+    	MCMCOperator [] operators = new MCMCOperator[getOperatorSchedule().getOperatorCount()];
+    	for (int i = 0; i < operators.length; i++) {
+    		operators[i] = getOperatorSchedule().getOperator(i);
+    	}
+    	return operators;
+    }
+    public void setOperators(MCMCOperator [] operators){throw new RuntimeException("not implemented yet");}
+    public Logger[] getLog() {return loggers;}
+    public void setLog(Logger [] loggers) {throw new RuntimeException("not implemented yet");}
+    
+    
     /**
      * Must be called before calling chain.
      *

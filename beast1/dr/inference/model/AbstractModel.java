@@ -53,10 +53,6 @@ public abstract class AbstractModel extends BEASTObject
     }
     
     
-    @Override
-    public void initAndValidate() {
-    }
-
     /**
      * Adds a sub-model to this model. If the model is already in the
      * list then it does nothing.

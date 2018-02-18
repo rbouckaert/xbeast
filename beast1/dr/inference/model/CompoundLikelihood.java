@@ -28,6 +28,8 @@ package dr.inference.model;
 import dr.util.Keywordable;
 import dr.util.NumberFormatter;
 import dr.xml.Reportable;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -39,7 +41,7 @@ import java.util.concurrent.*;
  * @author Andrew Rambaut
  * @version $Id: CompoundLikelihood.java,v 1.19 2005/05/25 09:14:36 rambaut Exp $
  */
-public class CompoundLikelihood implements Likelihood, Reportable, Keywordable {
+public class CompoundLikelihood extends BEASTObject implements Likelihood, Reportable, Keywordable {
 
     public final static boolean UNROLL_COMPOUND = true;
 
@@ -104,6 +106,14 @@ public class CompoundLikelihood implements Likelihood, Reportable, Keywordable {
             evaluationCounts = null;
         }
     }
+
+    public CompoundLikelihood(@Param(name="likelihood") List<Likelihood> likelihoods) {
+    	this((Collection<Likelihood>) likelihoods);
+    }
+    
+    public void setLikelihood(Likelihood likelihoods) {throw new RuntimeException("not implemented yet");}
+    public void setLikelihood(List<Likelihood> likelihoods) {throw new RuntimeException("not implemented yet");}
+    public List<Likelihood> getLikelihood() {return likelihoods;}
 
 //    public CompoundLikelihood(BeagleBranchLikelihoods bbl) {
 //
