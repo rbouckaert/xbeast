@@ -8,7 +8,7 @@ import xbeast.core.Param;
 
 public class RootHeightLogger extends BEASTObject implements Loggable {
 	
-	public RootHeightLogger(@Param(name="tree", description="") TreeModel tree) {		
+	public RootHeightLogger(@Param(name="tree") TreeModel tree) {		
 		this.tree = tree;
 		rootHeight = tree.getRootHeightParameter();
 	}

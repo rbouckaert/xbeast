@@ -26,6 +26,8 @@
 package dr.inference.loggers;
 
 import dr.util.Keywordable;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,7 +45,7 @@ import java.util.Set;
  * @author Alexei Drummond
  * @version $Id: MCLogger.java,v 1.18 2005/05/24 20:25:59 rambaut Exp $
  */
-public class MCLogger implements Logger {
+public class MCLogger extends BEASTObject implements Logger {
 
     /**
      * Output performance stats in this log
@@ -103,6 +105,38 @@ public class MCLogger implements Logger {
         this(new TabDelimitedFormatter(System.out), logEvery, true, 0);
     }
 
+    public MCLogger(
+    		@Param(name="logEvery") long logEvery, 
+    		@Param(name="log") List<Loggable> logs) {
+        this(new TabDelimitedFormatter(System.out), logEvery, true, 0);
+        for (Loggable l : logs) {
+        	add(l);
+        }
+        this.logs = logs;
+    }
+    
+    public MCLogger(
+    		@Param(name="fileName") String fileName, 
+    		@Param(name="logEvery") long logEvery, 
+    		@Param(name="log") List<Loggable> logs)  throws IOException {
+        this(new TabDelimitedFormatter(new PrintWriter(new FileWriter(fileName))), logEvery, true, 0);
+        for (Loggable l : logs) {
+        	add(l);
+        }
+        this.logs = logs;
+        this.fileName = fileName;
+    }
+
+    List<Loggable> logs = null;
+    protected String fileName = null;
+    public List<Loggable> getLog() {return logs;}
+    public void setLog(Loggable log) {throw new RuntimeException("not implemented yet");}
+    public void setLog(List<Loggable> logs) {throw new RuntimeException("not implemented yet");}
+    public List<LogColumn> getColumn() {return columns;}
+    public void setLogColumn(List<LogColumn> columns) {throw new RuntimeException("not implemented yet");}
+    public String getFileName() {return fileName;}
+    public void setFileName(String fileName) {throw new RuntimeException("not implemented yet");}
+    
     public final void setTitle(String title) {
         this.title = title;
     }
