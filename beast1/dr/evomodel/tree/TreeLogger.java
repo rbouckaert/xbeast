@@ -29,8 +29,12 @@ import dr.app.tools.NexusExporter;
 import dr.evolution.tree.*;
 import dr.inference.loggers.LogFormatter;
 import dr.inference.loggers.MCLogger;
+import dr.inference.loggers.TabDelimitedFormatter;
 import dr.util.Keywordable;
+import xbeast.core.Param;
 
+import java.io.IOException;
+import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -74,6 +78,21 @@ public class TreeLogger extends MCLogger {
        boolean logNow(long state);
     }
 
+    public TreeLogger(
+    		@Param(name="fileName") String fileName,
+    		@Param(name="logEvery") int logEvery, 
+    		@Param(name="tree") Tree tree, 
+    		@Param(name="nexus") boolean nexusFormat
+    		) throws IOException {
+
+    	this(tree, null, null, null, new TabDelimitedFormatter(new PrintStream(fileName)), logEvery, nexusFormat, true, true, null, null/*, Double.NaN*/);
+    	this.fileName = fileName;
+    }
+    
+    public void setLogEvery(int logEvery) {throw new RuntimeException("not implemented yet");}
+    public boolean getNexus() {return nexusFormat;}
+    public void setNexus(boolean nexusFormat) {throw new RuntimeException("not implemented yet");}
+    
     public TreeLogger(Tree tree, LogFormatter formatter, int logEvery, boolean nexusFormat,
                       boolean sortTranslationTable, boolean mapNames) {
 
