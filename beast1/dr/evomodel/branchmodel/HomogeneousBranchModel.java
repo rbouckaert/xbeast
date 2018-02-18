@@ -31,6 +31,7 @@ import dr.evolution.tree.NodeRef;
 import dr.inference.model.AbstractModel;
 import dr.inference.model.Model;
 import dr.inference.model.Variable;
+import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +51,9 @@ public class HomogeneousBranchModel extends AbstractModel implements BranchModel
         this(substitutionModel, null);
     }
 
-    public HomogeneousBranchModel(SubstitutionModel substitutionModel, FrequencyModel rootFrequencyModel) {
+    public HomogeneousBranchModel(
+    		@Param(name="substitutionModel") SubstitutionModel substitutionModel, 
+    		@Param(name="frequencies") FrequencyModel rootFrequencyModel) {
         super("HomogeneousBranchModel");
         this.substitutionModel = substitutionModel;
         addModel(substitutionModel);
@@ -61,6 +64,12 @@ public class HomogeneousBranchModel extends AbstractModel implements BranchModel
             this.rootFrequencyModel = substitutionModel.getFrequencyModel();
         }
     }
+    
+    
+    public SubstitutionModel getSubstitutionModel()  {return this.substitutionModel;}
+    public void setSubstitutionModel(SubstitutionModel substitutionModel) {throw new RuntimeException("not implemented yet");}
+    public FrequencyModel getFrequencies() {return rootFrequencyModel;}
+    public void setFrequencies(FrequencyModel rootFrequencyModel) {throw new RuntimeException("not implemented yet");}
 
     public Mapping getBranchModelMapping(NodeRef node) {
         return DEFAULT;
