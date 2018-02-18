@@ -28,7 +28,6 @@ package dr.evolution.tree;
 import dr.evolution.util.MutableTaxonListListener;
 import dr.evolution.util.Taxon;
 import dr.util.Attributable;
-import xbeast.core.BEASTObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,7 +41,7 @@ import java.util.List;
  *
  * @version $Id: SimpleTree.java,v 1.65 2006/08/23 10:46:33 rambaut Exp $
  */
-public class SimpleTree extends BEASTObject implements MutableTree {
+public class SimpleTree implements MutableTree {
 
     /** Constructor tree with no nodes. Use adoptNodes to add some nodes. */
     public SimpleTree() {
@@ -565,5 +564,4 @@ public class SimpleTree extends BEASTObject implements MutableTree {
     private Type units = Type.SUBSTITUTIONS;
 
     boolean inEdit = false;
-
 }

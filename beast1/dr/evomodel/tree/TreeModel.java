@@ -30,12 +30,8 @@ import dr.evolution.util.MutableTaxonListListener;
 import dr.evolution.util.Taxon;
 import dr.inference.model.*;
 import dr.util.*;
-import xbeast.core.Param;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import cern.colt.map.HashFunctions;
 
 import java.util.*;
 
@@ -64,20 +60,16 @@ public class TreeModel extends AbstractModel implements MutableTreeModel, Keywor
         isTreeRandom = true;
     }
 
-    public TreeModel(@Param(name="startingTree") Tree tree) {
+    public TreeModel(Tree tree) {
         this(TREE_MODEL, tree, false, false, false);
-        startingTree = tree;
     }
 
-    public TreeModel(String id, Tree tree) { 
-    	this(id, tree, false, false); 
-    }
+    public TreeModel(String id, Tree tree) { this(id, tree, false, false); }
 
-    Tree startingTree;
-    public TreeModel(String id,  Tree tree, boolean fixHeights, boolean fixTree) {
+    public TreeModel(String id, Tree tree, boolean fixHeights, boolean fixTree) {
+
         this(id, tree, false, fixHeights, fixTree);
         setId(id);
-        startingTree = tree;
     }
 
     /* New constructor that copies the attributes of Tree tree into the new TreeModel
@@ -1686,10 +1678,4 @@ public class TreeModel extends AbstractModel implements MutableTreeModel, Keywor
         }
     }
 
-    public Tree getStartingTree() {
-		return startingTree;
-	}
-    public void setStartingTree(Tree tree) {
-		throw new RuntimeException("Not implemented yet");
-	}    
 }
