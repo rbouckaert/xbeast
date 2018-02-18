@@ -64,6 +64,7 @@ import dr.math.MathUtils;
 import dr.util.Citable;
 import dr.util.Citation;
 import dr.util.CommonCitations;
+import xbeast.core.Param;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -109,20 +110,51 @@ public class BeagleTreeLikelihood extends AbstractSinglePartitionTreeLikelihood 
     private static final boolean RESCALING_OFF = false; // a debugging switch
     private static final boolean DEBUG = false;
 
-    public BeagleTreeLikelihood(PatternList patternList,
-                                TreeModel treeModel,
-                                BranchModel branchModel,
-                                SiteRateModel siteRateModel,
-                                BranchRateModel branchRateModel,
-                                TipStatesModel tipStatesModel,
-                                boolean useAmbiguities,
-                                PartialsRescalingScheme rescalingScheme,
-                                boolean delayRescalingUntilUnderflow) {
+    public BeagleTreeLikelihood(@Param(name="patternList") PatternList patternList,
+    		@Param(name="tree") TreeModel treeModel,
+    		@Param(name="branchModel") BranchModel branchModel,
+    		@Param(name="siteRateModel") SiteRateModel siteRateModel,
+    		@Param(name="branchRateModel") BranchRateModel branchRateModel,
+    		@Param(name="useAmbiguities") boolean useAmbiguities,
+    		@Param(name="rescalingScheme") PartialsRescalingScheme rescalingScheme,
+    		@Param(name="delayRescalingUntilUnderflow") boolean delayRescalingUntilUnderflow) {
+        this(patternList, treeModel, branchModel, siteRateModel, branchRateModel, null, useAmbiguities, rescalingScheme, delayRescalingUntilUnderflow, null);
+    }
+
+    public BeagleTreeLikelihood(@Param(name="patternList") PatternList patternList,
+    		@Param(name="tree") TreeModel treeModel,
+    		@Param(name="branchModel") BranchModel branchModel,
+    		@Param(name="siteRateModel") SiteRateModel siteRateModel,
+    		@Param(name="branchRateModel") BranchRateModel branchRateModel,
+    		@Param(name="tipStatesModel", description="", defaultValue="null") TipStatesModel tipStatesModel,
+    		@Param(name="useAmbiguities") boolean useAmbiguities,
+    		@Param(name="rescalingScheme") PartialsRescalingScheme rescalingScheme,
+    		@Param(name="delayRescalingUntilUnderflow") boolean delayRescalingUntilUnderflow) {
 
         this(patternList, treeModel, branchModel, siteRateModel, branchRateModel, tipStatesModel, useAmbiguities, rescalingScheme, delayRescalingUntilUnderflow, null);
     }
 
-    public BeagleTreeLikelihood(PatternList patternList,
+    public PatternList getPatternList() {return patternList;}
+    public void setPatternList(PatternList patternList) {throw new RuntimeException("not implemented yet");}
+    public TreeModel getTree() {return treeModel;}
+    public void setTree(TreeModel tree) {throw new RuntimeException("not implemented yet");}
+//  already defined    public BranchModel getBranchModel() {return branchModel;}
+    public void setBranchModel(BranchModel branchModel) {throw new RuntimeException("not implemented yet");}
+//  already defined   public SiteRateModel getSiteRateModel() {return siteRateModel;}
+    public void setSiteRateModel(SiteRateModel siteRateModel) {throw new RuntimeException("not implemented yet");}
+//  already defined   public BranchRateModel getBranchRateModel() {return branchRateModel;}
+    public void setBranchRateModel(BranchRateModel branchRateModel) {throw new RuntimeException("not implemented yet");}
+//  already defined   public TipStatesModel getTipStatesModel() {return tipStatesModel;}
+    public void setTipStatesModel(TipStatesModel tipStatesModel) {throw new RuntimeException("not implemented yet");}
+    public boolean getUseAmbiguities() {return useAmbiguities;}
+    public void setUseAmbiguities(boolean useAmbiguities) {throw new RuntimeException("not implemented yet");}
+    public PartialsRescalingScheme getPartialsRescalingScheme() {return rescalingScheme;}
+	public void setRescalingScheme(PartialsRescalingScheme rescalingScheme) {throw new RuntimeException("not implemented yet");}
+	public boolean getDelayRescalingUntilUnderflow() {return delayRescalingUntilUnderflow;}
+	public void setDelayRescalingUntilUnderflow(boolean delayRescalingUntilUnderflow) {throw new RuntimeException("not implemented yet");}
+	
+
+	public BeagleTreeLikelihood(PatternList patternList,
                                 TreeModel treeModel,
                                 BranchModel branchModel,
                                 SiteRateModel siteRateModel,
