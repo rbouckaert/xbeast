@@ -29,6 +29,7 @@ import dr.evolution.coalescent.ConstantPopulation;
 import dr.evolution.coalescent.DemographicFunction;
 import dr.evomodelxml.coalescent.ConstantPopulationModelParser;
 import dr.inference.model.Parameter;
+import xbeast.core.Param;
 
 /**
  * A wrapper for ConstantPopulation.
@@ -44,7 +45,8 @@ public class ConstantPopulationModel extends DemographicModel {
     /**
      * Construct demographic model with default settings
      */
-    public ConstantPopulationModel(Parameter N0Parameter, Type units) {
+    public ConstantPopulationModel(@Param(name="popSize") Parameter N0Parameter, 
+    		@Param(name="units") Type units) {
 
         this(ConstantPopulationModelParser.CONSTANT_POPULATION_MODEL, N0Parameter, units);
     }
@@ -66,7 +68,15 @@ public class ConstantPopulationModel extends DemographicModel {
 
     // general functions
 
-    public DemographicFunction getDemographicFunction() {
+    public Parameter getPopSize() {
+		return N0Parameter;
+	}
+
+	public void setPopSize(Parameter n0Parameter) {
+		N0Parameter = n0Parameter;
+	}
+
+	public DemographicFunction getDemographicFunction() {
         constantPopulation.setN0(N0Parameter.getParameterValue(0));
         return constantPopulation;
     }

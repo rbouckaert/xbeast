@@ -27,11 +27,13 @@ package dr.evomodel.coalescent;
 
 import dr.evolution.tree.*;
 import dr.evolution.util.Date;
+import dr.evolution.util.Taxa;
 import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
 import dr.evolution.util.TimeScale;
 import dr.inference.distribution.ParametricDistributionModel;
 import dr.math.UnivariateFunction;
+import xbeast.core.Param;
 
 /**
  * Simulates a set of coalescent intervals given a demographic model.
@@ -172,4 +174,29 @@ public class CoalescentSimulator {
         }
     }
 
+    public class Base extends SimpleTree {
+		private Taxa taxa;
+		private DemographicModel demoModel;
+
+		public Base(@Param(name="taxa") Taxa taxa,
+				@Param(name="demoModel") DemographicModel demoFunction) {
+			super(new CoalescentSimulator().simulateTree(taxa, demoFunction));			
+			this.taxa = taxa;
+			this.demoModel = demoFunction;
+		}
+		
+		public Taxa getTaxa() {
+			return taxa;
+		}
+		public void setTaxa(Taxa taxa) {
+			this.taxa = taxa;
+		}
+		public DemographicModel getDemoModel() {
+			return demoModel;
+		}
+		public void setDemoModel(DemographicModel demoModel) {
+			this.demoModel = demoModel;
+		}
+
+	}
 }

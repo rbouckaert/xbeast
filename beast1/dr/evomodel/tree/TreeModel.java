@@ -30,6 +30,8 @@ import dr.evolution.util.MutableTaxonListListener;
 import dr.evolution.util.Taxon;
 import dr.inference.model.*;
 import dr.util.*;
+import xbeast.core.Param;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -60,16 +62,17 @@ public class TreeModel extends AbstractModel implements MutableTreeModel, Keywor
         isTreeRandom = true;
     }
 
-    public TreeModel(Tree tree) {
+    public TreeModel(@Param(name="startingTree") Tree tree) {
         this(TREE_MODEL, tree, false, false, false);
     }
 
     public TreeModel(String id, Tree tree) { this(id, tree, false, false); }
 
-    public TreeModel(String id, Tree tree, boolean fixHeights, boolean fixTree) {
+    Tree startingTree;
 
-        this(id, tree, false, fixHeights, fixTree);
-        setId(id);
+    public TreeModel(String id,  Tree tree, boolean fixHeights, boolean fixTree) {
+             this(id, tree, false, fixHeights, fixTree);
+             setId(id);
     }
 
     /* New constructor that copies the attributes of Tree tree into the new TreeModel
@@ -79,6 +82,8 @@ public class TreeModel extends AbstractModel implements MutableTreeModel, Keywor
     public TreeModel(String name, Tree tree, boolean copyAttributes, boolean fixHeights, boolean fixTree) {
 
         super(name);
+
+        startingTree = tree;
 
         // get a rooted version of the tree to clone
         FlexibleTree binaryTree = new FlexibleTree(tree, copyAttributes);
@@ -1677,5 +1682,12 @@ public class TreeModel extends AbstractModel implements MutableTreeModel, Keywor
             return  Collections.EMPTY_LIST;
         }
     }
-
+    
+    public Tree getStartingTree() {
+		return startingTree;
+	}
+    
+    public void setStartingTree(Tree tree) {
+		throw new RuntimeException("Not implemented yet");
+	}  
 }

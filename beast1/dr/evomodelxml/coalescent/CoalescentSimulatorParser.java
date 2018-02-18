@@ -104,7 +104,7 @@ public class CoalescentSimulatorParser extends AbstractXMLObjectParser {
             for (int i = 0; i < remainingTaxa.getTaxonCount(); i++) {
                 Taxa tip = new Taxa();
                 tip.addTaxon(remainingTaxa.getTaxon(i));
-                trees[i + subtrees.size()] = simulator.simulateTree(tip, demoModel);
+                trees[i + subtrees.size()] = new CoalescentSimulator().new Base(tip, demoModel);
             }
 
             return simulator.simulateTree(trees, demoModel, height, trees.length != 1);
