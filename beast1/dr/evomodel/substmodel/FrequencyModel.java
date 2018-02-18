@@ -31,6 +31,8 @@ import dr.inference.model.AbstractModel;
 import dr.inference.model.Model;
 import dr.inference.model.Parameter;
 import dr.inference.model.Variable;
+import xbeast.core.Param;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -59,7 +61,7 @@ public class FrequencyModel extends AbstractModel {
         super(name);
     }
 
-    public FrequencyModel(DataType dataType, Parameter frequencyParameter) {
+    public FrequencyModel(@Param(name="dataType") DataType dataType, @Param(name="frequencyParameter") Parameter frequencyParameter) {
 
         super(FrequencyModelParser.FREQUENCY_MODEL);
 
@@ -103,12 +105,25 @@ public class FrequencyModel extends AbstractModel {
         return frequencyParameter;
     }
 
+    public void setFrequencyParameter(Parameter frequencyParameter) {
+		this.frequencyParameter = frequencyParameter;
+	}
+
     public double[] getFrequencies() {
         double[] frequencies = new double[getFrequencyCount()];
         for (int i = 0; i < frequencies.length; i++) {
             frequencies[i] = getFrequency(i);
         }
         return frequencies;
+    }
+
+    public void setFrequencies(double[] frequencies) {
+    	if (frequencies.length != frequencyParameter.getDimension()) {
+    		frequencyParameter.setDimension(frequencies.length);
+    	}
+    	for (int i = 0; i < frequencies.length; i++) {
+    		frequencyParameter.setValue(i, frequencies[i]);
+    	}
     }
 
     public double[] getCumulativeFrequencies() {
@@ -122,6 +137,11 @@ public class FrequencyModel extends AbstractModel {
     public DataType getDataType() {
         return dataType;
     }
+
+    public void setDataType(DataType dataType) {
+		this.dataType = dataType;
+	}
+
 
     // *****************************************************************
     // Interface Model
@@ -149,6 +169,7 @@ public class FrequencyModel extends AbstractModel {
     }
 
     private DataType dataType = null;
-    Parameter frequencyParameter = null;
+
+	Parameter frequencyParameter = null;
 
 }

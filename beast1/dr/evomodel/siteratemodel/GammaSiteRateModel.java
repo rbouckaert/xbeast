@@ -31,6 +31,7 @@ import dr.evomodel.substmodel.SubstitutionModel;
 import dr.util.Author;
 import dr.util.Citable;
 import dr.util.Citation;
+import xbeast.core.Param;
 
 import java.util.Collections;
 import java.util.List;
@@ -88,7 +89,25 @@ public class GammaSiteRateModel extends AbstractModel implements SiteRateModel, 
         this(name, nuParameter, 1.0, shapeParameter, gammaCategoryCount, invarParameter);
     }
 
-        /**
+    public GammaSiteRateModel(
+            SubstitutionModel substModel,
+            Parameter nuParameter,
+            Parameter shapeParameter, 
+            int gammaCategoryCount,
+            Parameter invarParameter) {
+        this("gammaModel", nuParameter, 1.0, shapeParameter, gammaCategoryCount, invarParameter);
+        setSubstitutionModel(substModel);
+    }
+
+    public GammaSiteRateModel(
+            @Param(name="substitutionModel") SubstitutionModel substModel,
+            @Param(name="relativeRateParameter") Parameter nuParameter,
+            @Param(name="alphaParameter") Parameter shapeParameter, 
+            @Param(name="gammaCategoryCount") int gammaCategoryCount) {
+        this("gammaModel", nuParameter, 1.0, shapeParameter, gammaCategoryCount, null);
+        setSubstitutionModel(substModel);
+    }
+    /**
          * Constructor for gamma+invar distributed sites. Either shapeParameter or
          * invarParameter (or both) can be null to turn off that feature.
          */
@@ -174,7 +193,7 @@ public class GammaSiteRateModel extends AbstractModel implements SiteRateModel, 
         return invarParameter;
     }
 
-    public Parameter setRelativeRateParameter() {
+    public Parameter getRelativeRateParameter() {
         return nuParameter;
     }
 
@@ -204,6 +223,17 @@ public class GammaSiteRateModel extends AbstractModel implements SiteRateModel, 
         return categoryCount;
     }
 
+    public int getGammaCategoryCount() {
+    	return categoryCount - (invarParameter == null ? 0 : 1);
+    }
+
+    public void setGammaCategoryCount(int gammaCategoryCount) {
+    	// TODO: provide more sensible implentation
+    	if (categoryCount != getGammaCategoryCount()) {
+    		throw new IllegalArgumentException();
+    	}
+    }
+    
     public double[] getCategoryRates() {
         synchronized (this) {
             if (!ratesKnown) {

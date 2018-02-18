@@ -35,6 +35,7 @@ import dr.math.matrixAlgebra.Vector;
 import dr.util.Author;
 import dr.util.Citable;
 import dr.util.Citation;
+import xbeast.core.Param;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +52,14 @@ public class HKY extends BaseSubstitutionModel implements Citable {
 
     private Parameter kappaParameter = null;
 
-    /**
+    public Parameter getKappaParameter() {
+		return kappaParameter;
+	}
+    
+	public void setKappaParameter(Parameter kappaParameter) {
+		this.kappaParameter = kappaParameter;
+	}
+	/**
      * A constructor which allows a more programmatic approach with
      * fixed kappa.
      * @param kappa
@@ -65,7 +73,9 @@ public class HKY extends BaseSubstitutionModel implements Citable {
      * @param kappaParameter
      * @param freqModel
      */
-    public HKY(Parameter kappaParameter, FrequencyModel freqModel) {
+    public HKY(
+    		@Param(name="kappaParameter") Parameter kappaParameter,  
+    		@Param(name="freqModel") FrequencyModel freqModel) {
 
         super("HKY", Nucleotides.INSTANCE, freqModel);
 

@@ -407,8 +407,16 @@ public abstract class BaseSubstitutionModel extends AbstractModel
         return copy;
     }
 
+	public FrequencyModel getFreqModel() {
+		return freqModel;
+	}
+
+	public void setFreqModel(FrequencyModel freqModel) {
+		this.freqModel = freqModel;
+	}
+
+
     private final double q[][];
     protected EigenDecomposition eigenDecomposition;
     private EigenDecomposition storedEigenDecomposition;
-
 }
