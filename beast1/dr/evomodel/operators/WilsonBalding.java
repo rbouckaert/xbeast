@@ -29,6 +29,7 @@ import dr.evolution.tree.NodeRef;
 import dr.evomodel.tree.TreeModel;
 import dr.evomodelxml.operators.WilsonBaldingParser;
 import dr.math.MathUtils;
+import xbeast.core.Param;
 
 /**
  * Implements the unweighted wilson-balding branch swapping move.
@@ -42,11 +43,14 @@ public class WilsonBalding extends AbstractTreeOperator {
     private final int tipCount;
 
 
-    public WilsonBalding(TreeModel tree, double weight) {
+    public WilsonBalding(@Param(name="tree") TreeModel tree, @Param(name="weight") double weight) {
         this.tree = tree;
         tipCount = tree.getExternalNodeCount();
         setWeight(weight);
     }
+
+    public TreeModel getTree() {return tree;}
+    public void setTree(TreeModel tree) {throw new RuntimeException("not implemented yet");}
 
     public double doOperation() {
 

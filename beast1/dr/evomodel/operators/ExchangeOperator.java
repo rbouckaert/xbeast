@@ -28,6 +28,7 @@ package dr.evomodel.operators;
 import dr.evolution.tree.NodeRef;
 import dr.evomodel.tree.TreeModel;
 import dr.math.MathUtils;
+import xbeast.core.Param;
 
 /**
  * Implements branch exchange operations. There is a NARROW and WIDE variety.
@@ -48,11 +49,18 @@ public class ExchangeOperator extends AbstractTreeOperator {
 
     private double[] distances;
 
-    public ExchangeOperator(int mode, TreeModel tree, double weight) {
+    public ExchangeOperator(
+    		@Param(name="mode") int mode, 
+    		@Param(name="tree") TreeModel tree, 
+    		@Param(name="weight") double weight) {
         this.mode = mode;
         this.tree = tree;
         setWeight(weight);
     }
+
+    public TreeModel getTree() {return tree;}
+    public void setTree(TreeModel tree) {throw new RuntimeException("not implemented yet");}
+    public void setMode(int mode) {this.mode = mode;}
 
     public double doOperation() {
 

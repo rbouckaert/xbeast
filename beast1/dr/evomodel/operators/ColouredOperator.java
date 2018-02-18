@@ -30,6 +30,8 @@ import dr.inference.operators.CoercableMCMCOperator;
 import dr.inference.operators.CoercionMode;
 import dr.inference.operators.MCMCOperator;
 import dr.xml.*;
+import xbeast.core.BEASTObject;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -42,7 +44,7 @@ import org.w3c.dom.Element;
  */
 // Cleaning out untouched stuff. Can be resurrected if needed
 @Deprecated
-public class ColouredOperator implements CoercableMCMCOperator {
+public class ColouredOperator extends BEASTObject implements CoercableMCMCOperator {
 
     public static final double ACCEPTANCE_FACTOR = 0.5;
 

@@ -31,6 +31,7 @@ import dr.evomodel.tree.TreeModel;
 import dr.evomodelxml.operators.SubtreeSlideOperatorParser;
 import dr.inference.operators.*;
 import dr.math.MathUtils;
+import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,17 @@ public class SubtreeSlideOperator extends AbstractTreeOperator implements Coerca
     private final boolean swapInRandomTrait;
     private final boolean scaledDirichletBranches;
     private CoercionMode mode = CoercionMode.DEFAULT;
+
+    
+    public SubtreeSlideOperator(
+    		@Param(name="tree") TreeModel tree, 
+    		@Param(name="weight") double weight, 
+    		@Param(name="size") double size) {
+    	this(tree, weight, size, false, false, false, false, CoercionMode.DEFAULT);
+    }
+    
+    public TreeModel getTree() {return tree;}
+    public void setTree(TreeModel tree) {throw new RuntimeException("not implemented yet");}
 
     public SubtreeSlideOperator(TreeModel tree, double weight, double size, boolean gaussian,
                                 boolean swapRates, boolean swapTraits, boolean scaleDirichletBranches, CoercionMode mode) {

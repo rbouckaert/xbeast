@@ -25,10 +25,12 @@
 
 package dr.inference.operators;
 
+import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Bounds;
 import dr.inference.model.Parameter;
 import dr.inferencexml.operators.UniformOperatorParser;
 import dr.math.MathUtils;
+import xbeast.core.Param;
 
 /**
  * A generic uniform sampler/operator for use with a multi-dimensional parameter.
@@ -43,7 +45,10 @@ public class UniformOperator extends SimpleMCMCOperator {
         this(parameter, weight, null, null);
     }
 
-    public UniformOperator(Parameter parameter, double weight, Double lowerBound, Double upperBound) {
+    public UniformOperator(Parameter parameter, 
+    		double weight, 
+    		Double lowerBound, 
+    		Double upperBound) {
         this.parameter = parameter;
         setWeight(weight);
 
@@ -51,6 +56,26 @@ public class UniformOperator extends SimpleMCMCOperator {
         this.upperBound = upperBound;
     }
 
+    public UniformOperator(@Param(name="tree") TreeModel tree, 
+    		@Param(name="weight") double weight) {
+		this.tree = tree;
+		// RRB: is it OK to call tree.createNodeHeightsParameter() multiple times?
+		parameter = tree.createNodeHeightsParameter(false, true, false);
+        this.lowerBound = null;
+        this.upperBound = null;
+	}
+
+    TreeModel tree;
+    public TreeModel getTree() {return tree;}
+    public void setTree(TreeModel tree) {throw new RuntimeException("Not implemented yet");}
+//	public Double getLower() {return lowerBound;}
+//    public void setLower(Double lower) {throw new RuntimeException("not implemented yet");}
+//    public Double getUpper() {return upperBound;}
+//    public void setUpper(Double upper) {throw new RuntimeException("not implemented yet");}
+    //public Parameter getParameter() {return parameter}
+    //public void setParameter(Parameter parameter) {throw new RuntimeException("not implemented yet");}
+    
+    
     /**
      * @return the parameter this operator acts on.
      */

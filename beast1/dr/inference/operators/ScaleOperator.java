@@ -25,11 +25,13 @@
 
 package dr.inference.operators;
 
+import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Bounds;
 import dr.inference.model.Parameter;
 import dr.inference.model.Variable;
 import dr.inferencexml.operators.ScaleOperatorParser;
 import dr.math.MathUtils;
+import xbeast.core.Param;
 
 import java.util.logging.Logger;
 
@@ -53,12 +55,39 @@ public class ScaleOperator extends AbstractCoercableOperator {
         this(variable, scale, CoercionMode.COERCION_ON, 1.0);
     }
 
-    public ScaleOperator(Variable<Double> variable, double scale, CoercionMode mode, double weight) {
+    public ScaleOperator(@Param(name="parameter") Variable<Double> variable, 
+    		@Param(name="scaleFactor") double scale, 
+    		@Param(name="optimise") CoercionMode mode, 
+    		@Param(name="weight") double weight) {
 
         this(variable, false, 0, scale, mode, null, 1.0, false);
         setWeight(weight);
     }
 
+    public ScaleOperator(@Param(name="tree") TreeModel tree,
+		@Param(name="scaleFactor") double scale, 
+		@Param(name="optimise") CoercionMode mode, 
+		@Param(name="weight") double weight) {
+        this(tree.getRootHeightParameter(), false, 0, scale, mode, null, 1.0, false);
+        setWeight(weight);
+        this.tree = tree;
+	}
+
+
+    TreeModel tree;
+    public TreeModel getTree() {return tree;}
+    public void setTree(TreeModel tree) {throw new RuntimeException("Not implemented yet");}
+    
+    public Variable<Double> getParameter() {if (tree == null) return variable; return null;}
+    public void setParameter(Variable<Double> parameter){throw new RuntimeException("Not implemented yet");}
+//    public double getScaleFactor() {return scaleFactor;}
+    public void setScaleFactor(double scale){throw new RuntimeException("Not implemented yet");}
+    public CoercionMode getOptimise() {return mode;}
+    public void setOptimise(CoercionMode mode){throw new RuntimeException("Not implemented yet");}
+//    public double getWeight() {return weight;}
+//    public void setWeight(double weight){throw new RuntimeException("Not implemented yet");}
+    
+    
     public ScaleOperator(Variable<Double> variable, boolean scaleAll, int degreesOfFreedom, double scale,
                          CoercionMode mode, Parameter indicator, double indicatorOnProb, boolean scaleAllInd) {
 
@@ -74,7 +103,7 @@ public class ScaleOperator extends AbstractCoercableOperator {
     }
 
 
-    /**
+	/**
      * @return the parameter this operator acts on.
      */
     public Variable getVariable() {

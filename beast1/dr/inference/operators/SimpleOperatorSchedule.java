@@ -29,6 +29,8 @@ import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.loggers.NumberColumn;
 import dr.math.MathUtils;
+import xbeast.core.BEASTObject;
+import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ import java.util.logging.Logger;
  * @author Alexei Drummond
  * @version $Id: SimpleOperatorSchedule.java,v 1.5 2005/06/14 10:40:34 rambaut Exp $
  */
-public class SimpleOperatorSchedule implements OperatorSchedule, Loggable {
+public class SimpleOperatorSchedule extends BEASTObject implements OperatorSchedule, Loggable {
 
 	private final List<MCMCOperator> operators = new ArrayList<MCMCOperator>();
 	private final List<Integer> availableOperators = new ArrayList<Integer>();
@@ -61,6 +63,16 @@ public class SimpleOperatorSchedule implements OperatorSchedule, Loggable {
 		this.operatorAcceptanceThreshold = operatorAcceptanceThreshold;
 	}
 
+	public SimpleOperatorSchedule(
+			@Param(name="operatorUseThreshold") int operatorUseThreshold, 
+			@Param(name="operatorAcceptanceThreshold") double operatorAcceptanceThreshold, 
+			@Param(name="operator") List<MCMCOperator> operators) {
+		this(operatorUseThreshold, operatorAcceptanceThreshold);
+		for (MCMCOperator operator : operators) {
+			addOperator(operator);
+		}
+	}
+	
 	public void addOperators(List<MCMCOperator> operators) {
 		for (MCMCOperator operator : operators) {
 			this.operators.add(operator);

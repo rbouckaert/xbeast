@@ -26,8 +26,9 @@
 package dr.inference.operators;
 
 import dr.inference.model.Likelihood;
+import xbeast.core.BEASTObject;
 
-public abstract class SimpleMCMCOperator implements MCMCOperator {
+public abstract class SimpleMCMCOperator extends BEASTObject implements MCMCOperator {
 
     public double getTargetAcceptanceProbability() {
         return targetAcceptanceProb;
