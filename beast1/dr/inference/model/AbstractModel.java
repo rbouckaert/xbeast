@@ -42,7 +42,7 @@ import java.util.List;
  * @author Andrew Rambaut
  * @version $Id: AbstractModel.java,v 1.13 2006/08/17 15:30:08 rambaut Exp $
  */
-public abstract class AbstractModel extends BEASTObject
+public abstract class AbstractModel
 	implements Model, ModelListener, VariableListener, StatisticList, MPISerializable, Keywordable {
 
     /**

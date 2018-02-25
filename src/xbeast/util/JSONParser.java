@@ -51,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import xbeast.core.BEASTInterface;
+import xbeast.core.BEASTObjectStore;
 import xbeast.core.Input;
 import xbeast.core.Param;
 import xbeast.core.Runnable;
@@ -848,7 +849,7 @@ public class JSONParser {
 				// }
 				// return null;
 				// } else {
-				throw new JSONParserException(node, "Expected object to be instance of BEASTObject", 108);
+//				throw new JSONParserException(node, "Expected object to be instance of BEASTObject", 108);
 				// }
 			}
 		} catch (ClassNotFoundException e1) {

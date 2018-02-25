@@ -15,13 +15,13 @@ import xbeast.core.util.Log;
 public class InputForAnnotatedConstructor<T> extends Input<T> {
 	
 	/** BEAST object for which to emulate this Input **/
-	BEASTInterface beastObject;
+	Object beastObject;
 	
 	/** get and set methods **/
 	Method getter, setter;
 	
 	
-	public InputForAnnotatedConstructor(BEASTInterface beastObject, Class<?> theClass, Param param) throws NoSuchMethodException, SecurityException,  IllegalArgumentException  {
+	public InputForAnnotatedConstructor(Object beastObject, Class<?> theClass, Param param) throws NoSuchMethodException, SecurityException,  IllegalArgumentException  {
 		if (beastObject == null) {
 			throw new NullPointerException();
 		}
@@ -192,7 +192,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 		try {
 			setter.invoke(beastObject, value);
 			if (value instanceof BEASTInterface) {
-	              ((BEASTInterface) value).getOutputs().add(beastObject);
+	              ((BEASTInterface) value).getOutputs().add(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject));
 			}
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
@@ -260,7 +260,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
         if (theClass.equals(Function.class)) {
         	final Function.Constant param = new Function.Constant(valueString);
         	setValue(param);
-            param.getOutputs().add(beastObject);
+            param.getOutputs().add(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject));
             return;
         }
 
@@ -304,7 +304,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
             final Object o = ctor.newInstance(v);
             setValue(o);
             if (o instanceof BEASTInterface) {
-                ((BEASTInterface) o).getOutputs().add(beastObject);
+                ((BEASTInterface) o).getOutputs().add(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject));
             }
         } catch (Exception e) {
             throw new IllegalArgumentException("Input 103: type mismatch, cannot initialize input '" + getName() +

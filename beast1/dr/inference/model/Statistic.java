@@ -25,12 +25,12 @@
 
 package dr.inference.model;
 
+
 import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.loggers.NumberColumn;
 import dr.util.Attribute;
 import dr.util.Identifiable;
-import xbeast.core.BEASTObject;
 
 /**
  * @author Alexei Drummond
@@ -77,7 +77,7 @@ public interface Statistic extends Attribute<double[]>, Identifiable, Loggable {
     /**
      * Abstract base class for Statistics
      */
-    public abstract class Abstract extends BEASTObject implements Statistic {
+    public abstract class Abstract implements Statistic {
 
         private String name = null;
 

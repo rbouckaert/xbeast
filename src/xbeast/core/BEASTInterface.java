@@ -238,8 +238,14 @@ public interface BEASTInterface {
             }
         }
         
+        listAnnotatedInputs(this, inputs, inputNames);
+    
+	    return inputs;
+    } // listInputs
+
+    default void listAnnotatedInputs(Object o, List<Input<?>> inputs, Map<String, Input> inputNames) {
         // Second, collect InputForAnnotatedConstructors of annotated constructor (if any)
-	    Constructor<?>[] allConstructors = this.getClass().getDeclaredConstructors();
+	    Constructor<?>[] allConstructors = o.getClass().getDeclaredConstructors();
 	    for (Constructor<?> ctor : allConstructors) {
 	    	Annotation[][] annotations = ctor.getParameterAnnotations();
 	    	List<Param> paramAnnotations = new ArrayList<>();
@@ -297,7 +303,7 @@ public interface BEASTInterface {
                         Class<?> theClass = (Class<?>) genericTypes2[0];
 	    				InputForAnnotatedConstructor<?> t = null;
 						try {
-							t = new InputForAnnotatedConstructor<>(this, theClass, param);
+							t = new InputForAnnotatedConstructor<>(o, theClass, param);
 						} catch (NoSuchMethodException | SecurityException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -318,7 +324,7 @@ public interface BEASTInterface {
 	    			} else {
 	    				InputForAnnotatedConstructor<?> t = null;
 						try {
-							t = new InputForAnnotatedConstructor<>(this, types[i + offset], param);
+							t = new InputForAnnotatedConstructor<>(o, types[i + offset], param);
 						} catch (NoSuchMethodException | SecurityException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -341,10 +347,10 @@ public interface BEASTInterface {
 	    		}
 	    	}
 		}
-	    
-	    return inputs;
-    } // listInputs
 
+    }
+    
+    
     /**
      * create array of all plug-ins in the inputs that are instantiated.
      * If the input is a List of plug-ins, these individual plug-ins are

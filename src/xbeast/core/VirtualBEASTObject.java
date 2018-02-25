@@ -1,42 +1,33 @@
 package xbeast.core;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import xbeast.core.util.Log;
 
 public class VirtualBEASTObject extends BEASTObject {
 	Object o;
 
 	public VirtualBEASTObject(Object o) {
 		this.o = o;
+		// this initialises inputs
+		getInputs();
 	}
-
-	
-	@Override
-	public Object getInputValue(String name) {
-		try {
-			return BEASTObjectStore.INSTANCE.getInputValue(o, name);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public void setInputValue(String name, Object value) {
-		try {
-			BEASTObjectStore.INSTANCE.setInputValue(o, name, value);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 	@Override
 	public String getId() {
 		String id;
 		try {
-			id = (String) BEASTObjectStore.INSTANCE.getInputValue(o, "id");
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			Method getter = o.getClass().getMethod("getId");
+			id = (String) getter.invoke(o);
+		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			Log.err.println("Method getId() could not be found on " + o.getClass().getName());
 			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
 		}
 		return id;
 	}
@@ -44,9 +35,20 @@ public class VirtualBEASTObject extends BEASTObject {
 	@Override
 	public void setId(String ID) {
 		try {
-			BEASTObjectStore.INSTANCE.setInputValue(o, "id", ID);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			Method setter = o.getClass().getMethod("setId");
+			setter.invoke(o, ID);
+		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			Log.err.println("Method setId() could not be found on " + o.getClass().getName());
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<Input<?>> listInputs() {
+        final List<Input<?>> inputs = new ArrayList<>();        
+        Map<String, Input> inputNames = new LinkedHashMap<>();
+        listAnnotatedInputs(o, inputs, inputNames);
+		return inputs; 
 	}
 }

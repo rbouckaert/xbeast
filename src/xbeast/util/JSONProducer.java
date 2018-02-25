@@ -1,5 +1,6 @@
 package xbeast.util;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,6 +19,7 @@ import org.xml.sax.SAXException;
 
 import xbeast.app.BEASTVersion2;
 import xbeast.core.BEASTInterface;
+import xbeast.core.BEASTObjectStore;
 import xbeast.core.Input;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
@@ -49,8 +51,8 @@ public class JSONProducer {
     /**
      * list of objects already converted to JSON, so an idref suffices
      */
-    Set<BEASTInterface> isDone;
-    Map<BEASTInterface, Set<String>> isInputsDone;
+    Set<Object> isDone;
+    Map<Object, Set<String>> isInputsDone;
     /**
      * list of IDs of elements produces, used to prevent duplicate ID generation
      */
@@ -71,11 +73,11 @@ public class JSONProducer {
      * Given a plug-in, produces the JSON in BEAST 2 format
      * representing the plug-in. This assumes beastObject is Runnable
      */
-    public String toJSON(BEASTInterface beastObject) {
+    public String toJSON(Object beastObject) {
     	return toJSON(beastObject, new ArrayList<>());
     }
 
-    public String toJSON(BEASTInterface beastObject, Collection<BEASTInterface> others) {
+    public String toJSON(Object beastObject, Collection<BEASTInterface> others) {
         try {
             StringBuffer buf = new StringBuffer();
             //buf.append("{\"version\": \"2.0\",\n\"namespace\": \"" + DEFAULT_NAMESPACE + "\",\n\n" +
@@ -116,14 +118,14 @@ public class JSONProducer {
         }
     } // toJSON
 
-    private void findPriorityBeastObjects(BEASTInterface beastObject, List<BEASTInterface> priorityBeastObjects) throws IllegalArgumentException, IllegalAccessException {
+    private void findPriorityBeastObjects(Object beastObject, List<BEASTInterface> priorityBeastObjects) throws IllegalArgumentException, IllegalAccessException {
 //    	if (beastObject.getClass().equals(Alignment.class)) {
 //    		priorityBeastObjects.add(beastObject);
 //    	}
 //    	if (beastObject instanceof TraitSet) {
 //    		priorityBeastObjects.add(beastObject);
 //    	}
-		for (BEASTInterface beastObject2 : beastObject.listActiveBEASTObjects()) {
+		for (Object beastObject2 : BEASTObjectStore.listActiveBEASTObjects(beastObject)) {
 			findPriorityBeastObjects(beastObject2, priorityBeastObjects);
 		}
 	}
@@ -151,7 +153,7 @@ public class JSONProducer {
      * It tries to create JSON conforming to the JSON transformation rules (see JSONParser)
      * that is moderately readable.
      */
-    void beastObjectToJSON(BEASTInterface beastObject, Class<?> defaultType, StringBuffer buf, String name, boolean isTopLevel) {
+    void beastObjectToJSON(Object beastObject, Class<?> defaultType, StringBuffer buf, String name, boolean isTopLevel) {
         // determine element name, default is input, otherwise find one of the defaults
 
     	String indent = "";
@@ -174,13 +176,13 @@ public class JSONProducer {
         if (isDone.contains(beastObject)) {
             // JSON is already produced, we can idref it
         	buf.append((needsComma == true) ? ",\n" + indent + " " : ""); 
-            buf.append("idref: \"" + beastObject.getId() + "\" ");
+            buf.append("idref: \"" + BEASTObjectStore.getId(beastObject) + "\" ");
             needsComma = true;
             skipInputs = true;
         } else {
             // see whether a reasonable id can be generated
-            if (beastObject.getId() != null && !beastObject.getId().equals("")) {
-                String id = beastObject.getId();
+            if (BEASTObjectStore.getId(beastObject) != null && !BEASTObjectStore.getId(beastObject).equals("")) {
+                String id = BEASTObjectStore.getId(beastObject);
                 // ensure ID is unique
                 if (IDs.contains(id)) {
                     int k = 1;
@@ -210,7 +212,7 @@ public class JSONProducer {
         if (!skipInputs) {
             // process inputs of this beastObject
             // first, collect values as attributes
-            List<Input<?>> inputs = beastObject.listInputs();
+            List<Input<?>> inputs = BEASTObjectStore.listInputs(beastObject);
             Collections.sort(inputs, (a,b) -> {return a.getName().compareTo(b.getName());});
             //List<InputType> inputs = XMLParserUtils.listInputs(beastObject.getClass(), beastObject);
             for (Input<?> input : inputs) {
@@ -274,7 +276,7 @@ public class JSONProducer {
      * @param isShort: flag to indicate attribute/value format (true) or element format (false)
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void inputToJSON(Input input, Object value, BEASTInterface beastObject, StringBuffer buf, boolean isShort, String indent) {
+    private void inputToJSON(Input input, Object value, Object beastObject, StringBuffer buf, boolean isShort, String indent) {
         if (value != null) {
         	
             // distinguish between Map, List, BEASTObject and primitive input types
