@@ -63,6 +63,7 @@ import beast.app.beastapp.BeastMain;
 import xbeast.app.util.Arguments;
 import xbeast.app.util.Utils;
 import xbeast.core.BEASTInterface;
+import xbeast.core.BEASTObjectStore;
 import xbeast.core.Description;
 import xbeast.core.util.Log;
 import beast.evolution.alignment.Alignment;
@@ -1860,7 +1861,7 @@ public class PackageManager {
     /** return set of Strings in the format of classToPackageMap (like "bModelTest v0.3.2")
      * for all packages used by o and its predecessors in the model graph.
      */
-    public static Set<String> getPackagesAndVersions(BEASTInterface o) {
+    public static Set<String> getPackagesAndVersions(Object o) {
     	Set<String> packagesAndVersions = new LinkedHashSet<>();
     	getPackagesAndVersions(o, packagesAndVersions);
     	return packagesAndVersions;
@@ -1869,12 +1870,12 @@ public class PackageManager {
     /** traverse model graph starting at o, and collect packageAndVersion strings
      * along the way.
      */
-    private static void getPackagesAndVersions(BEASTInterface o, Set<String> packagesAndVersions) {
+    private static void getPackagesAndVersions(Object o, Set<String> packagesAndVersions) {
     	String packageAndVersion = classToPackageMap.get(o.getClass().getName());
     	if (packageAndVersion != null) {
     		packagesAndVersions.add(packageAndVersion);
     	}
-    	for (BEASTInterface o2 : o.listActiveBEASTObjects()) {
+    	for (BEASTInterface o2 : BEASTObjectStore.listActiveBEASTObjects(o)) {
     		getPackagesAndVersions(o2, packagesAndVersions);
     	}
 	}

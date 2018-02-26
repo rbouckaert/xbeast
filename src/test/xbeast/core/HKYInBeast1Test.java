@@ -189,42 +189,42 @@ public class HKYInBeast1Test extends TestCase {
         
         
         
-//        XMLProducer xmlp = new XMLProducer();
-//		String xml = xmlp.toXML(mcmc);
-//		System.err.println(xml);
-//        		
-//        FileWriter outfile = new FileWriter("/tmp/x.xml");
-//        outfile.write(xml);
-//        outfile.close();
-//
-//		XMLParser parser = new XMLParser();
-//		BEASTInterface o = parser.parseFragment(xml, false);
-//		xml = xmlp.toXML((BEASTObject) o);
-//		System.err.println(xml);
-//
-//		outfile = new FileWriter("/tmp/y.xml");
-//        outfile.write(xml);
-//        outfile.close();
-		
-		
-		JSONProducer producer = new JSONProducer();
-		String json = producer.toJSON(mcmc);
-		
-        FileWriter outfile = new FileWriter("/tmp/x.json");
-        outfile.write(json);
+        XMLProducer xmlp = new XMLProducer();
+		String xml = xmlp.toXML(frequencyParameter);
+		System.err.println(xml);
+        		
+        FileWriter outfile = new FileWriter("/tmp/x.xml");
+        outfile.write(xml);
         outfile.close();
 
-		
-		System.err.println(json);
-		
-		JSONParser parser = new JSONParser();
-		List<Object> o = parser.parseFragment(json, false);
-		json = producer.toJSON((BEASTObject) o.get(0));
-		System.err.println(json);
+		XMLParser parser = new XMLParser();
+		BEASTInterface o = parser.parseFragment(xml, false);
+		xml = xmlp.toXML((BEASTObject) o);
+		System.err.println(xml);
 
-		outfile = new FileWriter("/tmp/y.json");
-        outfile.write(json);
+		outfile = new FileWriter("/tmp/y.xml");
+        outfile.write(xml);
         outfile.close();
+		
+		
+//		JSONProducer producer = new JSONProducer();
+//		String json = producer.toJSON(mcmc);
+//		
+//        FileWriter outfile = new FileWriter("/tmp/x.json");
+//        outfile.write(json);
+//        outfile.close();
+//
+//		
+//		System.err.println(json);
+//		
+//		JSONParser parser = new JSONParser();
+//		List<Object> o = parser.parseFragment(json, false);
+//		json = producer.toJSON((BEASTObject) o.get(0));
+//		System.err.println(json);
+//
+//		outfile = new FileWriter("/tmp/y.json");
+//        outfile.write(json);
+//        outfile.close();
 
 	}
 }

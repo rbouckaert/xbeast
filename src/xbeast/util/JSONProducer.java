@@ -17,8 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import dr.evolution.util.Taxa;
-import dr.evolution.util.Taxon;
 import xbeast.app.BEASTVersion2;
 import xbeast.core.BEASTInterface;
 import xbeast.core.BEASTObjectStore;
@@ -175,7 +173,9 @@ public class JSONProducer {
         }
 
         boolean skipInputs = false;
-        if (isDone.contains(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject))) {
+        BEASTInterface beastObject2 = BEASTObjectStore.INSTANCE.getBEASTObject(beastObject);
+        // isDone.contains(beastObject2) fails when BEASTObjects override equals(), so use a stream with == instead
+        if (isDone.stream().anyMatch(x -> x == beastObject2)) {
             // JSON is already produced, we can idref it
         	buf.append((needsComma == true) ? ",\n" + indent + " " : ""); 
             buf.append("idref: \"" + BEASTObjectStore.getId(beastObject) + "\" ");
@@ -197,6 +197,7 @@ public class JSONProducer {
                 buf.append("id: \"" + normalise(null, id) + "\"");
                 needsComma = true;
                 IDs.add(id);
+                BEASTObjectStore.setId(beastObject, id);
             }
             //isDone.add(beastObject);
             isDone.add(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject));

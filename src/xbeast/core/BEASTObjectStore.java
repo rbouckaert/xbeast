@@ -52,6 +52,13 @@ public class BEASTObjectStore {
 		return ((BEASTInterface) beastObject).getId();
 	}
 
+	public static void setId(Object beastObject, String id) {
+		if (!(beastObject instanceof BEASTInterface)) {
+			beastObject = INSTANCE.getBEASTObject(beastObject);
+		}
+		((BEASTInterface) beastObject).setId(id);
+	}
+
 	public static boolean isPrimitive(Object value) {			
 		// The value is primitive if there are no @Param annotations, and 
 		// no newInstance() method and has no @Description annotation. 

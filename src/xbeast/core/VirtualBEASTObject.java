@@ -82,5 +82,26 @@ public class VirtualBEASTObject extends BEASTObject {
         }		
 		return super.getDescriptionString();
 	}
+
 	
+	@Override
+	public List<BEASTInterface> listActiveBEASTObjects() {
+        final List<BEASTInterface> beastObjects = new ArrayList<>();
+
+        for (Input<?> input : getInputs().values()) {
+        	if (input.get() != null) {
+        		if (input.get() instanceof List<?>) {
+        			final List<?> list = (List<?>) input.get();
+        			for (final Object o : list) {
+        				if (!BEASTObjectStore.isPrimitive(o)) {
+        					beastObjects.add(BEASTObjectStore.INSTANCE.getBEASTObject(o));
+        				}
+        			}
+        		} else if (input.get() != null && input.get() instanceof BEASTInterface) {
+        			beastObjects.add((BEASTInterface) input.get());
+        		}
+        	}
+        }
+        return beastObjects;
+	}
 }
