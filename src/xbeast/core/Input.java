@@ -826,7 +826,11 @@ public class Input<T> {
 			// convert list to array of type componentType
 			Object array = java.lang.reflect.Array.newInstance(componentType, list.size());
 			for (int i = 0; i < list.size(); i++) {
-				Array.set(array, i, list.get(i));
+				if (list.get(i) instanceof VirtualBEASTObject) {
+					Array.set(array, i, ((VirtualBEASTObject)list.get(i)).getObject());
+				} else {
+					Array.set(array, i, list.get(i));
+				}
 			}
 			return array;
 		}

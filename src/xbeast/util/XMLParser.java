@@ -194,6 +194,10 @@ public class XMLParser {
 			this.value = value;
 			processed = false;
 		}
+		@Override
+		public String toString() {
+			return name + " "  + value;
+		}
 	}
 
     List<BEASTInterface> beastObjectsWaitingToInit;

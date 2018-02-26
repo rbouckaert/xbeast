@@ -63,6 +63,7 @@ public class HKYInBeast1Test extends TestCase {
 		Parameter.Default kappaParameter = new Parameter.Default(2.0);
 		kappaParameter.setId("kappa");
 		Parameter.Default frequencyParameter = new Parameter.Default(new Double[]{0.25,0.25,0.25,0.25});
+
 		dr.evolution.datatype.DataType dataType = Nucleotides.INSTANCE;
 		FrequencyModel freqModel = new FrequencyModel(dataType, frequencyParameter);
 		freqModel.setId("frequencies");

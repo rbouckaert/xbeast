@@ -25,6 +25,8 @@
 
 package dr.evolution.datatype;
 
+import xbeast.core.Description;
+
 /**
  * implements DataType for nucleotides with ambiguous characters
  *
@@ -33,6 +35,7 @@ package dr.evolution.datatype;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
+@Description("Datatype for nucleotide data")
 public class Nucleotides extends DataType {
 
     public static final String JC = "JC";

@@ -17,6 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import dr.evolution.util.Taxa;
+import dr.evolution.util.Taxon;
 import xbeast.app.BEASTVersion2;
 import xbeast.core.BEASTInterface;
 import xbeast.core.BEASTObjectStore;
@@ -93,7 +95,7 @@ public class JSONProducer {
             List<BEASTInterface> priorityBeastObjects = new ArrayList<>();
             findPriorityBeastObjects(beastObject, priorityBeastObjects);
             for (BEASTInterface beastObject2 : priorityBeastObjects) {
-            	if (!isDone.contains(beastObject2)) {
+            	if (!isDone.contains(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject2))) {
             		//name = name.substring(name.lastIndexOf('.') + 1).toLowerCase();
             		beastObjectToJSON(beastObject2, BEASTInterface.class, buf, null, true);
             		buf.append(",");
@@ -173,7 +175,7 @@ public class JSONProducer {
         }
 
         boolean skipInputs = false;
-        if (isDone.contains(beastObject)) {
+        if (isDone.contains(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject))) {
             // JSON is already produced, we can idref it
         	buf.append((needsComma == true) ? ",\n" + indent + " " : ""); 
             buf.append("idref: \"" + BEASTObjectStore.getId(beastObject) + "\" ");
@@ -196,9 +198,11 @@ public class JSONProducer {
                 needsComma = true;
                 IDs.add(id);
             }
-            isDone.add(beastObject);
+            //isDone.add(beastObject);
+            isDone.add(BEASTObjectStore.INSTANCE.getBEASTObject(beastObject));
         }
         String className = BEASTObjectStore.getClassName(beastObject);
+        
         if (skipInputs == false) {
             // only add spec element if it cannot be deduced otherwise (i.e., by idref)
         	//if (defaultType != null && !defaultType.getName().equals(className)) {
@@ -381,11 +385,11 @@ public class JSONProducer {
 	            	} else {
 	                    for (Object o2 : (Object []) value) {
 	                    	StringBuffer buf3 = new StringBuffer();
-	                    	if (o2 instanceof BEASTInterface) {
-	                    		beastObjectToJSON((BEASTInterface) o2, input.getType(), buf3, null, false);
-		                        buf2.append("\n" + buf3 + ", ");
+	                    	if (BEASTObjectStore.isPrimitive(o2)) {
+	                    	    buf2.append(o2.toString() + ", ");
 	                    	} else {
-	                    		buf2.append(o2.toString() + ", ");
+	                    		beastObjectToJSON(o2, input.getType(), buf3, null, false);
+		                        buf2.append("\n" + buf3 + ", ");
 	                    	}
 	                    }
 	                }
@@ -427,7 +431,7 @@ public class JSONProducer {
             			}
             		}
             		
-                    if (isShort && isDone.contains(value)) {
+                    if (isShort && isDone.contains(BEASTObjectStore.INSTANCE.getBEASTObject(value))) {
                         buf.append(" " + input.getName() + ": \"@" + ((BEASTInterface) value).getId() + "\"");
                         if (!isInputsDone.containsKey(beastObject)) {
                         	isInputsDone.put(beastObject, new HashSet<>());

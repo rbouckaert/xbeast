@@ -1014,6 +1014,11 @@ public class JSONParser {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private BEASTInterface useAnnotatedConstructor(JSONObject node, String _id, String clazzName, List<NameValuePair> inputInfo) throws JSONParserException {
+		if (clazzName.contains("MCMC")) {
+			
+			int h = 3;
+			h++;
+		}
 		Class<?> clazz = null;
 		try {
 			clazz = Class.forName(clazzName);
@@ -1082,7 +1087,13 @@ public class JSONParser {
 		    					args[i] = new ArrayList();
 		    				}
 		    				List<Object> values = XMLParser.getListOfValues(param, inputInfo);
-		    				((List)args[i]).addAll(values);
+		    				for (Object v : values) {
+		    					if (v instanceof VirtualBEASTObject) {
+		    						((List)args[i]).add(((VirtualBEASTObject) v).getObject());
+		    					} else {
+		    						((List)args[i]).add(v);
+		    					}
+		    				}
 		    			} else {
 		    				args[i] = getValue(param, types[i], inputInfo);
 	    					args[i] = Input.fromString(args[i], types[i]);
@@ -1119,6 +1130,7 @@ public class JSONParser {
 							throw new JSONParserException(node, "Could not create object: " + e.getMessage() + "\n"
 									+ "(Perhaps a programmer error: the constructor or class may not be public)", 1014);
 						} catch (InstantiationException | IllegalArgumentException | InvocationTargetException e) {
+							e.printStackTrace();
 							throw new JSONParserException(node, "Could not create object: " + e.getMessage(), 1012);
 				    	}
 			    	}

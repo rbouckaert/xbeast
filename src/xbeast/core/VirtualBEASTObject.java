@@ -1,5 +1,6 @@
 package xbeast.core;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,9 +34,8 @@ public class VirtualBEASTObject extends BEASTObject {
 			Method getter = o.getClass().getMethod("getId");
 			id = (String) getter.invoke(o);
 		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-			Log.err.println("Method getId() could not be found on " + o.getClass().getName());
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			Log.trace.println("Method getId() could not be found on " + o.getClass().getName());			
+			id = super.getId();
 		}
 		return id;
 	}
@@ -46,10 +46,9 @@ public class VirtualBEASTObject extends BEASTObject {
 			Method setter = o.getClass().getMethod("setId", String.class);
 			setter.invoke(o, ID);
 		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-			Log.err.println("Method setId() could not be found on " + o.getClass().getName());
-//			e.printStackTrace();
-//			throw new RuntimeException(e);
+			Log.trace.println("Method setId() could not be found on " + o.getClass().getName());
 		}
+		super.setId(ID);
 	}
 	
 
@@ -72,4 +71,16 @@ public class VirtualBEASTObject extends BEASTObject {
 		return inputs; 
 	}
 
+	@Override
+	public String getDescriptionString() {
+        final Annotation[] classAnnotations = o.getClass().getAnnotations();
+        for (final Annotation annotation : classAnnotations) {
+            if (annotation instanceof Description) {
+                final Description description = (Description) annotation;
+                return description.value();
+            }
+        }		
+		return super.getDescriptionString();
+	}
+	
 }

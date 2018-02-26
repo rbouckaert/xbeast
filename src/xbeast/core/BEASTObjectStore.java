@@ -52,10 +52,10 @@ public class BEASTObjectStore {
 		return ((BEASTInterface) beastObject).getId();
 	}
 
-	public static boolean isPrimitive(Object value) {
+	public static boolean isPrimitive(Object value) {			
 		// The value is primitive if there are no @Param annotations, and 
-		// no newInstance() method. Any primitive object (int, short, boolean, etc)
-		// is certainly primitive.
+		// no newInstance() method and has no @Description annotation. 
+		// Any primitive object (int, short, boolean, etc) is certainly primitive.
 		if (value.getClass().isPrimitive()) {
 			return true;
 		}
@@ -65,12 +65,16 @@ public class BEASTObjectStore {
 			return false;
 		}
 		
-		try {
-			if (value.getClass().getMethod("newInstance") != null) {
-				return false;
-			}
-		} catch (NoSuchMethodException | SecurityException e) {
-			// ifnoew
+//		try {
+//			if (value.getClass().getMethod("newInstance") != null) {
+//				return false;
+//			}
+//		} catch (NoSuchMethodException | SecurityException e) {
+//			// ignore
+//		}
+		
+		if (!INSTANCE.getBEASTObject(value).getDescriptionString().equals(BEASTInterface.DEFEAULT_DESCRIPTION)) {
+			return false;
 		}
 		
 		return true;
