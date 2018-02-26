@@ -1053,10 +1053,10 @@ public class XMLProducer extends XMLParser {
                 } else {
 	            	for (Object o2 : (Object []) value) {
                     	StringBuffer buf3 = new StringBuffer();
-                    	//if (o2 instanceof BEASTInterface) {
+                    	if (!BEASTObjectStore.isPrimitive(o2)) {
                     		beastObjectToXML(o2, buf3, input.getName(), false);
 	                        buf.append(buf3);
-                    	//}
+                    	}
 	            	}
                 }
             	return;

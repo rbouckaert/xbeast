@@ -59,9 +59,11 @@ import org.xml.sax.SAXException;
 
 import beast.app.beauti.PartitionContext;
 import xbeast.core.BEASTInterface;
+import xbeast.core.BEASTObjectStore;
 import xbeast.core.Input;
 import xbeast.core.Param;
 import xbeast.core.Runnable;
+import xbeast.core.VirtualBEASTObject;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
 import xbeast.core.util.Log;
@@ -724,7 +726,7 @@ public class XMLParser {
 		try {
 			Class<?> clazz = Class.forName(clazzName);
 			if (!BEASTInterface.class.isAssignableFrom(clazz)) {
-				throw new XMLParserException(node, "Expected object to be instance of BEASTObject", 108);
+				// throw new XMLParserException(node, "Expected object to be instance of BEASTObject", 108);
 			}
 		} catch (ClassNotFoundException e1) {
 			// should never happen since clazzName is in the list of classes collected by the AddOnManager
@@ -793,7 +795,7 @@ public class XMLParser {
 		}
 		
 		// set id
-		beastObject = (BEASTInterface) o;
+		beastObject = BEASTObjectStore.INSTANCE.getBEASTObject(o);
 		beastObject.setId(ID);
 
 		// hack required to make log-parsing easier
@@ -863,10 +865,6 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 
-		if (clazzName.contains("Taxon")) {
-			int h = 3;
-			h++;
-		}
 
 		// try to find a constructor that has Param annotations where all values of inputInfo can be matched
 	    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
@@ -915,6 +913,11 @@ public class XMLParser {
 						}
 		    		}
 		    		for (int i = offset; i < types.length; i++) {
+		    			if (clazzName.contains("MCMC")) {
+		    				int h = 3;
+		    				h++;
+		    			}
+
 		    			Param param = paramAnnotations.get(i - offset);
 		    			Type type = types[i];
 		    			if (type.getTypeName().equals("java.util.List")) {
@@ -923,16 +926,27 @@ public class XMLParser {
 		    					args[i] = new ArrayList();
 		    				}
 		    				List<Object> values = XMLParser.getListOfValues(param, inputInfo);
-		    				((List)args[i]).addAll(values);
+		    				for (Object v : values) {
+		    					if (v instanceof VirtualBEASTObject) {
+		    						((List)args[i]).add(((VirtualBEASTObject) v).getObject());
+		    					} else {
+		    						((List)args[i]).add(v);
+		    					}
+		    				}
 		    			} else if (type.getTypeName().endsWith("[]")) {
 							String typeName = type.getTypeName();
 							typeName = typeName.substring(0, typeName.length() - 2);
 							try {
-								if (BEASTInterface.class.isAssignableFrom(Class.forName(typeName))) {
+								if (!BEASTObjectStore.isPrimitiveType(typeName)) {
 									List<Object> values = XMLParser.getListOfValues(param, inputInfo);
 									Object array = java.lang.reflect.Array.newInstance(Class.forName(typeName), values.size());
 									for (int k = 0; k < values.size(); k++) {
-										Array.set(array, k, values.get(k));
+										Object v = values.get(k);
+										if (v instanceof VirtualBEASTObject) {
+											Array.set(array, k, ((VirtualBEASTObject) v).getObject());
+										} else {
+											Array.set(array, k, v);
+										}
 									}
 									args[i] = array;
 								} else {
@@ -970,7 +984,7 @@ public class XMLParser {
 			    	if (allUsed) {
 				    	try {
 							Object o = ctor.newInstance(args);
-							BEASTInterface beastObject = (BEASTInterface) o;
+							BEASTInterface beastObject = BEASTObjectStore.INSTANCE.getBEASTObject(o);
 							beastObject.setId(_id);
 							register(node, beastObject);
 							return beastObject;
@@ -996,7 +1010,11 @@ public class XMLParser {
 		for (NameValuePair pair : inputInfo) {
 			if (pair.name.equals(param.name())) {
 				pair.processed = true;
-				return pair.value;
+				Object value = pair.value;
+				if (value instanceof VirtualBEASTObject) {
+					value = ((VirtualBEASTObject) value).getObject();
+				}
+				return value;
 			}
 		}
 		

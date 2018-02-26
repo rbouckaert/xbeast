@@ -1,8 +1,13 @@
 package xbeast.core;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import xbeast.util.XMLParser.NameValuePair;
 
 public class BEASTObjectStore {
 	
@@ -86,6 +91,43 @@ public class BEASTObjectStore {
 		
 		return true;
 	}
+	
+	public static boolean isPrimitiveType(String typeName) {
+		try {
+			Class clazz = Class.forName(typeName);
+
+			if (clazz.isPrimitive()) {
+				return true;
+			}
+			
+			// has @Param annotation
+		    Constructor<?>[] allConstructors = clazz.getDeclaredConstructors();
+		    for (Constructor<?> ctor : allConstructors) {
+		    	Annotation[][] annotations = ctor.getParameterAnnotations();
+		    	for (Annotation [] a0 : annotations) {
+			    	for (Annotation a : a0) {
+			    		if (a instanceof Param) {
+			    			return false;
+			    		}
+		    		}
+		    	}	    	
+		    }
+		    
+			// has @Description annotation
+	        final Annotation[] classAnnotations = clazz.getAnnotations();
+	        for (final Annotation annotation : classAnnotations) {
+	            if (annotation instanceof Description) {
+	                return false;
+	            }
+	        }		
+			
+			return true;
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException("Incorrect type name: " + e);
+		}
+
+	}
+
 
 	public static String getClassName(Object beastObject) {
 		if (beastObject instanceof VirtualBEASTObject) {
@@ -93,6 +135,7 @@ public class BEASTObjectStore {
 		}
 		return beastObject.getClass().getName();
 	}
+
 	
 
 }

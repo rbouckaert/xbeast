@@ -25,6 +25,8 @@
 
 package dr.inference.loggers;
 
+import xbeast.core.Description;
+
 /**
  * An interface for a logger.
  *
@@ -33,6 +35,7 @@ package dr.inference.loggers;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
+@Description("An interface for a logger")
 public interface Logger  {
 
 	void startLogging();

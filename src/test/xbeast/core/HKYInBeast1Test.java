@@ -190,7 +190,7 @@ public class HKYInBeast1Test extends TestCase {
         
         
         XMLProducer xmlp = new XMLProducer();
-		String xml = xmlp.toXML(frequencyParameter);
+		String xml = xmlp.toXML(mcmc);
 		System.err.println(xml);
         		
         FileWriter outfile = new FileWriter("/tmp/x.xml");
