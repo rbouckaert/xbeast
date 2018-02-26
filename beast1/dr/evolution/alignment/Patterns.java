@@ -25,10 +25,10 @@
 
 package dr.evolution.alignment;
 
+
 import dr.evolution.datatype.DataType;
 import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
-import xbeast.core.BEASTObject;
 import xbeast.core.Param;
 
 import java.util.HashSet;
@@ -44,7 +44,7 @@ import java.util.Set;
  * @author Alexei Drummond
  * @version $Id: Patterns.java,v 1.10 2005/07/08 11:27:53 rambaut Exp $
  */
-public class Patterns extends BEASTObject implements PatternList {
+public class Patterns implements PatternList {
 
     public static final int COUNT_INCREMENT = 100;
 

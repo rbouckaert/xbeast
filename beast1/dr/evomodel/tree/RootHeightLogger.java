@@ -1,12 +1,13 @@
 package dr.evomodel.tree;
 
+
 import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.model.Parameter;
-import xbeast.core.BEASTObject;
+import dr.util.Identifiable;
 import xbeast.core.Param;
 
-public class RootHeightLogger extends BEASTObject implements Loggable {
+public class RootHeightLogger implements Loggable, Identifiable {
 	
 	public RootHeightLogger(@Param(name="tree") TreeModel tree) {		
 		this.tree = tree;
@@ -21,6 +22,17 @@ public class RootHeightLogger extends BEASTObject implements Loggable {
     	return rootHeight.getColumns();
 	}
 
-    TreeModel tree;
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	TreeModel tree;
     Parameter rootHeight;
+    String id;
 }

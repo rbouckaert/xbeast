@@ -25,8 +25,6 @@
 
 package dr.inference.loggers;
 
-import xbeast.core.BEASTInterface;
-
 /**
  * An interface for a logger.
  *
@@ -35,7 +33,7 @@ import xbeast.core.BEASTInterface;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
-public interface Logger extends BEASTInterface {
+public interface Logger  {
 
 	void startLogging();
 

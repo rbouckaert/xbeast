@@ -25,6 +25,7 @@
 
 package dr.evomodel.substmodel.nucleotide;
 
+
 import dr.evomodel.substmodel.BaseSubstitutionModel;
 import dr.evomodel.substmodel.FrequencyModel;
 import dr.evolution.datatype.Nucleotides;
@@ -33,13 +34,9 @@ import dr.inference.model.Variable;
 import dr.util.Author;
 import dr.util.Citable;
 import dr.util.Citation;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * General Time Reversible model of nucleotide evolution

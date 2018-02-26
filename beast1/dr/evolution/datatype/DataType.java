@@ -28,8 +28,6 @@ package dr.evolution.datatype;
 import java.io.Serializable;
 import java.util.*;
 
-import xbeast.core.BEASTObject;
-
 /**
  * Base class for sequence data types.
  *
@@ -37,7 +35,7 @@ import xbeast.core.BEASTObject;
  * @author Alexei Drummond
  * @version $Id: DataType.java,v 1.13 2005/05/24 20:25:56 rambaut Exp $
  */
-public abstract class DataType extends BEASTObject implements Serializable {
+public abstract class DataType implements Serializable {
     public static final String DATA_TYPE = "dataType";
 
 
@@ -453,7 +451,6 @@ public abstract class DataType extends BEASTObject implements Serializable {
     }
 
     
-    @Override
     public String getId() {
     	return getClass().getSimpleName();
     }

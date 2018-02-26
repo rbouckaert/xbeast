@@ -25,8 +25,8 @@
 
 package dr.inference.loggers;
 
+
 import dr.util.Keywordable;
-import xbeast.core.BEASTObject;
 import xbeast.core.Param;
 
 import java.io.FileWriter;
@@ -45,7 +45,7 @@ import java.util.Set;
  * @author Alexei Drummond
  * @version $Id: MCLogger.java,v 1.18 2005/05/24 20:25:59 rambaut Exp $
  */
-public class MCLogger extends BEASTObject implements Logger {
+public class MCLogger implements Logger {
 
     /**
      * Output performance stats in this log

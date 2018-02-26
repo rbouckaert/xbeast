@@ -55,6 +55,7 @@ import xbeast.core.BEASTObjectStore;
 import xbeast.core.Input;
 import xbeast.core.Param;
 import xbeast.core.Runnable;
+import xbeast.core.VirtualBEASTObject;
 //import xbeast.core.State;
 import xbeast.core.parameter.Parameter;
 import xbeast.core.util.Log;
@@ -959,7 +960,7 @@ public class JSONParser {
 		}
 		
 		// set id
-		beastObject = (BEASTInterface) o;
+		beastObject = BEASTObjectStore.INSTANCE.getBEASTObject(o);
 		beastObject.setId(ID);
 
 		// hack required to make log-parsing easier
@@ -1109,8 +1110,8 @@ public class JSONParser {
 
 			    	if (allUsed) {
 				    	try {
-							Object o = ctor.newInstance(args);
-							BEASTInterface beastObject = (BEASTInterface) o;
+							Object o = ctor.newInstance(args);							
+							BEASTInterface beastObject = BEASTObjectStore.INSTANCE.getBEASTObject(o);
 							beastObject.setId(_id);
 							register(node, beastObject);
 							return beastObject;
@@ -1139,7 +1140,11 @@ public class JSONParser {
 		for (NameValuePair pair : inputInfo) {
 			if (pair.name.equals(param.name())) {
 				pair.processed = true;
-				return pair.value;
+				Object value = pair.value;
+				if (value instanceof VirtualBEASTObject) {
+					value = ((VirtualBEASTObject) value).getObject();
+				}
+				return value;
 			}
 		}
 		

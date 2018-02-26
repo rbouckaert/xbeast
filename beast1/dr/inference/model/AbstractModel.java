@@ -25,9 +25,9 @@
 
 package dr.inference.model;
 
+
 import dr.inference.parallel.MPISerializable;
 import dr.util.Keywordable;
-import xbeast.core.BEASTObject;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

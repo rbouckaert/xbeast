@@ -25,8 +25,8 @@
 
 package dr.evolution.util;
 
+
 import dr.util.Identifiable;
-import xbeast.core.BEASTObject;
 import xbeast.core.Param;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
-public class Taxa extends BEASTObject implements MutableTaxonList, Identifiable, Comparable<Taxa> {
+public class Taxa implements MutableTaxonList, Identifiable, Comparable<Taxa> {
 
 	private final ArrayList<MutableTaxonListListener> mutableTaxonListListeners = new ArrayList<MutableTaxonListListener>();
 	ArrayList<Taxon> taxa = new ArrayList<Taxon>();

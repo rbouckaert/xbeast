@@ -17,7 +17,15 @@ public class VirtualBEASTObject extends BEASTObject {
 		// this initialises inputs
 		getInputs();
 	}
-		
+
+	public Object getObject() {
+		return o;
+	}
+	
+	public String getClassName() {
+		return o.getClass().getName();
+	}
+
 	@Override
 	public String getId() {
 		String id;
@@ -35,12 +43,24 @@ public class VirtualBEASTObject extends BEASTObject {
 	@Override
 	public void setId(String ID) {
 		try {
-			Method setter = o.getClass().getMethod("setId");
+			Method setter = o.getClass().getMethod("setId", String.class);
 			setter.invoke(o, ID);
 		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			Log.err.println("Method setId() could not be found on " + o.getClass().getName());
-			e.printStackTrace();
-			throw new RuntimeException(e);
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+		}
+	}
+	
+
+	@Override
+	public void initAndValidate() {
+		try {
+			Method initAndValidate = o.getClass().getMethod("initAndValidate");
+			initAndValidate.invoke(o);
+		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
 		}
 	}
 
@@ -51,4 +71,5 @@ public class VirtualBEASTObject extends BEASTObject {
         listAnnotatedInputs(o, inputs, inputNames);
 		return inputs; 
 	}
+
 }

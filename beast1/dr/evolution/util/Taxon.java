@@ -25,9 +25,9 @@
 
 package dr.evolution.util;
 
+
 import dr.util.Attributable;
 import dr.util.Identifiable;
-import xbeast.core.BEASTObject;
 import xbeast.core.Param;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import java.util.Iterator;
  * @author Andrew Rambaut
  * @author Alexei Drummond
  */
-public class Taxon extends BEASTObject implements Attributable, Identifiable, Comparable<Taxon> {
+public class Taxon implements Attributable, Identifiable, Comparable<Taxon> {
 
     public Taxon(@Param(name="id") String id) {
         setId(id);

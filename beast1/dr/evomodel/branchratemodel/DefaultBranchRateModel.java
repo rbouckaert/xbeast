@@ -25,17 +25,17 @@
 
 package dr.evomodel.branchratemodel;
 
+
 import dr.evolution.tree.*;
 import dr.inference.model.Model;
 import dr.inference.model.ModelListener;
 import dr.inference.model.Variable;
-import xbeast.core.BEASTObject;
 
 /**
  * @author Andrew Rambaut
  * @version $Id: DefaultBranchRateModel.java,v 1.4 2005/05/24 20:25:57 rambaut Exp $
  */
-public final class DefaultBranchRateModel extends BEASTObject implements BranchRateModel {
+public final class DefaultBranchRateModel implements BranchRateModel {
     public double getBranchRate(Tree tree, NodeRef node) {
         return 1.0;
     }

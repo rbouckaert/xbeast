@@ -198,7 +198,7 @@ public class JSONProducer {
             }
             isDone.add(beastObject);
         }
-        String className = beastObject.getClass().getName();
+        String className = BEASTObjectStore.getClassName(beastObject);
         if (skipInputs == false) {
             // only add spec element if it cannot be deduced otherwise (i.e., by idref)
         	//if (defaultType != null && !defaultType.getName().equals(className)) {
@@ -325,11 +325,11 @@ public class JSONProducer {
                     		buf2.append(",\n");
                     	}
                     	StringBuffer buf3 = new StringBuffer();
-                    	if (o2 instanceof BEASTInterface) {
-                    		beastObjectToJSON((BEASTInterface) o2, input.getType(), buf3, null, false);
-                    	} else {
-                    		buf2.append(o2.toString());
-                    	}
+                    	//if (o2 instanceof BEASTInterface) {
+                    	beastObjectToJSON(o2, input.getType(), buf3, null, false);
+                    	//} else {
+                    	//	buf2.append(o2.toString());
+                    	//}
                         buf2.append(buf3);
                         needsComma = oldLen < buf2.length();
                     }
@@ -441,20 +441,22 @@ public class JSONProducer {
             	}
                 return;
             } else {
-                // primitive type
-
-            	if (!value.equals(input.defaultValue)) {
-            		
-                    String valueString = value.toString();
-                    if (isShort) {
-                        if (valueString.indexOf('\n') < 0) {
-                            buf.append(" " + input.getName() + ": " + normalise(input, value.toString()) + "");
-                        }
-                    } else {
-                        if (valueString.indexOf('\n') >= 0) {
-                                buf.append(indent + "" + input.getName() + ": " + normalise(input, value.toString()) + "");
-                        }
-                    }
+            	if (BEASTObjectStore.isPrimitive(value)) {             	
+	            	if (!value.equals(input.defaultValue)) {
+	            		
+	                    String valueString = value.toString();
+	                    if (isShort) {
+	                        if (valueString.indexOf('\n') < 0) {
+	                            buf.append(" " + input.getName() + ": " + normalise(input, value.toString()) + "");
+	                        }
+	                    } else {
+	                        if (valueString.indexOf('\n') >= 0) {
+	                                buf.append(indent + "" + input.getName() + ": " + normalise(input, value.toString()) + "");
+	                        }
+	                    }
+	            	}
+            	} else {
+            		inputToJSON(input, BEASTObjectStore.INSTANCE.getBEASTObject(value), beastObject, buf, isShort, indent);
             	}
                 return;
             }

@@ -25,9 +25,8 @@
 
 package dr.inference.operators;
 
-import java.io.Serializable;
 
-import xbeast.core.BEASTInterface;
+import java.io.Serializable;
 
 /**
  * An MCMC operator.
@@ -36,7 +35,7 @@ import xbeast.core.BEASTInterface;
  * @author Andrew Rambaut
  * @version $Id: MCMCOperator.java,v 1.6 2005/06/14 10:40:34 rambaut Exp $
  */
-public interface MCMCOperator extends Serializable, BEASTInterface {
+public interface MCMCOperator extends Serializable {
 
     public static final String WEIGHT = "weight";
 

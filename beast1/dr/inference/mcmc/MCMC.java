@@ -25,6 +25,7 @@
 
 package dr.inference.mcmc;
 
+
 import dr.inference.state.Factory;
 import dr.inference.state.StateLoader;
 import dr.inference.loggers.LogColumn;
@@ -38,7 +39,6 @@ import dr.inference.operators.*;
 import dr.util.Identifiable;
 import dr.util.NumberFormatter;
 import dr.xml.Spawnable;
-import xbeast.core.BEASTObject;
 import xbeast.core.Param;
 
 import java.io.File;
@@ -53,7 +53,7 @@ import java.io.PrintStream;
  * @author Andrew Rambaut
  * @version $Id: MCMC.java,v 1.41 2005/07/11 14:06:25 rambaut Exp $
  */
-public class MCMC extends BEASTObject implements Identifiable, Spawnable, Loggable {
+public class MCMC implements Identifiable, Spawnable, Loggable {
 
     public MCMC(String id) {
         this.id = id;

@@ -28,13 +28,11 @@
  */
 package dr.inference.operators;
 
-import xbeast.core.BEASTObject;
-
 /**
  * @author Sebastian Hoehna
  *
  */
-public abstract class SimpleOperator extends BEASTObject implements MCMCOperator {
+public abstract class SimpleOperator implements MCMCOperator {
 
 	/**
 	 *
