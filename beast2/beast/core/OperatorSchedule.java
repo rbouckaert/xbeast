@@ -153,7 +153,8 @@ public class OperatorSchedule extends BEASTObject {
     	if (operatorPatternInput.get() == null || operatorPatternInput.get().trim().equals("")) {
     		return;
     	}
-		String operatorPattern = operatorPatternInput.get();
+    	String operatorPattern = operatorPatternInput.get();
+    	boolean noMatch = true;
 		for (Operator o : ops) {
 			if (o.getId() != null && o.getId().matches(operatorPattern)) {
 		    	for (Operator o2 : operators) {
@@ -163,6 +164,7 @@ public class OperatorSchedule extends BEASTObject {
 		    		}
 		    	}
 				operators.add(o);
+                noMatch = false;
 			}
 		}
     	reweighted = false;

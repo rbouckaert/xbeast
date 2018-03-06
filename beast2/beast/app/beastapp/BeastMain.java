@@ -282,6 +282,7 @@ public class BeastMain {
                         new Arguments.Option("help", "Print this information and stop"),
                         new Arguments.Option("version", "Print version and stop"),
                         new Arguments.Option("strictversions", "Use only package versions as specified in the 'required' attribute"),
+                        new Arguments.StringOption("D", "DEFINITIONS", "attribute-value pairs to be replaced in the XML, e.g., -D \"arg1=10,arg2=20\""),
                 });
 
         try {
@@ -521,7 +522,12 @@ public class BeastMain {
         if (arguments.hasOption("strictversions")) {
         	MCMCargs.add("-strictversions");
         }
-        
+
+        if (arguments.hasOption("D")) {
+        	MCMCargs.add("-D");
+        	MCMCargs.add(arguments.getStringOption("D"));
+        }
+
         if (beagleShowInfo) {
             Log.info.println("\n--- BEAGLE RESOURCES ---\n");
             for (beagle.ResourceDetails details : BeagleFactory.getResourceDetails())

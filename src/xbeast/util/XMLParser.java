@@ -25,7 +25,6 @@
 package xbeast.util;
 
 
-
 import static xbeast.util.XMLParserUtils.processPlates;
 import static xbeast.util.XMLParserUtils.replaceVariable;
 
@@ -204,6 +203,7 @@ public class XMLParser {
 
     List<BEASTInterface> beastObjectsWaitingToInit;
     List<Node> nodesWaitingToInit;
+	java.util.Map<String,String> parserDefinitions;
 
     public HashMap<String, String> getElement2ClassMap() {
         return element2ClassMap;
@@ -229,6 +229,13 @@ public class XMLParser {
         beastObjectsWaitingToInit = new ArrayList<>();
         nodesWaitingToInit = new ArrayList<>();
     }
+    
+	public XMLParser(java.util.Map<String,String> parserDefinitions) {
+		this();
+		this.parserDefinitions = parserDefinitions;
+	}
+
+
 
     public Runnable parseFile(final File file) throws SAXException, IOException, ParserConfigurationException, XMLParserException {
         // parse the XML file into a DOM document
@@ -251,6 +258,13 @@ public class XMLParser {
 //        replaceVariable(doc.getElementsByTagName(BEAST_ELEMENT).item(0), "seed",
 //                String.valueOf(Randomizer.getSeed()));
         
+        if (parserDefinitions != null) {
+        	for (String name : parserDefinitions.keySet()) {
+                replaceVariable(doc.getElementsByTagName(BEAST_ELEMENT).item(0), name, 
+                		parserDefinitions.get(name));
+        	}
+        }
+
         IDMap = new HashMap<>();
         likelihoodMap = new HashMap<>();
         IDNodeMap = new HashMap<>();
@@ -1310,3 +1324,4 @@ public class XMLParser {
     }
     
 } // class XMLParser
+
