@@ -509,7 +509,7 @@ public class TreeAnnotator {
             }
             cladeSystem.calculateCladeCredibilities(totalTreesUsed);
 
-            progressStream.println("Total trees have " + totalTrees + ", where " + totalTreesUsed + " are used.");
+            progressStream.println("Total number of trees " + totalTrees + ", where " + totalTreesUsed + " are used.");
 
             progressStream.println("Total unique clades: " + cladeSystem.getCladeMap().keySet().size());
             progressStream.println();
@@ -594,7 +594,7 @@ public class TreeAnnotator {
             	}
                 cladeSystem.collectAttributes(tree, attributeNames);
                 if (counter > 0 && counter % stepSize == 0 && reported < 61) {
-    				while (1000 * reported < 61000 * (counter + 1)/ this.totalTreesUsed) {
+    				while (10000 * reported < 610000 * (counter + 1)/ this.totalTreesUsed) {
     	                progressStream.print("*");
     	                reported++;
             	    }
@@ -724,7 +724,7 @@ public class TreeAnnotator {
               bestScore = score;
           }
           if (counter % stepSize == 0 && reported < 61) {
-			  while (1000*reported < 61000 * (counter + 1) / totalTreesUsed) {
+			  while (10000*reported < 610000 * (counter + 1) / totalTreesUsed) {
 	              progressStream.print("*");
 	              reported++;
         	  }
@@ -1579,7 +1579,7 @@ public class TreeAnnotator {
             }
             totalTreesUsed += 1;
             if (counter > 0 && counter % reportStepSize == 0 && reported < 61) {
-				while (1000 * reported < 61000 * (counter + 1)/ this.totalTreesUsed) {
+				while (10000 * reported < 61000 * (counter + 1)/ this.totalTreesUsed) {
 				    progressStream.print("*");
 				    reported++;
 				}

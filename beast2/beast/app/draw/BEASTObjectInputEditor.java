@@ -2,6 +2,7 @@ package beast.app.draw;
 
 
 
+
 import java.awt.Dimension;
 import java.util.List;
 
@@ -214,7 +215,8 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
                 BeautiSubTemplate selected = (BeautiSubTemplate) m_selectBEASTObjectBox.getSelectedItem();
                 BEASTInterface beastObject = (BEASTInterface) m_input.get();
                 String id = beastObject.getId();
-                String partition = id.substring(id.indexOf('.') + 1);
+                String partition = id.indexOf('.') >= 0 ? 
+                		id.substring(id.indexOf('.') + 1) : "";
                 if (partition.indexOf(':') >= 0) {
                 	partition = id.substring(id.indexOf(':') + 1);
                 }
@@ -274,7 +276,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
                             throw new IllegalArgumentException("Cannot set input to this value");
                         }
 //                    	// get handle on ID of the beastObject, and add to combobox if necessary
-//                        String id = beastObject.getId();
+//                        String id = beastObject.getID();
 //                        // TODO RRB: have to remove ID first, then add it
 //                        // The addition is necessary to make the items in the expansionBox scale and show up
 //                        // Is there another way?
@@ -282,7 +284,9 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                        m_selectPluginBox.addItem(id);
 //                        m_selectPluginBox.setSelectedItem(id);
                         id = beastObject.getId();
-                        id = id.substring(0, id.indexOf('.'));
+                        if (id.indexOf('.') != -1) {
+                        	id = id.substring(0,  id.indexOf('.'));
+                        }
                          for (int i = 0; i < m_selectBEASTObjectBox.getItemCount(); i++) {
                             BeautiSubTemplate template = (BeautiSubTemplate) m_selectBEASTObjectBox.getItemAt(i);
                             if (template.getMainID().replaceAll(".\\$\\(n\\)", "").equals(id) ||
@@ -350,7 +354,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //            m_selectPluginBox = new JComboBox(availableBEASTObjects.toArray(new String[0]));
 //            String selectString = NO_VALUE;
 //            if (input.get() != null) {
-//                selectString = ((BEASTObject) input.get()).getId();
+//                selectString = ((BEASTObject) input.get()).getID();
 //            }
 //            m_selectPluginBox.setSelectedItem(selectString);
 //
@@ -374,7 +378,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                    	selected = availableBEASTObjects.get(i);                       
 //                        /* create new beastObject */
 //                        try {
-//                            beastObject = (BEASTObject) xbeast.util.PackageManager.forName(selected.substring(4)).newInstance();
+//                            beastObject = (BEASTObject) Class.forName(selected.substring(4)).newInstance();
 //                            PluginPanel.addPluginToMap(beastObject);
 //                            // tricky: try to connect up new inputs with old inputs of existing name
 //                            BEASTObject oldPlugin = (BEASTObject) m_input.get();
@@ -423,7 +427,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                            	throw new Exception("Cannot set input to this value");
 //                            }
 //                        	// get handle on ID of the beastObject, and add to combobox if necessary
-//                            String id = beastObject.getId();
+//                            String id = beastObject.getID();
 //                            // TODO RRB: have to remove ID first, then add it
 //                            // The addition is necessary to make the items in the expansionBox scale and show up
 //                            // Is there another way?
@@ -452,7 +456,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                        }
 //                        
 //                    } catch (Exception ex) {
-//                        String id = ((BEASTObject)m_input.get()).getId();
+//                        String id = ((BEASTObject)m_input.get()).getID();
 //                        m_selectPluginBox.setSelectedItem(id);
 //                    	//ex.printStackTrace();
 //                        JOptionPane.showMessageDialog(null, "Could not change beastObject: " +

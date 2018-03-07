@@ -1,6 +1,7 @@
 package beast.app.beauti;
 
 
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -483,7 +484,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     public String processTemplate(String fileName) throws IOException {
         final String MERGE_ELEMENT = "mergepoint";
         // first gather the set of potential directories with templates
-        Set<String> dirs = new HashSet<>();// PackageManager.getBeastDirectories();
+        Set<String> dirs = new HashSet<>();// AddOnManager.getBeastDirectories();
         String pathSep = System.getProperty("path.separator");
         String classpath = System.getProperty("java.class.path");
         String fileSep = System.getProperty("file.separator");
@@ -584,8 +585,12 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
                                     }
                                 } catch (Exception e) {
-                                    if (!e.getMessage().contains("beast.app.beauti.InputConstraint")) {
+                                    if (e.getMessage() != null) {
+                                    	if (!e.getMessage().contains("beast.app.beauti.InputConstraint")) {
+                                    }
                                         Log.warning.println(e.getMessage());
+                                    } else {
+                                        e.printStackTrace();
                                     }
                                 }
                             }
@@ -1402,16 +1407,16 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         if (srcBEASTObject == null) {
             throw new IllegalArgumentException("Could not find beastObject with id " + srcID + ". Typo in template perhaps?\n");
         }
-        String targetID = translatePartitionNames(connector.targetID, context);
-        connect(srcBEASTObject, targetID, connector.targetInput);
+        String targetId = translatePartitionNames(connector.targetID, context);
+        connect(srcBEASTObject, targetId, connector.targetInput);
     }
 
 
-    public void connect(BEASTInterface srcBEASTObject, String targetID, String inputName) {
+    public void connect(BEASTInterface srcBEASTObject, String targetId, String inputName) {
         try {
-            BEASTInterface target = pluginmap.get(targetID);
+            BEASTInterface target = pluginmap.get(targetId);
             if (target == null) {
-                Log.trace.println("BeautiDoc: Could not find object " + targetID);
+                Log.trace.println("BeautiDoc: Could not find object " + targetId);
                 return;
             }
             // prevent duplication inserts in list
@@ -1419,7 +1424,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             if (o instanceof List) {
                 // System.err.println("   " + ((List)o).size());
                 if (((List<?>) o).contains(srcBEASTObject)) {
-                    warning("   " + targetID + "/" + inputName + " already contains " + (srcBEASTObject == null ? "nulls" : srcBEASTObject.getId()) + "\n");
+                    warning("   " + targetId + "/" + inputName + " already contains " + (srcBEASTObject == null ? "nulls" : srcBEASTObject.getId()) + "\n");
                     return;
                 }
             }
@@ -1438,13 +1443,13 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             return;
         }
         BEASTInterface srcBEASTObject = pluginmap.get(translatePartitionNames(connector.sourceID, context));
-        String targetID = translatePartitionNames(connector.targetID, context);
-        disconnect(srcBEASTObject, targetID, connector.targetInput);
+        String targetId = translatePartitionNames(connector.targetID, context);
+        disconnect(srcBEASTObject, targetId, connector.targetInput);
     }
 
-    public void disconnect(BEASTInterface srcBEASTObject, String targetID, String inputName) {
+    public void disconnect(BEASTInterface srcBEASTObject, String targetId, String inputName) {
         try {
-            BEASTInterface target = pluginmap.get(targetID);
+            BEASTInterface target = pluginmap.get(targetId);
             if (target == null) {
                 return;
             }
@@ -1455,7 +1460,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 // System.err.println("   " + ((List)o).size());
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i) == srcBEASTObject) {
-                        warning("  DEL " + targetID + "/" + inputName + " contains " + (srcBEASTObject == null ? "null" : srcBEASTObject.getId()) + "\n");
+                        warning("  DEL " + targetId + "/" + inputName + " contains " + (srcBEASTObject == null ? "null" : srcBEASTObject.getId()) + "\n");
                         list.remove(i);
                     }
                 }
@@ -1465,7 +1470,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             } else {
                 if (input.get() != null && input.get() instanceof BEASTInterface &&
                         input.get() == srcBEASTObject) {
-                    //((BEASTInterface) input.get()).getId().equals(targetID)) {
+                    //((BEASTInterface) input.get()).getId().equals(targetId)) {
                     input.setValue(null, target);
                 }
             }
@@ -2177,7 +2182,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
     public PartitionContext getContextFor(BEASTInterface beastObject) {
         String id = beastObject.getId();
-        String partition = id.substring(id.indexOf('.') + 1);
+        String partition = id.indexOf('.') >= 0 ? id.substring(id.indexOf('.') + 1) : "";
 
         int partitionID = ALIGNMENT_PARTITION;
         if (partition.indexOf(':') >= 0) {

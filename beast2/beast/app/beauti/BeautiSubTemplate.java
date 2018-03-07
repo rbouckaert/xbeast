@@ -1,6 +1,7 @@
 package beast.app.beauti;
 
 
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -63,7 +64,7 @@ public class BeautiSubTemplate extends BEASTObject {
     BeautiDoc doc;
 
     //	String [] srcIDs;
-//	String [] targetIDs;
+//	String [] targetIds;
 //	String [] targetInputs;
 //	ConnectCondition [] conditions;
     String mainID = "";
@@ -73,7 +74,7 @@ public class BeautiSubTemplate extends BEASTObject {
     @Override
     public void initAndValidate() {
     	try {
-        _class = xbeast.util.PackageManager.forName(classInput.get());
+        _class = Class.forName(classInput.get());
         shortClassName = classInput.get().substring(classInput.get().lastIndexOf('.') + 1);
         instance = _class.newInstance();
         xml = xMLInput.get();//.m_sValue.get();
@@ -107,14 +108,14 @@ public class BeautiSubTemplate extends BEASTObject {
     	}
 //		int connectors = connections.get().size();
 //		srcIDs = new String[connectors];
-//		targetIDs = new String[connectors];
+//		targetIds = new String[connectors];
 //		targetInputs = new String[connectors];
 ////		conditions = new ConnectCondition[connectors];
 //
 //		for (int i = 0; i < connectors; i++) {
 //			BeautiConnector connector = connections.get().get(i);
 //			srcIDs[i] = connector.sourceID.get();
-//			targetIDs[i] = connector.targetID.get();
+//			targetIds[i] = connector.targetId.get();
 //			targetInputs[i] = connector.inputName.get();
 ////			conditions[i] = connector.connectCondition.get(); 
 //		}
@@ -138,7 +139,7 @@ public class BeautiSubTemplate extends BEASTObject {
         	// find elements with an idref attribute
         	if (node.getNodeType() == Node.ELEMENT_NODE) {
         		if (node.getAttributes().getNamedItem("idref") != null) {
-        			String targetID = XMLParser.getAttribute(node, "idref");
+        			String targetId = XMLParser.getAttribute(node, "idref");
         			topNode.removeChild(node);
         			i--;
 
@@ -191,7 +192,7 @@ public class BeautiSubTemplate extends BEASTObject {
         	        					if (name2 != null) {
         	        						inputName = name2;
         	        					}
-        	        					BeautiConnector connector = new BeautiConnector(sourceID, targetID, inputName, condition);
+        	        					BeautiConnector connector = new BeautiConnector(sourceID, targetId, inputName, condition);
         	        					connectorsInput.get().add(connector);
 
         	        					if (!hasIDRef) {
@@ -221,7 +222,7 @@ public class BeautiSubTemplate extends BEASTObject {
 	        						child.getAttributes().removeNamedItem("beauti:if");
 	        					}
 	
-	        					BeautiConnector connector = new BeautiConnector(sourceID, targetID, inputName, condition);
+	        					BeautiConnector connector = new BeautiConnector(sourceID, targetId, inputName, condition);
 	        					connectorsInput.get().add(connector);
 	        					if (!hasIDRef) {
 	            					topNode.appendChild(child);
@@ -275,7 +276,9 @@ public class BeautiSubTemplate extends BEASTObject {
         // find template that created this beastObject
         String id = beastObject.getId();
         //String partition = BeautiDoc.parsePartition(id);
-        id = id.substring(0, id.indexOf("."));
+        if (id.indexOf(".") > 0) {
+        	id = id.substring(0, id.indexOf("."));
+        }
         BeautiSubTemplate template = null;
         for (BeautiSubTemplate template2 : doc.beautiConfig.subTemplatesInput.get()) {
             if (template2.matchesName(id)) {
@@ -376,7 +379,7 @@ public class BeautiSubTemplate extends BEASTObject {
                 if (init && connector.atInitialisationOnly()) {// ||
                     doc.connect(connector, context);
                 }
-                //System.out.println(connector.sourceID + " == " + connector.targetID);
+                //System.out.println(connector.sourceID + " == " + connector.targetId);
                 if (connector.targetID != null && connector.targetID.equals("prior")) {
                 	Log.warning.println(">>> No description for connector " + connector.sourceID + " == " + connector.targetID);
                 }
