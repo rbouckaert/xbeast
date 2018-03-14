@@ -203,4 +203,19 @@ public class Package {
         html += "</html>";
         return html;
     }
+
+    /**
+     * @return true if projectURL is valid
+     */
+    public boolean isValidFormat() {
+        //https://www.geeksforgeeks.org/check-if-url-is-valid-or-not-in-java/
+        try {
+            getProjectURL().toURI();
+            return true;
+        }
+        // If there was an Exception while creating URL object
+        catch (Exception e) {
+            return false;
+        }
+    }
 }

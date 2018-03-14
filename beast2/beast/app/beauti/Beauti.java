@@ -68,6 +68,7 @@ import beast.app.draw.ModelBuilder;
 import beast.app.draw.MyAction;
 import beast.app.tools.AppStore;
 import xbeast.app.util.Utils;
+import xbeast.app.util.Utils6;
 import xbeast.core.BEASTInterface;
 import beast.core.parameter.RealParameter;
 import xbeast.core.util.Log;
@@ -880,7 +881,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
         helpMenu.add(a_citation);
         helpMenu.add(a_viewModel);
         helpMenu.add(a_viewDistribution);
-        if (!Utils.isMac()) {
+        if (!Utils.isMac() || Utils6.getMajorJavaVersion() != 8) {
             helpMenu.add(a_about);
         }
 
@@ -1325,7 +1326,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
 
             final Beauti beauti = new Beauti(doc);
             
-            if (Utils.isMac()) {
+            if (Utils.isMac() && Utils6.getMajorJavaVersion() == 8) {
                 // set up application about-menu for Mac
                 // Mac-only stuff
                 try {

@@ -1,6 +1,7 @@
 package xbeast.app.util;
 
 
+
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -290,4 +291,33 @@ public class Utils6 {
         }
 	}
 	
+	   public static void logToSplashScreen(String msg) {
+	    	if (Utils6.splashScreen != null) {
+	    		try {
+		            Image img = getIcon("beast/app/draw/icons/beauti.png").getImage();
+		            Graphics gr = Utils6.can.getBufferedGraphics();
+		            gr.drawImage(img, Utils6.can.getWidth() / 4, 0, Utils6.can);
+		            gr.drawString(msg, 1, Utils6.can.getHeight() - 3);
+		            Utils6.can.repaint();
+	    		} catch (java.lang.NoSuchFieldError e) {
+	    			// we are dealing with an older (pre v2.5.6) version of the launcher
+	    			// so no feedback
+	    		}
+	    		
+	    	}
+	    }
+	    
+	    public static int getMajorJavaVersion() {
+			String javaVersion = System.getProperty("java.version");
+			// javaVersion should be something like "1.7.0_25"
+			String[] version = javaVersion.split("\\.");
+			if (version.length > 2) {
+				int majorVersion = Integer.parseInt(version[0]);
+				if (majorVersion == 1) {
+					majorVersion = Integer.parseInt(version[1]);
+				}
+				return majorVersion;
+			}
+			return -1;
+	    }
 }
