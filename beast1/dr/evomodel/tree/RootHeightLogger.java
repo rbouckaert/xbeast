@@ -1,11 +1,11 @@
 package dr.evomodel.tree;
 
 
+import beast.core.Param;
 import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.model.Parameter;
 import dr.util.Identifiable;
-import xbeast.core.Param;
 
 public class RootHeightLogger implements Loggable, Identifiable {
 	

@@ -1,7 +1,7 @@
 package beast.app.beauti;
 
 
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 import beast.evolution.likelihood.GenericTreeLikelihood;
 
 public class PartitionContext {

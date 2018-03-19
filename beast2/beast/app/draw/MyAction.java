@@ -9,7 +9,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import xbeast.app.util.Utils;
+import beast.app.util.Utils;
 
 
 

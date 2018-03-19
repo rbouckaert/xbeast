@@ -4,9 +4,9 @@ import javax.swing.Box;
 import javax.swing.JCheckBox;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.Input;
+import beast.core.util.Log;
 
 
 

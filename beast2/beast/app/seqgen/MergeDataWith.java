@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Set;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.Sequence;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLParserException;
-import xbeast.util.XMLProducer;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
+import beast.util.XMLProducer;
 
 @Description("Helper for Sequence Simulator, allows specifying template input file and destination output file")
 public class MergeDataWith extends BEASTObject {

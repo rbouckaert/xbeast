@@ -29,12 +29,13 @@ package dr.evolution.alignment;
 import dr.evolution.datatype.DataType;
 import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
-import xbeast.core.Param;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import beast.core.Param;
 
 /**
  * A concrete implementation of PatternList. Patterns can be added and

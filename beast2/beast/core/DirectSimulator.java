@@ -1,11 +1,11 @@
 package beast.core;
 
+import beast.core.*;
 import beast.util.Randomizer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import xbeast.core.*;
 
 /**
  * Runnable for generating a fixed number of samples from a prior distribution using
@@ -15,7 +15,7 @@ import xbeast.core.*;
  */
 @Description("Runnable for generating a fixed number of samples from a prior distribution" +
              "using direct simulation.")
-public class DirectSimulator extends xbeast.core.Runnable {
+public class DirectSimulator extends beast.core.Runnable {
 
     public Input<Distribution> distributionInput = new Input<>("distribution",
             "Distribution to sample from via direct simulation.",

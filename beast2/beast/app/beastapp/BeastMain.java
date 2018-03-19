@@ -18,16 +18,16 @@ import javax.swing.filechooser.FileFilter;
 
 import beagle.BeagleFactory;
 import beagle.BeagleFlag;
-import xbeast.app.BEASTVersion2;
+import beast.app.BEASTVersion2;
 import beast.app.BeastMCMC;
-import xbeast.app.util.Arguments;
-import xbeast.app.util.ErrorLogHandler;
-import xbeast.app.util.MessageLogHandler;
-import xbeast.app.util.Utils;
-import xbeast.app.util.Version;
-import xbeast.core.util.Log;
+import beast.app.util.Arguments;
+import beast.app.util.ErrorLogHandler;
+import beast.app.util.MessageLogHandler;
+import beast.app.util.Utils;
+import beast.app.util.Version;
+import beast.core.util.Log;
 import beast.util.Randomizer;
-import xbeast.util.XMLParserException;
+import beast.util.XMLParserException;
 import jam.util.IconUtils;
 
 public class BeastMain {

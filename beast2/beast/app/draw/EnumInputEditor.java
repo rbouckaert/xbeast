@@ -8,8 +8,8 @@ import javax.swing.Box;
 import javax.swing.JComboBox;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 
 
 

@@ -3,7 +3,6 @@ package beast.app.beauti;
 
 import beast.app.draw.*;
 import beast.core.*;
-import xbeast.core.*;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
 import beast.core.util.CompoundDistribution;

@@ -3,10 +3,10 @@ package beast.evolution.tree.coalescent;
 
 import java.util.List;
 
-import xbeast.core.CalculationNode;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.CalculationNode;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 
 

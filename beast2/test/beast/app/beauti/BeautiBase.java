@@ -30,20 +30,20 @@ import org.fest.swing.junit.testcase.FestSwingJUnitTestCase;
 
 import beast.app.beauti.Beauti;
 import beast.app.beauti.BeautiDoc;
-import xbeast.app.util.Utils;
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
+import beast.app.util.Utils;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
 import beast.core.Distribution;
-import xbeast.core.Function;
+import beast.core.Function;
 import beast.core.Logger;
 import beast.core.MCMC;
 import beast.core.Operator;
-import xbeast.core.State;
-import xbeast.core.StateNode;
-import xbeast.core.parameter.Parameter;
+import beast.core.State;
+import beast.core.StateNode;
+import beast.core.parameter.Parameter;
 import beast.core.util.CompoundDistribution;
 import beast.math.distributions.Prior;
-import xbeast.util.XMLParser;
+import beast.util.XMLParser;
 
 
 

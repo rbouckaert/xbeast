@@ -23,8 +23,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import xbeast.app.util.Utils;
-import xbeast.core.util.Log;
+import beast.app.util.Utils;
+import beast.core.util.Log;
 
 
 public class GuessPatternDialog extends JDialog {

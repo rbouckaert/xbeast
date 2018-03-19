@@ -29,10 +29,10 @@ import org.apache.commons.math.MathException;
 import org.apache.commons.math.distribution.ContinuousDistribution;
 import org.apache.commons.math.distribution.IntegerDistribution;
 
-import xbeast.core.CalculationNode;
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
+import beast.core.CalculationNode;
+import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
 import beast.util.Randomizer;
 
 /**

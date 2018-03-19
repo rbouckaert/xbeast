@@ -15,13 +15,13 @@ import javax.swing.JOptionPane;
 import beast.app.beauti.BeautiDoc;
 import beast.app.beauti.BeautiPanel;
 import beast.app.beauti.PartitionContext;
-import xbeast.app.util.Utils;
-import xbeast.core.BEASTInterface;
+import beast.app.util.Utils;
+import beast.core.BEASTInterface;
 import beast.core.Distribution;
-import xbeast.core.Input;
+import beast.core.Input;
 import beast.core.Operator;
-import xbeast.core.parameter.Parameter;
-import xbeast.core.util.Log;
+import beast.core.parameter.Parameter;
+import beast.core.util.Log;
 import beast.evolution.branchratemodel.BranchRateModel;
 import beast.math.distributions.ParametricDistribution;
 

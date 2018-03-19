@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.util.PackageManager;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
+import beast.util.PackageManager;
 import junit.framework.TestCase;
 
 
@@ -27,11 +27,11 @@ public class DocumentationTest extends TestCase {
      */
     @Test
     public void testDescriptions() {
-        final List<String> pluginNames = PackageManager.find(xbeast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
+        final List<String> pluginNames = PackageManager.find(beast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
         final List<String> undocumentedPlugins = new ArrayList<String>();
         for (final String beastObjectName : pluginNames) {
             try {
-                final Class<?> pluginClass = xbeast.util.PackageManager.forName(beastObjectName);
+                final Class<?> pluginClass = beast.util.PackageManager.forName(beastObjectName);
                 final Annotation[] classAnnotations = pluginClass.getAnnotations();
                 boolean hasSatisfactoryDescription = false;
                 for (final Annotation annotation : classAnnotations) {
@@ -58,11 +58,11 @@ public class DocumentationTest extends TestCase {
      */
     @Test
     public void testInputTipText() {
-        final List<String> pluginNames = PackageManager.find(xbeast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
+        final List<String> pluginNames = PackageManager.find(beast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
         final List<String> undocumentedInputs = new ArrayList<String>();
         for (final String beastObjectName : pluginNames) {
             try {
-                final BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
+                final BEASTObject beastObject = (BEASTObject) beast.util.PackageManager.forName(beastObjectName).newInstance();
                 final List<Input<?>> inputs = beastObject.listInputs();
                 for (final Input<?> input : inputs) {
                     boolean hasSatisfactoryDescription = false;

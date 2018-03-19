@@ -19,11 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.MCMC;
-import xbeast.core.util.Log;
-import xbeast.util.XMLProducer;
+import beast.core.util.Log;
+import beast.util.XMLProducer;
 
 /**
  * Panel for editing BEASTObjects.
@@ -451,12 +451,12 @@ public class BEASTObjectPanel extends JPanel {
                 } finally {
                     scanner.close();
                 }
-                BEASTInterface beastObject = new xbeast.util.XMLParser().parseBareFragment(text.toString(), false);
+                BEASTInterface beastObject = new beast.util.XMLParser().parseBareFragment(text.toString(), false);
                 pluginPanel = new BEASTObjectPanel(beastObject, beastObject.getClass(), null);
             } else if (args.length == 1) {
-                pluginPanel = new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[0]), null);
+                pluginPanel = new BEASTObjectPanel((BEASTInterface) beast.util.PackageManager.forName(args[0]).newInstance(), beast.util.PackageManager.forName(args[0]), null);
             } else if (args.length == 2) {
-                pluginPanel = new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[1]), null);
+                pluginPanel = new BEASTObjectPanel((BEASTInterface) beast.util.PackageManager.forName(args[0]).newInstance(), beast.util.PackageManager.forName(args[1]), null);
             } else {
                 throw new IllegalArgumentException("Incorrect number of arguments");
             }

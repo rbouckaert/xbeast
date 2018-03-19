@@ -54,8 +54,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;
 import beast.util.Randomizer;

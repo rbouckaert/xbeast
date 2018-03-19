@@ -31,10 +31,11 @@ import dr.inference.model.AbstractModel;
 import dr.inference.model.Model;
 import dr.inference.model.Parameter;
 import dr.inference.model.Variable;
-import xbeast.core.Param;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import beast.core.Param;
 
 /**
  * A model of equlibrium frequencies

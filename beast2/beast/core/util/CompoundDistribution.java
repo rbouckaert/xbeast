@@ -36,12 +36,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 
 import beast.app.BeastMCMC;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Description;
+import beast.core.BEASTInterface;
+import beast.core.Description;
 import beast.core.Distribution;
-import xbeast.core.Input;
-import xbeast.core.State;
-import xbeast.core.util.Log;
+import beast.core.Input;
+import beast.core.State;
+import beast.core.util.Log;
 
 
 @Description("Takes a collection of distributions, typically a number of likelihoods " +

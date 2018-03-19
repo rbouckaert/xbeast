@@ -25,7 +25,7 @@
 
 package dr.evolution.datatype;
 
-import xbeast.core.Description;
+import beast.core.Description;
 
 /**
  * implements DataType for nucleotides with ambiguous characters

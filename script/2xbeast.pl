@@ -2,7 +2,7 @@
 use File::Find;
 use File::Path qw(make_path);
 
-$base = '/Users/remco/workspace/xbeast/beast2';
+$base = '/Users/remco/workspace/xbeast/apputils';
 
 sub process_file {
 	$name = $File::Find::name;

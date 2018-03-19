@@ -5,8 +5,8 @@ import org.apache.commons.math.distribution.ContinuousDistribution;
 import org.apache.commons.math.distribution.Distribution;
 import org.apache.commons.math.distribution.NormalDistributionImpl;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.parameter.RealParameter;
 
 

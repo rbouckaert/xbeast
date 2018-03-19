@@ -27,8 +27,8 @@ package beast.evolution.operators;
 
 import java.text.DecimalFormat;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.Operator;
 import beast.core.parameter.BooleanParameter;
 import beast.core.parameter.RealParameter;

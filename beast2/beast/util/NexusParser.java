@@ -1,9 +1,8 @@
 package beast.util;
 
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
-import xbeast.util.XMLProducer;
+import beast.core.util.Log;
 import beast.evolution.alignment.*;
 import beast.evolution.datatype.DataType;
 import beast.evolution.datatype.StandardData;
@@ -11,6 +10,7 @@ import beast.evolution.datatype.UserDataType;
 import beast.evolution.tree.TraitSet;
 import beast.evolution.tree.Tree;
 import beast.math.distributions.*;
+import beast.util.XMLProducer;
 
 import java.io.*;
 import java.util.*;

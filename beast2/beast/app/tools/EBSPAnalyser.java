@@ -23,10 +23,10 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import xbeast.app.BEASTVersion2;
-import xbeast.app.util.Utils;
-import xbeast.app.util.WholeNumberField;
-import xbeast.core.util.Log;
+import beast.app.BEASTVersion2;
+import beast.app.util.Utils;
+import beast.app.util.WholeNumberField;
+import beast.core.util.Log;
 import beast.evolution.tree.coalescent.CompoundPopulationFunction;
 import beast.evolution.tree.coalescent.CompoundPopulationFunction.Type;
 import beast.math.statistic.DiscreteStatistics;

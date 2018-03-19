@@ -26,6 +26,7 @@
 package dr.evomodel.treelikelihood;
 
 import beagle.*;
+import beast.core.Param;
 import dr.evolution.datatype.HiddenDataType;
 import dr.evolution.tree.TreeUtils;
 import dr.evomodel.branchmodel.BranchModel;
@@ -64,7 +65,6 @@ import dr.math.MathUtils;
 import dr.util.Citable;
 import dr.util.Citation;
 import dr.util.CommonCitations;
-import xbeast.core.Param;
 
 import java.util.*;
 import java.util.logging.Logger;

@@ -7,12 +7,12 @@ import java.util.List;
 
 import beast.app.draw.BEASTObjectPanel;
 import beast.app.draw.InputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
+import beast.core.util.Log;
 
 
 
@@ -223,7 +223,7 @@ public class BeautiPanelConfig extends BEASTObject {
                 }
             }
             if (typeInput.get() != null) {
-                type = xbeast.util.PackageManager.forName(typeInput.get());
+                type = beast.util.PackageManager.forName(typeInput.get());
             }
             // sanity check
             if (!isList && (hasPartitionsInput.get() == Partition.none) && beastObjects.size() > 1) {

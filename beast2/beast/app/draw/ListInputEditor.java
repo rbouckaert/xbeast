@@ -24,9 +24,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.Input;
+import beast.core.util.Log;
 
 public class ListInputEditor extends InputEditor.Base {
 
@@ -443,7 +443,7 @@ public class ListInputEditor extends InputEditor.Base {
         }
         /* create new beastObject */
         try {
-            BEASTInterface beastObject = (BEASTInterface) xbeast.util.PackageManager.forName(className.substring(4)).newInstance();
+            BEASTInterface beastObject = (BEASTInterface) beast.util.PackageManager.forName(className.substring(4)).newInstance();
             BEASTObjectPanel.addPluginToMap(beastObject, doc);
             selectedPlugins.add(beastObject);
             return selectedPlugins;

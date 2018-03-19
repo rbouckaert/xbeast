@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
 import beast.evolution.datatype.DataType;
 
 @Description("Single sequence in an alignment.")

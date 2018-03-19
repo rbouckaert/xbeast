@@ -27,12 +27,13 @@ package dr.evolution.util;
 
 
 import dr.util.Identifiable;
-import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import beast.core.Param;
 
 /**
  * Class for a list of taxa.

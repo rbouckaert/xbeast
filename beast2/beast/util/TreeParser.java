@@ -38,11 +38,11 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.StateNode;
-import xbeast.core.StateNodeInitialiser;
-import xbeast.core.util.Log;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.StateNode;
+import beast.core.StateNodeInitialiser;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.Taxon;
 import beast.evolution.alignment.TaxonSet;

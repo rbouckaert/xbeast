@@ -4,13 +4,13 @@ package beast.app.beauti;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.MCMC;
 import beast.core.Operator;
+import beast.core.Input.Validate;
 
 
 
@@ -121,7 +121,7 @@ public class BeautiConnector extends BEASTObject {
         	String methodName = fullMethod.substring(fullMethod.lastIndexOf('.') + 1);
         	Class<?> class_;
 			try {
-				class_ = xbeast.util.PackageManager.forName(className);
+				class_ = beast.util.PackageManager.forName(className);
 	        	method = class_.getMethod(methodName, BeautiDoc.class);
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -154,7 +154,7 @@ public class BeautiConnector extends BEASTObject {
             	String fullMethod = methodnput.get();
             	String className = fullMethod.substring(0, fullMethod.lastIndexOf('.'));
             	String methodName = fullMethod.substring(fullMethod.lastIndexOf('.') + 1);
-            	Class<?> class_ = xbeast.util.PackageManager.forName(className);
+            	Class<?> class_ = beast.util.PackageManager.forName(className);
             	method = class_.getMethod(methodName, BeautiDoc.class);
         		method.invoke(null, doc);
         	} catch (Exception e) {

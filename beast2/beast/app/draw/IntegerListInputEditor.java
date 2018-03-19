@@ -38,9 +38,9 @@ import javax.swing.event.ListSelectionListener;
 import beast.app.beauti.BeautiDoc;
 import beast.app.beauti.BeautiPanel;
 import beast.app.beauti.BeautiPanelConfig;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.Input;
+import beast.core.util.Log;
 
 
 public class IntegerListInputEditor extends ListInputEditor {

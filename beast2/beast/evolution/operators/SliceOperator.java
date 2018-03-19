@@ -2,14 +2,14 @@ package beast.evolution.operators;
 
 import java.text.DecimalFormat;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.core.Distribution;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Input;
 import beast.core.Operator;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 import beast.core.util.Evaluator;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.util.Randomizer;
 
 

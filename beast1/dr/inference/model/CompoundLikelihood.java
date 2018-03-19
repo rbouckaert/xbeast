@@ -29,10 +29,11 @@ package dr.inference.model;
 import dr.util.Keywordable;
 import dr.util.NumberFormatter;
 import dr.xml.Reportable;
-import xbeast.core.Param;
 
 import java.util.*;
 import java.util.concurrent.*;
+
+import beast.core.Param;
 
 /**
  * A likelihood function which is simply the product of a set of likelihood functions.

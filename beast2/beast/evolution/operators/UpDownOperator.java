@@ -5,14 +5,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.Operator;
-import xbeast.core.StateNode;
-import xbeast.core.parameter.Parameter;
+import beast.core.StateNode;
+import beast.core.Input.Validate;
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.util.Randomizer;
 
 

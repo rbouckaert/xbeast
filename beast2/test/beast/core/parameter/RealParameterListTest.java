@@ -11,8 +11,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import beast.core.Operator;
-import xbeast.core.State;
-import xbeast.core.parameter.Parameter;
+import beast.core.State;
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.core.parameter.RealParameterList;
 

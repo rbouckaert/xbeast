@@ -1,11 +1,11 @@
 package beast.evolution.operators;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.Operator;
+import beast.core.Input.Validate;
 import beast.core.parameter.IntegerParameter;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.util.Randomizer;
 
 

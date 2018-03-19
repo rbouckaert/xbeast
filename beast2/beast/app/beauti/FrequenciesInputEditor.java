@@ -7,8 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 import beast.app.draw.BEASTObjectInputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.substitutionmodel.Frequencies;

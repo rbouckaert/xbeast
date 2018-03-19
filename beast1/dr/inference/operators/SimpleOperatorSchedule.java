@@ -30,12 +30,13 @@ import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.loggers.NumberColumn;
 import dr.math.MathUtils;
-import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
+
+import beast.core.Param;
 
 /**
  * This class implements a simple operator schedule.

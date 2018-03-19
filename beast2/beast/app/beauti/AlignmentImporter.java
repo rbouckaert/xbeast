@@ -3,7 +3,7 @@ package beast.app.beauti;
 import java.io.File;
 import java.util.List;
 
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 
 
 /** Interface for importing alignments from file that are recognisable 

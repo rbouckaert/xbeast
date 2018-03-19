@@ -15,9 +15,9 @@ import javax.swing.border.EtchedBorder;
 
 import beast.app.beauti.BeautiDoc;
 import beast.app.beauti.BeautiSubTemplate;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
-import xbeast.util.PackageManager;
+import beast.core.BEASTInterface;
+import beast.core.Input;
+import beast.util.PackageManager;
 
 public class BEASTObjectInputEditor extends InputEditor.Base {
     private static final long serialVersionUID = 1L;

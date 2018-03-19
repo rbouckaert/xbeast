@@ -31,10 +31,11 @@ import dr.evomodel.substmodel.SubstitutionModel;
 import dr.util.Author;
 import dr.util.Citable;
 import dr.util.Citation;
-import xbeast.core.Param;
 
 import java.util.Collections;
 import java.util.List;
+
+import beast.core.Param;
 
 /**
  * GammaSiteModel - A SiteModel that has a gamma distributed rates across sites.

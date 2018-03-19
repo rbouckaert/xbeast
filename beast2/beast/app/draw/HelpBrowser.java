@@ -38,7 +38,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 import beast.app.DocMaker;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 
 
 

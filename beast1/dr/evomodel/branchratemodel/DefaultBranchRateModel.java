@@ -26,11 +26,11 @@
 package dr.evomodel.branchratemodel;
 
 
+import beast.core.Description;
 import dr.evolution.tree.*;
 import dr.inference.model.Model;
 import dr.inference.model.ModelListener;
 import dr.inference.model.Variable;
-import xbeast.core.Description;
 
 /**
  * @author Andrew Rambaut

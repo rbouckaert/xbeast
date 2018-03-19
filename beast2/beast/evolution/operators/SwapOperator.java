@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.Operator;
+import beast.core.Input.Validate;
 import beast.core.parameter.IntegerParameter;
-import xbeast.core.parameter.Parameter;
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.util.Randomizer;
 

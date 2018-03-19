@@ -18,11 +18,11 @@ import beast.app.beauti.BeautiDoc;
 import beast.app.beauti.BeautiSubTemplate;
 import beast.app.draw.InputEditor.ButtonStatus;
 import beast.app.draw.InputEditor.ExpandOption;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.util.Log;
-import xbeast.util.PackageManager;
+import beast.core.BEASTInterface;
+import beast.core.Input;
+import beast.core.Input.Validate;
+import beast.core.util.Log;
+import beast.util.PackageManager;
 
 
 
@@ -62,7 +62,7 @@ public class InputEditorFactory {
         	// ignore inner classes, which are marked with $
         	if (!inputEditor.contains("$")) {
 	            try {
-	                Class<?> _class = xbeast.util.PackageManager.forName(inputEditor);
+	                Class<?> _class = beast.util.PackageManager.forName(inputEditor);
 	                
 	                
 	                Constructor<?> con = _class.getConstructor(BeautiDoc.class);
@@ -181,7 +181,7 @@ public class InputEditorFactory {
             if (listInputEditorMap.containsKey(inputClass)) {
                 // use custom list input editor
                 String inputEditorName = listInputEditorMap.get(inputClass);
-                Constructor<?> con = xbeast.util.PackageManager.forName(inputEditorName).getConstructor(BeautiDoc.class);
+                Constructor<?> con = beast.util.PackageManager.forName(inputEditorName).getConstructor(BeautiDoc.class);
                 inputEditor = (InputEditor) con.newInstance(doc);
 
                 //inputEditor = (InputEditor) xbeast.util.PackageManager.forName(inputEditor).newInstance();
@@ -204,7 +204,7 @@ public class InputEditorFactory {
 	            // handle BEASTObject-input with custom input editors
 	            String inputEditorName = inputEditorMap.get(inputClass2);
 	            
-	            Constructor<?> con = xbeast.util.PackageManager.forName(inputEditorName).getConstructor(BeautiDoc.class);
+	            Constructor<?> con = beast.util.PackageManager.forName(inputEditorName).getConstructor(BeautiDoc.class);
 	            inputEditor = (InputEditor) con.newInstance(doc);
         	}
         }        	
@@ -316,7 +316,7 @@ public class InputEditorFactory {
             List<String> classes = PackageManager.find(input.getType(), "beast");
             for (String className : classes) {
                 try {
-                    Object o = xbeast.util.PackageManager.forName(className).newInstance();
+                    Object o = beast.util.PackageManager.forName(className).newInstance();
                     if (input.canSetValue(o, parent)) {
                         beastObjectNames.add("new " + className);
                     }

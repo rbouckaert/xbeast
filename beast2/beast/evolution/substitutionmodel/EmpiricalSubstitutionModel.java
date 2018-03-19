@@ -2,8 +2,8 @@ package beast.evolution.substitutionmodel;
 
 import java.lang.reflect.InvocationTargetException;
 
-import xbeast.core.Description;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 import beast.evolution.tree.Node;
 

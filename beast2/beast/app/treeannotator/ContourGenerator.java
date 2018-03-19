@@ -3,7 +3,7 @@ package beast.app.treeannotator;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 
 
 /**

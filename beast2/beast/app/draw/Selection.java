@@ -27,7 +27,7 @@ package beast.app.draw;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 
 public class Selection {
     public List<TrackPoint> m_tracker = null;

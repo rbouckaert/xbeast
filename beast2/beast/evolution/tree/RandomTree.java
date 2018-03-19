@@ -38,13 +38,13 @@ import java.util.TreeSet;
 
 import org.apache.commons.math.MathException;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.StateNode;
-import xbeast.core.StateNodeInitialiser;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.StateNode;
+import beast.core.StateNodeInitialiser;
+import beast.core.Input.Validate;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.coalescent.PopulationFunction;

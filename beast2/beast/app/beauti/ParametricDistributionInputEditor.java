@@ -14,8 +14,8 @@ import javax.swing.UIManager;
 import org.apache.commons.math.MathException;
 
 import beast.app.draw.BEASTObjectInputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.evolution.tree.TreeDistribution;
 import beast.math.distributions.MRCAPrior;
 import beast.math.distributions.ParametricDistribution;

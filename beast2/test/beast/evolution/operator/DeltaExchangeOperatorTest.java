@@ -5,7 +5,7 @@ package test.beast.evolution.operator;
 
 import org.junit.Test;
 
-import xbeast.core.State;
+import beast.core.State;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.operators.DeltaExchangeOperator;

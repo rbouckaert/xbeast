@@ -27,10 +27,11 @@ package dr.inference.model;
 
 import dr.inference.parallel.MPIServices;
 import dr.xml.Reportable;
-import xbeast.core.Param;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import beast.core.Param;
 
 import java.util.*;
 

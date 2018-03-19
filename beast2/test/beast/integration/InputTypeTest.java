@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Input;
-import xbeast.core.Param;
-import xbeast.util.PackageManager;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Input;
+import beast.core.Param;
+import beast.util.PackageManager;
 import junit.framework.TestCase;
 
 public class InputTypeTest extends TestCase {
@@ -30,12 +30,12 @@ public class InputTypeTest extends TestCase {
 	 */
 	@Test
 	public void testInputTypeCanBeSet() throws Exception {
-		List<String> beastObjectNames = PackageManager.find(xbeast.core.BEASTObject.class,
+		List<String> beastObjectNames = PackageManager.find(beast.core.BEASTObject.class,
 				PackageManager.IMPLEMENTATION_DIR);
 		List<String> failingInputs = new ArrayList<String>();
 		for (String beastObjectName : beastObjectNames) {
 			try {
-				BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
+				BEASTObject beastObject = (BEASTObject) beast.util.PackageManager.forName(beastObjectName).newInstance();
 				List<Input<?>> inputs = beastObject.listInputs();
 				for (Input<?> input : inputs) {
 					if (input.getType() == null) {
@@ -71,7 +71,7 @@ public class InputTypeTest extends TestCase {
 		List<String> failingInputs = new ArrayList<String>();
 		for (String beastObject : beastObjectNames) {
 			try {
-				Class<?> _class = xbeast.util.PackageManager.forName(beastObject);
+				Class<?> _class = beast.util.PackageManager.forName(beastObject);
 			    Constructor<?>[] allConstructors = _class.getDeclaredConstructors();
 			    for (Constructor<?> ctor : allConstructors) {
 			    	Annotation[][] annotations = ctor.getParameterAnnotations();
@@ -108,7 +108,7 @@ public class InputTypeTest extends TestCase {
 								case "double" : type = Double.class; break;
 								case "boolean" : type = Boolean.class; break;
 								default:
-									clazz = xbeast.util.PackageManager.forName(typeName);
+									clazz = beast.util.PackageManager.forName(typeName);
 					    			if (clazz.isAssignableFrom(List.class)) {
 				                        Type[] genericTypes2 = ((ParameterizedType) gtypes[i + offset]).getActualTypeArguments();
 				                        type = (Class<?>) genericTypes2[0];

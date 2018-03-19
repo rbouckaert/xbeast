@@ -2,8 +2,8 @@ package test.xbeast.core;
 
 import com.sun.org.glassfish.gmbal.Description;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Param;
+import beast.core.BEASTObject;
+import beast.core.Param;
 
 @Description("PrimitiveInterface is used for testing inner class inside interface")
 public interface PrimitiveInterface {

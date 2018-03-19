@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import beast.app.draw.InputEditor;
 import beast.app.draw.ListInputEditor;
 import beast.app.draw.StringInputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.Logger;
 
 

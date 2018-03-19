@@ -2,7 +2,7 @@ package beast.core.parameter;
 
 import java.util.List;
 
-import xbeast.core.Description;
+import beast.core.Description;
 
 /**
  * @author Tim Vaughan <tgvaughan@gmail.com>

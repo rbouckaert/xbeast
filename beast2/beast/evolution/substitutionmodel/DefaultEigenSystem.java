@@ -1,6 +1,6 @@
 package beast.evolution.substitutionmodel;
 
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.math.MachineAccuracy;
 import java.util.Arrays;
 

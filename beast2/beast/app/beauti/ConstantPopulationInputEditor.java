@@ -3,8 +3,8 @@ package beast.app.beauti;
 import java.lang.reflect.InvocationTargetException;
 
 import beast.app.draw.InputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.evolution.tree.coalescent.ConstantPopulation;
 
 public class ConstantPopulationInputEditor extends InputEditor.Base {

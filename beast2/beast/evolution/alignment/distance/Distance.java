@@ -1,7 +1,7 @@
 package beast.evolution.alignment.distance;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
+import beast.core.BEASTObject;
+import beast.core.Description;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.datatype.DataType;

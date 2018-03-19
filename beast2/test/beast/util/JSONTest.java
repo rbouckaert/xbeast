@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.Test;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Taxon;
-import xbeast.util.JSONParser;
-import xbeast.util.JSONProducer;
+import beast.util.JSONParser;
+import beast.util.JSONProducer;
 import junit.framework.TestCase;
 
 public class JSONTest extends TestCase {

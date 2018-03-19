@@ -3,8 +3,8 @@ package beast.math.distributions;
 import org.apache.commons.math.MathException;
 import org.apache.commons.math.distribution.ContinuousDistribution;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.parameter.RealParameter;
 
 @Description("Laplace distribution.    f(x|\\mu,b) = \\frac{1}{2b} \\exp \\left( -\\frac{|x-\\mu|}{b} \\right)" +

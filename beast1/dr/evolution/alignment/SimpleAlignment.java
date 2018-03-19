@@ -37,7 +37,6 @@ import dr.evolution.util.Taxa;
 import dr.evolution.util.Taxon;
 import dr.evolution.util.TaxonList;
 import dr.util.NumberFormatter;
-import xbeast.core.Param;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +44,8 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import beast.core.Param;
 
 /**
  * A simple alignment class that implements gaps by characters in the sequences.

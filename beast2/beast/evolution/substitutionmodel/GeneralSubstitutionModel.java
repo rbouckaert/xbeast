@@ -30,10 +30,10 @@ package beast.evolution.substitutionmodel;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.evolution.datatype.DataType;
 import beast.evolution.tree.Node;
 
@@ -90,7 +90,7 @@ public class GeneralSubstitutionModel extends SubstitutionModel.Base {
      * @throws InstantiationException *
      */
     protected EigenSystem createEigenSystem() throws SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Constructor<?>[] ctors = xbeast.util.PackageManager.forName(eigenSystemClass.get()).getDeclaredConstructors();
+        Constructor<?>[] ctors = beast.util.PackageManager.forName(eigenSystemClass.get()).getDeclaredConstructors();
         Constructor<?> ctor = null;
         for (int i = 0; i < ctors.length; i++) {
             ctor = ctors[i];

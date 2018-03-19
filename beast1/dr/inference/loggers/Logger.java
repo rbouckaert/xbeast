@@ -25,7 +25,7 @@
 
 package dr.inference.loggers;
 
-import xbeast.core.Description;
+import beast.core.Description;
 
 /**
  * An interface for a logger.

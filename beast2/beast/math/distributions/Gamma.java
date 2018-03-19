@@ -4,8 +4,8 @@ package beast.math.distributions;
 import org.apache.commons.math.distribution.ContinuousDistribution;
 import org.apache.commons.math.distribution.GammaDistributionImpl;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.parameter.RealParameter;
 
 @Description("Gamma distribution. for x>0  g(x;alpha,beta) = 1/Gamma(alpha) beta^alpha} x^{alpha - 1} e^{-\frac{x}{beta}}" +

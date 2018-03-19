@@ -4,13 +4,13 @@ package test.beast.math.distributions;
 
 import org.junit.Test;
 
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 import beast.math.distributions.Exponential;
 import beast.math.distributions.Gamma;
 import beast.math.distributions.LogNormalDistributionModel;
 import beast.math.distributions.Normal;
 import beast.math.distributions.Uniform;
-import xbeast.util.XMLParser;
+import beast.util.XMLParser;
 import junit.framework.TestCase;
 
 public class MeanOfParametricDistributionTest extends TestCase {

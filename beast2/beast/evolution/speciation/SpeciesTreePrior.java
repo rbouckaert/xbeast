@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.State;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.State;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Node;

@@ -1,7 +1,7 @@
 package test.beast.evolution.substmodel;
 
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.core.parameter.RealParameter;
 import beast.evolution.substitutionmodel.Frequencies;
 import beast.evolution.substitutionmodel.GTR;

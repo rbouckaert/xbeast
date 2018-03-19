@@ -28,10 +28,11 @@ package dr.evolution.util;
 
 import dr.util.Attributable;
 import dr.util.Identifiable;
-import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import beast.core.Param;
 
 /**
  * Class for data about a taxon.

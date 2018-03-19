@@ -30,9 +30,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import xbeast.app.BEASTVersion;
-import xbeast.app.util.Utils6;
-import xbeast.util.PackageVersion;
+import beast.app.BEASTVersion;
+import beast.app.util.Utils6;
+import beast.util.PackageVersion;
 
 /**
  * Loads beast.jar and launches BEAST through the BEASTMain class

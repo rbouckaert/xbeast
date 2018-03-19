@@ -11,13 +11,13 @@ import javax.swing.JTextField;
 
 import beast.app.draw.ListInputEditor;
 import beast.app.draw.SmallLabel;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.MCMC;
 import beast.core.Operator;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.branchratemodel.BranchRateModel;
 import beast.evolution.operators.DeltaExchangeOperator;

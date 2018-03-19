@@ -13,8 +13,8 @@ import javax.swing.SwingUtilities;
 
 import beast.app.draw.InputEditor;
 import beast.app.draw.SmallLabel;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeDistribution;
 

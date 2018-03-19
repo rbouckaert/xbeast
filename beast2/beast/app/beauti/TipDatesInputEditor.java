@@ -1,9 +1,9 @@
 package beast.app.beauti;
 
 import beast.app.draw.BEASTObjectInputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.Input;
+import beast.core.util.Log;
 import beast.evolution.alignment.Taxon;
 import beast.evolution.tree.TraitSet;
 import beast.evolution.tree.Tree;

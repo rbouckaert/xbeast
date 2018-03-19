@@ -1,7 +1,7 @@
 package test.xbeast.core;
 
 
-import xbeast.core.*;
+import beast.core.*;
 
 @Description("Class to test the behaviour of primitive inputs")
 public class PrimitiveBeastObject extends BEASTObject {

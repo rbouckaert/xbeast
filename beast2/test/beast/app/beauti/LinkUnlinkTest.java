@@ -14,10 +14,10 @@ import org.fest.swing.fixture.JTabbedPaneFixture;
 import org.fest.swing.fixture.JTableFixture;
 import org.junit.Test;
 
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 import beast.core.Distribution;
-import xbeast.core.Function;
-import xbeast.core.parameter.Parameter;
+import beast.core.Function;
+import beast.core.parameter.Parameter;
 import beast.core.util.CompoundDistribution;
 import beast.math.distributions.Prior;
 

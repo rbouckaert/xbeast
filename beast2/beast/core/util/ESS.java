@@ -5,12 +5,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.*;
+import beast.core.*;
+import beast.core.Input.Validate;
 
 
 //import beast.core.Distribution;

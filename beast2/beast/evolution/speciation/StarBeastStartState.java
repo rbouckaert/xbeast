@@ -14,8 +14,8 @@ import java.util.Set;
 
 import org.apache.commons.math.MathException;
 
-import xbeast.core.*;
-import xbeast.core.Input.Validate;
+import beast.core.*;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.Taxon;

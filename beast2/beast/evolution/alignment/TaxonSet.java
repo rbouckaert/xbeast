@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 
 
 @Description("A TaxonSet is an ordered set of taxa. The order on the taxa is provided at the time of construction" +

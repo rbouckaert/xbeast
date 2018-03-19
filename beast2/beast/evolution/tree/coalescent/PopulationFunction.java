@@ -7,8 +7,8 @@ import org.apache.commons.math.MaxIterationsExceededException;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.apache.commons.math.analysis.integration.RombergIntegrator;
 
-import xbeast.core.CalculationNode;
-import xbeast.core.Description;
+import beast.core.CalculationNode;
+import beast.core.Description;
 import beast.math.Binomial;
 import beast.util.Randomizer;
 

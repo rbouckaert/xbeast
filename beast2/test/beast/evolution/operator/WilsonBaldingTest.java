@@ -17,7 +17,6 @@
 package test.beast.evolution.operator;
 
 import beast.core.*;
-import xbeast.core.*;
 import beast.core.parameter.RealParameter;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.Sequence;

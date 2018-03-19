@@ -3,7 +3,7 @@ package beast.math.statistic;
 
 import java.util.Stack;
 
-import xbeast.core.Description;
+import beast.core.Description;
 
 
 /**

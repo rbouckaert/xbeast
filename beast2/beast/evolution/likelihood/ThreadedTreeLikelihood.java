@@ -43,11 +43,11 @@ import java.util.concurrent.RejectedExecutionException;
 
 import beast.app.BeastMCMC;
 import beast.app.beauti.Beauti;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.State;
-import xbeast.core.util.Log;
+import beast.core.BEASTInterface;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.State;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.FilteredAlignment;
 import beast.evolution.sitemodel.SiteModel;

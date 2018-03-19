@@ -8,13 +8,13 @@ import java.util.List;
 
 import org.apache.commons.math.MathException;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.core.Distribution;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 import beast.core.util.CompoundDistribution;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;

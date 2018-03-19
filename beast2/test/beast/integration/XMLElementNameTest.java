@@ -8,10 +8,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Input;
-import xbeast.util.PackageManager;
-import xbeast.util.XMLParser;
+import beast.core.BEASTObject;
+import beast.core.Input;
+import beast.util.PackageManager;
+import beast.util.XMLParser;
 import junit.framework.TestCase;
 
 
@@ -22,11 +22,11 @@ public class XMLElementNameTest extends TestCase {
      */
     @Test
     public void test_NameUniqueness() {
-        List<String> pluginNames = PackageManager.find(xbeast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
+        List<String> pluginNames = PackageManager.find(beast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
         List<String> improperInputs = new ArrayList<String>();
         for (String beastObjectName : pluginNames) {
             try {
-                BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
+                BEASTObject beastObject = (BEASTObject) beast.util.PackageManager.forName(beastObjectName).newInstance();
                 List<Input<?>> inputs = beastObject.listInputs();
                 Set<String> names = new HashSet<String>();
                 for (Input<?> input : inputs) {
@@ -66,11 +66,11 @@ public class XMLElementNameTest extends TestCase {
         element2ClassMap.put("parameter", "beast.core.parameter.Parameter");
 
         // check each beastObject
-        List<String> pluginNames = PackageManager.find(xbeast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
+        List<String> pluginNames = PackageManager.find(beast.core.BEASTObject.class, PackageManager.IMPLEMENTATION_DIR);
         List<String> improperInputs = new ArrayList<String>();
         for (String beastObjectName : pluginNames) {
             try {
-                BEASTObject beastObject = (BEASTObject) xbeast.util.PackageManager.forName(beastObjectName).newInstance();
+                BEASTObject beastObject = (BEASTObject) beast.util.PackageManager.forName(beastObjectName).newInstance();
                 // check each input
                 List<Input<?>> inputs = beastObject.listInputs();
                 for (Input<?> input : inputs) {

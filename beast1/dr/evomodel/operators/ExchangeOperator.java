@@ -25,10 +25,10 @@
 
 package dr.evomodel.operators;
 
+import beast.core.Param;
 import dr.evolution.tree.NodeRef;
 import dr.evomodel.tree.TreeModel;
 import dr.math.MathUtils;
-import xbeast.core.Param;
 
 /**
  * Implements branch exchange operations. There is a NARROW and WIDE variety.

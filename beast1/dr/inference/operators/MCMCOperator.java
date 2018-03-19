@@ -28,7 +28,7 @@ package dr.inference.operators;
 
 import java.io.Serializable;
 
-import xbeast.core.Description;
+import beast.core.Description;
 
 /**
  * An MCMC operator.

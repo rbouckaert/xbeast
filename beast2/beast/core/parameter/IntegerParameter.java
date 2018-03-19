@@ -3,10 +3,10 @@ package beast.core.parameter;
 
 import java.io.PrintStream;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.util.Log;
-import xbeast.core.parameter.Parameter;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.parameter.Parameter;
+import beast.core.util.Log;
 
 
 /**

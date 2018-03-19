@@ -24,20 +24,20 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.Logger;
-import xbeast.core.util.Log;
+import beast.core.Input.Validate;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.FilteredAlignment;
 import beast.evolution.likelihood.GenericTreeLikelihood;
 import beast.evolution.sitemodel.SiteModel;
 import beast.evolution.sitemodel.SiteModelInterface.Base;
 import beast.evolution.substitutionmodel.SubstitutionModel;
-import xbeast.util.XMLParser;
+import beast.util.XMLParser;
 
 
 //import beast.app.beauti.BeautiConnector.ConnectCondition;

@@ -58,7 +58,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import xbeast.app.BEASTVersion2;
+import beast.app.BEASTVersion2;
 import beast.app.beauti.BeautiDoc.ActionOnExit;
 import beast.app.beauti.BeautiDoc.DOC_STATUS;
 import beast.app.draw.BEASTObjectPanel;
@@ -67,16 +67,16 @@ import beast.app.draw.InputEditor;
 import beast.app.draw.ModelBuilder;
 import beast.app.draw.MyAction;
 import beast.app.tools.AppStore;
-import xbeast.app.util.Utils;
-import xbeast.app.util.Utils6;
-import xbeast.core.BEASTInterface;
+import beast.app.util.Utils;
+import beast.app.util.Utils6;
+import beast.core.BEASTInterface;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
-import xbeast.util.PackageManager;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.math.distributions.MRCAPrior;
 import beast.math.distributions.Prior;
 import beast.math.distributions.Uniform;
+import beast.util.PackageManager;
 import jam.framework.DocumentFrame;
 
 
@@ -268,7 +268,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
             fileSep = "\\\\";
         }
         String defaultFile = g_sDir + (doc.getFileName().equals("") ? "" : fileSep + new File(doc.getFileName()).getName());
-        File file = xbeast.app.util.Utils.getSaveFile("Save Model As", new File(
+        File file = beast.app.util.Utils.getSaveFile("Save Model As", new File(
                 defaultFile), null, FILE_EXT, FILE_EXT2);
         if (file != null) {
             if (file.exists() && !Utils.isMac()) {
@@ -339,7 +339,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
 
         @Override
 		public void actionPerformed(ActionEvent ae) {
-            File file = xbeast.app.util.Utils.getLoadFile("Load Beast XML File",
+            File file = beast.app.util.Utils.getLoadFile("Load Beast XML File",
                     new File(g_sDir), "Beast XML files", "xml");//, "BEAST json file", "json");
             // JFileChooser fileChooser = new JFileChooser(g_sDir);
             // fileChooser.addChoosableFileFilter(ef1);
@@ -388,7 +388,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
         @Override
 		public void actionPerformed(ActionEvent ae) {
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            File file = xbeast.app.util.Utils
+            File file = beast.app.util.Utils
                     .getLoadFile("Load Template XML File");
             // JFileChooser fileChooser = new
             // JFileChooser(System.getProperty("user.dir")+"/templates");
@@ -1369,7 +1369,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
                     // ignore
                 }
                 try {
-                    Class<?> class_ = xbeast.util.PackageManager.forName("jam.maconly.OSXAdapter");
+                    Class<?> class_ = beast.util.PackageManager.forName("jam.maconly.OSXAdapter");
                     Method method = class_.getMethod("enablePrefs", boolean.class);
                     method.invoke(null, false);
                 } catch (java.lang.NoSuchMethodException e) {

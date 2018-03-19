@@ -40,8 +40,8 @@ import javax.swing.UIManager;
 
 import org.w3c.dom.Node;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.util.Randomizer;
 
 
@@ -50,7 +50,7 @@ import beast.util.Randomizer;
 
 public class BEASTObjectShape extends Shape {
     static Font g_PluginFont = new Font("arial", Font.PLAIN, UIManager.getFont("Label.font").getSize() * 11 / 12);
-    public xbeast.core.BEASTInterface m_beastObject;
+    public beast.core.BEASTInterface m_beastObject;
     List<InputShape> m_inputs;
 
 
@@ -73,7 +73,7 @@ public class BEASTObjectShape extends Shape {
     public void init(String className, Document doc) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
     	m_doc = doc;
         if (m_beastObject == null) {
-            m_beastObject = (xbeast.core.BEASTInterface) xbeast.util.PackageManager.forName(className).newInstance();
+            m_beastObject = (beast.core.BEASTInterface) beast.util.PackageManager.forName(className).newInstance();
         }
         m_inputs = new ArrayList<>();
         if (m_beastObject.getId() == null) {
@@ -176,7 +176,7 @@ public class BEASTObjectShape extends Shape {
             if (node.getAttributes().getNamedItem("class") != null) {
                 String className = node.getAttributes().getNamedItem("class").getNodeValue();
                 try {
-                    m_beastObject = (xbeast.core.BEASTInterface) xbeast.util.PackageManager.forName(className).newInstance();
+                    m_beastObject = (beast.core.BEASTInterface) beast.util.PackageManager.forName(className).newInstance();
                     m_beastObject.setId(m_sID);
                 } catch (Exception e) {
                     // TODO: handle exception

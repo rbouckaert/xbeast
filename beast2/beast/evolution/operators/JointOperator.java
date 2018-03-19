@@ -19,11 +19,11 @@ package beast.evolution.operators;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.Operator;
-import xbeast.core.StateNode;
-import xbeast.core.util.Log;
+import beast.core.StateNode;
+import beast.core.util.Log;
 
 /**
  * @author Tim Vaughan <tgvaughan@gmail.com>

@@ -39,9 +39,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import xbeast.app.util.Utils;
-import xbeast.core.util.Log;
-import xbeast.util.PackageManager;
+import beast.app.util.Utils;
+import beast.core.util.Log;
+import beast.util.PackageManager;
 
 
 /**
@@ -390,7 +390,7 @@ public class AppStore {
     
 	private String sanitise(String property) {
 		// sanitise for windows
-		if (xbeast.app.util.Utils.isWindows()) {
+		if (beast.app.util.Utils.isWindows()) {
 			String cwd = System.getProperty("user.dir");
 			cwd = cwd.replace("\\", "/");
 			property = property.replaceAll(";\\.", ";" +  cwd + ".");

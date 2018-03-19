@@ -10,10 +10,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTInterface;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.Sequence;
 import beast.evolution.branchratemodel.BranchRateModel;
@@ -23,9 +23,9 @@ import beast.evolution.sitemodel.SiteModel;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;
 import beast.util.Randomizer;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLParserException;
-import xbeast.util.XMLProducer;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
+import beast.util.XMLProducer;
 
 
 
@@ -34,7 +34,7 @@ import xbeast.util.XMLProducer;
  */
 @Description("Performs random sequence generation for a given site model. " +
         "Sequences for the leave nodes in the tree are returned as an alignment.")
-public class SequenceSimulator extends xbeast.core.Runnable {
+public class SequenceSimulator extends beast.core.Runnable {
     final public Input<Alignment> m_data = new Input<>("data", "alignment data which specifies datatype and taxa of the beast.tree", Validate.REQUIRED);
     final public Input<Tree> m_treeInput = new Input<>("tree", "phylogenetic beast.tree with sequence data in the leafs", Validate.REQUIRED);
     final public Input<SiteModel.Base> m_pSiteModelInput = new Input<>("siteModel", "site model for leafs in the beast.tree", Validate.REQUIRED);

@@ -11,14 +11,14 @@ import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.evolution.alignment.Alignment;
 import beast.math.distributions.MRCAPrior;
-import xbeast.util.XMLParser;
+import beast.util.XMLParser;
 
 @Description("Beauti configuration object, used to find Beauti configuration " +
         "information from Beauti template files.")

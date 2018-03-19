@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.State;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
+import beast.core.State;
+import beast.core.Input.Validate;
 import beast.core.parameter.IntegerParameter;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeDistribution;

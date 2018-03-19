@@ -45,20 +45,20 @@ import org.xml.sax.SAXException;
 import beast.app.draw.BEASTObjectPanel;
 import beast.app.draw.InputEditor;
 import beast.app.draw.InputEditorFactory;
-import xbeast.app.util.Utils;
-import xbeast.app.util.Utils6;
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
+import beast.app.util.Utils;
+import beast.app.util.Utils6;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
 import beast.core.Distribution;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Input;
 import beast.core.MCMC;
-import xbeast.core.StateNode;
-import xbeast.core.parameter.Parameter;
+import beast.core.StateNode;
+import beast.core.Input.Validate;
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.core.util.CompoundDistribution;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.FilteredAlignment;
 import beast.evolution.alignment.Taxon;
@@ -74,12 +74,12 @@ import beast.math.distributions.MRCAPrior;
 import beast.math.distributions.Normal;
 import beast.math.distributions.ParametricDistribution;
 import beast.math.distributions.Prior;
-import xbeast.util.JSONProducer;
+import beast.util.JSONProducer;
 import beast.util.NexusParser;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLParser.RequiredInputProvider;
-import xbeast.util.XMLParserException;
-import xbeast.util.XMLProducer;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
+import beast.util.XMLProducer;
+import beast.util.XMLParser.RequiredInputProvider;
 
 
 @Description("Beauti document in doc-view pattern, not useful in models")
@@ -97,7 +97,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
     public List<Alignment> alignments = new ArrayList<>();
 
-    final public Input<xbeast.core.Runnable> mcmc = new Input<>("runnable", "main entry of analysis",
+    final public Input<beast.core.Runnable> mcmc = new Input<>("runnable", "main entry of analysis",
             Validate.REQUIRED);
 
     protected List<BranchRateModel> clockModels;
@@ -929,7 +929,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         BEASTObjectPanel.init();
         List<BEASTInterface> beastObjects = parser.parseTemplate(xml, new HashMap<>(), true);
         for (BEASTInterface beastObject : beastObjects) {
-            if (beastObject instanceof xbeast.core.Runnable) {
+            if (beastObject instanceof beast.core.Runnable) {
                 mcmc.setValue(beastObject, this);
             } else if (beastObject instanceof BeautiConfig) {
                 beautiConfig = (BeautiConfig) beastObject;

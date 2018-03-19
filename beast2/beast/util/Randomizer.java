@@ -49,7 +49,7 @@
 
 package beast.util;
 
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 
 /**
  * Handy utility functions which have some Mathematical relevance.

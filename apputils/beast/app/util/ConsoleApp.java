@@ -6,8 +6,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import xbeast.app.BEASTVersion2;
-import xbeast.core.util.Log;
+import beast.app.BEASTVersion2;
+import beast.core.util.Log;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;

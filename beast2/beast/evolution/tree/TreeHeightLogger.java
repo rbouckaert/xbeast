@@ -4,12 +4,12 @@ package beast.evolution.tree;
 
 import java.io.PrintStream;
 
-import xbeast.core.CalculationNode;
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.Loggable;
+import beast.core.CalculationNode;
+import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
+import beast.core.Loggable;
+import beast.core.Input.Validate;
 
 
 @Description("Logger to report height of a tree -- deprecated: use TreeStatLogger instead")

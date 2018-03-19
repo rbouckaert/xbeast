@@ -8,8 +8,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.app.BEASTVersion2;
-import xbeast.app.util.Utils;
+import beast.app.BEASTVersion2;
+import beast.app.util.Utils;
 
 /**
  * Compare log files to find the set of parameters same between logs but having significantly different value.

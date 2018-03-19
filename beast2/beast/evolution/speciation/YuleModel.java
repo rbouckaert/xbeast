@@ -7,16 +7,14 @@ import java.util.List;
 import java.util.Random;
 
 import beast.core.*;
-import xbeast.core.Input.Validate;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeInterface;
 import beast.evolution.tree.TreeUtils;
 import beast.math.distributions.MRCAPrior;
-
-import xbeast.core.*;
 
 
 // From Gernhard 2008, Yule density (p; conditioned on n nodes) should be:

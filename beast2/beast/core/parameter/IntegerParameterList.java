@@ -2,8 +2,8 @@ package beast.core.parameter;
 
 import java.util.List;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 
 /**
  * @author Tim Vaughan <tgvaughan@gmail.com>

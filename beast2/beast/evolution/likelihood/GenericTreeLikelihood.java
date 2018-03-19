@@ -4,11 +4,11 @@ package beast.evolution.likelihood;
 import java.util.List;
 import java.util.Random;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.core.Distribution;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.State;
+import beast.core.Input;
+import beast.core.State;
+import beast.core.Input.Validate;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.branchratemodel.BranchRateModel;
 import beast.evolution.sitemodel.SiteModelInterface;

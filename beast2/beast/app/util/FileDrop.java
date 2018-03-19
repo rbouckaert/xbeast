@@ -410,7 +410,7 @@ public class FileDrop {
             boolean support = false;
             try {
                 @SuppressWarnings("unused")
-				Class<?> arbitraryDndClass = xbeast.util.PackageManager.forName("java.awt.dnd.DnDConstants");
+				Class<?> arbitraryDndClass = beast.util.PackageManager.forName("java.awt.dnd.DnDConstants");
                 support = true;
             }   // end try
             catch (Exception e) {

@@ -30,12 +30,12 @@ import java.util.*;
 
 import javax.swing.JFrame;
 
-import xbeast.app.BEASTVersion;
+import beast.app.BEASTVersion;
 import beast.app.beauti.BeautiDoc;
 import beast.app.tools.LogCombiner;
-import xbeast.app.util.Arguments;
-import xbeast.app.util.Utils;
-import xbeast.core.util.Log;
+import beast.app.util.Arguments;
+import beast.app.util.Utils;
+import beast.core.util.Log;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;

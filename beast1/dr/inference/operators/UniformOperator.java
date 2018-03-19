@@ -25,12 +25,12 @@
 
 package dr.inference.operators;
 
+import beast.core.Param;
 import dr.evomodel.tree.TreeModel;
 import dr.inference.model.Bounds;
 import dr.inference.model.Parameter;
 import dr.inferencexml.operators.UniformOperatorParser;
 import dr.math.MathUtils;
-import xbeast.core.Param;
 
 /**
  * A generic uniform sampler/operator for use with a multi-dimensional parameter.

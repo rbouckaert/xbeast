@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
 import beast.app.beauti.BeautiDoc;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.MCMC;
-import xbeast.util.XMLProducer;
+import beast.util.XMLProducer;
 
 /**
  * Dialog for editing BEASTObjects.
@@ -181,12 +181,12 @@ public class BEASTObjectDialog extends JDialog {
                 } finally {
                     scanner.close();
                 }
-                BEASTInterface beastObject = new xbeast.util.XMLParser().parseBareFragment(text.toString(), false);
+                BEASTInterface beastObject = new beast.util.XMLParser().parseBareFragment(text.toString(), false);
                 dlg = new BEASTObjectDialog(new BEASTObjectPanel(beastObject, beastObject.getClass(), null), null);
             } else if (args.length == 1) {
-                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[0]), null), null);
+                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) beast.util.PackageManager.forName(args[0]).newInstance(), beast.util.PackageManager.forName(args[0]), null), null);
             } else if (args.length == 2) {
-                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) xbeast.util.PackageManager.forName(args[0]).newInstance(), xbeast.util.PackageManager.forName(args[1]), null), null);
+                dlg = new BEASTObjectDialog(new BEASTObjectPanel((BEASTInterface) beast.util.PackageManager.forName(args[0]).newInstance(), beast.util.PackageManager.forName(args[1]), null), null);
             } else {
                 throw new IllegalArgumentException("Incorrect number of arguments");
             }

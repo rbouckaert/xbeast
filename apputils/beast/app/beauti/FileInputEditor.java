@@ -8,9 +8,9 @@ import java.io.File;
 import javax.swing.JButton;
 
 import beast.app.draw.InputEditor;
-import xbeast.app.util.Utils;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.app.util.Utils;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 
 
 /** for opening files for reading

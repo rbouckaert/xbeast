@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import xbeast.app.BEASTVersion2;
-import xbeast.app.util.Utils;
+import beast.app.BEASTVersion2;
+import beast.app.util.Utils;
 import beast.core.util.ESS;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 
 
 public class LogAnalyser {

@@ -46,7 +46,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import xbeast.app.util.WholeNumberField;
+import beast.app.util.WholeNumberField;
 import jam.panels.OptionsPanel;
 
 public class TreeAnnotatorDialog {

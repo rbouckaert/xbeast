@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 import beast.core.*;
-import xbeast.core.Input.Validate;
+import beast.core.Input.Validate;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
 import org.apache.commons.math.MathException;
-import xbeast.core.*;
 
 
 @Description("Produces prior (log) probability of value x." +

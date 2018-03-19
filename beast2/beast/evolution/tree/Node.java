@@ -25,8 +25,8 @@
 package beast.evolution.tree;
 
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
+import beast.core.BEASTObject;
+import beast.core.Description;
 import beast.util.HeapSort;
 
 import java.util.*;

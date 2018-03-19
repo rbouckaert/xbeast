@@ -25,11 +25,11 @@
 
 package dr.evomodel.operators;
 
+import beast.core.Param;
 import dr.evolution.tree.NodeRef;
 import dr.evomodel.tree.TreeModel;
 import dr.evomodelxml.operators.WilsonBaldingParser;
 import dr.math.MathUtils;
-import xbeast.core.Param;
 
 /**
  * Implements the unweighted wilson-balding branch swapping move.

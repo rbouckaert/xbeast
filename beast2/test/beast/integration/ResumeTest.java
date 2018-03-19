@@ -7,7 +7,7 @@ import org.junit.Test;
 import beast.core.Logger;
 import beast.core.MCMC;
 import beast.util.Randomizer;
-import xbeast.util.XMLParser;
+import beast.util.XMLParser;
 import junit.framework.TestCase;
 
 /**
@@ -30,7 +30,7 @@ public class ResumeTest extends TestCase {
 
         System.out.println("Processing " + fileName);
         XMLParser parser = new XMLParser();
-        xbeast.core.Runnable runable = parser.parseFile(new File(fileName));
+        beast.core.Runnable runable = parser.parseFile(new File(fileName));
         runable.setStateFile("tmp.state", false);
         if (runable instanceof MCMC) {
             MCMC mcmc = (MCMC) runable;

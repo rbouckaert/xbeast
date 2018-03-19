@@ -31,10 +31,10 @@ import java.util.List;
 
 import org.apache.commons.math.MathException;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.StateNode;
-import xbeast.core.StateNodeInitialiser;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.StateNode;
+import beast.core.StateNodeInitialiser;
 import beast.evolution.tree.Tree;
 
 /**

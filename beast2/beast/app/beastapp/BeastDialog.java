@@ -68,7 +68,7 @@ public class BeastDialog {
         final JTextField inputFileNameText = new JTextField("not selected", 16);
 
         inputFileButton.addActionListener(ae -> {
-                File file = xbeast.app.util.Utils.getLoadFile("Load xml file", inputFile, "Beast xml files", "xml");
+                File file = beast.app.util.Utils.getLoadFile("Load xml file", inputFile, "Beast xml files", "xml");
                 if (file != null) {
                     inputFile = file;
                     inputFileNameText.setText(inputFile.getName());

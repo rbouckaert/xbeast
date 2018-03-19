@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 
 import beast.core.Operator;
-import xbeast.core.State;
-import xbeast.core.StateNode;
+import beast.core.State;
+import beast.core.StateNode;
 import junit.framework.TestCase;
 
 /**

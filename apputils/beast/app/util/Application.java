@@ -15,9 +15,9 @@ import beast.app.beauti.BeautiConfig;
 import beast.app.beauti.BeautiDoc;
 import beast.app.draw.BEASTObjectDialog;
 import beast.app.draw.BEASTObjectPanel;
-import xbeast.app.util.*;
-import xbeast.core.*;
-import xbeast.core.util.Log;
+import beast.app.util.*;
+import beast.core.*;
+import beast.core.util.Log;
 
 @Description("BEAST application that handles argument parsing by introspection "
 		+ "using Inputs declared in the class.")
@@ -29,7 +29,7 @@ public class Application {
 		this.myBeastObject = myBeastObject;
 	}
 	
-	public Application(xbeast.core.Runnable analyser, String title, String[] args) throws Exception {
+	public Application(beast.core.Runnable analyser, String title, String[] args) throws Exception {
 		
 		analyser.setId(title);
 
@@ -208,7 +208,7 @@ public class Application {
 	public static void main(final String[] args) throws Exception {
 		Application main = null;
 		try {
-			BEASTObject myBeastObject = (BEASTObject) xbeast.util.PackageManager.forName(args[0])
+			BEASTObject myBeastObject = (BEASTObject) beast.util.PackageManager.forName(args[0])
 					.newInstance();
 			main = new Application(myBeastObject);
 			String[] args2 = new String[args.length - 1];

@@ -3,11 +3,11 @@ package beast.evolution.sitemodel;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.CalculationNode;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.StateNode;
+import beast.core.CalculationNode;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.StateNode;
+import beast.core.Input.Validate;
 import beast.evolution.datatype.DataType;
 import beast.evolution.likelihood.TreeLikelihood;
 import beast.evolution.substitutionmodel.SubstitutionModel;

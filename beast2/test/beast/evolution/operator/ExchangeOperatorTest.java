@@ -2,7 +2,7 @@ package test.beast.evolution.operator;
 
 import org.junit.Test;
 
-import xbeast.core.State;
+import beast.core.State;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.Sequence;
 import beast.evolution.operators.Exchange;

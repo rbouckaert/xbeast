@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.Description;
-import xbeast.core.Param;
-import xbeast.core.Runnable;
+import beast.core.BEASTInterface;
+import beast.core.Description;
+import beast.core.Param;
+import beast.core.Runnable;
 import beast.evolution.alignment.Taxon;
 
 @Description("Used for testing purposed only")

@@ -12,10 +12,10 @@ import javax.swing.event.DocumentListener;
 
 import beast.app.draw.InputEditor;
 import beast.app.draw.ListInputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.Operator;
-import xbeast.core.StateNode;
+import beast.core.StateNode;
 
 
 

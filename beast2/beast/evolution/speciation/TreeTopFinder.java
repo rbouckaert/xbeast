@@ -4,9 +4,9 @@ package beast.evolution.speciation;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.CalculationNode;
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.CalculationNode;
+import beast.core.Description;
+import beast.core.Input;
 import beast.evolution.tree.Tree;
 
 

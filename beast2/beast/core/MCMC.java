@@ -34,10 +34,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import xbeast.core.*;
+import beast.core.*;
 import beast.core.util.CompoundDistribution;
 import beast.core.util.Evaluator;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.util.Randomizer;
 
 @Description("MCMC chain. This is the main element that controls which posterior " +
@@ -49,7 +49,7 @@ import beast.util.Randomizer;
                 "  evolutionary analysis. PLoS Computational Biology 10(4): e1003537"
         , year = 2014, firstAuthorSurname = "bouckaert",
         DOI="10.1371/journal.pcbi.1003537")
-public class MCMC extends xbeast.core.Runnable {
+public class MCMC extends beast.core.Runnable {
 
     final public Input<Long> chainLengthInput =
             new Input<>("chainLength", "Length of the MCMC chain i.e. number of samples taken in main loop",

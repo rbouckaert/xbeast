@@ -30,9 +30,10 @@ import dr.evolution.datatype.DataType;
 import dr.evolution.util.Taxon;
 import dr.util.Attributable;
 import dr.util.Identifiable;
-import xbeast.core.Param;
 
 import java.util.Iterator;
+
+import beast.core.Param;
 
 /**
  * Class for storing a molecular sequence.

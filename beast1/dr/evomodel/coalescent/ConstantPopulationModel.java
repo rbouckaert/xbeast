@@ -25,11 +25,11 @@
 
 package dr.evomodel.coalescent;
 
+import beast.core.Param;
 import dr.evolution.coalescent.ConstantPopulation;
 import dr.evolution.coalescent.DemographicFunction;
 import dr.evomodelxml.coalescent.ConstantPopulationModelParser;
 import dr.inference.model.Parameter;
-import xbeast.core.Param;
 
 /**
  * A wrapper for ConstantPopulation.

@@ -34,8 +34,8 @@ import org.json.JSONObject;
 //import org.json.JSONWriter;
 import org.json.JSONStringer;
 
-import xbeast.core.*;
-import xbeast.core.Input.Validate;
+import beast.core.*;
+import beast.core.Input.Validate;
 import beast.core.util.Evaluator;
 
 @Description("Proposes a move in state space.")

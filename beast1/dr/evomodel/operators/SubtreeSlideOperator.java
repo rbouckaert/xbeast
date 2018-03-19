@@ -31,10 +31,11 @@ import dr.evomodel.tree.TreeModel;
 import dr.evomodelxml.operators.SubtreeSlideOperatorParser;
 import dr.inference.operators.*;
 import dr.math.MathUtils;
-import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import beast.core.Param;
 
 /**
  * Implements the subtree slide move.

@@ -1,10 +1,10 @@
 package test.beast.beast2vs1.trace;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Citation;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTObject;
+import beast.core.Citation;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 
 
 @Description("It is used by LogAnalyser. assertExpectation(TraceStatistics) sets TraceStatistics instance " +

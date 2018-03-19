@@ -3,8 +3,8 @@ package beast.evolution.operators;
 
 import java.util.List;
 
-import xbeast.core.Description;
-import xbeast.core.parameter.Parameter;
+import beast.core.Description;
+import beast.core.parameter.Parameter;
 
 
 @Description("A temporary helper class to solve compound state nodes for operators, " +

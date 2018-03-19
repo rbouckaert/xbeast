@@ -32,10 +32,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.State;
-import xbeast.core.util.Log;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.State;
+import beast.core.util.Log;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.branchratemodel.BranchRateModel;
 import beast.evolution.branchratemodel.StrictClockModel;

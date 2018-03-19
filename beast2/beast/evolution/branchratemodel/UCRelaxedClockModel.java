@@ -5,12 +5,12 @@ import java.util.Arrays;
 
 import org.apache.commons.math.MathException;
 
-import xbeast.core.Citation;
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Citation;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.tree.Node;
 import beast.evolution.tree.Tree;
 import beast.math.distributions.ParametricDistribution;

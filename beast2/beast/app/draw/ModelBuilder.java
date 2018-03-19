@@ -77,12 +77,12 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
-import xbeast.app.util.Utils;
-import xbeast.core.BEASTInterface;
+import beast.app.util.Utils;
+import beast.core.BEASTInterface;
 import beast.evolution.alignment.Sequence;
-import xbeast.util.PackageManager;
+import beast.util.PackageManager;
 import beast.util.Randomizer;
-import xbeast.util.XMLProducer;
+import beast.util.XMLProducer;
 
 /**
  * program for drawing BEAST 2.0 models *
@@ -1348,7 +1348,7 @@ public class ModelBuilder extends JPanel implements ComponentListener {
         if (!m_bViewSequences && beastObject instanceof Sequence) {
             return false;
         }
-        if (!m_bViewState && beastObject instanceof xbeast.core.State) {
+        if (!m_bViewState && beastObject instanceof beast.core.State) {
             return false;
         }
         return true;

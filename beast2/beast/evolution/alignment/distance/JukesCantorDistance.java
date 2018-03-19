@@ -25,7 +25,7 @@
 
 package beast.evolution.alignment.distance;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.evolution.alignment.Alignment;
 
 /**

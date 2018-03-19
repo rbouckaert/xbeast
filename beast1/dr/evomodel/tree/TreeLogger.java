@@ -31,12 +31,13 @@ import dr.inference.loggers.LogFormatter;
 import dr.inference.loggers.MCLogger;
 import dr.inference.loggers.TabDelimitedFormatter;
 import dr.util.Keywordable;
-import xbeast.core.Param;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.util.*;
+
+import beast.core.Param;
 
 /**
  * A logger that logs tree and clade frequencies.

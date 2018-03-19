@@ -24,10 +24,10 @@
 */
 package beast.evolution.substitutionmodel;
 
-import xbeast.core.Citation;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Citation;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 import beast.evolution.datatype.DataType;
 import beast.evolution.datatype.Nucleotide;

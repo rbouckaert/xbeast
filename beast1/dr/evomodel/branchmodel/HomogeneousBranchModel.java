@@ -31,11 +31,12 @@ import dr.evolution.tree.NodeRef;
 import dr.inference.model.AbstractModel;
 import dr.inference.model.Model;
 import dr.inference.model.Variable;
-import xbeast.core.Param;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import beast.core.Param;
 
 /**
  * @author Andrew Rambaut

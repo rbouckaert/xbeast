@@ -14,12 +14,12 @@ import javax.swing.SwingUtilities;
 
 import beast.app.draw.InputEditor;
 import beast.app.draw.ListInputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.MCMC;
-import xbeast.core.State;
-import xbeast.core.StateNode;
-import xbeast.core.StateNodeInitialiser;
+import beast.core.State;
+import beast.core.StateNode;
+import beast.core.StateNodeInitialiser;
 import beast.evolution.tree.Tree;
 
 public class StateNodeInitialiserListInputEditor extends ListInputEditor {

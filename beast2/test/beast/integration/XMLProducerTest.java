@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 import beast.core.Logger;
 import beast.evolution.datatype.Nucleotide;
 import beast.util.NexusParser;
 import beast.util.Randomizer;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLProducer;
+import beast.util.XMLParser;
+import beast.util.XMLProducer;
 import junit.framework.TestCase;
 
 public class XMLProducerTest extends TestCase {

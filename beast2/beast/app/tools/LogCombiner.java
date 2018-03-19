@@ -17,9 +17,9 @@ import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.table.TableCellEditor;
 
-import xbeast.app.BEASTVersion2;
-import xbeast.app.util.Utils;
-import xbeast.core.util.Log;
+import beast.app.BEASTVersion2;
+import beast.app.util.Utils;
+import beast.core.util.Log;
 import beast.util.LogAnalyser;
 import jam.console.ConsoleApplication;
 

@@ -30,10 +30,11 @@ import dr.evolution.util.MutableTaxonListListener;
 import dr.evolution.util.Taxon;
 import dr.inference.model.*;
 import dr.util.*;
-import xbeast.core.Param;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import beast.core.Param;
 
 import java.util.*;
 

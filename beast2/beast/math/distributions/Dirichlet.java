@@ -4,10 +4,10 @@ import org.apache.commons.math.MathException;
 import org.apache.commons.math.distribution.ContinuousDistribution;
 import org.apache.commons.math.distribution.Distribution;
 
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
 
 

@@ -5,17 +5,17 @@ import java.util.List;
 import org.json.JSONException;
 import org.junit.Test;
 
+import beast.core.Input;
+import beast.util.JSONParser;
+import beast.util.JSONParserException;
+import beast.util.JSONProducer;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
+import beast.util.XMLProducer;
 import junit.framework.TestCase;
 import test.xbeast.core.PrimitiveBeastObject.Enumeration;
 import test.xbeast.core.PrimitiveBeastObject.InnerClass;
 import test.xbeast.core.PrimitiveInterface.InterfaceInnerClass;
-import xbeast.core.Input;
-import xbeast.util.JSONParser;
-import xbeast.util.JSONParserException;
-import xbeast.util.JSONProducer;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLParserException;
-import xbeast.util.XMLProducer;
 
 public class InputForAnnotatedConstructorTest extends TestCase {
 

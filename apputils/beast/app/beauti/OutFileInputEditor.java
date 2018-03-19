@@ -10,10 +10,10 @@ import java.io.File;
 import javax.swing.JButton;
 
 import beast.app.util.OutFile;
+import beast.app.util.Utils;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.app.draw.InputEditor;
-import xbeast.app.util.Utils;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
 
 public class OutFileInputEditor extends InputEditor.Base {
 	

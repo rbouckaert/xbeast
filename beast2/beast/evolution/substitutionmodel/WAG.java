@@ -1,6 +1,6 @@
 package beast.evolution.substitutionmodel;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.evolution.datatype.Aminoacid;
 import beast.evolution.datatype.DataType;
 import beast.math.statistic.DiscreteStatistics;

@@ -1,6 +1,6 @@
 package beast.evolution.branchratemodel;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.core.parameter.RealParameter;
 import beast.evolution.tree.Node;
 

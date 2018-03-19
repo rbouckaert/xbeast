@@ -6,14 +6,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Function;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
-import xbeast.core.Loggable;
-import xbeast.core.StateNode;
-import xbeast.core.parameter.Parameter;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Function;
+import beast.core.Input;
+import beast.core.Loggable;
+import beast.core.StateNode;
+import beast.core.Input.Validate;
+import beast.core.parameter.Parameter;
 import beast.core.parameter.RealParameter;
 import beast.evolution.branchratemodel.BranchRateModel;
 

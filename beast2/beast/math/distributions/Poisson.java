@@ -3,8 +3,8 @@ package beast.math.distributions;
 
 import org.apache.commons.math.distribution.PoissonDistributionImpl;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
+import beast.core.Description;
+import beast.core.Input;
 import beast.core.parameter.RealParameter;
 
 

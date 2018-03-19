@@ -14,8 +14,8 @@ import javax.swing.text.StyledEditorKit.FontSizeAction;
 
 import beast.app.draw.BEASTObjectDialog;
 import beast.app.draw.InputEditor;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
 import beast.math.distributions.Prior;

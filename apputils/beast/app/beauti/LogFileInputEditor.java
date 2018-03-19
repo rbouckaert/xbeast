@@ -4,8 +4,8 @@ package beast.app.beauti;
 import java.io.File;
 
 import beast.app.util.LogFile;
-import xbeast.core.BEASTInterface;
-import xbeast.core.Input;
+import beast.core.BEASTInterface;
+import beast.core.Input;
 
 public class LogFileInputEditor extends FileInputEditor {
 	

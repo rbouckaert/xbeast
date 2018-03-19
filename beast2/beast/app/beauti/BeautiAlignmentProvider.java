@@ -28,19 +28,19 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.evolution.alignment.Alignment;
 import beast.evolution.alignment.FilteredAlignment;
 import beast.evolution.alignment.Sequence;
 import beast.evolution.datatype.DataType;
 import beast.math.distributions.MRCAPrior;
-import xbeast.util.PackageManager;
 import beast.util.NexusParser;
-import xbeast.util.XMLParser;
+import beast.util.PackageManager;
+import beast.util.XMLParser;
 
 
 @Description("Class for creating new alignments to be edited by AlignmentListInputEditor")
@@ -64,7 +64,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
         for (String _class: importerClasses) {
         	try {
         		if (!_class.startsWith(this.getClass().getName())) {
-					AlignmentImporter importer = (AlignmentImporter) xbeast.util.PackageManager.forName(_class).newInstance();
+					AlignmentImporter importer = (AlignmentImporter) beast.util.PackageManager.forName(_class).newInstance();
 					importers.add(importer);
         		}
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
@@ -102,7 +102,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
 				extensions.add(extension);
 			}
 		}
-        File [] files = xbeast.app.util.Utils.getLoadFiles("Load Alignment File",
+        File [] files = beast.app.util.Utils.getLoadFiles("Load Alignment File",
                 new File(Beauti.g_sDir), "Alignment files", extensions.toArray(new String[]{}));
         if (files != null && files.length > 0) {
             return getAlignments(doc, files);

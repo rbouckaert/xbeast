@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import beast.core.Logger;
 import beast.core.MCMC;
-import xbeast.util.JSONParser;
+import beast.util.JSONParser;
 import beast.util.Randomizer;
 import junit.framework.TestCase;
 
@@ -93,7 +93,7 @@ public class ExampleJSONParsingTest extends TestCase {
                 System.out.println("Processing " + fileName);
                 JSONParser parser = new JSONParser();
                 try {
-                    xbeast.core.Runnable runable = parser.parseFile(new File(dir + "/" + fileName));
+                    beast.core.Runnable runable = parser.parseFile(new File(dir + "/" + fileName));
                     if (runable instanceof MCMC) {
                         MCMC mcmc = (MCMC) runable;
                         mcmc.setInputValue("preBurnin", 0);

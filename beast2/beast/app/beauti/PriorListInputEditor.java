@@ -20,14 +20,14 @@ import beast.app.draw.BEASTObjectPanel;
 import beast.app.draw.InputEditor;
 import beast.app.draw.ListInputEditor;
 import beast.app.draw.SmallButton;
-import xbeast.core.BEASTInterface;
+import beast.core.BEASTInterface;
 import beast.core.Distribution;
-import xbeast.core.Input;
+import beast.core.Input;
 import beast.core.Logger;
-import xbeast.core.State;
-import xbeast.core.StateNode;
+import beast.core.State;
+import beast.core.StateNode;
 import beast.core.parameter.RealParameter;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.alignment.Taxon;
 import beast.evolution.alignment.TaxonSet;
 import beast.evolution.tree.Tree;
@@ -36,7 +36,7 @@ import beast.evolution.tree.TreeInterface;
 import beast.math.distributions.MRCAPrior;
 import beast.math.distributions.OneOnX;
 import beast.math.distributions.Prior;
-import xbeast.util.PackageManager;
+import beast.util.PackageManager;
 
 
 
@@ -229,7 +229,7 @@ public class PriorListInputEditor extends ListInputEditor {
         for (String _class: importerClasses) {
         	try {
         		if (!_class.startsWith(this.getClass().getName())) {
-        			PriorProvider priorProvider = (PriorProvider) xbeast.util.PackageManager.forName(_class).newInstance();
+        			PriorProvider priorProvider = (PriorProvider) beast.util.PackageManager.forName(_class).newInstance();
 					priorProviders.add(priorProvider);
         		}
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {

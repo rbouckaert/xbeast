@@ -25,6 +25,7 @@
 
 package dr.evomodel.coalescent;
 
+import beast.core.Param;
 import dr.evolution.tree.*;
 import dr.evolution.util.Date;
 import dr.evolution.util.Taxa;
@@ -33,7 +34,6 @@ import dr.evolution.util.TaxonList;
 import dr.evolution.util.TimeScale;
 import dr.inference.distribution.ParametricDistributionModel;
 import dr.math.UnivariateFunction;
-import xbeast.core.Param;
 
 /**
  * Simulates a set of coalescent intervals given a demographic model.

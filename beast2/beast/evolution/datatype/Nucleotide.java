@@ -1,6 +1,6 @@
 package beast.evolution.datatype;
 
-import xbeast.core.Description;
+import beast.core.Description;
 import beast.evolution.datatype.DataType.Base;
 
 @Description("Nucleotide datatype for DNA sequences")

@@ -24,14 +24,14 @@
 */
 package beast.evolution.alignment;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.Input.Validate;
 import beast.core.parameter.Map;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.datatype.DataType;
 import beast.evolution.datatype.StandardData;
-import xbeast.util.PackageManager;
+import beast.util.PackageManager;
 
 import java.util.*;
 
@@ -67,7 +67,7 @@ public class Alignment extends Map<String> {
         List<String> m_sDataTypes = PackageManager.find(beast.evolution.datatype.DataType.class, IMPLEMENTATION_DIR);
         for (String dataTypeName : m_sDataTypes) {
             try {
-                DataType dataType = (DataType) xbeast.util.PackageManager.forName(dataTypeName).newInstance();
+                DataType dataType = (DataType) beast.util.PackageManager.forName(dataTypeName).newInstance();
                 if (dataType.isStandard()) {
                     String description = dataType.getTypeDescription();
                     if (!types.contains(description)) {
@@ -234,7 +234,7 @@ public class Alignment extends Map<String> {
             for (String dataTypeName : dataTypes) {
                 DataType dataType;
 				try {
-					dataType = (DataType) xbeast.util.PackageManager.forName(dataTypeName).newInstance();
+					dataType = (DataType) beast.util.PackageManager.forName(dataTypeName).newInstance();
 	                if (dataTypeInput.get().equals(dataType.getTypeDescription())) {
 	                    m_dataType = dataType;
 	                    break;

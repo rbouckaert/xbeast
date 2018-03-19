@@ -39,12 +39,13 @@ import dr.inference.operators.*;
 import dr.util.Identifiable;
 import dr.util.NumberFormatter;
 import dr.xml.Spawnable;
-import xbeast.core.Param;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
+import beast.core.Param;
 
 /**
  * An MCMC analysis that estimates parameters of a probabilistic model.

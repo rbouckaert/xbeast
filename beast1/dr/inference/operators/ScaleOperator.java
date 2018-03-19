@@ -31,9 +31,10 @@ import dr.inference.model.Parameter;
 import dr.inference.model.Variable;
 import dr.inferencexml.operators.ScaleOperatorParser;
 import dr.math.MathUtils;
-import xbeast.core.Param;
 
 import java.util.logging.Logger;
+
+import beast.core.Param;
 
 /**
  * A generic scale operator for use with a multi-dimensional parameters.

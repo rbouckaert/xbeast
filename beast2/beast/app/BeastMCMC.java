@@ -69,14 +69,14 @@ import beast.app.beastapp.BeastMain;
 import beast.app.beauti.Beauti;
 import beast.app.draw.ExtensionFileFilter;
 import beast.core.Logger;
-import xbeast.core.Runnable;
-import xbeast.core.util.Log;
-import xbeast.util.PackageManager;
-import xbeast.util.JSONParser;
-import xbeast.util.JSONParserException;
+import beast.core.Runnable;
+import beast.core.util.Log;
+import beast.util.JSONParser;
+import beast.util.JSONParserException;
+import beast.util.PackageManager;
 import beast.util.Randomizer;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLParserException;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
 import jam.util.IconUtils;
 
 /**
@@ -192,7 +192,7 @@ public class BeastMCMC {
             // Not resuming so get starting options...
 
             List<String> MCMCargs = new ArrayList<>();
-            xbeast.app.util.Version version = new xbeast.app.BEASTVersion2();
+            beast.app.util.Version version = new beast.app.BEASTVersion2();
             String titleString = "<html><center><p>Bayesian Evolutionary Analysis Sampling Trees<br>" +
                     "Version " + version.getVersionString() + ", " + version.getDateString() + "</p></center></html>";
             javax.swing.Icon icon = IconUtils.getIcon(BeastMain.class, "images/beast.png");

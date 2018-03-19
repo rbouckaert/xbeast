@@ -31,7 +31,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
-import xbeast.util.PackageManager;
+import beast.util.PackageManager;
 
 /**
  * @author Tim Vaughan <tgvaughan@gmail.com>

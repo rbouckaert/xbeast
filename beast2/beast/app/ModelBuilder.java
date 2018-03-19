@@ -35,7 +35,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import xbeast.util.PackageManager;
+import beast.util.PackageManager;
 import beast.util.Randomizer;
 
 

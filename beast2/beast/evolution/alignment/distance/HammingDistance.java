@@ -1,6 +1,6 @@
 package beast.evolution.alignment.distance;
 
-import xbeast.core.Description;
+import beast.core.Description;
 
 
 @Description("Hamming distance is the mean number of characters that differ between sequences. " +

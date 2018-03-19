@@ -19,8 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import xbeast.core.*;
-import xbeast.core.util.Log;
+import beast.core.*;
+import beast.core.util.Log;
 import beast.util.Randomizer;
 
 @Description("Specify operator selection and optimisation schedule")

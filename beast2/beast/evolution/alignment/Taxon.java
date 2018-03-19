@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import xbeast.core.BEASTObject;
-import xbeast.core.Description;
+import beast.core.BEASTObject;
+import beast.core.Description;
 
 
 @Description("For identifying a single taxon")

@@ -10,6 +10,14 @@ import java.util.List;
 import org.json.JSONException;
 import org.junit.Test;
 
+import beast.core.BEASTInterface;
+import beast.core.BEASTObject;
+import beast.util.JSONParser;
+import beast.util.JSONParserException;
+import beast.util.JSONProducer;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
+import beast.util.XMLProducer;
 import dr.evolution.alignment.Patterns;
 import dr.evolution.alignment.SimpleAlignment;
 import dr.evomodel.coalescent.CoalescentSimulator;
@@ -45,14 +53,6 @@ import dr.inference.operators.ScaleOperator;
 import dr.inference.operators.SimpleOperatorSchedule;
 import dr.inference.operators.UniformOperator;
 import junit.framework.TestCase;
-import xbeast.core.BEASTInterface;
-import xbeast.core.BEASTObject;
-import xbeast.util.JSONParser;
-import xbeast.util.JSONParserException;
-import xbeast.util.JSONProducer;
-import xbeast.util.XMLParser;
-import xbeast.util.XMLParserException;
-import xbeast.util.XMLProducer;
 
 public class HKYInBeast1Test extends TestCase {
 

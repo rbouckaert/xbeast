@@ -27,11 +27,11 @@ import java.util.regex.Pattern;
 
 import org.w3c.dom.Node;
 
-import xbeast.core.Description;
-import xbeast.core.Input;
-import xbeast.core.StateNode;
-import xbeast.core.util.Log;
-import xbeast.core.parameter.Parameter;
+import beast.core.Description;
+import beast.core.Input;
+import beast.core.StateNode;
+import beast.core.parameter.Parameter;
+import beast.core.util.Log;
 
 /**
  * @author Tim Vaughan <tgvaughan@gmail.com>

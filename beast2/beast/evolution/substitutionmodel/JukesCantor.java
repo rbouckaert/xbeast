@@ -2,8 +2,8 @@ package beast.evolution.substitutionmodel;
 
 import java.util.Arrays;
 
-import xbeast.core.Description;
-import xbeast.core.Input.Validate;
+import beast.core.Description;
+import beast.core.Input.Validate;
 import beast.evolution.datatype.DataType;
 import beast.evolution.datatype.Nucleotide;
 import beast.evolution.tree.Node;

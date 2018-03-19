@@ -64,8 +64,8 @@ import javax.swing.table.AbstractTableModel;
 
 import beast.app.beauti.Beauti;
 import beast.app.util.FileDrop;
-import xbeast.app.util.Utils;
-import xbeast.app.util.WholeNumberField;
+import beast.app.util.Utils;
+import beast.app.util.WholeNumberField;
 
 //import dr.app.gui.FileDrop;
 

@@ -12,10 +12,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import beast.core.Operator;
-import xbeast.core.State;
+import beast.core.State;
 import beast.core.parameter.BooleanParameter;
 import beast.core.parameter.BooleanParameterList;
-import xbeast.core.parameter.Parameter;
+import beast.core.parameter.Parameter;
 
 /**
  * Unit tests for ParameterList class.

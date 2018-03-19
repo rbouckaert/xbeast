@@ -2,8 +2,7 @@ package beast.evolution.tree;
 
 
 import beast.core.*;
-import xbeast.core.*;
-import xbeast.core.util.Log;
+import beast.core.util.Log;
 import beast.evolution.alignment.TaxonSet;
 import beast.util.TreeParser;
 
@@ -175,7 +174,7 @@ public class Tree extends StateNode implements TreeInterface {
      */
     protected Node newNode() {
         try {
-            return (Node) xbeast.util.PackageManager.forName(nodeTypeInput.get()).newInstance();
+            return (Node) beast.util.PackageManager.forName(nodeTypeInput.get()).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Cannot create node of type "
                     + nodeTypeInput.get() + ": " + e.getMessage());
