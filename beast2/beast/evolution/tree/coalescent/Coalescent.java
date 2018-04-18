@@ -8,8 +8,8 @@ import java.util.Random;
 import beast.core.CalculationNode;
 import beast.core.Description;
 import beast.core.Input;
-import beast.core.State;
 import beast.core.Input.Validate;
+import beast.core.State;
 import beast.evolution.tree.TreeDistribution;
 import beast.math.Binomial;
 
@@ -112,7 +112,7 @@ public class Coalescent extends TreeDistribution {
             if (intervalArea == 0 && duration > 1e-10) {
             	/* the above test used to be duration != 0, but that leads to numerical issues on resume
             	 * (https://github.com/CompEvol/beast2/issues/329) */
-            	return Double.NEGATIVE_INFINITY;
+                return Double.NEGATIVE_INFINITY;
             }
             final int lineageCount = intervals.getLineageCount(i);
 

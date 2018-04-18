@@ -1,13 +1,12 @@
 package beast.evolution.datatype;
 
+import beast.core.BEASTObject;
+import beast.core.Description;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import beast.core.BEASTObject;
-import beast.core.Description;
 
 
 public interface DataType {

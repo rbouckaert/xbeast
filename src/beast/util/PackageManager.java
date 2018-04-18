@@ -31,19 +31,17 @@
 package beast.util;
 
 
+
+import beast.app.BEASTVersion;
+import beast.app.util.Arguments;
+import beast.app.util.Utils6;
+import beast.core.util.Log;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import beast.app.BEASTVersion;
-import beast.app.util.Arguments;
-import beast.app.util.Utils6;
-import beast.core.BEASTInterface;
-import beast.core.BEASTObjectStore;
-import beast.core.util.Log;
 
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -86,7 +84,7 @@ public class PackageManager {
     public final static String TO_INSTALL_LIST_FILE = "toInstallList";
     public final static String BEAST_PACKAGE_NAME = "BEAST";
 
-    public final static String PACKAGES_XML = "https://raw.githubusercontent.com/CompEvol/CBAN/master/packages.xml";
+    public final static String PACKAGES_XML = "https://raw.githubusercontent.com/CompEvol/CBAN/master/packages2.5.xml";
 //    public final static String PACKAGES_XML = "file:///Users/remco/workspace/beast2/packages.xml";
     public final static String ARCHIVE_DIR = "archive";
     // flag to indicate archive directory and version numbers in directories are required
@@ -364,7 +362,7 @@ public class PackageManager {
                             packageMap.put(packageName, pkg);
                         } else{
                             String urlStr = pkg.getProjectURL()==null ? "null" : pkg.getProjectURL().toString();
-                            Log.warning("Warning: filter " + packageName + " from package manager " +
+                            System.err.println("Warning: filter " + packageName + " from package manager " +
                                     " because of invalid project URL " + urlStr + " !");
                         }
                     }
@@ -498,7 +496,7 @@ public class PackageManager {
         }
 
         // make sure the class path is updated next time BEAST is started
-        Utils6.saveBeautiProperty("packages.url", null);
+        Utils6.saveBeautiProperty("package.path", null);
         return dirList;
     }
 
@@ -596,7 +594,7 @@ public class PackageManager {
         }
         
         // make sure the class path is updated next time BEAST is started
-        Utils6.saveBeautiProperty("packages.url", null);
+        Utils6.saveBeautiProperty("package.path", null);
         return dirName;
     }
 
@@ -615,14 +613,14 @@ public class PackageManager {
      * 
      */
     private static void closeClassLoader() {
-    	try {
+    	//try {
     		if (Utils6.isWindows()) {
     			URLClassLoader sysLoader = (URLClassLoader) PackageManager.class.getClassLoader();
-    			sysLoader.close();
+    			// sysLoader.close(); <= only since Java 1.7
     		}
-		} catch (IOException e) {
-			Log.warning.println("Could not close ClassLoader: " + e.getMessage());
-		}
+		//} catch (IOException e) {
+		//	Log.warning.println("Could not close ClassLoader: " + e.getMessage());
+		//}
 		
 	}
 
@@ -748,7 +746,7 @@ public class PackageManager {
 		try {
 			u = Class.forName("beast.app.beastapp.BeastMain").getProtectionDomain().getCodeSource().getLocation();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			return null;
 		}
 		String s = u.getPath();
@@ -914,7 +912,8 @@ public class PackageManager {
             }
         }
 
-        dirs.addAll(subDirs);
+        subDirs.addAll(dirs);
+        dirs = subDirs;
         dirs.addAll(getLatestBeastArchiveDirectories(dirs));
         return dirs;
     }
@@ -1018,21 +1017,27 @@ public class PackageManager {
      * load external jars in beast directories *
      */
     public static void loadExternalJars() throws IOException {
+    	Utils6.logToSplashScreen("PackageManager::processDeleteList");
         processDeleteList();
 
+    	Utils6.logToSplashScreen("PackageManager::addInstalledPackages");
         addInstalledPackages(packages);
 
+    	Utils6.logToSplashScreen("PackageManager::processInstallList");
         processInstallList(packages);
 
+    	Utils6.logToSplashScreen("PackageManager::checkInstalledDependencies");
         checkInstalledDependencies(packages);
 
         // jars will only be loaded the classical (pre v2.5.0)
         // way with java 8 when the -Dbeast.load.jars=true
         // directive is given. This can be useful for developers
         // but generally slows down application starting.
-        if (System.getProperty("beast.load.jars") == null || Utils6.getMajorJavaVersion() != 8) {
+        if (Boolean.getBoolean("beast.load.jars") == false || Utils6.getMajorJavaVersion() != 8) {
             externalJarsLoaded = true;
+        	Utils6.logToSplashScreen("PackageManager::findDataTypes");
             findDataTypes();
+        	Utils6.logToSplashScreen("PackageManager::Done");
     		return;
     	}
 
@@ -1040,7 +1045,9 @@ public class PackageManager {
         	loadPackage(jarDirName);
         }
         externalJarsLoaded = true;
+    	Utils6.logToSplashScreen("PackageManager::findDataTypes");
         findDataTypes();
+    	Utils6.logToSplashScreen("PackageManager::Done");
     } // loadExternalJars
     
 	private static void findDataTypes() {
@@ -1322,8 +1329,6 @@ public class PackageManager {
         }
     }
 
-    private static URLClassLoader sysLoader = null; 
-
     /**
      * Add URL to CLASSPATH
      *
@@ -1332,14 +1337,10 @@ public class PackageManager {
      */
     public static void addURL(URL u) throws IOException {
         // ClassloaderUtil clu = new ClassloaderUtil();
+        PackageManager clu = new PackageManager();
         // URLClassLoader sysLoader = (URLClassLoader)
         // ClassLoader.getSystemClassLoader();
-        //URLClassLoader sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
-        if (sysLoader == null) {
-            PackageManager clu = new PackageManager();
-        	sysLoader = URLClassLoader.newInstance(new URL[]{}, clu.getClass().getClassLoader());//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
-        	// sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
-        }
+        URLClassLoader sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
         URL urls[] = sysLoader.getURLs();
         for (URL url : urls) {
             if (url.toString().toLowerCase().equals(u.toString().toLowerCase())) {
@@ -1365,7 +1366,6 @@ public class PackageManager {
         System.setProperty("java.class.path", classpath);
         all_classes = null;
     }
-
 
 
     private static void loadAllClasses() {
@@ -1626,7 +1626,9 @@ public class PackageManager {
         List<String> result = new ArrayList<String>();
         for (int i = all_classes.size() - 1; i >= 0; i--) {
             String className = all_classes.get(i);
-            className = className.replaceAll("/", ".");
+            if (className.indexOf('/') >= 0) {
+            	className = className.replaceAll("/", ".");
+            }
             //Log.debug.println(className + " " + pkgname);
 
             // must match package
@@ -1674,21 +1676,6 @@ public class PackageManager {
         return result;
     }
 
-    public static Class forName(String className) throws ClassNotFoundException {
-//    	try {
-//    		return Class.forName(className);
-//    	} catch (ClassNotFoundException e2) {
-//    		// ignore
-//    	}
-    	if (sysLoader == null) {
-            PackageManager clu = new PackageManager();
-            ClassLoader c = clu.getClass().getClassLoader();
-        	sysLoader = URLClassLoader.newInstance(new URL[]{}, c);//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
-        	// sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
-    	}
-		return Class.forName(className, true, sysLoader);
-    }
-    
 
     /*
      * Command-line interface code
@@ -1921,7 +1908,7 @@ public class PackageManager {
 	                                Log.info.println("Package " + name + " is uninstalled from " + dir + ".");
 	                            } else {
 	                                Log.info.println("Un-installation aborted: " + name + " is used by these other packages: " +
-	                                        String.join(", ", deps) + ".");
+	                                        join(", ", deps) + ".");
 	                                Log.info.println("Remove these packages first.");
 	                                System.exit(1);
 	                            }
@@ -1941,12 +1928,28 @@ public class PackageManager {
         }
     }
 
-    /** keep track of which class comes from a particular package.
+    private static String join(String string, List<String> deps) {
+		StringBuilder buf = new StringBuilder();
+		for (int i = 0; i < deps.size(); i++) {
+			buf.append(deps.get(i));
+			buf.append(',');
+		}
+		buf.deleteCharAt(buf.length() - 1);
+		return buf.toString();
+	}
+
+	/** keep track of which class comes from a particular package.
      * It maps a full class name onto a package name + " v" + package version
      * e.g. "bModelTest v0.3.2"
      */
     private static Map<String, String> classToPackageMap = new HashMap<String, String>();
-       
+    
+    /**  maps package name to a Package object, which contains info on whether 
+     * and which version is installed. This is initialised when loadExternalJars()
+     * is called, which happens at the start of BEAST, BEAUti and many utilities.
+     */
+    private static TreeMap<String, Package> packages = new TreeMap<String, Package>();
+   
     public static Map<String, String> getClassToPackageMap() {
     	if (classToPackageMap.size() == 0) {
             for (String jarDirName : getBeastDirectories()) {
@@ -2013,35 +2016,7 @@ public class PackageManager {
 		
 	}
 
-    /**  maps package name to a Package object, which contains info on whether 
-     * and which version is installed. This is initialised when loadExternalJars()
-     * is called, which happens at the start of BEAST, BEAUti and many utilities.
-     */
-    private static TreeMap<String, Package> packages = new TreeMap<>();
-
-    /** return set of Strings in the format of classToPackageMap (like "bModelTest v0.3.2")
-     * for all packages used by o and its predecessors in the model graph.
-     */
-    public static Set<String> getPackagesAndVersions(Object o) {
-    	Set<String> packagesAndVersions = new LinkedHashSet<>();
-    	getPackagesAndVersions(o, packagesAndVersions);
-    	return packagesAndVersions;
-    }
-    
-    /** traverse model graph starting at o, and collect packageAndVersion strings
-     * along the way.
-     */
-    private static void getPackagesAndVersions(Object o, Set<String> packagesAndVersions) {
-    	String packageAndVersion = classToPackageMap.get(o.getClass().getName());
-    	if (packageAndVersion != null) {
-    		packagesAndVersions.add(packageAndVersion);
-    	}
-    	for (BEASTInterface o2 : BEASTObjectStore.listActiveBEASTObjects(o)) {
-    		getPackagesAndVersions(o2, packagesAndVersions);
-    	}
-	}
-
-    /** test whether a package with given name and version is available.
+	/** test whether a package with given name and version is available.
      * @param pkgname
      * @param pkgversion ignored for now
      * @return

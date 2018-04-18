@@ -418,6 +418,7 @@ public class BeastMain {
             }
         }
 
+        
         BeastConsoleApp consoleApp = null;
 
         final String nameString = "BEAST " + version.getVersionString();
@@ -522,7 +523,7 @@ public class BeastMain {
         if (arguments.hasOption("strictversions")) {
         	MCMCargs.add("-strictversions");
         }
-
+        
         if (arguments.hasOption("D")) {
         	MCMCargs.add("-D");
         	MCMCargs.add(arguments.getStringOption("D"));
