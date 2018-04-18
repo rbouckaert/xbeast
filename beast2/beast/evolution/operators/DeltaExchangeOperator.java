@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import beast.app.beauti.Beauti;
 import beast.core.Description;
 import beast.core.Input;
 import beast.core.Operator;
@@ -84,6 +85,10 @@ public class DeltaExchangeOperator extends Operator {
 	}
 
     public void initAndValidate() {
+    	if (Beauti.isInBeauti()) {
+    		// prevent exceptions being thrown in Beauti when initialising
+    		return;
+    	}
         autoOptimize = autoOptimizeiInput.get();
         delta = deltaInput.get();
         isIntegerOperator = integerOperatorInput.get();
