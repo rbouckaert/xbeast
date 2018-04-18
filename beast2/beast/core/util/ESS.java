@@ -38,7 +38,7 @@ public class ESS extends BEASTObject implements Loggable {
 
     @Override
     public void init(PrintStream out) {
-        final String id = ((BEASTObject) functionInput.get()).getId();
+        final String id = ((BEASTObject) functionInput.get()).getID();
         out.print("ESS(" + id + ")\t");
     }
 

@@ -150,7 +150,7 @@ public class MCMC extends beast.core.Runnable {
                 final int distrCount = distrs.size();
                 for (int i = 0; i < distrCount; i++) {
                     final Distribution distr = distrs.get(i);
-                    final String id = distr.getId();
+                    final String id = distr.getID();
                     if (id != null && id.equals("likelihood")) {
                         distrs.remove(distr);
                         break;
@@ -176,7 +176,7 @@ public class MCMC extends beast.core.Runnable {
                 initialiser.getInitialisedStateNodes(list);
                 for (final StateNode stateNode : list) {
                     if (initialisedStateNodes.contains(stateNode)) {
-                        throw new RuntimeException("Trying to initialise stateNode (id=" + stateNode.getId() + ") more than once. " +
+                        throw new RuntimeException("Trying to initialise stateNode (id=" + stateNode.getID() + ") more than once. " +
                                 "Remove an initialiser from MCMC to fix this.");
                     }
                 }
@@ -222,14 +222,14 @@ public class MCMC extends beast.core.Runnable {
         for (final Operator op : operatorsInput.get()) {
             List<StateNode> nodes = op.listStateNodes();
             if (nodes.size() == 0) {
-                    throw new RuntimeException("Operator " + op.getId() + " has no state nodes in the state. "
+                    throw new RuntimeException("Operator " + op.getID() + " has no state nodes in the state. "
                                     + "Each operator should operate on at least one estimated state node in the state. "
                                     + "Remove the operator or add its statenode(s) to the state and/or set estimate='true'.");
                     // otherwise the chain may hang without obvious reason
             }
 	        for (final StateNode stateNode : op.listStateNodes()) {
 	            if (!stateNodes.contains(stateNode)) {
-	                throw new RuntimeException("Operator " + op.getId() + " has a statenode " + stateNode.getId() + " in its inputs that is missing from the state.");
+	                throw new RuntimeException("Operator " + op.getID() + " has a statenode " + stateNode.getID() + " in its inputs that is missing from the state.");
 	            }
 	        }
 	    }
@@ -242,7 +242,7 @@ public class MCMC extends beast.core.Runnable {
         // sanity check: all state nodes should be operated on
         for (final StateNode stateNode : stateNodes) {
             if (!operatorStateNodes.contains(stateNode)) {
-                Log.warning.println("Warning: state contains a node " + stateNode.getId() + " for which there is no operator.");
+                Log.warning.println("Warning: state contains a node " + stateNode.getID() + " for which there is no operator.");
             }
         }
     } // init
@@ -334,7 +334,7 @@ public class MCMC extends beast.core.Runnable {
         	if (l.isLoggingToStdout()) {
         		hasStdOutLogger = true;
         	}
-        	if (l.getId() != null && l.getId().equals("screenlog")) {
+        	if (l.getID() != null && l.getID().equals("screenlog")) {
         		hasScreenLog = true;
         	}
         }
@@ -548,7 +548,7 @@ public class MCMC extends beast.core.Runnable {
     protected void reportLogLikelihoods(final Distribution distr, final String tabString) {
         final double full =  distr.logP, last = distr.storedLogP;
         final String changed = full == last ? "" : "  **";
-        Log.info.println(tabString + "P(" + distr.getId() + ") = " + full + " (was " + last + ")" + changed);
+        Log.info.println(tabString + "P(" + distr.getID() + ") = " + full + " (was " + last + ")" + changed);
         if (distr instanceof CompoundDistribution) {
             for (final Distribution distr2 : ((CompoundDistribution) distr).pDistributions.get()) {
                 reportLogLikelihoods(distr2, tabString + "\t");

@@ -87,7 +87,7 @@ public class Node extends BEASTObject {
     }
 
     public Node(final String id) {
-        setId(id);
+        setID(id);
         initAndValidate();
     }
 
@@ -372,7 +372,7 @@ public class Node extends BEASTObject {
             buf.append(")");
         }
 
-        if (isLeaf() || getId() != null || printInternalNodeNumbers) {
+        if (isLeaf() || getID() != null || printInternalNodeNumbers) {
             buf.append(getNr());
         }
 
@@ -418,7 +418,7 @@ public class Node extends BEASTObject {
                     buf.append(child1);
                 }
                 buf.append(")");
-                if (getId() != null) {
+                if (getID() != null) {
                     buf.append(labelNr+1);
                 }
 
@@ -456,7 +456,7 @@ public class Node extends BEASTObject {
 
                 buf.append(")");
 
-                if (getId() != null) {
+                if (getID() != null) {
                     buf.append(labelNr + 1);
                 }
             }
@@ -480,7 +480,7 @@ public class Node extends BEASTObject {
 
     @Deprecated
     public String toNewick(final List<String> labels) {
-        throw new UnsupportedOperationException("Please use toNewick(). Labels will come from node.getId() or node.getNr().");
+        throw new UnsupportedOperationException("Please use toNewick(). Labels will come from node.getID() or node.getNr().");
     }
 
     /**
@@ -502,11 +502,11 @@ public class Node extends BEASTObject {
             }
             buf.append(")");
 
-            if (getId() != null)
-                buf.append(getId());
+            if (getID() != null)
+                buf.append(getID());
         } else {
-            if (getId() != null)
-                buf.append(getId());
+            if (getID() != null)
+                buf.append(getID());
             else
                 buf.append(labelNr);
         }
@@ -653,7 +653,7 @@ public class Node extends BEASTObject {
         node.metaData = new TreeMap<>(metaData);
         node.lengthMetaData = new TreeMap<>(lengthMetaData);
         node.parent = null;
-        node.setId(getId());
+        node.setID(getID());
 
         for (final Node child : getChildren()) {
             node.addChild(child.copy());
@@ -673,7 +673,7 @@ public class Node extends BEASTObject {
         node.metaData = new TreeMap<>(metaData);
         node.lengthMetaData = new TreeMap<>(lengthMetaData);
         node.parent = null;
-        node.setId(getId());
+        node.setID(getID());
         if (getLeft() != null) {
             node.setLeft(nodes[getLeft().getNr()]);
             getLeft().assignTo(nodes);
@@ -697,7 +697,7 @@ public class Node extends BEASTObject {
         metaData = new TreeMap<>(node.metaData);
         lengthMetaData = new TreeMap<>(node.lengthMetaData);
         parent = null;
-        setId(node.getId());
+        setID(node.getID());
         if (node.getLeft() != null) {
             setLeft(nodes[node.getLeft().getNr()]);
             getLeft().assignFrom(nodes, node.getLeft());

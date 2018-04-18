@@ -326,7 +326,7 @@ public class BeagleTreeLikelihood extends TreeLikelihood {
         
         Node [] nodes = treeInput.get().getNodesAsArray();
         for (int i = 0; i < tipCount; i++) {
-        	int taxon = dataInput.get().getTaxonIndex(nodes[i].getId()); 
+        	int taxon = dataInput.get().getTaxonIndex(nodes[i].getID()); 
             if (m_bUseAmbiguities || m_bUseTipLikelihoods) {
                 setPartials(beagle, i, taxon);
             } else {

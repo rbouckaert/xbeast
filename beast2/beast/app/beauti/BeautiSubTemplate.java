@@ -74,7 +74,7 @@ public class BeautiSubTemplate extends BEASTObject {
     @Override
     public void initAndValidate() {
     	try {
-        _class = Class.forName(classInput.get());
+        _class = beast.util.PackageManager.forName(classInput.get());
         shortClassName = classInput.get().substring(classInput.get().lastIndexOf('.') + 1);
         instance = _class.newInstance();
         xml = xMLInput.get();//.m_sValue.get();
@@ -278,7 +278,7 @@ public class BeautiSubTemplate extends BEASTObject {
         }
 
         // find template that created this beastObject
-        String id = beastObject.getId();
+        String id = beastObject.getID();
         //String partition = BeautiDoc.parsePartition(id);
         if (id.indexOf(".") > 0) {
         	id = id.substring(0, id.indexOf("."));
@@ -291,7 +291,7 @@ public class BeautiSubTemplate extends BEASTObject {
             }
         }
         if (template == null) {
-            throw new RuntimeException("Cannot find template for removing " + beastObject.getId());
+            throw new RuntimeException("Cannot find template for removing " + beastObject.getID());
         }
         PartitionContext context = doc.getContextFor(beastObject);
         removeSubNet(template, context);
@@ -332,7 +332,7 @@ public class BeautiSubTemplate extends BEASTObject {
 
 
     BEASTInterface createSubNet(Alignment data, BeautiDoc doc, boolean init) {
-        String partition = data.getId();
+        String partition = data.getID();
         HashMap<String, BEASTInterface> idMap = doc.pluginmap;//new HashMap<>();
         idMap.put(partition, data);
         return createSubNet(new PartitionContext(partition), idMap, init);
@@ -457,7 +457,7 @@ public class BeautiSubTemplate extends BEASTObject {
 	            	while (data instanceof FilteredAlignment) {
 	            		data = ((FilteredAlignment) data).alignmentInput.get();
 	            	}
-	            	fileName = data.getId() + fileName.substring(5);
+	            	fileName = data.getID() + fileName.substring(5);
 	            	try {
 						logger.fileNameInput.setValue(fileName, logger);
 					} catch (Exception e) {
@@ -488,7 +488,7 @@ public class BeautiSubTemplate extends BEASTObject {
 
     @Override
     public String toString() {
-        String id = getId();
+        String id = getID();
         id = id.replaceAll("([a-z])([A-Z])", "$1 $2");
         return id;
     }

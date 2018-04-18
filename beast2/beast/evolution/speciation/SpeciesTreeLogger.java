@@ -132,7 +132,7 @@ public class SpeciesTreeLogger extends BEASTObject implements Loggable {
 	            if (metadataList.indexOf(metadata2) > 0 || buf.length() > 1) {
 	            	buf.append(",");
 	            }
-	            buf.append(((BEASTObject)metadata2).getId());
+	            buf.append(((BEASTObject)metadata2).getID());
 	            buf.append('=');
 	            if (metadata2 instanceof Parameter<?>) {
 	            	Parameter<?> p = (Parameter<?>) metadata2;

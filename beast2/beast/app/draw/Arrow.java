@@ -52,7 +52,7 @@ public class Arrow extends Shape {
 
     /* c'tor for creating arrow when starting to draw new one **/
     public Arrow(BEASTObjectShape tailShape, int x, int y) {
-        m_sTailID = tailShape.getId();
+        m_sTailID = tailShape.getID();
         m_x = x;
         m_y = y;
         m_w = 1;
@@ -63,13 +63,13 @@ public class Arrow extends Shape {
     /* c'tor for creating arrow with all fields set properly
       * Used when arrows are created by Document.recalcArrows */
     public Arrow(BEASTObjectShape tailShape, BEASTObjectShape headShape, String inputName) {
-	        m_sTailID = tailShape.getId();
+	        m_sTailID = tailShape.getID();
 	        m_tailShape = tailShape;
 	        InputShape input = headShape.getInputShape(inputName);
 	        if (input == null) {
-	        	Log.warning.println("Arrow from " + tailShape.m_beastObject.getId() + " to " + headShape.m_beastObject.getId() + "." + inputName + " skipped");	        	
+	        	Log.warning.println("Arrow from " + tailShape.m_beastObject.getID() + " to " + headShape.m_beastObject.getID() + "." + inputName + " skipped");	        	
 	        }
-	        m_sHeadID = input.getId();
+	        m_sHeadID = input.getID();
 	        m_headShape = input;
 	        //m_sHeadID = headShape.m_id;
 	        m_x = 0;
@@ -99,7 +99,7 @@ public class Arrow extends Shape {
 
     /* set all parameters properly at end of dragging when mouse is released */
     public boolean setHead(InputShape shape, List<Shape> objects, Document doc) {
-        m_sHeadID = shape.getId();
+        m_sHeadID = shape.getID();
         m_headShape = shape;
         adjustCoordinates();
         String inputName = m_headShape.getInputName();
@@ -243,11 +243,11 @@ public class Arrow extends Shape {
     String m_sID = null;
 
     @Override
-    public String getId() {
+    public String getID() {
         return m_sID;
     }
 
-    public void setId(String id) {
+    public void setID(String id) {
         m_sID = id;
     }
 

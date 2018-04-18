@@ -32,6 +32,7 @@ import beast.core.Input;
 import beast.core.StateNode;
 import beast.core.parameter.Parameter;
 import beast.core.util.Log;
+import xbeast.Identifiable;
 
 /**
  * @author Tim Vaughan <tgvaughan@gmail.com>
@@ -465,7 +466,7 @@ public abstract class GeneralParameterList<T> extends StateNode {
     
     @Override
     public void init(PrintStream out) {
-        out.print(getId() + ".size\t");
+        out.print(getID() + ".size\t");
     }
 
     @Override
@@ -592,7 +593,7 @@ public abstract class GeneralParameterList<T> extends StateNode {
         }
 
         @Override
-        public String getId() {
+        public String getID() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 

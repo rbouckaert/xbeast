@@ -93,14 +93,14 @@ public class CompoundPopulationFunction extends PopulationFunction.Abstract impl
             if (popSizeParameter.getDimension() != events) {
                 final RealParameter p = new RealParameter();
                 p.initByName("value", popSizeParameter.getValue() + "", "upper", popSizeParameter.getUpper(), "lower", popSizeParameter.getLower(), "dimension", events);
-                p.setId(popSizeParameter.getId());
+                p.setID(popSizeParameter.getID());
                 popSizeParameter.assignFromWithoutID(p);
             }
 
             if (indicatorsParameter.getDimension() != events - 1) {
                 final BooleanParameter p = new BooleanParameter();
                 p.initByName("value", "" + indicatorsParameter.getValue(), "dimension", events - 1);
-                p.setId(indicatorsParameter.getId());
+                p.setID(indicatorsParameter.getID());
                 indicatorsParameter.assignFrom(p);
             }
         } catch (Exception e) {
@@ -121,12 +121,12 @@ public class CompoundPopulationFunction extends PopulationFunction.Abstract impl
     @Override
     public List<String> getParameterIds() {
         List<String> paramIDs = new ArrayList<>();
-        paramIDs.add(popSizeParameter.getId());
-        paramIDs.add(indicatorsParameter.getId());
+        paramIDs.add(popSizeParameter.getID());
+        paramIDs.add(indicatorsParameter.getID());
 
         for (TreeIntervals t : trees) {
             // I think this may be wrong, and we need the trees themselves
-            paramIDs.add(t.getId());
+            paramIDs.add(t.getID());
         }
         return paramIDs;
     }
@@ -585,7 +585,7 @@ public class CompoundPopulationFunction extends PopulationFunction.Abstract impl
         // interval sizes
         out.print("popsSize0\t");
         for (int i = 0; i < alltimes.length; i++) {
-            out.print(getId() + ".times." + i + "\t");
+            out.print(getID() + ".times." + i + "\t");
         }
     }
 

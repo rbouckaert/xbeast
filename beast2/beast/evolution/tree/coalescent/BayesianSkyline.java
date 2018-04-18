@@ -160,8 +160,8 @@ public class BayesianSkyline extends TreeDistribution {
     public List<String> getParameterIds() {
 
         List<String> paramIDs = new ArrayList<>();
-        paramIDs.add(((BEASTObject) popSizes).getId());
-        paramIDs.add(groupSizes.getId());
+        paramIDs.add(((BEASTObject) popSizes).getID());
+        paramIDs.add(groupSizes.getID());
 
         return paramIDs;
     }

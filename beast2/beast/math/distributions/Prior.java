@@ -65,7 +65,7 @@ public class Prior extends Distribution {
      */
     public String getParameterName() {
         if (m_x.get() instanceof BEASTObject) {
-            return ((BEASTObject) m_x.get()).getId();
+            return ((BEASTObject) m_x.get()).getID();
         }
         return m_x.get() + "";
     }
@@ -107,7 +107,7 @@ public class Prior extends Distribution {
     @Override
     public List<String> getConditions() {
         List<String> conditions = new ArrayList<>();
-        conditions.add(dist.getId());
+        conditions.add(dist.getID());
         return conditions;
     }
 
@@ -117,7 +117,7 @@ public class Prior extends Distribution {
 
         String id = null;
         if (m_x.get() != null && m_x.get() instanceof BEASTInterface) {
-            arguments.add(((BEASTInterface)m_x.get()).getId());
+            arguments.add(((BEASTInterface)m_x.get()).getID());
         }
 
         return arguments;

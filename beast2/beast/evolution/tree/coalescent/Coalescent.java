@@ -63,7 +63,7 @@ public class Coalescent extends TreeDistribution {
      */
     @Override
     public List<String> getArguments() {
-        return Collections.singletonList(treeIntervalsInput.get().getId());
+        return Collections.singletonList(treeIntervalsInput.get().getID());
     }
 
     /**

@@ -234,7 +234,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
 	                taxonSets.add(lastMonophyletic, usedTaxa);
 	                distributions.add(lastMonophyletic, distr);
 	                m_bounds.add(lastMonophyletic, bounds);
-	                taxonSetIDs.add(prior.getId());
+	                taxonSetIDs.add(prior.getID());
 	                lastMonophyletic++;
 	            } else {
 	                // only calibrations with finite bounds are added
@@ -242,7 +242,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
 	                    taxonSets.add(usedTaxa);
 	                    distributions.add(distr);
 	                    m_bounds.add(bounds);
-	                    taxonSetIDs.add(prior.getId());
+	                    taxonSetIDs.add(prior.getID());
 	                }
 	            }
             }
@@ -326,7 +326,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
                 // dont ask me how the initial tree is rubbish  (i.e. 0:0.0)
                 taxonToNR = new HashMap<>();
                 for (Node n : m_initial.get().getExternalNodes()) {
-                    taxonToNR.put(n.getId(), n.getNr());
+                    taxonToNR.put(n.getID(), n.getNr());
                 }
             }
         } else {
@@ -349,7 +349,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
             if( p.isMonophyleticInput.get() ) {
                 final TaxonSet taxonSet = p.taxonsetInput.get();
                 if (taxonSet == null) {
-                	throw new IllegalArgumentException("Something is wrong with constraint " + p.getId() + " -- a taxonset must be specified if a monophyletic constraint is enforced.");
+                	throw new IllegalArgumentException("Something is wrong with constraint " + p.getID() + " -- a taxonset must be specified if a monophyletic constraint is enforced.");
                 }
                 final Set<String> usedTaxa = new LinkedHashSet<>();
                 if (taxonSet.asStringList()  == null) {
@@ -365,7 +365,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
     private int setNodesNrs(final Node node, int internalNodeCount, int[] n, Map<String,Integer> initial) {
         if( node.isLeaf() )  {
             if( initial != null ) {
-                node.setNr(initial.get(node.getId()));
+                node.setNr(initial.get(node.getID()));
             } else {
                 node.setNr(n[0]);
                 n[0] += 1;
@@ -426,7 +426,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
                 for (String taxon : taxa) {
                     final Node node = newNode();
                     node.setNr(i);
-                    node.setId(taxon);
+                    node.setID(taxon);
                     node.setHeight(0.0);
                     candidates.add(node);
                     i += 1;
@@ -440,7 +440,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
 
                 final Map<String,Node> allCandidates = new TreeMap<>();
                 for (Node node: candidates) {
-                    allCandidates.put(node.getId(),node);
+                    allCandidates.put(node.getID(),node);
                 }
                 root = simulateCoalescent(lastMonophyletic, allCandidates, candidates, demoFunction);
                 return;
@@ -469,7 +469,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
     private void processCandidateTraits(Set<Node> candidates, List<TraitSet> traitSets) {
         for (TraitSet traitSet : traitSets) {
             for (Node node : candidates) {
-                node.setMetaData(traitSet.getTraitName(), traitSet.getValue(node.getId()));
+                node.setMetaData(traitSet.getTraitName(), traitSet.getValue(node.getID()));
             }
         }
     }
@@ -494,7 +494,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
         }
 
         for (final Node node : candidates) {
-            if (!taxaDone.contains(node.getId())) {
+            if (!taxaDone.contains(node.getID())) {
                 remainingCandidates.add(node);
             }
         }
@@ -511,7 +511,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
 //     */
 //    private Node getNodeById(String id, List<Node> nodes) {
 //        for (Node node : nodes) {
-//            if (node.getId().equals(id)) return node;
+//            if (node.getID().equals(id)) return node;
 //        }
 //        return null;
 //    }
@@ -768,7 +768,7 @@ public class RandomTree extends Tree implements StateNodeInitialiser {
     int traverse(final Node node, final Set<String> MRCATaxonSet, final int nrOfMRCATaxa, final int[] taxonCount) {
         if (node.isLeaf()) {
             taxonCount[0]++;
-            if (MRCATaxonSet.contains(node.getId())) {
+            if (MRCATaxonSet.contains(node.getID())) {
                 return 1;
             } else {
                 return 0;

@@ -40,7 +40,7 @@ public class NodeReheight extends TreeOperator {
         final List<Taxon> list = taxonSetInput.get().taxonsetInput.get();
         
         if (list.size() <= 1) {
-        	Log.err.println("NodeReheight operator requires at least 2 taxa while the taxon set (id=" + taxonSetInput.get().getId() +") has only " + list.size() + " taxa. "
+        	Log.err.println("NodeReheight operator requires at least 2 taxa while the taxon set (id=" + taxonSetInput.get().getID() +") has only " + list.size() + " taxa. "
         			+ "If the XML file was set up in BEAUti, this probably means a taxon assignment needs to be set up in the taxonset panel.");
         	// assume we are in BEAUti, back off for now
         	return;
@@ -51,7 +51,7 @@ public class NodeReheight extends TreeOperator {
             // cast should be ok if taxon-set is the set for the species tree
             final TaxonSet set = (TaxonSet) taxa;
             for (final Taxon taxon : set.taxonsetInput.get()) {
-                taxonMap.put(taxon.getId(), i);
+                taxonMap.put(taxon.getID(), i);
             }
         }
 
@@ -70,7 +70,7 @@ public class NodeReheight extends TreeOperator {
     // initialisation code: create node number in gene tree to node number in species tree map
     private void setupTaxaMap(final Node node, final Map<Integer, Integer> map, final Map<String, Integer> taxonMap) {
         if (node.isLeaf()) {
-            map.put(node.getNr(), taxonMap.get(node.getId()));
+            map.put(node.getNr(), taxonMap.get(node.getID()));
         } else {
             setupTaxaMap(node.getLeft(), map, taxonMap);
             setupTaxaMap(node.getRight(), map, taxonMap);

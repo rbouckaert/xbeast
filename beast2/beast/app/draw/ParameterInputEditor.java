@@ -180,7 +180,7 @@ public class ParameterInputEditor extends BEASTObjectInputEditor {
                         Parameter.Base<?> parameter2 = (Parameter.Base<?>) m_input.get();
                         parameter2.isEstimatedInput.setValue(m_isEstimatedBox.isSelected(), parameter2);
                         if (isParametricDistributionParameter) {
-                        	String id = parameter2.getId();
+                        	String id = parameter2.getID();
                         	
 
                         	if (id.startsWith("RealParameter")) {
@@ -199,9 +199,9 @@ public class ParameterInputEditor extends BEASTObjectInputEditor {
                 	                }
                 	            }
                         		id = "parameter.hyper" + parent.getClass().getSimpleName() + "-" + 
-                        				m_input.getName() + "-" + grandparent.getId();
-                        		doc.pluginmap.remove(parameter2.getId());
-                        		parameter2.setId(id);
+                        				m_input.getName() + "-" + grandparent.getID();
+                        		doc.pluginmap.remove(parameter2.getID());
+                        		parameter2.setID(id);
                         		doc.addPlugin(parameter2);
                         	}
                         	

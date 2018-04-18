@@ -31,7 +31,7 @@ public class ScaledPopulationFunction extends PopulationFunction.Abstract {
     @Override
 	public List<String> getParameterIds() {
         List<String> ids = popParameterInput.get().getParameterIds();
-        ids.add(scaleFactorInput.get().getId());
+        ids.add(scaleFactorInput.get().getID());
         return ids;
     }
 

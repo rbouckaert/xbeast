@@ -210,7 +210,7 @@ public class BeautiPanelConfig extends BEASTObject {
                             parentInputs.add(namedInput);
                         } else {
                             if (matches(beastObject, conditionalAttribute[i], conditionalValue[i])) {
-//							if ((m_sConditionalAttribute[i].equals("id") && beastObject.getId().equals(m_sConditionalValue[i])) ||
+//							if ((m_sConditionalAttribute[i].equals("id") && beastObject.getID().equals(m_sConditionalValue[i])) ||
 //							    (m_sConditionalAttribute[i].equals("type") && beastObject.getClass().getName().equals(m_sConditionalValue[i]))) {
                                 beastObjects.add(beastObject);
                                 parentBEASTObjects.add(beastObject);
@@ -274,7 +274,7 @@ public class BeautiPanelConfig extends BEASTObject {
     }
 
     private boolean matches(BEASTInterface beastObject2, String conditionalAttribute, String conditionalValue) {
-        if (conditionalAttribute.equals("id") && beastObject2.getId().equals(conditionalValue)) return true;
+        if (conditionalAttribute.equals("id") && beastObject2.getID().equals(conditionalValue)) return true;
         if (conditionalAttribute.equals("type") && beastObject2.getClass().getName().equals(conditionalValue)) return true;
         if (conditionalAttribute.equals("type!") && !beastObject2.getClass().getName().equals(conditionalValue))
             return true;

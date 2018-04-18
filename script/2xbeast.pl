@@ -2,7 +2,7 @@
 use File::Find;
 use File::Path qw(make_path);
 
-$base = '/Users/remco/workspace/xbeast/apputils';
+$base = '/Users/remco/workspace/xbeast/beast2';
 
 sub process_file {
 	$name = $File::Find::name;
@@ -65,8 +65,8 @@ sub process_file {
 
 		$s =~ s/AddOnManager/PackageManager/;
 		$s =~ s/getCitations\(\)/getCitationString()/;
-		$s =~ s/\bgetID\(\)/getId()/g;
-		$s =~ s/\bsetID\(/setId(/;
+		$s =~ s/\bgetId\(\)/getID()/g;
+		$s =~ s/\bsetId\(/setID(/;
 		$s =~ s/Class.forName\(/xbeast.util.PackageManager.forName(/;
 
 		$text .= $s;

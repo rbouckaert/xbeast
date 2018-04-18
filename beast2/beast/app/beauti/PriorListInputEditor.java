@@ -66,8 +66,8 @@ public class PriorListInputEditor extends ListInputEditor {
     	List<?> list = (List<?>) input.get();
     	Collections.sort(list, (Object o1, Object o2) -> {
 				if (o1 instanceof BEASTInterface && o2 instanceof BEASTInterface) {
-					String d1 = ((BEASTInterface)o1).getId();
-					String id2 = ((BEASTInterface)o2).getId();
+					String d1 = ((BEASTInterface)o1).getID();
+					String id2 = ((BEASTInterface)o2).getID();
 					// first the tree priors
 					if (o1 instanceof TreeDistribution) {
 						if (o2 instanceof TreeDistribution) {
@@ -120,7 +120,7 @@ public class PriorListInputEditor extends ListInputEditor {
         
         if (beastObject instanceof BeautiPanelConfig) {
         	BeautiPanelConfig config = (BeautiPanelConfig) beastObject;
-        	if (config.parentBEASTObjects != null && config.parentBEASTObjects.size() > 0 && config.parentBEASTObjects.get(0).getId().equals("speciescoalescent")) {
+        	if (config.parentBEASTObjects != null && config.parentBEASTObjects.size() > 0 && config.parentBEASTObjects.get(0).getID().equals("speciescoalescent")) {
         		m_buttonStatus = ButtonStatus.NONE;
         	}
         }
@@ -295,7 +295,7 @@ public class PriorListInputEditor extends ListInputEditor {
 	            if (trees.size() > 1) {
 	                String[] treeIDs = new String[trees.size()];
 	                for (int j = 0; j < treeIDs.length; j++) {
-	                    treeIDs[j] = trees.get(j).getId();
+	                    treeIDs[j] = trees.get(j).getID();
 	                }
 	                treeIndex = JOptionPane.showOptionDialog(null, "Select a tree", "MRCA selector",
 	                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
@@ -308,7 +308,7 @@ public class PriorListInputEditor extends ListInputEditor {
 	            TaxonSet taxonSet = new TaxonSet();
 	
 	            TaxonSetDialog dlg = new TaxonSetDialog(taxonSet, getTaxonCandidates(prior), doc);
-	            if (!dlg.showDialog() || dlg.taxonSet.getId() == null || dlg.taxonSet.getId().trim().equals("")) {
+	            if (!dlg.showDialog() || dlg.taxonSet.getID() == null || dlg.taxonSet.getID().trim().equals("")) {
 	                return null;
 	            }
 	            taxonSet = dlg.taxonSet;
@@ -318,14 +318,14 @@ public class PriorListInputEditor extends ListInputEditor {
 	            	return null;
 	            }
 	            int i = 1;
-	            String id = taxonSet.getId();
-	            while (doc.pluginmap.containsKey(taxonSet.getId()) && doc.pluginmap.get(taxonSet.getId()) != taxonSet) {
-	            	taxonSet.setId(id + i);
+	            String id = taxonSet.getID();
+	            while (doc.pluginmap.containsKey(taxonSet.getID()) && doc.pluginmap.get(taxonSet.getID()) != taxonSet) {
+	            	taxonSet.setID(id + i);
 	            	i++;
 	            }
 	            BEASTObjectPanel.addPluginToMap(taxonSet, doc);
 	            prior.taxonsetInput.setValue(taxonSet, prior);
-	            prior.setId(taxonSet.getId() + ".prior");
+	            prior.setID(taxonSet.getID() + ".prior");
 	            // this sets up the type
 	            prior.distInput.setValue(new OneOnX(), prior);
 	            // this removes the parametric distribution
@@ -338,7 +338,7 @@ public class PriorListInputEditor extends ListInputEditor {
 	        }
 	        List<Distribution> selectedPlugins = new ArrayList<>();
 	        selectedPlugins.add(prior);
-	        g_collapsedIDs.add(prior.getId());
+	        g_collapsedIDs.add(prior.getID());
 	        return selectedPlugins;
 	    }
 

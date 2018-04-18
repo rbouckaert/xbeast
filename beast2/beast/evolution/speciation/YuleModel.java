@@ -15,6 +15,7 @@ import beast.evolution.tree.Tree;
 import beast.evolution.tree.TreeInterface;
 import beast.evolution.tree.TreeUtils;
 import beast.math.distributions.MRCAPrior;
+import xbeast.Identifiable;
 
 
 // From Gernhard 2008, Yule density (p; conditioned on n nodes) should be:
@@ -219,7 +220,7 @@ public class YuleModel extends SpeciesTreeDistribution {
 
         List<Node> activeLineages = new ArrayList<>();
         for (Node oldLeaf : tree.getExternalNodes()) {
-            Node newLeaf = new Node(oldLeaf.getId());
+            Node newLeaf = new Node(oldLeaf.getID());
             newLeaf.setNr(oldLeaf.getNr());
             newLeaf.setHeight(0.0);
             activeLineages.add(newLeaf);
@@ -257,7 +258,7 @@ public class YuleModel extends SpeciesTreeDistribution {
     @Override
     public List<String> getConditions() {
         List<String> conditions = new ArrayList<>();
-        conditions.add(birthDiffRateParameterInput.get().getId());
+        conditions.add(birthDiffRateParameterInput.get().getID());
 
         return conditions;
     }
@@ -265,7 +266,7 @@ public class YuleModel extends SpeciesTreeDistribution {
     @Override
     public List<String> getArguments() {
         List<String> arguments = new ArrayList<>();
-        arguments.add(treeInput.get().getId());
+        arguments.add(((Identifiable)treeInput.get()).getID());
 
         return arguments;
     }

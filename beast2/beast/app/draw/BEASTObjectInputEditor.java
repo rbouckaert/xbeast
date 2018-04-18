@@ -100,7 +100,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
     void refresh() {
     	if (m_selectBEASTObjectBox != null) {
 	        String oldID = (String) m_selectBEASTObjectBox.getSelectedItem();
-	        String id = ((BEASTInterface) m_input.get()).getId();
+	        String id = ((BEASTInterface) m_input.get()).getID();
 	        if (!id.equals(oldID)) {
 	            m_selectBEASTObjectBox.addItem(id);
 	            m_selectBEASTObjectBox.setSelectedItem(id);
@@ -133,7 +133,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
             for (String str : availableBEASTObjects.toArray(new String[0])) {
                 m_selectBEASTObjectBox.addItem(str);
             }
-            m_selectBEASTObjectBox.setSelectedItem(m_beastObject.getId());
+            m_selectBEASTObjectBox.setSelectedItem(m_beastObject.getID());
         }
     }
 
@@ -164,7 +164,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
      */
     protected void addComboBox(JComponent box, Input<?> input, BEASTInterface beastObject0) {
     	if (itemNr >= 0) {
-    		box.add(new JLabel(beastObject0.getId()));
+    		box.add(new JLabel(beastObject0.getID()));
     		box.add(Box.createGlue());
     		return;
     	}
@@ -191,9 +191,9 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
             }
             String id2;
             if (o == null) {
-                id2 = beastObject0.getId();
+                id2 = beastObject0.getID();
             } else {
-                id2 = ((BEASTInterface) o).getId();
+                id2 = ((BEASTInterface) o).getID();
             }
             if (id2.indexOf('.')>=0) {
             	id2 = id2.substring(0, id2.indexOf('.'));
@@ -214,7 +214,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
                 // get a handle of the selected beastObject
                 BeautiSubTemplate selected = (BeautiSubTemplate) m_selectBEASTObjectBox.getSelectedItem();
                 BEASTInterface beastObject = (BEASTInterface) m_input.get();
-                String id = beastObject.getId();
+                String id = beastObject.getID();
                 String partition = id.indexOf('.') >= 0 ? 
                 		id.substring(id.indexOf('.') + 1) : "";
                 if (partition.indexOf(':') >= 0) {
@@ -283,7 +283,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                        m_selectPluginBox.removeItem(id);
 //                        m_selectPluginBox.addItem(id);
 //                        m_selectPluginBox.setSelectedItem(id);
-                        id = beastObject.getId();
+                        id = beastObject.getID();
                         if (id.indexOf('.') != -1) {
                         	id = id.substring(0,  id.indexOf('.'));
                         }
@@ -320,7 +320,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
                     sync();
                     refreshPanel();
                 } catch (Exception ex) {
-                    id = ((BEASTInterface) m_input.get()).getId();
+                    id = ((BEASTInterface) m_input.get()).getID();
                     m_selectBEASTObjectBox.setSelectedItem(id);
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Could not change beastObject: " +
@@ -378,7 +378,7 @@ public class BEASTObjectInputEditor extends InputEditor.Base {
 //                    	selected = availableBEASTObjects.get(i);                       
 //                        /* create new beastObject */
 //                        try {
-//                            beastObject = (BEASTObject) Class.forName(selected.substring(4)).newInstance();
+//                            beastObject = (BEASTObject) xbeast.util.PackageManager.forName(selected.substring(4)).newInstance();
 //                            PluginPanel.addPluginToMap(beastObject);
 //                            // tricky: try to connect up new inputs with old inputs of existing name
 //                            BEASTObject oldPlugin = (BEASTObject) m_input.get();

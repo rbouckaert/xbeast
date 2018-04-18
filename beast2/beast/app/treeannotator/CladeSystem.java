@@ -90,7 +90,7 @@ public class CladeSystem {
 
             int index = getTaxonIndex(node);
             if (index < 0) {
-                throw new IllegalArgumentException("Taxon, " + node.getId() + ", not found in target tree");
+                throw new IllegalArgumentException("Taxon, " + node.getID() + ", not found in target tree");
             }
             bits.set(2*index);
 

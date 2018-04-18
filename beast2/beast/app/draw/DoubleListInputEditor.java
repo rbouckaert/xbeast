@@ -348,7 +348,7 @@ public class DoubleListInputEditor extends ListInputEditor {
                         try {
                             input2.validate();
                         } catch (Exception e) {
-                            throw new IllegalArgumentException(((BEASTInterface) input.get()).getId() + "</p><p> " + e.getMessage());
+                            throw new IllegalArgumentException(((BEASTInterface) input.get()).getID() + "</p><p> " + e.getMessage());
                         }
                         validateRecursively(input2, done);
                     }
@@ -361,7 +361,7 @@ public class DoubleListInputEditor extends ListInputEditor {
                                 try {
                                     input2.validate();
                                 } catch (Exception e) {
-                                    throw new IllegalArgumentException(((BEASTInterface) o).getId() + " " + e.getMessage());
+                                    throw new IllegalArgumentException(((BEASTInterface) o).getID() + " " + e.getMessage());
                                 }
                                 validateRecursively(input2, done);
                             }

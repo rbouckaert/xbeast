@@ -126,7 +126,7 @@ public class CladeSet extends FrequencySet<BitSet> {
 
         if (node.isLeaf()) {
             if (taxonSet != null) {
-                int index = taxonSet.getTaxonIndex(node.getId());
+                int index = taxonSet.getTaxonIndex(node.getID());
                 bits.set(index);
             } else {
                 bits.set(node.getNr());
@@ -178,7 +178,7 @@ public class CladeSet extends FrequencySet<BitSet> {
         if (node.isLeaf()) {
             int index;
             if (taxonSet != null) {
-                index = taxonSet.getTaxonIndex(node.getId());
+                index = taxonSet.getTaxonIndex(node.getID());
             } else {
                 index = node.getNr();
             }
@@ -234,7 +234,7 @@ public class CladeSet extends FrequencySet<BitSet> {
         if (node.isLeaf()) {
 
             if (taxonSet != null) {
-                int index = taxonSet.getTaxonIndex(node.getId());
+                int index = taxonSet.getTaxonIndex(node.getID());
                 if (bitSet.get(index)) return 1;
             } else {
                 if (bitSet.get(node.getNr())) return 1;

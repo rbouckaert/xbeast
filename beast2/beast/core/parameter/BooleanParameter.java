@@ -106,7 +106,7 @@ public class BooleanParameter extends Parameter.Base<java.lang.Boolean> {
     @Override
     public int scale(double scale) {
         // nothing to do
-        Log.warning.println("Attempt to scale Boolean parameter " + getId() + "  has no effect");
+        Log.warning.println("Attempt to scale Boolean parameter " + getID() + "  has no effect");
         return 0;
     }
 

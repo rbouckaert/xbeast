@@ -141,7 +141,7 @@ public class FilteredAlignmentTest extends TestCase {
 
         // reorder taxa
         Alignment data = getAlignmentNoTInHuman();
-        data.setId("data");
+        data.setID("data");
 
         List<Taxon> taxa = new ArrayList<>();
         taxa.add(new Taxon("1chimp"));
@@ -297,7 +297,7 @@ public class FilteredAlignmentTest extends TestCase {
     public void testReordered() throws Exception {
     	// make sure the order of sites is not affected by filtering
         Alignment data = getAlignmentNoTInHuman();
-        data.setId("data");
+        data.setID("data");
 
         // second sequence not in alphabetical order
         FilteredAlignment data2 = new FilteredAlignment();

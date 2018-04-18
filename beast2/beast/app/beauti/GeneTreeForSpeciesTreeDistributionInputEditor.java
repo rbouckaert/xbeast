@@ -29,7 +29,7 @@ public class GeneTreeForSpeciesTreeDistributionInputEditor extends InputEditor.B
         m_input = input;
         m_beastObject = beastObject;
         this.itemNr= itemNr;
-        String id = beastObject.getId();
+        String id = beastObject.getID();
         if (id.contains(".t:")) {
         	id = id.substring(id.indexOf(".t:") + 3);
         }

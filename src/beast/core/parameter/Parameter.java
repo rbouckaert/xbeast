@@ -16,8 +16,9 @@ import beast.core.Description;
 import beast.core.Function;
 import beast.core.Input;
 import beast.core.StateNode;
+import xbeast.Identifiable;
 
-public interface Parameter<T> extends Function {
+public interface Parameter<T> extends Function, xbeast.Identifiable {
 
     public T getValue(int i);
 
@@ -37,7 +38,7 @@ public interface Parameter<T> extends Function {
 
     public T[] getValues();
 
-    public String getId();
+    // public String getId();
 
     public int getMinorDimension1();
 

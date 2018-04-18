@@ -117,7 +117,7 @@ public class OperatorSchedule extends BEASTObject {
     	for (OperatorSchedule os : subschedulesInput.get()) {
     		for (Operator o : os.operators) {
     			if (allOperators.contains(o)) {
-    				Log.warning("WARNING: Operator " + o.getId() + " is contained in multiple operator schedules.\n"
+    				Log.warning("WARNING: Operator " + o.getID() + " is contained in multiple operator schedules.\n"
     						+ "Operator weighting may not work as expected.");
     			}
     			allOperators.add(o);
@@ -156,7 +156,7 @@ public class OperatorSchedule extends BEASTObject {
     	String operatorPattern = operatorPatternInput.get();
     	boolean noMatch = true;
 		for (Operator o : ops) {
-			if (o.getId() != null && o.getId().matches(operatorPattern)) {
+			if (o.getID() != null && o.getID().matches(operatorPattern)) {
 		    	for (Operator o2 : operators) {
 		    		if (o2 == o) {
 		    			// operator was already added earlier
@@ -334,7 +334,7 @@ public class OperatorSchedule extends BEASTObject {
 	    		boolean found = false;
 	            if (!id.equals("null")) {
 	            	for (Operator operator: operators) {
-	            		if (id.equals(operator.getId())) {
+	            		if (id.equals(operator.getID())) {
 	                    	operator.restoreFromFile(item);
 	                        autoOptimizeDelayCount += operator.m_nNrAccepted + operator.m_nNrRejected;
 	                        found = true;
@@ -347,7 +347,7 @@ public class OperatorSchedule extends BEASTObject {
 	        	}
 	        }
 	    	for (Operator operator: operators) {
-	    		if (operator.getId() == null) {
+	    		if (operator.getID() == null) {
 	        		Log.warning.println("Operator (" + operator.getClass() + ") found in BEAST file that could not be restored because it has not ID");
 	    		}
 	    	}    
@@ -358,7 +358,7 @@ public class OperatorSchedule extends BEASTObject {
 	        for (int i = 0; i < operators.size() && i + 2 < strs.length; i++) {
 	            String[] strs2 = strs[i + 1].split(" ");
 	            Operator operator = operators.get(i);
-	            if ((operator.getId() == null && strs2[0].equals("null")) || operator.getId().equals(strs2[0])) {
+	            if ((operator.getID() == null && strs2[0].equals("null")) || operator.getID().equals(strs2[0])) {
 	                cumulativeProbs[i] = Double.parseDouble(strs2[1]);
 	                if (!strs2[2].equals("NaN")) {
 	                    operator.setCoercableParameterValue(Double.parseDouble(strs2[2]));
@@ -513,7 +513,7 @@ public class OperatorSchedule extends BEASTObject {
         // log results
     	//Log.debug("operator weight cumulativeProbs");
         //for (i = 0; i < operatorCount; i++) {
-        //	Log.debug(operators.get(i).getId() + " " + weights[i] + " " + cumulativeProbs[i]);
+        //	Log.debug(operators.get(i).getID() + " " + weights[i] + " " + cumulativeProbs[i]);
         //}
     }
 

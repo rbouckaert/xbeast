@@ -77,7 +77,7 @@ public class TipDatesInputEditor extends BEASTObjectInputEditor {
                                 traitSet.initByName("traitname", "date",
                                         "taxa", tree.getTaxonset(),
                                         "value", "");
-                                traitSet.setId("dateTrait.t:" + BeautiDoc.parsePartition(tree.getId()));
+                                traitSet.setID("dateTrait.t:" + BeautiDoc.parsePartition(tree.getID()));
                             }
                             tree.setDateTrait(traitSet);
                         } else {

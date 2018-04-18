@@ -140,7 +140,7 @@ public class CompoundDistribution extends Distribution {
                     logP += distr.getCurrentLogP();
                 }
             } catch (Exception e) {
-                Log.err.println("Something went wrong in a calculation of " + distr.getId());
+                Log.err.println("Something went wrong in a calculation of " + distr.getID());
                 e.printStackTrace();
                 System.exit(1);
             }

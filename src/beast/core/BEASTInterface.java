@@ -24,6 +24,7 @@
 package beast.core;
 
 
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -33,12 +34,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface BEASTInterface {
+public interface BEASTInterface extends xbeast.Identifiable {
 	final static String DEFEAULT_DESCRIPTION = "Not documented!!!";
 	/**
 	 * initAndValidate is supposed to check validity of values of inputs, and initialise. 
@@ -49,8 +49,8 @@ public interface BEASTInterface {
     public void initAndValidate();
 
 	/** identifiable **/
-	public String getId();
-	public void setId(String ID);
+	//public String getId();
+	//public void setId(String ID);
 	
 	/** return set of Outputs, that is Objects for which this object is an Input **/
 	public Set<BEASTInterface> getOutputs();

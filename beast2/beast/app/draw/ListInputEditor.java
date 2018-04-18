@@ -186,7 +186,7 @@ public class ListInputEditor extends InputEditor.Base {
         InputEditor editor = addPluginItem(itemBox, beastObject);
         
         SmallButton editButton = new SmallButton("e", true, SmallButton.ButtonType.square);
-        editButton.setName(beastObject.getId() + ".editButton");
+        editButton.setName(beastObject.getID() + ".editButton");
         if (m_bExpandOption == ExpandOption.FALSE || m_bExpandOption == ExpandOption.IF_ONE_ITEM && ((List<?>) m_input.get()).size() > 1) {
             editButton.setToolTipText("Edit item in the list");
             editButton.addActionListener(new ActionListenerObject(beastObject) {
@@ -245,18 +245,18 @@ public class ListInputEditor extends InputEditor.Base {
                         }catch (Exception e2) {
 							// TODO: handle exception
 						}
-                        g_collapsedIDs.remove(m_beastObject.getId());
+                        g_collapsedIDs.remove(m_beastObject.getID());
                     } else {
                     	try {
                         editButton.setImg(RIGHT_ICON);
 	                    }catch (Exception e2) {
 							// TODO: handle exception
 						}
-                        g_collapsedIDs.add(m_beastObject.getId());
+                        g_collapsedIDs.add(m_beastObject.getID());
                     }
                 }
             });
-            String id = beastObject.getId();
+            String id = beastObject.getID();
             expandBox.setVisible(!g_collapsedIDs.contains(id));
             try {
             if (expandBox.isVisible()) {
@@ -293,7 +293,7 @@ public class ListInputEditor extends InputEditor.Base {
      * @param beastObject  beastObject to add
      */
     protected InputEditor addPluginItem(Box itemBox, BEASTInterface beastObject) {
-        String name = beastObject.getId();
+        String name = beastObject.getID();
         if (name == null || name.length() == 0) {
             name = beastObject.getClass().getName();
             name = name.substring(name.lastIndexOf('.') + 1);
@@ -331,9 +331,9 @@ public class ListInputEditor extends InputEditor.Base {
         }
 
         void processEntry() {
-            String oldID = m_beastObject.getId();
-            m_beastObject.setId(m_entry.getText());
-            BEASTObjectPanel.renamePluginID(m_beastObject, oldID, m_beastObject.getId(), doc);
+            String oldID = m_beastObject.getID();
+            m_beastObject.setID(m_entry.getText());
+            BEASTObjectPanel.renamePluginID(m_beastObject, oldID, m_beastObject.getID(), doc);
             validateAllEditors();
             m_entry.requestFocusInWindow();
         }
@@ -367,9 +367,9 @@ public class ListInputEditor extends InputEditor.Base {
         BEASTInterface beastObject = (BEASTInterface) ((List<?>) m_input.get()).get(i);
         BEASTObjectDialog dlg = new BEASTObjectDialog(beastObject, m_input.getType(), doc);
         if (dlg.showDialog()) {
-            //m_labels.get(i).setText(dlg.m_panel.m_beastObject.getId());
+            //m_labels.get(i).setText(dlg.m_panel.m_beastObject.getID());
         	if (m_entries.size() > i) {
-        		m_entries.get(i).setText(dlg.m_panel.m_beastObject.getId());
+        		m_entries.get(i).setText(dlg.m_panel.m_beastObject.getID());
         	}
             //o = dlg.m_panel.m_beastObject;
             dlg.accept((BEASTInterface) o, doc);

@@ -67,7 +67,7 @@ public class Alignment extends Map<String> {
         List<String> m_sDataTypes = PackageManager.find(beast.evolution.datatype.DataType.class, IMPLEMENTATION_DIR);
         for (String dataTypeName : m_sDataTypes) {
             try {
-                DataType dataType = (DataType) Class.forName(dataTypeName).newInstance();
+                DataType dataType = (DataType) beast.util.PackageManager.forName(dataTypeName).newInstance();
                 if (dataType.isStandard()) {
                     String description = dataType.getTypeDescription();
                     if (!types.contains(description)) {
@@ -265,7 +265,7 @@ public class Alignment extends Map<String> {
         for (String dataTypeName : dataTypes) {
             DataType dataType;
             try {
-                dataType = (DataType) Class.forName(dataTypeName).newInstance();
+                dataType = (DataType) beast.util.PackageManager.forName(dataTypeName).newInstance();
                 if (dataTypeInput.get().equals(dataType.getTypeDescription())) {
                     m_dataType = dataType;
                     break;
@@ -391,7 +391,7 @@ public class Alignment extends Map<String> {
             if (from != excludefromInput.defaultValue || to != excludetoInput.defaultValue) {
             	Log.warning.println("WARNING: excludefrom or excludeto is specified, but 'ascertained' flag is not set to true");
             	Log.warning.println("WARNING: to suppress this warning, remove the excludefrom or excludeto attributes (if no astertainment correction is required)");
-            	Log.warning.println("WARNING: or set the 'ascertained' flag to true on element with id=" + getId());
+            	Log.warning.println("WARNING: or set the 'ascertained' flag to true on element with id=" + getID());
             }
         }
 
@@ -676,7 +676,7 @@ public class Alignment extends Map<String> {
     public String toString(boolean singleLine) {
         long totalWeight = getTotalWeight();
         StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getSimpleName() + "(" + getId() + ")");
+        builder.append(getClass().getSimpleName() + "(" + getID() + ")");
 
         if (singleLine) {
             builder.append(": [taxa, patterns, sites] = [" + getTaxonCount() + ", " + getPatternCount());

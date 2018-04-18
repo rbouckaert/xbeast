@@ -174,7 +174,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
     public BeautiDoc() {
         // g_doc = this;
-        setId("BeautiDoc");
+        setID("BeautiDoc");
         clear();
         inputEditorFactory = new InputEditorFactory(this);
     }
@@ -327,16 +327,16 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         // first make sure to remove plug-ins when the id of a beastObject changed
         unregisterPlugin(beastObject);
 
-        pluginmap.put(beastObject.getId(), beastObject);
-        reversePluginmap.put(beastObject, beastObject.getId());
+        pluginmap.put(beastObject.getID(), beastObject);
+        reversePluginmap.put(beastObject, beastObject.getID());
         if (beastObject instanceof Taxon) {
             Taxon taxon = (Taxon) beastObject;
-            taxaset.put(taxon.getId(), taxon);
+            taxaset.put(taxon.getID(), taxon);
         }
     }
 
     public void unregisterPlugin(BEASTInterface beastObject) {
-        taxaset.remove(beastObject.getId());
+        taxaset.remove(beastObject.getID());
         // directly remove beast object from HashMap
         // relies on hashes of String being unique (which they should be).
         // is much more efficient (O(1)) than lookup in keySet (O(n)),
@@ -484,7 +484,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     public String processTemplate(String fileName) throws IOException {
         final String MERGE_ELEMENT = "mergepoint";
         // first gather the set of potential directories with templates
-        Set<String> dirs = new HashSet<>();// AddOnManager.getBeastDirectories();
+        Set<String> dirs = new HashSet<>();// PackageManager.getBeastDirectories();
         String pathSep = System.getProperty("path.separator");
         String classpath = System.getProperty("java.class.path");
         String fileSep = System.getProperty("file.separator");
@@ -675,10 +675,10 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     }
 
     Alignment getPartition(BEASTInterface beastObject) {
-        String partition = beastObject.getId();
+        String partition = beastObject.getID();
         partition = parsePartition(partition);
         for (Alignment data : alignments) {
-            if (data.getId().equals(partition)) {
+            if (data.getID().equals(partition)) {
                 return data;
             }
         }
@@ -822,7 +822,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         try {
             CompoundDistribution posterior = (CompoundDistribution) ((beast.core.MCMC) mcmc.get()).posteriorInput.get();
             for (Distribution distr : posterior.pDistributions.get()) {
-                if (distr.getId().equals("likelihood")) {
+                if (distr.getID().equals("likelihood")) {
                     for (Distribution likelihood : ((CompoundDistribution) distr).pDistributions.get()) {
                         if (likelihood instanceof GenericTreeLikelihood) {
                             GenericTreeLikelihood treeLikelihood = (GenericTreeLikelihood) likelihood;
@@ -935,7 +935,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 beautiConfig = (BeautiConfig) beastObject;
                 beautiConfig.setDoc(this);
             } else {
-                Log.warning.println("template item " + beastObject.getId() + " is ignored");
+                Log.warning.println("template item " + beastObject.getID() + " is ignored");
             }
             BEASTObjectPanel.addPluginToMap(beastObject, this);
         }
@@ -1002,7 +1002,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 }
                 if (tree != null && tree != ((GenericTreeLikelihood) d).treeInput.get()) {
                     clockModel = clockModels.get(k);
-                    Log.warning.println("WARNING: unlinking clock model for " + d.getId());
+                    Log.warning.println("WARNING: unlinking clock model for " + d.getID());
                     // TODO #557: this should move to the event of clock model drop box
 //                    JOptionPane.showMessageDialog(beauti.getSelectedComponent(),
 //                            "Cannot link all clock model(s) except strict clock with different trees !");
@@ -1013,9 +1013,9 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             }
 
             if (clockModel != null) {
-                String id = ((BEASTInterface) clockModel).getId();
+                String id = ((BEASTInterface) clockModel).getID();
                 id = parsePartition(id);
-                String partition = alignments.get(k).getId();
+                String partition = alignments.get(k).getID();
                 if (id.equals(partition)) {
                     clockModels.set(k, clockModel);
                 }
@@ -1078,7 +1078,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     BranchRateModel getClockModel(String partition) {
         int k = 0;
         for (Alignment data : alignments) {
-            if (data.getId().equals(partition)) {
+            if (data.getID().equals(partition)) {
                 return clockModels.get(k);
             }
             k++;
@@ -1089,7 +1089,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     // TreeDistribution getTreePrior(String partition) {
     // int k = 0;
     // for (Alignment data : alignments) {
-    // if (data.getId().equals(partition)) {
+    // if (data.getID().equals(partition)) {
     // return treePriors.get(k);
     // }
     // k++;
@@ -1179,8 +1179,8 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             templates.add(beautiConfig.hyperPriorTemplate);
             for (BEASTInterface beastObject : pluginmap.values()) {
                 if (beastObject instanceof RealParameter) {
-                    if (beastObject.getId() != null && beastObject.getId().startsWith("parameter.")) {
-                        PartitionContext context = new PartitionContext(beastObject.getId().substring("parameter.".length()));
+                    if (beastObject.getID() != null && beastObject.getID().startsWith("parameter.")) {
+                        PartitionContext context = new PartitionContext(beastObject.getID().substring("parameter.".length()));
                         applyBeautiRules(templates, isInitial, context);
                     }
                 }
@@ -1210,10 +1210,10 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
         Log.trace.print("InPosterior=");
         for (BEASTInterface o : posteriorPredecessors) {
-            pluginmap.put(o.getId(), o);
-            Log.trace.print(o.getId() + " ");
+            pluginmap.put(o.getID(), o);
+            Log.trace.print(o.getID() + " ");
             //if (!pluginmap.containsKey(o)) {
-            //	System.err.println("MISSING: " + o.getId());
+            //	System.err.println("MISSING: " + o.getID());
             //}
         }
         Log.trace.println();
@@ -1387,7 +1387,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
         // }});
 
-        // m_sIDMap.put(beastObject.getId(), beastObject);
+        // m_sIDMap.put(beastObject.getID(), beastObject);
         // for (BEASTObject beastObject2 : beastObject.listActivePlugins()) {
         // addPlugin(beastObject2);
         // }
@@ -1424,7 +1424,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             if (o instanceof List) {
                 // System.err.println("   " + ((List)o).size());
                 if (((List<?>) o).contains(srcBEASTObject)) {
-                    warning("   " + targetId + "/" + inputName + " already contains " + (srcBEASTObject == null ? "nulls" : srcBEASTObject.getId()) + "\n");
+                    warning("   " + targetId + "/" + inputName + " already contains " + (srcBEASTObject == null ? "nulls" : srcBEASTObject.getID()) + "\n");
                     return;
                 }
             }
@@ -1460,7 +1460,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 // System.err.println("   " + ((List)o).size());
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i) == srcBEASTObject) {
-                        warning("  DEL " + targetId + "/" + inputName + " contains " + (srcBEASTObject == null ? "null" : srcBEASTObject.getId()) + "\n");
+                        warning("  DEL " + targetId + "/" + inputName + " contains " + (srcBEASTObject == null ? "null" : srcBEASTObject.getID()) + "\n");
                         list.remove(i);
                     }
                 }
@@ -1470,7 +1470,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             } else {
                 if (input.get() != null && input.get() instanceof BEASTInterface &&
                         input.get() == srcBEASTObject) {
-                    //((BEASTInterface) input.get()).getId().equals(targetId)) {
+                    //((BEASTInterface) input.get()).getID().equals(targetId)) {
                     input.setValue(null, target);
                 }
             }
@@ -1501,7 +1501,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         try {
             PartitionContext context = null;
             for (PartitionContext context2 : partitionNames) {
-                if (context2.partition.equals(data.getId())) {
+                if (context2.partition.equals(data.getID())) {
                     context = context2;
                     break;
                 }
@@ -1652,7 +1652,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     }
 
     int getPartitionNr(BEASTInterface beastObject) {
-        String ID = beastObject.getId();
+        String ID = beastObject.getID();
         String partition = ID;
         if (ID.indexOf('.') >= 0) {
             partition = ID.substring(ID.indexOf('.') + 1);
@@ -1704,7 +1704,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         for (BeautiSubTemplate template : beautiConfig.subTemplates) {
             try {
                 if (input.canSetValue(template.instance, beastObject)) {
-                    String partition = beastObject.getId();
+                    String partition = beastObject.getID();
                     partition = parsePartition(partition);
                     Object o = template.createSubNet(context, beastObject, input, true);
                     return o;
@@ -1832,21 +1832,21 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             try {
                 for (BEASTInterface p2 : p.listActiveBEASTObjects()) {
                     if (ancestors.contains(p2)) {
-                        Log.info.print(p2.getId()+ " ");
+                        Log.info.print(p2.getID()+ " ");
                     }
                 }
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
             Log.info.print(") ");
-            Log.info.println(p.getId());
+            Log.info.println(p.getID());
         }
 
         // now the ancestors contain all beastObjects to be copied
         // make a copy of all individual BEASTObjects, before connecting them up
         Map<String, BEASTInterface> copySet = new HashMap<>();
         for (BEASTInterface beastObject2 : ancestors) {
-            String id = beastObject2.getId();
+            String id = beastObject2.getID();
             if (id == null) {
                 id = beastObject.getClass().getName().replaceAll(".*\\.", "");
                 int i = 0;
@@ -1854,7 +1854,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                     i++;
                 }
                 id = id + "." + i;
-                beastObject2.setId(id);
+                beastObject2.setID(id);
             }
 
             String copyID = renameId(id, oldContext, newContext);
@@ -1866,7 +1866,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                     BEASTInterface copy;
                     try {
                         copy = beastObject2.getClass().newInstance();
-                        copy.setId(copyID);
+                        copy.setID(copyID);
                         copySet.put(id, copy);
                     } catch (InstantiationException | IllegalAccessException e) {
                         e.printStackTrace();
@@ -1879,10 +1879,10 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
         // set all inputs of copied beastObjects + outputs to taboo
         for (BEASTInterface beastObject2 : ancestors) {
-            String id = beastObject2.getId();
+            String id = beastObject2.getID();
             BEASTInterface copy = copySet.get(id);
             if (copy != null) {
-                Log.warning.println("Processing: " + id + " -> " + copy.getId());
+                Log.warning.println("Processing: " + id + " -> " + copy.getID());
                 // set inputs
                 for (Input<?> input : beastObject2.listInputs()) {
                     if (input.get() != null) {
@@ -1965,7 +1965,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
 
         // deep copy must be obtained from copyset, before sorting
         // since the sorting changes (deletes items) from the copySet map
-        BEASTInterface deepCopy = copySet.get(beastObject.getId());
+        BEASTInterface deepCopy = copySet.get(beastObject.getID());
 
         // first need to sort copySet by topology, before we can initAndValidate
         // them
@@ -2008,11 +2008,11 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     } // deepCopyPlugin
 
     private static BEASTInterface getCopyValue(BEASTInterface value, Map<String, BEASTInterface> copySet, PartitionContext oldContext, PartitionContext partitionContext, BeautiDoc doc) {
-        if (copySet.containsKey(value.getId())) {
-            value = copySet.get(value.getId());
+        if (copySet.containsKey(value.getID())) {
+            value = copySet.get(value.getID());
             return value;
         }
-        String valueID = value.getId();
+        String valueID = value.getID();
         if (valueID == null) {
             return value;
         }
@@ -2116,7 +2116,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 throw new IllegalArgumentException();
         }
         for (BEASTInterface beastObject : pluginmap.values()) {
-            if (beastObject.getId().endsWith(newsuffix)) {
+            if (beastObject.getID().endsWith(newsuffix)) {
                 throw new IllegalArgumentException("Name " + newName + " is already in use");
             }
         }
@@ -2140,17 +2140,17 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 throw new IllegalArgumentException();
         }
         for (BEASTInterface beastObject : pluginmap.values()) {
-            if (beastObject.getId().endsWith(oldsuffix)) {
-                String id = beastObject.getId();
+            if (beastObject.getID().endsWith(oldsuffix)) {
+                String id = beastObject.getID();
                 id = id.substring(0, id.indexOf(oldsuffix)) + newsuffix;
-                beastObject.setId(id);
+                beastObject.setID(id);
             }
         }
         if (partitionID == ALIGNMENT_PARTITION) {
             // make exception for renaming alignment: its ID does not contain a dot
             for (BEASTInterface beastObject : pluginmap.values()) {
-                if (beastObject.getId().equals(oldName)) {
-                    beastObject.setId(newName);
+                if (beastObject.getID().equals(oldName)) {
+                    beastObject.setID(newName);
                 }
             }
         }
@@ -2181,7 +2181,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     } // renamePartition
 
     public PartitionContext getContextFor(BEASTInterface beastObject) {
-        String id = beastObject.getId();
+        String id = beastObject.getID();
         String partition = id.indexOf('.') >= 0 ? id.substring(id.indexOf('.') + 1) : "";
 
         int partitionID = ALIGNMENT_PARTITION;
@@ -2242,7 +2242,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             Map<String, Integer> outputIDs = new HashMap<>();
             for (Object output : beastObject.getOutputs()) {
                 if (posteriorPredecessors.contains(output)) {
-                    String id = ((BEASTInterface)output).getId();
+                    String id = ((BEASTInterface)output).getID();
                     if (id.indexOf('.') >= 0) {
                         id = id.substring(0, id.indexOf('.'));
                         if (outputIDs.containsKey(id)) {
@@ -2255,7 +2255,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             }
             for (Object output : beastObject.getOutputs()) {
                 if (posteriorPredecessors.contains(output)) {
-                    String id = ((BEASTInterface)output).getId();
+                    String id = ((BEASTInterface)output).getID();
                     if (id.indexOf('.') >= 0) {
                         id = id.substring(0, id.indexOf('.'));
                         if (outputIDs.get(id) > 1) {
@@ -2345,7 +2345,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
      * @return
      */
     public List<BEASTInterface> suggestedLinks(BEASTInterface beastObject) {
-        String id = beastObject.getId();
+        String id = beastObject.getID();
         List<BEASTInterface> list = new ArrayList<>();
         String partitionID = null;
         if (id.indexOf('.') >= 0) {
@@ -2355,7 +2355,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             return list;
         }
         for (BEASTInterface candidate : posteriorPredecessors) {
-            String id2 = candidate.getId();
+            String id2 = candidate.getID();
             if (id2.indexOf('.') >= 0) {
                 String partitionID2 = id2.substring(id2.indexOf('.') + 1);
                 id2 = id2.substring(0, id2.indexOf('.'));
@@ -2417,7 +2417,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         for (final String taxaName : taxaNames) {
             taxonset.taxonsetInput.get().add(doc.getTaxon(taxaName));
         }
-        taxonset.setId("TaxonSet0." + a.getId());
+        taxonset.setID("TaxonSet0." + a.getID());
         try {
             taxonset.initAndValidate();
         } catch (Exception e) {
@@ -2445,7 +2445,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
     }
 
     public void addMRCAPrior(MRCAPrior mrcaPrior) {
-        Tree tree = (Tree) pluginmap.get("Tree.t:" + alignments.get(0).getId());
+        Tree tree = (Tree) pluginmap.get("Tree.t:" + alignments.get(0).getID());
         if (tree == null) {
             for (String key : pluginmap.keySet()) {
                 if (key.startsWith("Tree.t:")) {
@@ -2461,7 +2461,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             int index=-1;
             int j=0;
             while (index<0 && j++ < alignments.size()){
-                tree = (Tree) pluginmap.get("Tree.t:" + alignments.get(j-1).getId());
+                tree = (Tree) pluginmap.get("Tree.t:" + alignments.get(j-1).getID());
                 taxaNames = tree.getTaxaNames();
                 for (int i=0; i<taxaNames.length && index<0; i++)
                     if (testTaxon.equals(taxaNames[i])) index=i;
@@ -2473,17 +2473,17 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
         ParametricDistribution distr = mrcaPrior.distInput.get();
 
         TaxonSet t = mrcaPrior.taxonsetInput.get();
-        if (taxaset.keySet().contains(t.getId())) {
-            Log.warning.println("taxonset " + t.getId() + " already exists: MRCAPrior " + mrcaPrior.getId() + " can not be added");
+        if (taxaset.keySet().contains(t.getID())) {
+            Log.warning.println("taxonset " + t.getID() + " already exists: MRCAPrior " + mrcaPrior.getID() + " can not be added");
         } else {
-            taxaset.put(t.getId(), t);
+            taxaset.put(t.getID(), t);
             // ensure TaxonSets are not duplicated
             List<Taxon> taxa = t.taxonsetInput.get();
             for (int i = 0; i< taxa.size(); i++) {
-                if (taxaset.containsKey(taxa.get(i).getId())) {
-                    taxa.set(i, taxaset.get(taxa.get(i).getId()));
+                if (taxaset.containsKey(taxa.get(i).getID())) {
+                    taxa.set(i, taxaset.get(taxa.get(i).getID()));
                 } else {
-                    taxaset.put(taxa.get(i).getId(), taxa.get(i));
+                    taxaset.put(taxa.get(i).getID(), taxa.get(i));
                 }
             }
             if (distr instanceof Normal && (Double.isInfinite(((Normal)distr).sigmaInput.get().getValue()))) {
@@ -2499,7 +2499,7 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
                 TipDatesRandomWalker operator = new TipDatesRandomWalker();
                 t.initAndValidate();
                 operator.initByName("taxonset", t, "weight", 1.0, "tree", tree, "windowSize", 1.0);
-                operator.setId("TipDatesRandomWalker." + t.getId());
+                operator.setID("TipDatesRandomWalker." + t.getID());
                 MCMC mcmc = (MCMC) this.mcmc.get();
                 mcmc.operatorsInput.setValue(operator, mcmc);
             }
@@ -2513,15 +2513,15 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             }
             if (dateTrait == null) {
                 dateTrait = new TraitSet();
-                dateTrait.setId("traitsetDate");
+                dateTrait.setID("traitsetDate");
                 registerPlugin(dateTrait);
                 dateTrait.initByName("traitname", TraitSet.DATE_BACKWARD_TRAIT, "taxa", tree.getTaxonset(),
-                        "value", t.taxonsetInput.get().get(0).getId() + "=" + date);
+                        "value", t.taxonsetInput.get().get(0).getID() + "=" + date);
                 tree.m_traitList.setValue(dateTrait, tree);
                 tree.initAndValidate();
             } else {
                 dateTrait.traitsInput.setValue(dateTrait.traitsInput.get() + ",\n" +
-                                t.taxonsetInput.get().get(0).getId() + "=" + date
+                                t.taxonsetInput.get().get(0).getID() + "=" + date
                         , dateTrait);
             }
             mrcaPrior.onlyUseTipsInput.setValue(true, mrcaPrior);

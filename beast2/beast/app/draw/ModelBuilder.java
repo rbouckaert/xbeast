@@ -1763,9 +1763,9 @@ public class ModelBuilder extends JPanel implements ComponentListener {
 					public void actionPerformed(ActionEvent ae) {
                         Shape shape = m_Selection.getSingleSelectionShape();
                         String name = (String) JOptionPane.showInputDialog(
-                                null, shape.getId(), "New label",
+                                null, shape.getID(), "New label",
                                 JOptionPane.OK_CANCEL_OPTION, null, null, shape
-                                .getId());
+                                .getID());
                         if (name == null || name.equals("")) {
                             return;
                         }
@@ -1774,7 +1774,7 @@ public class ModelBuilder extends JPanel implements ComponentListener {
                             name = name.substring(0, i - 1) + '\n'
                                     + name.substring(i + 2);
                         }
-                        m_doc.setId(name, m_Selection.getSingleSelection());
+                        m_doc.setID(name, m_Selection.getSingleSelection());
                         repaint();
                     }
                 };

@@ -191,25 +191,25 @@ public class BeautiAlignmentProvider extends BEASTObject {
         	if (beastObject instanceof Alignment) {
 	        	// ensure ID of alignment is unique
 	        	int k = 0;
-	        	String id = beastObject.getId();
+	        	String id = beastObject.getID();
         		boolean found = true;
 	        	while (doc.pluginmap.containsKey(id) && found) {
 	        		found = false;
 	        		for (Alignment data : doc.alignments) {
-	        			if (data.getId().equals(beastObject.getId())) {
+	        			if (data.getID().equals(beastObject.getID())) {
 	        				found = true;
 	        				break;
 	        			}
 	        		}
 	        		if (found) {
 		        		k++;
-		        		id = beastObject.getId() + k;	        			
+		        		id = beastObject.getID() + k;	        			
 	        		} else {
-	        			BEASTInterface oldData = doc.pluginmap.get(beastObject.getId());
+	        			BEASTInterface oldData = doc.pluginmap.get(beastObject.getID());
 	        			replaceItem(doc, oldData, beastObject);
 	        		}
 	        	}
-	        	beastObject.setId(id);
+	        	beastObject.setID(id);
 	        	sortByTaxonName(((Alignment) beastObject).sequenceInput.get());
 	        	if (getStartTemplate() != null) {
 	        		doc.addAlignmentWithSubnet((Alignment) beastObject, getStartTemplate());
@@ -220,7 +220,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	private void replaceItem(BeautiDoc doc, BEASTInterface oldData, BEASTInterface newData) {
-        doc.pluginmap.remove(newData.getId());
+        doc.pluginmap.remove(newData.getID());
         Set<BEASTInterface> outputs = new LinkedHashSet<>();
         outputs.addAll(oldData.getOutputs()); 
         for (BEASTInterface o : outputs) {
@@ -291,7 +291,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
 				ID = ID.substring(0, ID.lastIndexOf('.')).replaceAll("\\..*", "");
 				BEASTInterface alignment = parseBeast1XML(ID, xml);
 				if (alignment != null) {
-					alignment.setId(file.getName().substring(0, file.getName().length() - 4).replaceAll("\\..*", ""));
+					alignment.setID(file.getName().substring(0, file.getName().length() - 4).replaceAll("\\..*", ""));
 				}
 				return alignment;
 			} catch (Exception ex2) {
@@ -346,12 +346,12 @@ public class BeautiAlignmentProvider extends BEASTObject {
 				}
 				String data = child.getTextContent();
 				sequence.initByName("totalcount", totalCount, "taxon", taxon, "value", data);
-				sequence.setId("seq_" + taxon);
+				sequence.setID("seq_" + taxon);
 				alignment.sequenceInput.setValue(sequence, alignment);
 
 			}
 		}
-		alignment.setId(ID);
+		alignment.setID(ID);
 		alignment.initAndValidate();
 		return alignment;
 	} // parseBeast1XML
@@ -406,9 +406,9 @@ public class BeautiAlignmentProvider extends BEASTObject {
 					if (overlap.size() > 0) {
 						String overlaps = "<html>Warning: The following partitions overlap:<br/>";
 						for (int i : overlap) {
-							overlaps += parser.filteredAlignments.get(i / 10000 - 1).getId()
+							overlaps += parser.filteredAlignments.get(i / 10000 - 1).getID()
 									+ " overlaps with "
-									+ parser.filteredAlignments.get(i % 10000 - 1).getId() + "<br/>";
+									+ parser.filteredAlignments.get(i % 10000 - 1).getID() + "<br/>";
 						}
 						overlaps += "The first thing you might want to do is delete some of these partitions.</html>";
 						JOptionPane.showMessageDialog(null, overlaps);
@@ -545,12 +545,12 @@ public class BeautiAlignmentProvider extends BEASTObject {
 			            final Sequence sequence = new Sequence();
 			            data = data.replaceAll("[Xx]", "?");
 			            sequence.init(totalCount, taxon, data);
-			            sequence.setId(NexusParser.generateSequenceID(taxon));
+			            sequence.setID(NexusParser.generateSequenceID(taxon));
 			            alignment.sequenceInput.setValue(sequence, alignment);
 			        }
 			        String ID = file.getName();
 			        ID = ID.substring(0, ID.lastIndexOf('.')).replaceAll("\\..*", "");
-			        alignment.setId(ID);
+			        alignment.setID(ID);
 
 			        if (mayBeAminoacid) {
 			        	switch (this.datatype) {
@@ -559,7 +559,7 @@ public class BeautiAlignmentProvider extends BEASTObject {
 					        	JComboBox<String> jcb = new JComboBox<>(new String[]{"aminoacid", "nucleotide", "all are aminoacid", "all are nucleotide"});
 					        	jcb.setEditable(true);
 					        	jcb.setSelectedItem(datatype);
-					        	JOptionPane.showMessageDialog(null, jcb, "Choose the datatype of alignment " + alignment.getId(), JOptionPane.QUESTION_MESSAGE);
+					        	JOptionPane.showMessageDialog(null, jcb, "Choose the datatype of alignment " + alignment.getID(), JOptionPane.QUESTION_MESSAGE);
 					        	switch ((String) jcb.getSelectedItem()) {
 						        	case "aminoacid": datatype = "aminoacid"; totalCount = 20; break;
 						        	case "nucleotide": datatype = "nucleotide"; totalCount = 4; break;

@@ -24,7 +24,7 @@ public class TreeStatLogger extends CalculationNode implements Loggable, Functio
     @Override
     public void initAndValidate() {
     	if ((!logHeigthInput.get() || !logHeightInput.get()) && !logLengthInput.get()) {
-    		Log.warning.println("TreeStatLogger " + getId() + "logs nothing. Set logHeight=true or logLength=true to log at least something");
+    		Log.warning.println("TreeStatLogger " + getID() + "logs nothing. Set logHeight=true or logLength=true to log at least something");
     	}
     }
 
@@ -32,10 +32,10 @@ public class TreeStatLogger extends CalculationNode implements Loggable, Functio
     public void init(PrintStream out) {
         final Tree tree = treeInput.get();
         if (logHeigthInput.get() && logHeightInput.get()) {
-            out.print(tree.getId() + ".height\t");
+            out.print(tree.getID() + ".height\t");
         }
         if (logLengthInput.get()) {
-            out.print(tree.getId() + ".treeLength\t");
+            out.print(tree.getID() + ".treeLength\t");
         }
     }
 

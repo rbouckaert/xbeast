@@ -62,7 +62,7 @@ public class SiteModelInputEditor extends BEASTObjectInputEditor {
     	if (operator == null) {
     		operator = new DeltaExchangeOperator();
     		try {
-    			operator.setId("FixMeanMutationRatesOperator");
+    			operator.setID("FixMeanMutationRatesOperator");
 				operator.initByName("weight", 2.0, "delta", 0.75);
 			} catch (Throwable e1) {
 				// ignore initAndValidate exception
@@ -240,12 +240,12 @@ public class SiteModelInputEditor extends BEASTObjectInputEditor {
 		    		//clockRate.m_bIsEstimated.setValue(true, clockRate);
 		    		if (mutationRate.isEstimatedInput.get()) {
 		    			hasOneEstimatedRate = true;
-		    			if (rateIDs.indexOf(mutationRate.getId()) == -1) {
+		    			if (rateIDs.indexOf(mutationRate.getID()) == -1) {
 			    			parameters.add(mutationRate);
 			    			weights.add(weight);
-			    			rateIDs.add(mutationRate.getId());
+			    			rateIDs.add(mutationRate.getID());
 		    			} else {
-		    				int k = rateIDs.indexOf(mutationRate.getId());
+		    				int k = rateIDs.indexOf(mutationRate.getID());
 			    			weights.set(k,  weights.get(k) + weight);
 		    			}
 		    		}
@@ -262,7 +262,7 @@ public class SiteModelInputEditor extends BEASTObjectInputEditor {
 					weightString += k + " ";
 				}
 		    	weightParameter = new IntegerParameter(weightString);
-				weightParameter.setId("weightparameter");
+				weightParameter.setID("weightparameter");
 				
 			}
 			weightParameter.isEstimatedInput.setValue(false, weightParameter);

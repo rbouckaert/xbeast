@@ -294,7 +294,7 @@ public class MRCAPrior extends Distribution {
     int calcMRCAtime(final Node node, final int[] taxonCount2) {
         if (node.isLeaf()) {
             taxonCount2[0]++;
-            if (isInTaxaSet.contains(node.getId())) {
+            if (isInTaxaSet.contains(node.getID())) {
                 return 1;
             } else {
                 return 0;
@@ -363,19 +363,19 @@ public class MRCAPrior extends Distribution {
     	}
         if (onlyUseTips) {
             if (dist != null) {
-                out.print("logP(mrca(" + getId() + "))\t");
+                out.print("logP(mrca(" + getID() + "))\t");
             }
             for (final int i : taxonIndex) {
                 out.print("height(" + tree.getTaxaNames()[i] + ")\t");
             }
         } else {
         	if (!isMonophyleticInput.get()) {
-        		out.print("monophyletic(" + taxonsetInput.get().getId() + ")\t");
+        		out.print("monophyletic(" + taxonsetInput.get().getID() + ")\t");
         	}
             if (dist != null) {
-                out.print("logP(mrca(" + taxonsetInput.get().getId() + "))\t");
+                out.print("logP(mrca(" + taxonsetInput.get().getID() + "))\t");
             }
-            out.print("mrcatime(" + taxonsetInput.get().getId() + (useOriginate ? ".originate" : "") +")\t");
+            out.print("mrcatime(" + taxonsetInput.get().getID() + (useOriginate ? ".originate" : "") +")\t");
         }
     }
 

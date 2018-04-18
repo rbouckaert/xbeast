@@ -79,7 +79,7 @@ public abstract class Distribution extends CalculationNode implements Loggable, 
             for (Input input : getInputs().values()) {
                 Object value = input.get();
                 if (value != null && value instanceof BEASTInterface) {
-                    String valueID = ((BEASTInterface) value).getId();
+                    String valueID = ((BEASTInterface) value).getID();
                     if (valueID != null && valueID.equals(id)) {
                         conditionInputs.add(input);
                     }
@@ -134,7 +134,7 @@ public abstract class Distribution extends CalculationNode implements Loggable, 
             if (output instanceof Distribution) {
                 Distribution distrib = (Distribution) output;
                 List<String> distribArgs = distrib.getArguments();
-                if (distribArgs != null && distribArgs.contains(stateNode.getId())) {
+                if (distribArgs != null && distribArgs.contains(stateNode.getID())) {
                     distrib.sample(state, random);
                     break;
                 }
@@ -192,7 +192,7 @@ public abstract class Distribution extends CalculationNode implements Loggable, 
      */
     @Override
     public void init(final PrintStream out) {
-        out.print(getId() + "\t");
+        out.print(getID() + "\t");
     }
 
     @Override

@@ -186,7 +186,7 @@ public class BeautiPanel extends JPanel implements ListSelectionListener {
         	} else if (type.equals("Tree")) {
         		partition = (BEASTInterface) ((GenericTreeLikelihood) partition).treeInput.get();
         	}
-            String partitionID = partition.getId();
+            String partitionID = partition.getID();
             partitionID = partitionID.substring(partitionID.lastIndexOf('.') + 1);
             if (partitionID.length() > 1 && partitionID.charAt(1) == ':') {
             	partitionID = partitionID.substring(2);
@@ -313,7 +313,7 @@ public class BeautiPanel extends JPanel implements ListSelectionListener {
         	} else if (type.equals("Tree")) {
         		partition = (BEASTInterface) ((GenericTreeLikelihood) partition).treeInput.get();
         	}
-            String partitionID = partition.getId();
+            String partitionID = partition.getID();
             partitionID = partitionID.substring(partitionID.lastIndexOf('.') + 1);
             if (partitionID.length() > 1 && partitionID.charAt(1) == ':') {
             	partitionID = partitionID.substring(2);
@@ -393,8 +393,8 @@ public class BeautiPanel extends JPanel implements ListSelectionListener {
 					return;
 			}
 			// sanity check: make sure taxon sets are compatible
-            Taxon.assertSameTaxa(tree.getId(), tree.getTaxonset().getTaxaNames(),
-                    likelihood.dataInput.get().getId(), likelihood.dataInput.get().getTaxaNames());
+            Taxon.assertSameTaxa(tree.getID(), tree.getTaxonset().getTaxaNames(),
+                    likelihood.dataInput.get().getID(), likelihood.dataInput.get().getTaxaNames());
 
 			likelihood.treeInput.setValue(tree, likelihood);
 			return;

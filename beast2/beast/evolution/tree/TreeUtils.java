@@ -116,7 +116,7 @@ public class TreeUtils {
                                              Node[] mrca) {
 
         if (node.isLeaf()) {
-            if (leafNodes.contains(node.getId())) {
+            if (leafNodes.contains(node.getID())) {
                 if (cardinality == 1) {
                     mrca[0] = node;
                 }
@@ -331,7 +331,7 @@ public class TreeUtils {
     public static String sortedNewickTopology(Node node, boolean isTaxaLabel) {
         if (node.isLeaf()) {
             if (isTaxaLabel) {
-                return String.valueOf(node.getId());
+                return String.valueOf(node.getID());
             } else {
                 return String.valueOf(node.getNr());
             }

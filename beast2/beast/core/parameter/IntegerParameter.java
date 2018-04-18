@@ -100,7 +100,7 @@ public class IntegerParameter extends Parameter.Base<java.lang.Integer> {
     @Override
     public int scale(double scale) {
         // nothing to do
-        Log.warning.println("Attempt to scale Integer parameter " + getId() + "  has no effect");
+        Log.warning.println("Attempt to scale Integer parameter " + getID() + "  has no effect");
         return 0;
     }
 

@@ -344,14 +344,14 @@ public class AlignmentListInputEditor extends ListInputEditor {
 			switch (columnNr) {
 			case SITEMODEL_COLUMN:
 				if (!doc.pluginmap.containsKey("SiteModel.s:" + partition)) {
-					String id = ((BEASTInterface)likelihoods[rowNr].siteModelInput.get()).getId();
+					String id = ((BEASTInterface)likelihoods[rowNr].siteModelInput.get()).getID();
 					oldName = BeautiDoc.parsePartition(id);
 					doc.renamePartition(BeautiDoc.SITEMODEL_PARTITION, oldName, partition);
 					isRenaming = true;
 				}
 				break;
 			case CLOCKMODEL_COLUMN: {
-				String id = likelihoods[rowNr].branchRateModelInput.get().getId();
+				String id = likelihoods[rowNr].branchRateModelInput.get().getID();
 				String clockModelName = id.substring(0, id.indexOf('.')) + ".c:" + partition;
 				if (!doc.pluginmap.containsKey(clockModelName)) {
 					oldName = BeautiDoc.parsePartition(id);
@@ -362,7 +362,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 				break;
 			case TREE_COLUMN:
 				if (!doc.pluginmap.containsKey("Tree.t:" + partition)) {
-					String id = likelihoods[rowNr].treeInput.get().getId();
+					String id = likelihoods[rowNr].treeInput.get().getID();
 					oldName = BeautiDoc.parsePartition(id);
 					doc.renamePartition(BeautiDoc.TREEMODEL_PARTITION, oldName, partition);
 					isRenaming = true;
@@ -441,7 +441,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 			needsRePartition = (this.likelihoods[rowNr].siteModelInput.get() != siteModel);
 			this.likelihoods[rowNr].siteModelInput.setValue(siteModel, this.likelihoods[rowNr]);
 
-			partition = ((BEASTInterface)likelihoods[rowNr].siteModelInput.get()).getId();
+			partition = ((BEASTInterface)likelihoods[rowNr].siteModelInput.get()).getID();
 			partition = BeautiDoc.parsePartition(partition);
 			getDoc().setCurrentPartition(BeautiDoc.SITEMODEL_PARTITION, rowNr, partition);
 		}
@@ -482,7 +482,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 
 			needsRePartition = (this.likelihoods[rowNr].branchRateModelInput.get() != clockModel);
 			this.likelihoods[rowNr].branchRateModelInput.setValue(clockModel, this.likelihoods[rowNr]);
-			partition = likelihoods[rowNr].branchRateModelInput.get().getId();
+			partition = likelihoods[rowNr].branchRateModelInput.get().getID();
 			partition = BeautiDoc.parsePartition(partition);
 			getDoc().setCurrentPartition(BeautiDoc.CLOCKMODEL_PARTITION, rowNr, partition);
 		}
@@ -509,7 +509,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 					List<StateNode> stateNodes = new ArrayList<>();
 					stateNodes.addAll(state.stateNodeInput.get());
 					for (StateNode s : stateNodes) {
-						if (s.getId().endsWith(".t:" + oldContext.tree) && !(s instanceof TreeInterface)) {
+						if (s.getID().endsWith(".t:" + oldContext.tree) && !(s instanceof TreeInterface)) {
 							try {
 								@SuppressWarnings("unused")
 								StateNode copy = (StateNode) BeautiDoc.deepCopyPlugin(s, likelihoods[rowNr], (MCMC) doc.mcmc.get(), oldContext, context, doc, null);
@@ -523,8 +523,8 @@ public class AlignmentListInputEditor extends ListInputEditor {
 				}
 			}
 			// sanity check: make sure taxon sets are compatible
-			Taxon.assertSameTaxa(tree.getId(), tree.getTaxonset().getTaxaNames(),
-					likelihoods[rowNr].dataInput.get().getId(), likelihoods[rowNr].dataInput.get().getTaxaNames());
+			Taxon.assertSameTaxa(tree.getID(), tree.getTaxonset().getTaxaNames(),
+					likelihoods[rowNr].dataInput.get().getID(), likelihoods[rowNr].dataInput.get().getTaxaNames());
 
 			needsRePartition = (this.likelihoods[rowNr].treeInput.get() != tree);
 			Log.warning.println("needsRePartition = " + needsRePartition);			
@@ -573,7 +573,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 			// if (!getDoc().posteriorPredecessors.contains(d)) {
 			// prior.pDistributions.setValue(d, prior);
 			// }
-			partition = likelihoods[rowNr].treeInput.get().getId();
+			partition = likelihoods[rowNr].treeInput.get().getID();
 			partition = BeautiDoc.parsePartition(partition);
 			getDoc().setCurrentPartition(BeautiDoc.TREEMODEL_PARTITION, rowNr, partition);
 		}
@@ -674,7 +674,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 
 	private String getPartition(Input<?> input) {
 		BEASTInterface beastObject = (BEASTInterface) input.get();
-		String id = beastObject.getId();
+		String id = beastObject.getID();
 		String partition = BeautiDoc.parsePartition(id);
 		return partition;
 	}
@@ -859,7 +859,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 				} else if (e.getButton() == e.BUTTON3) {
 					int alignmemt = table.rowAtPoint(e.getPoint());
 					Alignment alignment = alignments.get(alignmemt);
-					int result = JOptionPane.showConfirmDialog(null, "Do you want to replace alignment " + alignment.getId());
+					int result = JOptionPane.showConfirmDialog(null, "Do you want to replace alignment " + alignment.getID());
 					if (result == JOptionPane.YES_OPTION) {
 						replaceItem(alignment);
 					}
@@ -885,9 +885,9 @@ public class AlignmentListInputEditor extends ListInputEditor {
 			partitionNames[i] = new HashSet<>();
 		}
 		for (int i = 0; i < partitionCount; i++) {
-			partitionNames[0].add(((BEASTInterface) likelihoods[i].siteModelInput.get()).getId());
-			partitionNames[1].add(likelihoods[i].branchRateModelInput.get().getId());
-			partitionNames[2].add(likelihoods[i].treeInput.get().getId());
+			partitionNames[0].add(((BEASTInterface) likelihoods[i].siteModelInput.get()).getID());
+			partitionNames[1].add(likelihoods[i].branchRateModelInput.get().getID());
+			partitionNames[2].add(likelihoods[i].treeInput.get().getID());
 		}
 		String[][] partitionNameStrings = new String[3][];
 		for (int i = 0; i < 3; i++) {
@@ -1217,8 +1217,8 @@ public class AlignmentListInputEditor extends ListInputEditor {
 		if (replacement != null) {
 			if (!replacement.getDataType().getClass().getName().equals(alignment.getDataType().getClass().getName())) {
 				JOptionPane.showMessageDialog(null, "Data types do not match, so alignment cannot be replaced: " + 
-						replacement.getId() + " " + replacement.getDataType().getClass().getName() + " != " + 
-						alignment.getId() + " " + alignment.getDataType().getClass().getName());
+						replacement.getID() + " " + replacement.getDataType().getClass().getName() + " != " + 
+						alignment.getID() + " " + alignment.getDataType().getClass().getName());
 				return;
 			}
 			// replace alignment
@@ -1293,7 +1293,7 @@ public class AlignmentListInputEditor extends ListInputEditor {
 				for (int j = 0; j < filters.length; j++) {
 					FilteredAlignment f = new FilteredAlignment();
 					f.initByName("data", alignment, "filter", filters[j], "dataType", alignment.dataTypeInput.get());
-					f.setId(alignment.getId() + ids[j]);
+					f.setID(alignment.getID() + ids[j]);
 					getDoc().addAlignmentWithSubnet(f, getDoc().beautiConfig.partitionTemplate.get());
 					newAlignments.add(f);
 				}

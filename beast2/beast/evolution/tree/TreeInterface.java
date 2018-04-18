@@ -6,8 +6,8 @@ import java.util.List;
 
 import beast.evolution.alignment.TaxonSet;
 
-public interface TreeInterface {
-    String getId();
+public interface TreeInterface extends xbeast.Identifiable {
+//    String getID();
 
     int getLeafNodeCount();
 	int getInternalNodeCount();

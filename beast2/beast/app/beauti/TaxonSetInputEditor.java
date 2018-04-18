@@ -83,7 +83,7 @@ public class TaxonSetInputEditor extends InputEditor.Base {
             taxonsets.add(taxon);
         }
         add(getContent(taxonsets));
-        if (taxa.size() == 1 && taxa.get(0).getId().equals("Beauti2DummyTaxonSet") || taxa.size() == 0) {
+        if (taxa.size() == 1 && taxa.get(0).getID().equals("Beauti2DummyTaxonSet") || taxa.size() == 0) {
             taxa.clear();
             try {
                 // species is first character of taxon
@@ -91,7 +91,7 @@ public class TaxonSetInputEditor extends InputEditor.Base {
                 for (Taxon taxonset2 : m_taxonset) {
                     for (Taxon taxon : ((TaxonSet) taxonset2).taxonsetInput.get()) {
                         m_lineageset.add(taxon);
-                        m_taxonMap.put(taxon.getId(), taxonset2.getId());
+                        m_taxonMap.put(taxon.getID(), taxonset2.getID());
                     }
                 }
             } catch (Exception e) {
@@ -110,7 +110,7 @@ public class TaxonSetInputEditor extends InputEditor.Base {
         	if (taxonset2 instanceof TaxonSet) {
 		        for (Taxon taxon : ((TaxonSet) taxonset2).taxonsetInput.get()) {
 		            m_lineageset.add(taxon);
-		            m_taxonMap.put(taxon.getId(), taxonset2.getId());
+		            m_taxonMap.put(taxon.getID(), taxonset2.getID());
 		        }
         	}
         }
@@ -302,7 +302,7 @@ public class TaxonSetInputEditor extends InputEditor.Base {
         for (Taxon taxonset2 : m_taxonset) {
             for (Taxon taxon : ((TaxonSet) taxonset2).taxonsetInput.get()) {
                 m_lineageset.add(taxon);
-                m_taxonMap.put(taxon.getId(), taxonset2.getId());
+                m_taxonMap.put(taxon.getID(), taxonset2.getID());
             }
         }
         taxonSetToModel();
@@ -332,8 +332,8 @@ public class TaxonSetInputEditor extends InputEditor.Base {
                 if (!taxonIDs.contains(id)) {
                     Taxon taxon = getDoc().getTaxon(sequence.taxonInput.get());
                     // ensure sequence and taxon do not get same ID
-                    if (sequence.getId().equals(sequence.taxonInput.get())) {
-                        sequence.setId("_" + sequence.getId());
+                    if (sequence.getID().equals(sequence.taxonInput.get())) {
+                        sequence.setID("_" + sequence.getID());
                     }
                     taxa.add(taxon);
                     taxonIDs.add(id);
@@ -344,13 +344,13 @@ public class TaxonSetInputEditor extends InputEditor.Base {
         List<String> unknowns = new ArrayList<>();
         for (Taxon taxon : taxa) {
             if (!(taxon instanceof TaxonSet)) {
-                Matcher matcher = m_pattern.matcher(taxon.getId());
+                Matcher matcher = m_pattern.matcher(taxon.getID());
                 String match;
                 if (matcher.find()) {
                     match = matcher.group(1);
                 } else {
                    	match = "UNKNOWN";
-                   	unknowns.add(taxon.getId());
+                   	unknowns.add(taxon.getID());
                 }
                 try {
                     if (map.containsKey(match)) {
@@ -393,7 +393,7 @@ public class TaxonSetInputEditor extends InputEditor.Base {
     		}
     	}
         TaxonSet set = new TaxonSet();
-        set.setId(match);
+        set.setID(match);
 		return set;
 	}
 
@@ -427,10 +427,10 @@ public class TaxonSetInputEditor extends InputEditor.Base {
         List<String> unknowns = new ArrayList<>();
         for (Taxon taxon : taxa) {
             if (!(taxon instanceof TaxonSet)) {
-                String match = traitmap.get(taxon.getId());
+                String match = traitmap.get(taxon.getID());
                 if (match == null) {
                 	match = "UNKNOWN";
-                	unknowns.add(taxon.getId());
+                	unknowns.add(taxon.getID());
                 }
                 try {
                     if (map.containsKey(match)) {
@@ -581,11 +581,11 @@ public class TaxonSetInputEditor extends InputEditor.Base {
         // group lineages with their taxon sets
         for (String lineageID : m_taxonMap.keySet()) {
             for (Taxon taxon : m_lineageset) {
-                if (taxon.getId().equals(lineageID)) {
+                if (taxon.getID().equals(lineageID)) {
                     String taxonSet = m_taxonMap.get(lineageID);
                     for (Taxon taxon2 : m_taxonset) {
                         TaxonSet set = (TaxonSet) taxon2;
-                        if (set.getId().equals(taxonSet)) {
+                        if (set.getID().equals(taxonSet)) {
                             try {
                                 set.taxonsetInput.setValue(taxon, set);
                             } catch (Exception e) {

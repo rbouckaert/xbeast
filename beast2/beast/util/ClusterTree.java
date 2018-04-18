@@ -107,12 +107,12 @@ public class ClusterTree extends Tree implements StateNodeInitialiser {
             // make a caterpillar
             Node left = newNode();
             left.setNr(0);
-            left.setId(taxaNames.get(0));
+            left.setID(taxaNames.get(0));
             left.setHeight(0);
             for (int i = 1; i < taxaNames.size(); i++) {
                 final Node right = newNode();
                 right.setNr(i);
-                right.setId(taxaNames.get(i));
+                right.setID(taxaNames.get(i));
                 right.setHeight(0);
                 final Node parent = newNode();
                 parent.setNr(taxaNames.size() + i - 1);
@@ -266,12 +266,12 @@ public class ClusterTree extends Tree implements StateNodeInitialiser {
             if (m_left == null) {
                 node.setLeft(newNode());
                 node.getLeft().setNr(m_iLeftInstance);
-                node.getLeft().setId(taxaNames.get(m_iLeftInstance));
+                node.getLeft().setID(taxaNames.get(m_iLeftInstance));
                 node.getLeft().setHeight(m_fHeight - m_fLeftLength);
                 if (m_right == null) {
                     node.setRight(newNode());
                     node.getRight().setNr(m_iRightInstance);
-                    node.getRight().setId(taxaNames.get(m_iRightInstance));
+                    node.getRight().setID(taxaNames.get(m_iRightInstance));
                     node.getRight().setHeight(m_fHeight - m_fRightLength);
                 } else {
                     node.setRight(m_right.toNode());
@@ -281,7 +281,7 @@ public class ClusterTree extends Tree implements StateNodeInitialiser {
                 if (m_right == null) {
                     node.setRight(newNode());
                     node.getRight().setNr(m_iRightInstance);
-                    node.getRight().setId(taxaNames.get(m_iRightInstance));
+                    node.getRight().setID(taxaNames.get(m_iRightInstance));
                     node.getRight().setHeight(m_fHeight - m_fRightLength);
                 } else {
                     node.setRight(m_right.toNode());
