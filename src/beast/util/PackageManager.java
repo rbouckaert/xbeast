@@ -35,6 +35,8 @@ package beast.util;
 import beast.app.BEASTVersion;
 import beast.app.util.Arguments;
 import beast.app.util.Utils6;
+import beast.core.BEASTInterface;
+import beast.core.BEASTObjectStore;
 import beast.core.util.Log;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -1329,6 +1331,8 @@ public class PackageManager {
         }
     }
 
+    private static URLClassLoader sysLoader = null; 
+    
     /**
      * Add URL to CLASSPATH
      *
@@ -1337,10 +1341,14 @@ public class PackageManager {
      */
     public static void addURL(URL u) throws IOException {
         // ClassloaderUtil clu = new ClassloaderUtil();
-        PackageManager clu = new PackageManager();
+        // PackageManager clu = new PackageManager();
         // URLClassLoader sysLoader = (URLClassLoader)
         // ClassLoader.getSystemClassLoader();
-        URLClassLoader sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+        if (sysLoader == null) {
+            PackageManager clu = new PackageManager();
+        	sysLoader = URLClassLoader.newInstance(new URL[]{}, clu.getClass().getClassLoader());//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
+        	sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+        }
         URL urls[] = sysLoader.getURLs();
         for (URL url : urls) {
             if (url.toString().toLowerCase().equals(u.toString().toLowerCase())) {
@@ -1367,6 +1375,20 @@ public class PackageManager {
         all_classes = null;
     }
 
+    public static Class forName(String className) throws ClassNotFoundException {
+    	//    	try {
+    	//    		return Class.forName(className);
+    	//    	} catch (ClassNotFoundException e2) {
+    	//    		// ignore
+    	//    	}
+    	if (sysLoader == null) {
+            PackageManager clu = new PackageManager();
+            ClassLoader c = clu.getClass().getClassLoader();
+        	sysLoader = URLClassLoader.newInstance(new URL[]{}, c);//new URLClassLoader(new URL[]{}, clu.getClass().getClassLoader());
+        	// sysLoader = (URLClassLoader) clu.getClass().getClassLoader();
+    	}
+		return Class.forName(className, true, sysLoader);
+    }
 
     private static void loadAllClasses() {
         if (!externalJarsLoaded) {
@@ -1959,6 +1981,29 @@ public class PackageManager {
     	return classToPackageMap;
     }
 
+
+    /** return set of Strings in the format of classToPackageMap (like "bModelTest v0.3.2")
+     * for all packages used by o and its predecessors in the model graph.
+     */
+    public static Set<String> getPackagesAndVersions(Object o) {
+    	Set<String> packagesAndVersions = new LinkedHashSet<>();
+    	getPackagesAndVersions(o, packagesAndVersions);
+    	return packagesAndVersions;
+    }
+    
+    /** traverse model graph starting at o, and collect packageAndVersion strings
+     * along the way.
+     */
+    private static void getPackagesAndVersions(Object o, Set<String> packagesAndVersions) {
+    	String packageAndVersion = classToPackageMap.get(o.getClass().getName());
+    	if (packageAndVersion != null) {
+    		packagesAndVersions.add(packageAndVersion);
+    	}
+    	for (BEASTInterface o2 : BEASTObjectStore.listActiveBEASTObjects(o)) {
+    		getPackagesAndVersions(o2, packagesAndVersions);
+    	}
+	}
+
     private static void initPackageMap(String jarDirName) {
         try {
             File versionFile = new File(jarDirName + "/version.xml");
@@ -2178,4 +2223,5 @@ public class PackageManager {
     	}    	
     	return System.getenv("BEAST_ADDON_PATH");
     }
- }
+
+}
