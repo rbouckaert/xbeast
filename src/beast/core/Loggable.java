@@ -10,7 +10,7 @@ import java.io.PrintStream;
 /**
  * interface for items that can be logged through a Logger *
  */
-public interface Loggable {
+public interface Loggable extends xbeast.Loggable {
 
     /**
      * write header information, e.g. labels of a parameter,

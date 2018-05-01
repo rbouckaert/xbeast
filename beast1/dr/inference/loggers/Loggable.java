@@ -34,7 +34,7 @@ package dr.inference.loggers;
  * @author Alexei Drummond
  */
  
-public interface Loggable {
+public interface Loggable extends xbeast.Loggable {
 
 	LogColumn[] getColumns();
 	
