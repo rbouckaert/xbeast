@@ -42,6 +42,10 @@ public interface Statistic extends Identifiable {
     	return getArrayValue(dim);
     }
     
+	default double getArrayValue() {
+		return getArrayValue(0);
+	}
+	
 	default double getArrayValue(int dim) {
 		try {
 			return getStatisticValue(dim);

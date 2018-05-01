@@ -44,6 +44,7 @@ import beast.core.parameter.Parameter;
 import beast.core.util.CompoundDistribution;
 import beast.math.distributions.Prior;
 import beast.util.XMLParser;
+import xbeast.Statistic;
 
 
 
@@ -229,7 +230,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 		// count nr of parameters in Prior objects in prior
 		// including those for prior distributions (Normal, etc)
 		// useful to make sure they do (or do not) get linked
-		Set<Function> parameters = new LinkedHashSet<>();
+		Set<Statistic> parameters = new LinkedHashSet<>();
 		CompoundDistribution prior = (CompoundDistribution) doc.pluginmap.get("prior");
 		for (Distribution p : prior.pDistributions.get()) {
 			if (p instanceof Prior) {

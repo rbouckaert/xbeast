@@ -34,6 +34,7 @@ import beast.core.Description;
 import beast.core.Function;
 import beast.core.Input;
 import beast.util.Randomizer;
+import xbeast.Statistic;
 
 /**
  * A class that describes a parametric distribution
@@ -57,7 +58,7 @@ public abstract class ParametricDistribution extends CalculationNode implements 
      * If x is multidimensional, the components of x are assumed to be independent,
      * so the sum of log probabilities of all elements of x is returned as the prior.
      */
-    public double calcLogP(final Function fun) {
+    public double calcLogP(final Statistic fun) {
         final double offset = offsetInput.get();
         double logP = 0;
         for (int i = 0; i < fun.getDimension(); i++) {

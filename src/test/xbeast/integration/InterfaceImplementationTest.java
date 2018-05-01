@@ -1,5 +1,6 @@
 package test.xbeast.integration;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -9,9 +10,12 @@ import java.util.List;
 import org.junit.Test;
 
 import beast.core.parameter.RealParameter;
+import beast.math.distributions.Normal;
+import beast.math.distributions.Prior;
 import beast.util.PackageManager;
 import dr.inference.loggers.LogColumn;
 import dr.inference.model.Parameter;
+import dr.inference.operators.ScaleOperator;
 import junit.framework.TestCase;
 
 public class InterfaceImplementationTest extends TestCase {
@@ -256,7 +260,8 @@ public class InterfaceImplementationTest extends TestCase {
     	
     }
     
-    public void testLoggableRealParameterParameter() {
+    public void testLoggableRealParameter() {
+    	// log a beast 2 parameter with beast 1
     	RealParameter p2 = new RealParameter("3.0 14.0");
     	p2.setID("oki");
     	p2.log(0l, System.out);
@@ -273,12 +278,33 @@ public class InterfaceImplementationTest extends TestCase {
     	System.out.println();
     	
     	
+    	// log a beast 1 parameter with beast 2
     	Parameter.Default p1 = new Parameter.Default(new double[]{14.0, 3.0});
     	p1.setId("iko");
     	p1.init(System.out);
     	System.out.println();
     	p1.log(0l, System.out);
     	System.out.println();
+    	
+    	
+    	// beast 1 parameter with beast 2 prior
+    	Parameter.Default x1 = new Parameter.Default(new double[]{2.0});
+    	Normal normal = new Normal();
+    	normal.initByName("mean","1.0","sigma","1");
+    	Prior prior = new Prior();
+    	prior.initByName("x", x1, "distr", normal);
+    	double logP = prior.calculateLogP();
+    	assertEquals(logP, -1.4189385332046727, 1e-10);
+
+    	// beast 1 parameter with beast 1 operator, but beast 2 methods
+    	ScaleOperator operator = new ScaleOperator(x1, 0.75);
+    	x1.addBounds(0.0, Double.POSITIVE_INFINITY);
+    	operator.proposal();
+    	double v = x1.getArrayValue();
+    	assertNotSame(v, 2.0);
+    	operator.accept();
+    	operator.proposal();
+    	assertNotSame(x1.getValue(0), v);
     }
     
     public void testLoggableMisFit() {
@@ -290,13 +316,13 @@ public class InterfaceImplementationTest extends TestCase {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-    	try {
-    		o2.init(out);
-    		// should never get here
-    		assert(false);
-    	} catch (StackOverflowError e) {
-    		// OK this is expected
-    	}
+//    	try {
+//    		o2.init(out);
+//    		// should never get here
+//    		assert(false);
+//    	} catch (StackOverflowError e) {
+//    		// OK this is expected
+//    	}
     	try {
     		o2.log(0l, out);
     		// should never get here
@@ -304,12 +330,12 @@ public class InterfaceImplementationTest extends TestCase {
     	} catch (StackOverflowError e) {
     		// OK this is expected
     	}
-    	try {
-    		o2.getColumns();
-    		assert(false);
-    	} catch (StackOverflowError e) {
-    		// OK this is expected
-    	}
+//    	try {
+//    		o2.getColumns();
+//    		assert(false);
+//    	} catch (StackOverflowError e) {
+//    		// OK this is expected
+//    	}
     }
 
     /**

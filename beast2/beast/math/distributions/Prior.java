@@ -10,6 +10,8 @@ import beast.core.*;
 import beast.core.Input.Validate;
 import beast.core.parameter.IntegerParameter;
 import beast.core.parameter.RealParameter;
+import xbeast.Statistic;
+
 import org.apache.commons.math.MathException;
 
 
@@ -17,7 +19,7 @@ import org.apache.commons.math.MathException;
         "If x is multidimensional, the components of x are assumed to be independent, " +
         "so the sum of log probabilities of all elements of x is returned as the prior.")
 public class Prior extends Distribution {
-    final public Input<Function> m_x = new Input<>("x", "point at which the density is calculated", Validate.REQUIRED);
+    final public Input<Statistic> m_x = new Input<>("x", "point at which the density is calculated", Validate.REQUIRED);
     final public Input<ParametricDistribution> distInput = new Input<>("distr", "distribution used to calculate prior, e.g. normal, beta, gamma.", Validate.REQUIRED);
 
     /**
@@ -33,7 +35,7 @@ public class Prior extends Distribution {
 
     @Override
     public double calculateLogP() {
-        Function x = m_x.get();
+    	Statistic x = m_x.get();
         if (x instanceof RealParameter || x instanceof IntegerParameter) {
             // test that parameter is inside its bounds
             double l = 0.0;
@@ -82,7 +84,7 @@ public class Prior extends Distribution {
         sampleConditions(state, random);
 
         // sample distribution parameters
-        Function x = m_x.get();
+        Statistic x = m_x.get();
 
         Double[] newx;
         try {

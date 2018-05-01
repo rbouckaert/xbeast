@@ -38,7 +38,7 @@ import beast.core.Description;
  * @version $Id: MCMCOperator.java,v 1.6 2005/06/14 10:40:34 rambaut Exp $
  */
 @Description("Provides proposals for MCMC algorithm")
-public interface MCMCOperator extends Serializable {
+public interface MCMCOperator extends Serializable, xbeast.Operator {
 
     public static final String WEIGHT = "weight";
 
