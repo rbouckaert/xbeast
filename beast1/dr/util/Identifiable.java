@@ -33,7 +33,7 @@ import java.io.Serializable;
  * @author Andrew Rambaut
  * @version $Id: Identifiable.java,v 1.6 2005/05/24 20:26:01 rambaut Exp $
  */
-public interface Identifiable extends Serializable {
+public interface Identifiable extends Serializable, xbeast.Identifiable {
 
     /**
      * @return the id as a string.

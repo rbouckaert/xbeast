@@ -37,7 +37,7 @@ import dr.util.Identifiable;
  * @author Andrew Rambaut
  * @version $Id: Statistic.java,v 1.8 2005/05/24 20:26:00 rambaut Exp $
  */
-public interface Statistic extends Attribute<double[]>, Identifiable, Loggable {
+public interface Statistic extends Attribute<double[]>, Identifiable, Loggable, xbeast.Statistic {
 
     public static final String NAME = "name";
 

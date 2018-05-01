@@ -11,6 +11,7 @@ import org.junit.Test;
 import beast.core.parameter.RealParameter;
 import beast.util.PackageManager;
 import dr.inference.loggers.LogColumn;
+import dr.inference.model.Parameter;
 import junit.framework.TestCase;
 
 public class InterfaceImplementationTest extends TestCase {
@@ -256,19 +257,27 @@ public class InterfaceImplementationTest extends TestCase {
     }
     
     public void testLoggableRealParameterParameter() {
-    	RealParameter p = new RealParameter("3.0 14.0");
-    	p.setID("oki");
-    	p.log(0l, System.out);
+    	RealParameter p2 = new RealParameter("3.0 14.0");
+    	p2.setID("oki");
+    	p2.log(0l, System.out);
     	System.out.println();
-    	for (LogColumn c : p.getColumns()) {
+    	for (LogColumn c : p2.getColumns()) {
     		System.out.print(c.getLabel());
     		System.out.print("\t");
     	}
     	System.out.println();
-    	for (LogColumn c : p.getColumns()) {
+    	for (LogColumn c : p2.getColumns()) {
     		System.out.print(c.getFormatted());
     		System.out.print("\t");
     	}
+    	System.out.println();
+    	
+    	
+    	Parameter.Default p1 = new Parameter.Default(new double[]{14.0, 3.0});
+    	p1.setId("iko");
+    	p1.init(System.out);
+    	System.out.println();
+    	p1.log(0l, System.out);
     	System.out.println();
     }
     

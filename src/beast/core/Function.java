@@ -7,7 +7,7 @@ package beast.core;
  * where the possibilities of calculations are limitless.
  * *
  */
-public interface Function {
+public interface Function extends xbeast.Statistic {
 
     /**
      * @return dimension of the Function *
@@ -19,7 +19,9 @@ public interface Function {
      *         value, but for a Tree this can be the root height, while the individual
      *         values obtained from getValue(dim) return the node heights.
      */
-    public double getArrayValue();
+    default public double getArrayValue() {
+    	return getArrayValue(0);
+    }
 
     /**
      * @param dim requested dimension
@@ -41,6 +43,7 @@ public interface Function {
     @Description("")
     public class Constant extends BEASTObject implements Function {
     	private double [] values;
+    	private String[] names;
     	
     	public Constant() {
     		values = new double[1];
@@ -71,17 +74,27 @@ public interface Function {
 		}
 
 		@Override
-		public double getArrayValue() {
-			return values[0];
-		}
-
-		@Override
 		public double getArrayValue(int dim) {
 			return values[dim];
 		}
 		
 		@Override
 		public void initAndValidate() {
+		}
+		
+		
+		@Override
+		public String getDimensionName(int dim) {
+			if (names != null && names.length > dim) {
+				return names[dim];
+			}
+			return Function.super.getDimensionName(dim);
+		}
+		
+		@Override
+		public void setDimensionNames(String[] names) {
+			this.names = names.clone();
+			
 		}
     	
     }
