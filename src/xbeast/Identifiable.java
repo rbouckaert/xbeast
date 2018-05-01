@@ -19,7 +19,7 @@ public interface Identifiable extends Serializable {
 		try {
 			return getId();
 		} catch (StackOverflowError e) {
-			System.err.println("Programmer error: getID() is not implemented!");
+			System.err.println("Programmer error: getID() is not implemented in class " + this.getClass().getName()+ "!");
 			throw e;
  		}
 	}
@@ -35,7 +35,7 @@ public interface Identifiable extends Serializable {
 		try {
 			setId(ID);
 		} catch (StackOverflowError e) {
-			System.err.println("Programmer error: setID() is not implemented!");
+			System.err.println("Programmer error: setID() is not implemented in class " + this.getClass().getName()+ "!");
 			throw e;
  		}
 	}
