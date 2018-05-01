@@ -168,7 +168,12 @@ public interface Parameter extends Statistic, Variable<Double> {
 
     boolean isUsed();
 
-    Set<Parameter> FULL_PARAMETER_SET = new LinkedHashSet<Parameter>();
+	@Override
+	default int getDimension() {
+		return getSize();
+	}
+
+	Set<Parameter> FULL_PARAMETER_SET = new LinkedHashSet<Parameter>();
     Set<Parameter> CONNECTED_PARAMETER_SET = new LinkedHashSet<Parameter>();
 
     /**
@@ -386,7 +391,13 @@ public interface Parameter extends Statistic, Variable<Double> {
             removeParameterListener(listener);
         }
 
+        @Override
+        public Collection<VariableListener> getVariableListeners() {
+        	return listeners;
+        }
+
         /**
+         * 
          * stores the state of this parameter for subsequent restore
          */
         public void storeVariableValues() {

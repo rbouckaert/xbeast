@@ -28,9 +28,9 @@ package dr.inference.model;
 import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.loggers.NumberColumn;
-import dr.util.Identifiable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author Alexei Drummond
  */
-public interface Variable<V> extends Identifiable {
+public interface Variable<V> extends xbeast.Variable<V> {
 
     public enum ChangeType {
         VALUE_CHANGED,
@@ -323,6 +323,11 @@ public interface Variable<V> extends Identifiable {
             }
         }
 
+        @Override
+        public Collection<VariableListener> getVariableListeners() {
+        	return listeners;
+        }
+        
         String id;
         double[] values;
         double[] storedValues;
@@ -466,6 +471,11 @@ public interface Variable<V> extends Identifiable {
             public double getDoubleValue() {
                 return getValue(i)[j];
             }
+        }
+
+        @Override
+        public Collection<VariableListener> getVariableListeners() {
+        	return listeners;
         }
 
         String id;
@@ -635,6 +645,11 @@ public interface Variable<V> extends Identifiable {
             public double getDoubleValue() {
                 return getValue(dim);
             }
+        }
+
+        @Override
+        public Collection<VariableListener> getVariableListeners() {
+        	return listeners;
         }
 
         String id;
