@@ -25,6 +25,7 @@
 package beast.core;
 
 
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,11 @@ import org.json.JSONObject;
 //import org.json.JSONWriter;
 import org.json.JSONStringer;
 
-import beast.core.*;
 import beast.core.Input.Validate;
 import beast.core.util.Evaluator;
 
 @Description("Proposes a move in state space.")
-public abstract class Operator extends BEASTObject {
+public abstract class Operator extends BEASTObject implements xbeast.Operator {
     final public Input<Double> m_pWeight = new Input<>("weight", "weight with which this operator is selected", Validate.REQUIRED);
 
     private final String STANDARD_OPERATOR_PACKAGE = "beast.evolution.operators";
@@ -104,8 +104,14 @@ public abstract class Operator extends BEASTObject {
      * @return the relative weight which determines the probability this proposal is chosen
      * from among all the available proposals
      */
+    @Override
     public double getWeight() {
         return m_pWeight.get();
+    }
+    
+    @Override
+    public void setWeight(double weight) {
+    	m_pWeight.setValue(weight, this);    	
     }
 
     public String getName() {
@@ -120,28 +126,50 @@ public abstract class Operator extends BEASTObject {
     /**
      * keep statistics of how often this operator was used, accepted or rejected *
      */
-    protected int m_nNrRejected = 0;
-    protected int m_nNrAccepted = 0;
-    protected int m_nNrRejectedForCorrection = 0;
-    protected int m_nNrAcceptedForCorrection = 0;
+    protected long m_nNrRejected = 0;
+    protected long m_nNrAccepted = 0;
+    protected long m_nNrRejectedForCorrection = 0;
+    protected long m_nNrAcceptedForCorrection = 0;
 
     private final boolean detailedRejection = false;
     // rejected because likelihood is infinite
-    protected int m_nNrRejectedInvalid = 0;
+    protected long m_nNrRejectedInvalid = 0;
     // rejected because operator failed (sub-group of above)
-    protected int m_nNrRejectedOperator = 0;
+    protected long m_nNrRejectedOperator = 0;
 
-    public void accept() {
+    @Override
+    public void accept(double deviation) {
         m_nNrAccepted++;
         if (operatorSchedule.autoOptimizeDelayCount >= operatorSchedule.autoOptimizeDelay) {
             m_nNrAcceptedForCorrection++;
         }
     }
 
+    @Override
     public void reject() {
         reject(0); // silly hack
     }
+    
+    @Override
+    public long getAcceptCount() {
+    	return m_nNrAccepted;
+    }
 
+    @Override
+    public void setAcceptCount(long acceptCount) {
+    	m_nNrAccepted = acceptCount;
+    }
+
+    @Override
+    public long getRejectCount() {
+    	return m_nNrRejected;
+    }
+    
+    @Override
+    public void setRejectCount(long rejectCount) {
+    	m_nNrRejected = rejectCount;    	
+    }
+    
     // 0 like finite  -1 like -inf -2 operator failed
     public void reject(final int reason) {
         m_nNrRejected++;
@@ -154,6 +182,21 @@ public abstract class Operator extends BEASTObject {
         if (operatorSchedule.autoOptimizeDelayCount >= operatorSchedule.autoOptimizeDelay) {
             m_nNrRejectedForCorrection++;
         }
+    }
+
+    @Override
+    public void reset() {
+    	m_nNrAccepted = 0;
+    	m_nNrAcceptedForCorrection = 0;
+    	m_nNrRejected = 0;
+    	m_nNrRejectedForCorrection = 0;
+    	m_nNrRejectedInvalid = 0;
+    	m_nNrRejectedOperator = 0;
+    }
+    
+    @Override
+    public long getCount() {
+    	return m_nNrAccepted + m_nNrRejected;
     }
 
     /**
