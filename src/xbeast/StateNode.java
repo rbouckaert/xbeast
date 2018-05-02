@@ -107,7 +107,7 @@ public interface StateNode extends Identifiable {
      *         This will generally be called only for stochastic nodes.
      */
     default public StateNode copy() {
-    	StateNode obj = null;
+    	StateNode copy = null;
         try {
         	State state = this.getState();
         	setState(null);
@@ -122,15 +122,15 @@ public interface StateNode extends Identifiable {
             // a copy of the object back in.
             ObjectInputStream in = new ObjectInputStream(
                 new ByteArrayInputStream(bos.toByteArray()));
-            obj = (StateNode) in.readObject();
+            copy = (StateNode) in.readObject();
             
-            obj.setIndex(getIndex());
-            obj.setState(state);
+            copy.setIndex(getIndex());
+            copy.setState(state);
             setState(state);
         } catch(IOException|ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return (StateNode) obj;    
+        return (StateNode) copy;    
     }
 
     /**
@@ -141,7 +141,7 @@ public interface StateNode extends Identifiable {
      * @param isDirty
      */
     default void setEverythingDirty(final boolean isDirty) {
-    	throw new RuntimeException("Not implemented yet");
+    	// throw new RuntimeException("Not implemented yet");
     }
 
 

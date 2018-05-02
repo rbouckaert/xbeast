@@ -211,6 +211,16 @@ public abstract class SimpleMCMCOperator implements MCMCOperator {
         sumEvaluationTime += time;
     }
 
+    @Override
+    public void setId(String id) {
+    	this.id = id;
+    }
+    
+    @Override
+    public String getId() {
+    	return id;
+    }
+    
     /**
      * Called by operate(), does the actual operation.
      *
@@ -230,6 +240,7 @@ public abstract class SimpleMCMCOperator implements MCMCOperator {
 
     private long sumEvaluationTime = 0;
 
+    private String id;
 //    private final double[] spanDeviation = {Double.MAX_VALUE, -Double.MAX_VALUE};
 //    private int spanCount = 0;
 }

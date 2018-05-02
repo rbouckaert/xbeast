@@ -21,24 +21,31 @@ public class ParameterMCMCTest extends TestCase {
 	public void testMCMC() throws IOException, SAXException, ParserConfigurationException {
 		// run MCMC 2 on parameter 1 with operator 1 and prior 2
     	Parameter.Default x1 = new Parameter.Default(new double[]{2.0});
+    	x1.setID("x1");
     	Normal normal = new Normal();
+    	normal.setID("normal");
     	normal.initByName("mean","1.0","sigma","1");
     	Prior prior = new Prior();
+    	prior.setID("prior");
     	prior.initByName("x", x1, "distr", normal);
 
     	ScaleOperator operator = new ScaleOperator(x1, 0.75);
-    	x1.addBounds(0.0, Double.POSITIVE_INFINITY);
+    	operator.setID("scaleOperator");
+        	x1.addBounds(0.0, Double.POSITIVE_INFINITY);
     	operator.proposal();
     	double v = x1.getArrayValue();
     	assertNotSame(v, 2.0);
     	operator.accept();
     	operator.proposal();
     	assertNotSame(x1.getValue(0), v);
+    	operator.accept();
 
     	Logger logger = new Logger();
-    	logger.initByName("log", x1, "log", prior, "logEvery", 100, "mode", Logger.LOGMODE.compound);
+    	logger.setID("screenlog");
+    	logger.initByName("log", x1, "log", prior, "logEvery", 1, "mode", Logger.LOGMODE.compound);
     	
     	MCMC mcmc = new MCMC();
+    	mcmc.setID("mcmc");
     	mcmc.initByName("chainLength", 1000L, "operator", operator, "distribution", prior, "logger", logger);
     	mcmc.run();
 	}
