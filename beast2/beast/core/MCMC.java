@@ -24,6 +24,7 @@
 */
 package beast.core;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +35,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import beast.core.*;
 import beast.core.util.CompoundDistribution;
 import beast.core.util.Evaluator;
 import beast.core.util.Log;
@@ -78,7 +78,7 @@ public class MCMC extends beast.core.Runnable {
             new Input<>("distribution", "probability distribution to sample over (e.g. a posterior)",
                     Input.Validate.REQUIRED);
 
-    final public Input<List<Operator>> operatorsInput =
+    final public Input<List<xbeast.Operator>> operatorsInput =
             new Input<>("operator", "operator for generating proposals in MCMC state space",
                     new ArrayList<>());//, Input.Validate.REQUIRED);
 
@@ -138,7 +138,7 @@ public class MCMC extends beast.core.Runnable {
         Log.info.println("===============================================================================");
 
         operatorSchedule = operatorScheduleInput.get();
-        for (final Operator op : operatorsInput.get()) {
+        for (final xbeast.Operator op : operatorsInput.get()) {
             operatorSchedule.addOperator(op);
         }
 
@@ -187,9 +187,9 @@ public class MCMC extends beast.core.Runnable {
         }
 
         // State initialisation
-        final HashSet<StateNode> operatorStateNodes = new HashSet<>();
-        for (final Operator op : operatorsInput.get()) {
-            for (final StateNode stateNode : op.listStateNodes()) {
+        final HashSet<xbeast.StateNode> operatorStateNodes = new HashSet<>();
+        for (final xbeast.Operator op : operatorsInput.get()) {
+            for (final xbeast.StateNode stateNode : op.listStateNodes()) {
                 operatorStateNodes.add(stateNode);
             }
         }
@@ -201,7 +201,7 @@ public class MCMC extends beast.core.Runnable {
         } else {
             // create state from scratch by collecting StateNode inputs from Operators
             this.state = new State();
-            for (final StateNode stateNode : operatorStateNodes) {
+            for (final xbeast.StateNode stateNode : operatorStateNodes) {
                 this.state.stateNodeInput.setValue(stateNode, this.state);
             }
             this.state.m_storeEvery.setValue(storeEveryInput.get(), this.state);
@@ -219,15 +219,15 @@ public class MCMC extends beast.core.Runnable {
 
         // sanity check: all operator state nodes should be in the state
         final List<StateNode> stateNodes = this.state.stateNodeInput.get();
-        for (final Operator op : operatorsInput.get()) {
-            List<StateNode> nodes = op.listStateNodes();
+        for (final xbeast.Operator op : operatorsInput.get()) {
+            List<xbeast.StateNode> nodes = op.listStateNodes();
             if (nodes.size() == 0) {
                     throw new RuntimeException("Operator " + op.getID() + " has no state nodes in the state. "
                                     + "Each operator should operate on at least one estimated state node in the state. "
                                     + "Remove the operator or add its statenode(s) to the state and/or set estimate='true'.");
                     // otherwise the chain may hang without obvious reason
             }
-	        for (final StateNode stateNode : op.listStateNodes()) {
+	        for (final xbeast.StateNode stateNode : op.listStateNodes()) {
 	            if (!stateNodes.contains(stateNode)) {
 	                throw new RuntimeException("Operator " + op.getID() + " has a statenode " + stateNode.getID() + " in its inputs that is missing from the state.");
 	            }
@@ -240,7 +240,7 @@ public class MCMC extends beast.core.Runnable {
         }
         
         // sanity check: all state nodes should be operated on
-        for (final StateNode stateNode : stateNodes) {
+        for (final xbeast.StateNode stateNode : stateNodes) {
             if (!operatorStateNodes.contains(stateNode)) {
                 Log.warning.println("Warning: state contains a node " + stateNode.getID() + " for which there is no operator.");
             }
@@ -382,7 +382,7 @@ public class MCMC extends beast.core.Runnable {
         	Log.warning.println("Please wait while BEAST takes " + burnIn + " pre-burnin samples");
         }
         for (long sampleNr = -burnIn; sampleNr <= chainLength; sampleNr++) {
-            final Operator operator = propagateState(sampleNr);
+            final xbeast.Operator operator = propagateState(sampleNr);
 
             if (debugFlag && sampleNr % 3 == 0 || sampleNr % 10000 == 0) {
                 // check that the posterior is correctly calculated at every third
@@ -449,14 +449,14 @@ public class MCMC extends beast.core.Runnable {
      * @param sampleNr the index of the current MCMC step
      * @return the selected {@link beast.core.Operator}
      */
-    protected Operator propagateState(final long sampleNr) {
+    protected xbeast.Operator propagateState(final long sampleNr) {
         state.store(sampleNr);
 //            if (m_nStoreEvery > 0 && sample % m_nStoreEvery == 0 && sample > 0) {
 //                state.storeToFile(sample);
 //            	operatorSchedule.storeToFile();
 //            }
 
-        final Operator operator = operatorSchedule.selectOperator();
+        final xbeast.Operator operator = operatorSchedule.selectOperator();
 
         if (printDebugInfo) System.err.print("\n" + sampleNr + " " + operator.getName()+ ":");
 

@@ -50,7 +50,7 @@ public class SiteModelInputEditor extends BEASTObjectInputEditor {
     	fixMeanRatesCheckBox.setEnabled(!doc.autoUpdateFixMeanSubstRate);
     	super.init(input, beastObject, itemNr, isExpandOption, addButtons);
 
-		List<Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
+		List<xbeast.Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
     	fixMeanRatesCheckBox.addActionListener(e -> {
 				JCheckBox averageRatesBox = (JCheckBox) e.getSource();
 				doFixMeanRates(averageRatesBox.isSelected());
@@ -91,7 +91,7 @@ public class SiteModelInputEditor extends BEASTObjectInputEditor {
 //    }
 
 	private void doFixMeanRates(boolean averageRates) {
-		List<Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
+		List<xbeast.Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
 		if (averageRates) {
 			// connect DeltaExchangeOperator
 			if (!operators.contains(operator)) {

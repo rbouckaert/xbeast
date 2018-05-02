@@ -58,11 +58,11 @@ public class ClockModelListInputEditor extends ListInputEditor {
     	m_buttonStatus = ButtonStatus.NONE;
     	super.init(input, beastObject, itemNr, isExpandOption, addButtons);
     	
-		List<Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
+		List<xbeast.Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
     	fixMeanRatesCheckBox.addActionListener(e -> {
 				JCheckBox averageRatesBox = (JCheckBox) e.getSource();
 				boolean averageRates = averageRatesBox.isSelected();
-				List<Operator> operators2 = ((MCMC) doc.mcmc.get()).operatorsInput.get();
+				List<xbeast.Operator> operators2 = ((MCMC) doc.mcmc.get()).operatorsInput.get();
 				if (averageRates) {
 					// connect DeltaExchangeOperator
 					if (!operators2.contains(operator)) {

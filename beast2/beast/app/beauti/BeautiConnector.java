@@ -193,7 +193,7 @@ public class BeautiConnector extends BEASTObject {
                         break;
                     //System.err.println("isActivated::is in posterior");
                     case IS_NOT_AN_OPERTOR:
-        				List<Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
+        				List<xbeast.Operator> operators = ((MCMC) doc.mcmc.get()).operatorsInput.get();
         				if (operators.contains(beastObject)) {
         					return false;
         				}

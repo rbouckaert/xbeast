@@ -57,7 +57,10 @@ public class JointOperator extends Operator {
             // state nodes made dirty by this operation.
             try {
                 if (!op.listStateNodes().isEmpty())
-                    op.listStateNodes().get(0).getState().checkCalculationNodesDirtiness();
+                	if (op.listStateNodes().get(0) instanceof StateNode) {
+                		StateNode sn = (StateNode) op.listStateNodes().get(0);
+                		sn.getState().checkCalculationNodesDirtiness();
+                	}
             } catch (Exception ex) {
                 Log.err(ex.getMessage());
             }
@@ -67,8 +70,8 @@ public class JointOperator extends Operator {
     }
     
     @Override
-    public List<StateNode> listStateNodes() {
-        List<StateNode> stateNodeList = new ArrayList<>();
+    public List<xbeast.StateNode> listStateNodes() {
+        List<xbeast.StateNode> stateNodeList = new ArrayList<>();
         
         for (Operator op : operatorsInput.get())
             stateNodeList.addAll(op.listStateNodes());

@@ -49,19 +49,9 @@ public abstract class Operator extends BEASTObject implements xbeast.Operator {
      */
     OperatorSchedule operatorSchedule;
 
-    public void setOperatorSchedule(final OperatorSchedule operatorSchedule) {
-        this.operatorSchedule = operatorSchedule;
-    }
-
-    /**
-     * Implement this for proposing new states based on evaluations of
-     * a distribution. By default it returns null but can be overridden
-     * to implement more complex proposals.
-     *
-     * @return a distribution or null if not required
-     */
-    public Distribution getEvaluatorDistribution() {
-        return null;
+    @Override
+    public void setOperatorSchedule(final Object operatorSchedule) {
+        this.operatorSchedule = (OperatorSchedule) operatorSchedule;
     }
 
     /**
@@ -199,15 +189,37 @@ public abstract class Operator extends BEASTObject implements xbeast.Operator {
     	return m_nNrAccepted + m_nNrRejected;
     }
 
-    /**
-     * called after every invocation of this operator to see whether
-     * a parameter can be optimised for better acceptance hence faster
-     * mixing
-     *
-     * @param logAlpha difference in posterior between previous state & proposed state + hasting ratio
-     */
-    public void optimize(final double logAlpha) {
-        // must be overridden by operator implementation to have an effect
+    @Override
+    public void setAcceptCountForCorrection(long acceptCount) {
+    	m_nNrAcceptedForCorrection = acceptCount;
+    }
+    @Override
+    public long getAcceptCountForCorrection() {
+    	return m_nNrAcceptedForCorrection;
+    }
+    @Override
+    public long getRejectCountInvalid() {
+    	return m_nNrRejectedInvalid;
+    }
+    @Override
+    public long getRejectCountOperator() {
+    	return m_nNrRejectedOperator;
+    }
+    @Override
+    public void setRejectCountForCorrection(long rejectCount) {
+    	m_nNrRejectedForCorrection = rejectCount;
+    }
+    @Override
+    public long getRejectCountForCorrection() {
+    	return m_nNrRejectedForCorrection;
+    }
+    @Override
+    public void setRejectCountInvalid(long rejectCount) {
+    	m_nNrRejectedInvalid = rejectCount;
+    }
+    @Override
+    public void setRejectCountOperator(long rejectCount) {
+    	m_nNrRejectedOperator = rejectCount;
     }
 
     /**
@@ -225,20 +237,6 @@ public abstract class Operator extends BEASTObject implements xbeast.Operator {
         return 0.234;
     }
 
-    /**
-     * @return value changed through automatic operator optimisation
-     */
-    public double getCoercableParameterValue() {
-        return Double.NaN;
-    }
-
-    /**
-     * set value that changed through automatic operator optimisation
-     *
-     * @param value
-     */
-    public void setCoercableParameterValue(final double value) {
-    }
 
     /**
      * return directions on how to set operator parameters, if any *
@@ -254,9 +252,9 @@ public abstract class Operator extends BEASTObject implements xbeast.Operator {
      * state nodes that are input to the operator but are never changed
      * in a proposal should not be listed
      */
-    public List<StateNode> listStateNodes() {
+    public List<xbeast.StateNode> listStateNodes() {
         // pick up all inputs that are stateNodes that are estimated
-        final List<StateNode> list = new ArrayList<>();
+        final List<xbeast.StateNode> list = new ArrayList<>();
         for (BEASTInterface o : listActiveBEASTObjects()) {
             if (o instanceof StateNode) {
                 final StateNode stateNode = (StateNode) o;
@@ -273,94 +271,6 @@ public abstract class Operator extends BEASTObject implements xbeast.Operator {
         return OperatorSchedule.prettyPrintOperator(this, 70, 10, 4, 0.0, detailedRejection);
     }
 
-    /**
-     * Store to state file, so on resume the parameter tuning is restored.
-     * By default, it stores information in JSON for example
-     * <p>
-     * {"id":"kappaScaler", "p":0.5, "accept":39, "reject":35, "acceptFC":0, "rejectFC":0}
-     * <p>
-     * Meta-operators (operators that have one or more operators as inputs)
-     * need to override this method to store the tuning information associated
-     * with their sub-operators by generating nested JSON, for example
-     * <p>
-     * {"id":"metaOperator", "p":0.5, "accept":396, "reject":355, "acceptFC":50, "rejectFC":45,
-     * operators [
-     * {"id":"kappaScaler1", "p":0.5, "accept":39, "reject":35, "acceptFC":0, "rejectFC":0}
-     * {"id":"kappaScaler2", "p":0.5, "accept":39, "reject":35, "acceptFC":0, "rejectFC":0}
-     * ]
-     * }
-     * *
-     */
-    public void storeToFile(final PrintWriter out) {
-    	try {
-	        JSONStringer json = new JSONStringer();
-	        json.object();
-	
-	        if (getID()==null)
-	           setID("unknown");
-	
-	        json.key("id").value(getID());
-	
-	        double p = getCoercableParameterValue();
-	        if (Double.isNaN(p)) {
-	            json.key("p").value("NaN");
-	        } else if (Double.isInfinite(p)) {
-	        	if (p > 0) {
-	        		json.key("p").value("Infinity");
-	        	} else {
-	        		json.key("p").value("-Infinity");
-	        	}
-	        } else {
-	            json.key("p").value(p);
-	        }
-	        json.key("accept").value(m_nNrAccepted);
-	        json.key("reject").value(m_nNrRejected);
-	        json.key("acceptFC").value(m_nNrAcceptedForCorrection);
-	        json.key("rejectFC").value(m_nNrRejectedForCorrection);
-	        json.key("rejectIv").value(m_nNrRejectedInvalid);
-	        json.key("rejectOp").value(m_nNrRejectedOperator);
-	        json.endObject();
-	        out.print(json.toString());
-    	} catch (JSONException e) {
-    		// failed to log operator in state file
-    		// report and continue
-    		e.printStackTrace();
-    	}
-    }
 
-    /**
-     * Restore tuning information from file
-     * Override this method for meta-operators (see also storeToFile).
-     */
-    public void restoreFromFile(JSONObject o) {
-    	try {
-	        if (!Double.isNaN(o.getDouble("p"))) {
-	            setCoercableParameterValue(o.getDouble("p"));
-	        }
-	        m_nNrAccepted = o.getInt("accept");
-	        m_nNrRejected = o.getInt("reject");
-	        m_nNrAcceptedForCorrection = o.getInt("acceptFC");
-	        m_nNrRejectedForCorrection = o.getInt("rejectFC");
-	
-	        m_nNrRejectedInvalid = o.has("rejectIv") ? o.getInt("rejectIv") : 0;
-	        m_nNrRejectedOperator = o.has("rejectOp") ? o.getInt("rejectOp") : 0;
-    	} catch (JSONException e) {
-    		// failed to restore from state file
-    		// report and continue
-    		e.printStackTrace();
-    	}
-    }
-
-
-    /**
-     * indicates that the state needs to be initialised so that
-     * BEASTObjects can be identified that need updating. This
-     * almost always needs to happen, except for cases where the
-     * operator already initialised the state, e.g. for delayed
-     * acceptance operators.
-     */
-    public boolean requiresStateInitialisation() {
-        return true;
-    }
 
 } // class Operator

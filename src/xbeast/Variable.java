@@ -6,7 +6,7 @@ import java.util.Collection;
 import dr.inference.model.Bounds;
 import dr.inference.model.VariableListener;
 
-public interface Variable<V> extends Statistic {
+public interface Variable<V> extends Statistic, StateNode {
 
     /**
      * @return the name of this variable.

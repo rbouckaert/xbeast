@@ -93,7 +93,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 
 	String operatorsAsString() {
 		MCMC mcmc = (MCMC) doc.mcmc.get();
-		List<Operator> operators = mcmc.operatorsInput.get();
+		List<xbeast.Operator> operators = mcmc.operatorsInput.get();
 		return "assertOperatorsEqual" + pluginListAsString(operators);
 	}
 	
@@ -206,7 +206,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 	void assertOperatorsEqual(String... ids) {
 		System.err.println("assertOperatorsEqual");
 		MCMC mcmc = (MCMC) doc.mcmc.get();
-		List<Operator> operators = mcmc.operatorsInput.get();
+		List<xbeast.Operator> operators = mcmc.operatorsInput.get();
 		asserListsEqual(operators, ids);
 	}
 

@@ -1,5 +1,6 @@
 package beast.core;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import beast.core.*;
 import beast.core.util.Log;
 import beast.util.Randomizer;
 
@@ -41,7 +41,7 @@ public class OperatorSchedule extends BEASTObject {
     // the following inputs are for to deal with schedules nested inside other schedules
     // this allows operators to be grouped, and a percentage of operator weights to be 
     // assigned to a group of operators.
-    final public Input<List<Operator>> operatorsInput = new Input<>("operator", "operator that the schedule can choose from. Any operators "
+    final public Input<List<xbeast.Operator>> operatorsInput = new Input<>("operator", "operator that the schedule can choose from. Any operators "
     		+ "added by other classes (e.g. MCMC) will be added if there are no duplicates.", new ArrayList<>());
     final public Input<List<OperatorSchedule>> subschedulesInput = new Input<>("subschedule", "operator schedule representing a subset of"
     		+ "the weight of the operators it contains.", new ArrayList<>());
@@ -57,7 +57,7 @@ public class OperatorSchedule extends BEASTObject {
      * list of operators in the schedule *
      */
     // temporary for play
-    public List<Operator> operators = new ArrayList<>();
+    public List<xbeast.Operator> operators = new ArrayList<>();
 
     /**
      * sum of weight of operators *
@@ -93,7 +93,7 @@ public class OperatorSchedule extends BEASTObject {
         autoOptimizeDelay = autoOptimizeDelayInput.get();
         detailedRejection = detailedRejectionInput.get();
         operators.addAll(operatorsInput.get());
-        for (Operator o : operators) {
+        for (xbeast.Operator o : operators) {
         	o.setOperatorSchedule(this);
         }
         
@@ -112,10 +112,10 @@ public class OperatorSchedule extends BEASTObject {
         }
         
         // sanity check: warn if operators appear in multiple schedules
-    	Set<Operator> allOperators = new LinkedHashSet<>();
+    	Set<xbeast.Operator> allOperators = new LinkedHashSet<>();
     	allOperators.addAll(operators);
     	for (OperatorSchedule os : subschedulesInput.get()) {
-    		for (Operator o : os.operators) {
+    		for (xbeast.Operator o : os.operators) {
     			if (allOperators.contains(o)) {
     				Log.warning("WARNING: Operator " + o.getID() + " is contained in multiple operator schedules.\n"
     						+ "Operator weighting may not work as expected.");
@@ -134,9 +134,9 @@ public class OperatorSchedule extends BEASTObject {
      * add operator to the schedule *
      * @param p
      */
-    public void addOperator(final Operator p) {
+    public void addOperator(final xbeast.Operator p) {
     	// check for duplicates
-    	for (Operator o : operators) {
+    	for (xbeast.Operator o : operators) {
     		if (o == p) {
     			// operator was already added earlier
     			return;
@@ -149,15 +149,15 @@ public class OperatorSchedule extends BEASTObject {
     }
 
     /** used to add operators to subschedules matching a pattern **/ 
-    protected void addOperators(Collection<Operator> ops) {
+    protected void addOperators(Collection<xbeast.Operator> ops) {
     	if (operatorPatternInput.get() == null || operatorPatternInput.get().trim().equals("")) {
     		return;
     	}
     	String operatorPattern = operatorPatternInput.get();
     	boolean noMatch = true;
-		for (Operator o : ops) {
+		for (xbeast.Operator o : ops) {
 			if (o.getID() != null && o.getID().matches(operatorPattern)) {
-		    	for (Operator o2 : operators) {
+		    	for (xbeast.Operator o2 : operators) {
 		    		if (o2 == o) {
 		    			// operator was already added earlier
 		    			return;
@@ -175,7 +175,7 @@ public class OperatorSchedule extends BEASTObject {
      * of the operator
      * @return
      */
-    public Operator selectOperator() {
+    public xbeast.Operator selectOperator() {
     	if (!reweighted) {
     		reweightOperators();
     		reweighted = true;
@@ -199,7 +199,7 @@ public class OperatorSchedule extends BEASTObject {
         Formatter formatter = new Formatter(out);
 
         int longestName = 0;
-        for (final Operator operator : operators) {
+        for (final xbeast.Operator operator : operators) {
             if (operator.getName().length() > longestName) {
                 longestName = operator.getName().length();
             }
@@ -220,7 +220,7 @@ public class OperatorSchedule extends BEASTObject {
         formatter.format(headerFormat, PR_M);
         formatter.format(headerFormat, PR_ACCEPT);
         out.println();
-        for (final Operator operator : operators) {
+        for (final xbeast.Operator operator : operators) {
             out.println(prettyPrintOperator(operator, longestName, colWidth, 4, totalWeight, detailedRejection));
         }
         out.println();
@@ -242,7 +242,7 @@ public class OperatorSchedule extends BEASTObject {
     }
 
     protected static String prettyPrintOperator(
-            Operator op,
+            xbeast.Operator op,
             int nameColWidth,
             int colWidth,
             int dp,
@@ -250,7 +250,7 @@ public class OperatorSchedule extends BEASTObject {
             boolean detailedRejection) {
 
         double tuning = op.getCoercableParameterValue();
-        double accRate = (double) op.m_nNrAccepted / (double) (op.m_nNrAccepted + op.m_nNrRejected);
+        double accRate = (double) op.getAcceptCount() / (double) (op.getAcceptCount() + op.getRejectCount());
 
         StringBuilder sb = new StringBuilder();
         Formatter formatter = new Formatter(sb);
@@ -265,11 +265,11 @@ public class OperatorSchedule extends BEASTObject {
             formatter.format(" %" + colWidth + "s", "-");
         }
 
-        formatter.format(intFormat, op.m_nNrAccepted);
-        formatter.format(intFormat, op.m_nNrRejected);
+        formatter.format(intFormat, op.getAcceptCount());
+        formatter.format(intFormat, op.getRejectCount());
         if (detailedRejection) {
-            formatter.format(doubleFormat, (double) op.m_nNrRejectedInvalid / (double) op.m_nNrRejected);
-            formatter.format(doubleFormat, (double) op.m_nNrRejectedOperator / (double) op.m_nNrRejected);
+            formatter.format(doubleFormat, (double) op.getRejectCountInvalid() / (double) op.getRejectCount());
+            formatter.format(doubleFormat, (double) op.getRejectCountOperator() / (double) op.getRejectCount());
         }
         if (totalWeight > 0.0) {
             formatter.format(doubleFormat, op.getWeight() / totalWeight);
@@ -295,7 +295,7 @@ public class OperatorSchedule extends BEASTObject {
         out.println("<!--");
         out.println("{\"operators\":[");
         int k = 0;
-        for (Operator operator: operators) {
+        for (xbeast.Operator operator: operators) {
             operator.storeToFile(out);
             if (k++ < operators.size() - 1) {
             	out.println(",");
@@ -333,10 +333,10 @@ public class OperatorSchedule extends BEASTObject {
 	            String id = item.getString("id");
 	    		boolean found = false;
 	            if (!id.equals("null")) {
-	            	for (Operator operator: operators) {
+	            	for (xbeast.Operator operator: operators) {
 	            		if (id.equals(operator.getID())) {
 	                    	operator.restoreFromFile(item);
-	                        autoOptimizeDelayCount += operator.m_nNrAccepted + operator.m_nNrRejected;
+	                        autoOptimizeDelayCount += operator.getAcceptCount() + operator.getRejectCount();
 	                        found = true;
 	            			break;
 	            		}
@@ -346,7 +346,7 @@ public class OperatorSchedule extends BEASTObject {
 	        		Log.warning.println("Operator (" + id + ") found in state file that is not in operator list any more");
 	        	}
 	        }
-	    	for (Operator operator: operators) {
+	    	for (xbeast.Operator operator: operators) {
 	    		if (operator.getID() == null) {
 	        		Log.warning.println("Operator (" + operator.getClass() + ") found in BEAST file that could not be restored because it has not ID");
 	    		}
@@ -357,17 +357,17 @@ public class OperatorSchedule extends BEASTObject {
             autoOptimizeDelayCount = 0;
 	        for (int i = 0; i < operators.size() && i + 2 < strs.length; i++) {
 	            String[] strs2 = strs[i + 1].split(" ");
-	            Operator operator = operators.get(i);
+	            xbeast.Operator operator = operators.get(i);
 	            if ((operator.getID() == null && strs2[0].equals("null")) || operator.getID().equals(strs2[0])) {
 	                cumulativeProbs[i] = Double.parseDouble(strs2[1]);
 	                if (!strs2[2].equals("NaN")) {
 	                    operator.setCoercableParameterValue(Double.parseDouble(strs2[2]));
 	                }
-	                operator.m_nNrAccepted = Integer.parseInt(strs2[3]);
-	                operator.m_nNrRejected = Integer.parseInt(strs2[4]);
-	                autoOptimizeDelayCount += operator.m_nNrAccepted + operator.m_nNrRejected;
-	                operator.m_nNrAcceptedForCorrection = Integer.parseInt(strs2[5]);
-	                operator.m_nNrRejectedForCorrection = Integer.parseInt(strs2[6]);
+	                operator.setAcceptCount(Integer.parseInt(strs2[3]));
+	                operator.setRejectCount(Integer.parseInt(strs2[4]));
+	                autoOptimizeDelayCount += operator.getAcceptCount() + operator.getRejectCount();
+	                operator.setAcceptCountForCorrection(Integer.parseInt(strs2[5]));
+	                operator.setRejectCountForCorrection(Integer.parseInt(strs2[6]));
 	            } else {
 	                throw new RuntimeException("Cannot resume: operator order or set changed from previous run");
 	            }
@@ -420,8 +420,8 @@ public class OperatorSchedule extends BEASTObject {
      * collect all operators (both local and from sub schedules) and calculate weight for each of them 
      * **/
     private void reweightOperators() {
-    	Set<Operator> allOperators = new LinkedHashSet<>();
-    	Set<Operator> subOperators = new LinkedHashSet<>();
+    	Set<xbeast.Operator> allOperators = new LinkedHashSet<>();
+    	Set<xbeast.Operator> subOperators = new LinkedHashSet<>();
     	allOperators.addAll(operators);
     	for (OperatorSchedule os : subschedulesInput.get()) {
     		allOperators.addAll(os.operators);
@@ -432,17 +432,17 @@ public class OperatorSchedule extends BEASTObject {
     	}
     	allOperators.addAll(subOperators);
 
-    	Set<Operator> localOperators = new LinkedHashSet<>();
+    	Set<xbeast.Operator> localOperators = new LinkedHashSet<>();
     	localOperators.addAll(allOperators);
     	localOperators.removeAll(subOperators);
     	
     	// set up operators list and raw weights
     	operators.clear();
-    	for (Operator o : localOperators) {
+    	for (xbeast.Operator o : localOperators) {
     		operators.add(o);
     	}
     	for (OperatorSchedule os : subschedulesInput.get()) {
-    		for (Operator o : os.operators) {
+    		for (xbeast.Operator o : os.operators) {
         		operators.add(o);
     		}
     	}
@@ -451,18 +451,18 @@ public class OperatorSchedule extends BEASTObject {
 
     	double [] weights = new double[operatorCount];
     	int i = 0;
-    	for (Operator o : localOperators) {
+    	for (xbeast.Operator o : localOperators) {
     		weights[i++] = o.getWeight();
     	}
     	for (OperatorSchedule os : subschedulesInput.get()) {
-    		for (Operator o : os.operators) {
+    		for (xbeast.Operator o : os.operators) {
         		weights[i++] = o.getWeight();    			
     		}
     	}
     	
     	// calculate weights per OperatorSchedule
     	double localWeight = 0;
-    	for (Operator o : localOperators) {
+    	for (xbeast.Operator o : localOperators) {
     		localWeight += o.getWeight();
     	}
     	
@@ -481,14 +481,14 @@ public class OperatorSchedule extends BEASTObject {
     	// reweight local operators
     	double localFactor = (1/totalWeight);    	
     	i = 0;
-    	for (Operator o : localOperators) {
+    	for (xbeast.Operator o : localOperators) {
     		weights[i++] *= localFactor;
     	}
 
     	// reweight operators of sub OperatorSchedules
     	for (OperatorSchedule os : subschedulesInput.get()) {
 	    	localWeight = 0;
-	    	for (Operator o : os.operators) {
+	    	for (xbeast.Operator o : os.operators) {
 	    		localWeight += o.getWeight();
 	    	}
 	    	double factor;
@@ -497,7 +497,7 @@ public class OperatorSchedule extends BEASTObject {
     		} else {
     			factor = (os.weightInput.get() / 100) * 1.0/localWeight;
     		}
-	    	for (Operator o : os.operators) {
+	    	for (xbeast.Operator o : os.operators) {
 	    		weights[i++] *= factor;
 	    	}
     	}

@@ -15,7 +15,7 @@ import beast.core.Operator;
  * @author Alexei Drummond
  */
 @Description("A node that can be part of the state.")
-public abstract class StateNode extends CalculationNode implements Loggable, Cloneable, Function {
+public abstract class StateNode extends CalculationNode implements Loggable, Cloneable, Function, xbeast.StateNode {
     /**
      * Flag to indicate the StateNode is not constant.
      * This is particularly useful for Beauti *

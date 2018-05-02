@@ -1,4 +1,4 @@
-package beast.core;
+package xbeast;
 
 /**
  * @author Andrew Rambaut
