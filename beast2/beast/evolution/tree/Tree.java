@@ -783,7 +783,7 @@ public class Tree extends StateNode implements TreeInterface {
      * StateNode implementation *
      */
     @Override
-    protected void store() {
+    public void store() {
 
         // this condition can only be true for sampled ancestor trees
         if (m_storedNodes.length != nodeCount) {

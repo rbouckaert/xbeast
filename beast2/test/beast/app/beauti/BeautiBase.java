@@ -87,7 +87,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 	
 	String stateAsString() {
 		State state = (State) doc.pluginmap.get("state");
-		List<StateNode> stateNodes = state.stateNodeInput.get();
+		List<xbeast.StateNode> stateNodes = state.stateNodeInput.get();
 		return "assertStateEquals" + pluginListAsString(stateNodes);
 	}
 
@@ -99,7 +99,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 	
 	String traceLogAsString() {
 		Logger logger = (Logger) doc.pluginmap.get("tracelog");
-		List<BEASTObject> logs = logger.loggersInput.get();
+		List<xbeast.Loggable> logs = logger.loggersInput.get();
 		return "assertTraceLogEqual" + pluginListAsString(logs);
 	}
 
@@ -199,7 +199,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 	void assertStateEquals(String... ids) {
 		System.err.println("assertStateEquals");
 		State state = (State) doc.pluginmap.get("state");
-		List<StateNode> stateNodes = state.stateNodeInput.get();
+		List<xbeast.StateNode> stateNodes = state.stateNodeInput.get();
 		asserListsEqual(stateNodes, ids);
 	}
 
@@ -213,7 +213,7 @@ public class BeautiBase extends FestSwingJUnitTestCase {
 	void assertTraceLogEqual(String... ids) {
 		System.err.println("assertTraceLogEqual");
 		Logger logger = (Logger) doc.pluginmap.get("tracelog");
-		List<BEASTObject> logs = logger.loggersInput.get();
+		List<xbeast.Loggable> logs = logger.loggersInput.get();
 		asserListsEqual(logs, ids);
 	}
 

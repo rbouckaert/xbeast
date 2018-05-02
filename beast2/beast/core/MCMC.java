@@ -218,7 +218,7 @@ public class MCMC extends beast.core.Runnable {
         this.state.setPosterior(posteriorInput.get());
 
         // sanity check: all operator state nodes should be in the state
-        final List<StateNode> stateNodes = this.state.stateNodeInput.get();
+        final List<xbeast.StateNode> stateNodes = this.state.stateNodeInput.get();
         for (final xbeast.Operator op : operatorsInput.get()) {
             List<xbeast.StateNode> nodes = op.listStateNodes();
             if (nodes.size() == 0) {

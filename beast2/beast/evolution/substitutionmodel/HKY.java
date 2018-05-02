@@ -247,7 +247,7 @@ public class HKY extends SubstitutionModel.NucleotideBase {
     }
 
     @Override
-    protected void store() {
+    public void store() {
         if (eigenDecomposition != null) {
             storedEigenDecomposition = eigenDecomposition.copy();
         }
@@ -255,7 +255,7 @@ public class HKY extends SubstitutionModel.NucleotideBase {
     }
 
     @Override
-    protected void restore() {
+    public void restore() {
         updateMatrix = true;
         updateEigen = true;
         if (storedEigenDecomposition != null) {

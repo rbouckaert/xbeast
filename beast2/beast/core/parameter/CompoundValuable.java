@@ -68,9 +68,12 @@ public class CompoundValuable extends CalculationNode implements Function {
     private void recompute() {
         int k = 0;
         for (BEASTObject beastObject : m_values.get()) {
-            Function valuable = (Function) beastObject;
+            xbeast.Variable valuable = (xbeast.Variable) beastObject;
             if (beastObject instanceof StateNode) {
-                valuable = ((StateNode) beastObject).getCurrent();
+                Object v = ((xbeast.StateNode) beastObject).getCurrent();
+                if (v instanceof xbeast.Variable) {
+                	valuable = (xbeast.Variable) v;
+                }
             }
             int dimension = valuable.getDimension();
             for (int i = 0; i < dimension; i++) {

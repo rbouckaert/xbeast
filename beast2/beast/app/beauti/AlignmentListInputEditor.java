@@ -506,13 +506,13 @@ public class AlignmentListInputEditor extends ListInputEditor {
 					}
 					
 					State state = ((MCMC) doc.mcmc.get()).startStateInput.get();
-					List<StateNode> stateNodes = new ArrayList<>();
+					List<xbeast.StateNode> stateNodes = new ArrayList<>();
 					stateNodes.addAll(state.stateNodeInput.get());
-					for (StateNode s : stateNodes) {
+					for (xbeast.StateNode s : stateNodes) {
 						if (s.getID().endsWith(".t:" + oldContext.tree) && !(s instanceof TreeInterface)) {
 							try {
 								@SuppressWarnings("unused")
-								StateNode copy = (StateNode) BeautiDoc.deepCopyPlugin(s, likelihoods[rowNr], (MCMC) doc.mcmc.get(), oldContext, context, doc, null);
+								xbeast.StateNode copy = (xbeast.StateNode) BeautiDoc.deepCopyPlugin((BEASTInterface)s, likelihoods[rowNr], (MCMC) doc.mcmc.get(), oldContext, context, doc, null);
 							} catch (RuntimeException e) {
 								JOptionPane.showMessageDialog(this, "Could not clone tree model: " + e.getMessage());
 								return;

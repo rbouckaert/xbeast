@@ -10,7 +10,7 @@ import dr.inference.loggers.LogColumn;
 /**
  * interface for items that can be logged through a Logger *
  */
-public interface Loggable {
+public interface Loggable extends Identifiable {
 
     /**
      * write header information, e.g. labels of a parameter,

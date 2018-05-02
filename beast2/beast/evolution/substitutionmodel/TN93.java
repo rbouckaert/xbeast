@@ -366,7 +366,7 @@ public class TN93 extends SubstitutionModel.NucleotideBase {
     }
 
     @Override
-    protected void store() {
+    public void store() {
         if (eigenDecomposition != null) {
             storedEigenDecomposition = eigenDecomposition.copy();
         }
@@ -374,7 +374,7 @@ public class TN93 extends SubstitutionModel.NucleotideBase {
     }
 
     @Override
-    protected void restore() {
+    public void restore() {
         updateEigen = true;
         updateIntermediates = true;
         if (storedEigenDecomposition != null) {

@@ -457,7 +457,7 @@ public interface Parameter<T> extends Function, xbeast.Identifiable {
 
         @SuppressWarnings("unchecked")
         @Override
-        protected void store() {
+        public void store() {
             if (storedValues.length != values.length) {
                 storedValues = (T[]) Array.newInstance(m_fUpper.getClass(), values.length);
             }

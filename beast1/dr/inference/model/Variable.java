@@ -28,6 +28,7 @@ package dr.inference.model;
 import dr.inference.loggers.LogColumn;
 import dr.inference.loggers.Loggable;
 import dr.inference.loggers.NumberColumn;
+import xbeast.State;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -135,10 +136,34 @@ public interface Variable<V> extends xbeast.Variable<V> {
         public Collection<VariableListener> getVariableListeners() {
         	return listeners;
         }
+
+        @Override
+        public void setIndex(int i) {
+        	this.index = i;
+        }
+
+        @Override
+        public int getIndex() {
+        	return index;
+        }
         
+        @Override
+        public void setState(xbeast.State state) {
+        	this.state = state;
+        }
+
+        @Override
+        public xbeast.State getState() {
+        	return state;
+        }
+
         protected List<VariableListener> listeners = new ArrayList<VariableListener>();
 
         protected String id;
+        
+        private int index;
+        
+        private xbeast.State state;
     }
 
 
@@ -333,12 +358,34 @@ public interface Variable<V> extends xbeast.Variable<V> {
         public Collection<VariableListener> getVariableListeners() {
         	return listeners;
         }
+
+        @Override
+        public void setIndex(int i) {
+        	this.index = i;
+        }
+
+        @Override
+        public int getIndex() {
+        	return index;
+        }
         
+        @Override
+        public void setState(xbeast.State state) {
+        	this.state = state;
+        }
+
+        @Override
+        public xbeast.State getState() {
+        	return state;
+        }
+
         String id;
         double[] values;
         double[] storedValues;
         List<VariableListener> listeners = new ArrayList<VariableListener>();
         private IntersectionBounds bounds = null;
+        private int index;
+        private xbeast.State state;
     }
 
     public class DM implements Variable<double[]>, Loggable {
@@ -484,12 +531,34 @@ public interface Variable<V> extends xbeast.Variable<V> {
         	return listeners;
         }
 
+        @Override
+        public void setIndex(int i) {
+        	this.index = i;
+        }
+
+        @Override
+        public int getIndex() {
+        	return index;
+        }
+        
+        @Override
+        public void setState(xbeast.State state) {
+        	this.state = state;
+        }
+
+        @Override
+        public xbeast.State getState() {
+        	return state;
+        }
+
         String id;
         double[][] values;
         double[][] storedValues;
         List<VariableListener> listeners = new ArrayList<VariableListener>();
         double[] lower;
         double[] upper;
+        int index;
+        xbeast.State state;
     }
 
     public class I implements Variable<Integer>, Loggable {
@@ -658,10 +727,33 @@ public interface Variable<V> extends xbeast.Variable<V> {
         	return listeners;
         }
 
+        @Override
+        public void setIndex(int i) {
+        	this.index = i;
+        }
+
+        @Override
+        public int getIndex() {
+        	return index;
+        }
+        
+        @Override
+        public void setState(xbeast.State state) {
+        	this.state = state;
+        }
+
+        @Override
+        public xbeast.State getState() {
+        	return state;
+        }
+
         String id;
         int[] values;
         int[] storedValues;
         List<VariableListener> listeners = new ArrayList<VariableListener>();
         private Bounds<Integer> bounds = null;
+        int index;
+        xbeast.State state;
+
     }
 }

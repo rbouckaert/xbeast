@@ -71,9 +71,9 @@ public class Logger extends BEASTObject {
     final public Input<SORTMODE> sortModeInput = new Input<>("sort", "sort items to be logged, one of " + Arrays.toString(SORTMODE.values()), SORTMODE.none, SORTMODE.values());
     final public Input<Boolean> sanitiseHeadersInput = new Input<>("sanitiseHeaders", "whether to remove any clutter introduced by Beauti" , false);
 
-    final public Input<List<BEASTObject>> loggersInput = new Input<>("log",
+    final public Input<List<xbeast.Loggable>> loggersInput = new Input<>("log",
             "Element in a log. This can be any plug in that is Loggable.",
-            new ArrayList<>(), Validate.REQUIRED, Loggable.class);
+            new ArrayList<>(), Validate.REQUIRED, xbeast.Loggable.class);
 
     // the file name to log to, or null, or "" if logging to stdout
     private String fileName;
@@ -81,7 +81,7 @@ public class Logger extends BEASTObject {
     /**
      * list of loggers, if any
      */
-    List<Loggable> loggerList;
+    List<xbeast.Loggable> loggerList;
     public enum LogFileMode {
     	only_new, overwrite, resume, only_new_or_exit
     }
@@ -119,15 +119,15 @@ public class Logger extends BEASTObject {
 
         fileName = fileNameInput.get();
 
-        final List<BEASTObject> loggers = loggersInput.get();
+        final List<xbeast.Loggable> loggers = loggersInput.get();
         final int loggerCount = loggers.size();
         if (loggerCount == 0) {
             throw new RuntimeException("Logger with nothing to log specified");
         }
 
         loggerList = new ArrayList<>();
-        for (final BEASTObject logger : loggers) {
-            loggerList.add((Loggable) logger);
+        for (final xbeast.Loggable logger : loggers) {
+            loggerList.add(logger);
         }
 
         // determine logging mode
@@ -156,9 +156,9 @@ public class Logger extends BEASTObject {
        			break;
         	case alphabetic:
         		// sort loggers by id
-        		Collections.sort(loggerList, (Loggable o1, Loggable o2) -> {
-						final String id1 = ((BEASTObject)o1).getID();
-						final String id2 = ((BEASTObject)o2).getID();  //was o1, probably a bug, found by intelliJ
+        		Collections.sort(loggerList, (xbeast.Loggable o1, xbeast.Loggable o2) -> {
+						final String id1 = o1.getID();
+						final String id2 = o2.getID();  //was o1, probably a bug, found by intelliJ
 						if (id1 == null || id2 == null) {return 0;}
 						return id1.compareTo(id2);
 					}
@@ -171,8 +171,8 @@ public class Logger extends BEASTObject {
         		// related log items together in Tracer
         		final List<String> ids = new ArrayList<>();
         		final List<String> postfix = new ArrayList<>();
-                for (final Loggable aLoggerList : loggerList) {
-                    String id = ((BEASTInterface) aLoggerList).getID();
+                for (final xbeast.Loggable aLoggerList : loggerList) {
+                    String id = aLoggerList.getID();
                     if (id == null) {
                         id = "";
                     }
@@ -200,7 +200,7 @@ public class Logger extends BEASTObject {
         					ids.add(i + m, id);
         					String p = postfix.remove(j);
         					postfix.add(i + m, p);
-        					final Loggable l = loggerList.remove(j);
+        					final xbeast.Loggable l = loggerList.remove(j);
         					loggerList.add(i + m, l);
         					k++;
         				}
@@ -244,7 +244,7 @@ public class Logger extends BEASTObject {
             if (mode == LOGMODE.compound) {
                 out.print("Sample\t");
             }
-            for (final Loggable m_logger : loggerList) {
+            for (final xbeast.Loggable m_logger : loggerList) {
                 m_logger.init(out);
             }
 
@@ -352,9 +352,9 @@ public class Logger extends BEASTObject {
         } else {
             if (fileName.contains("$(tree)")) {
             	String treeName = "tree";
-            	for (final Loggable logger : loggerList) {
+            	for (final xbeast.Loggable logger : loggerList) {
             		if (logger instanceof BEASTObject) {
-            			final String id = ((BEASTObject) logger).getID();
+            			final String id = logger.getID();
             			if (id.indexOf(".t:") > 0) {
             				treeName = id.substring(id.indexOf(".t:") + 3); 
             			}
@@ -514,7 +514,7 @@ public class Logger extends BEASTObject {
             out.print((sampleNr) + "\t");
         }
 
-        for (final Loggable m_logger : loggerList) {
+        for (final xbeast.Loggable m_logger : loggerList) {
             m_logger.log(sampleNr, out);
         }
 
@@ -609,7 +609,7 @@ public class Logger extends BEASTObject {
      * stop logging, produce end of log message and close file (if necessary) *
      */
     public void close() {
-        for (final Loggable m_logger : loggerList) {
+        for (final xbeast.Loggable m_logger : loggerList) {
             m_logger.close(m_out);
         }
 

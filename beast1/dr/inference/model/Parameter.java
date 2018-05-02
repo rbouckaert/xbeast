@@ -788,6 +788,26 @@ public interface Parameter extends Statistic, Variable<Double> {
             }
         }
 
+        @Override
+        public void setIndex(int i) {
+        	this.index = i;
+        }
+
+        @Override
+        public int getIndex() {
+        	return index;
+        }
+        
+        @Override
+        public void setState(xbeast.State state) {
+        	this.state = state;
+        }
+
+        @Override
+        public xbeast.State getState() {
+        	return state;
+        }
+
         private double[] values;
 
         private double[] storedValues;
@@ -795,6 +815,9 @@ public interface Parameter extends Statistic, Variable<Double> {
         // same as !storedValues && !bounds
         //private boolean hasBeenStored = false;
         private Bounds<Double> bounds = null;
+        
+        private int index;
+        private xbeast.State state;
 
         public void addBounds(double lower, double upper) {
             addBounds(new DefaultBounds(upper, lower, getDimension()));

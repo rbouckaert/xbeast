@@ -49,13 +49,13 @@ public class TreeTopFinder extends CalculationNode {
     }
 
     @Override
-    protected void store() {
+    public void store() {
         oldHeight = height;
         super.store();
     }
 
     @Override
-    protected void restore() {
+    public void restore() {
         height = oldHeight;
         super.restore();
     }

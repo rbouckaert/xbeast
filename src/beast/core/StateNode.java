@@ -21,18 +21,18 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
      * This is particularly useful for Beauti *
      */
     final public Input<Boolean> isEstimatedInput = new Input<>("estimate", "whether to estimate this item or keep constant to its initial value", true);
-
-    /**
-     * @return this StateNode if it is not in the State.
-     *         If it is in the State, return the version that is currently valid
-     *         (i.e. not the stored one).
-     */
-    public StateNode getCurrent() {
-        if (state == null) {
-            return this;
-        }
-        return state.getStateNode(index);
+    
+    
+    @Override
+    public void setIndex(int i) {
+    	this.index = i;
     }
+    
+    @Override
+    public void setState(xbeast.State state) {
+    	this.state = state;
+    }
+
 
     /**
      * @param operator explain here why operator is useful
@@ -116,33 +116,7 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
         out.print("</statenode>\n");
     }
 
-    /**
-     * stores a state node in XML format, to be restored by fromXML() *
-     */
-    final public String toXML() {
-        return "<statenode id='" + normalise(getId()) + "'>" +
-                normalise(toString()) +
-                "</statenode>\n";
-    }
 
-    /** ensure XML identifiers get proper escape sequences **/
-    private String normalise(String str) {
-    	if (str == null) {
-    		return null;
-    	}
-    	str = str.replaceAll("&", "&amp;");    	
-    	str = str.replaceAll("'", "&apos;");
-    	str = str.replaceAll("\"", "&quot;");
-    	str = str.replaceAll("<", "&lt;");
-    	str = str.replaceAll(">", "&gt;");
-    	return str;
-    }
-
-    /**
-     * for restoring a state that was stored using toXML() above
-     * from a DOM Node. *
-     */
-    public abstract void fromXML(Node node);
 
 
 //    /**
@@ -178,9 +152,9 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
     /**
      * Pointer to state, null if not part of a State.
      */
-    protected State state = null;
+    protected xbeast.State state = null;
 
-    public State getState() {
+    public xbeast.State getState() {
         return state;
     }
 
@@ -237,10 +211,5 @@ public abstract class StateNode extends CalculationNode implements Loggable, Clo
         return true;
     }
 
-    @Override
-	abstract protected void store();
-
-    @Override
-	abstract public void restore();
 
 } // class StateNode

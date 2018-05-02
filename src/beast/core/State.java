@@ -51,9 +51,9 @@ import beast.core.util.Log;
         "maintains values of a set of StateNodes, such as parameters and trees. " +
         "Furthermore, the state manages which parts of the model need to be stored/restored " +
         "and notified that recalculation is appropriate.")
-public class State extends BEASTObject {
+public class State extends BEASTObject implements xbeast.State {
 
-    public final Input<List<StateNode>> stateNodeInput =
+    public final Input<List<xbeast.StateNode>> stateNodeInput =
             new Input<>("stateNode", "anything that is part of the state", new ArrayList<>());
     final public Input<Integer> m_storeEvery =
             new Input<>("storeEvery", "store the state to disk every X number of samples so that we can " +
@@ -70,7 +70,7 @@ public class State extends BEASTObject {
      * StateNode is copied.
      * Access through getNrStatNodes() and getStateNode(.).
      */
-    protected StateNode[] stateNode;
+    protected xbeast.StateNode[] stateNode;
 
     /**
      * number of state nodes *
@@ -84,7 +84,7 @@ public class State extends BEASTObject {
     /**
      * pointers to memory allocated to stateNodes and storedStateNodes *
      */
-    private StateNode[] stateNodeMem;
+    private xbeast.StateNode[] stateNodeMem;
 
     /**
      * File name used for storing the state, either periodically or at the end of an MCMC chain
@@ -188,19 +188,19 @@ public class State extends BEASTObject {
     }
 
     public void initialise() {
-        stateNode = stateNodeInput.get().toArray(new StateNode[0]);
+        stateNode = stateNodeInput.get().toArray(new xbeast.StateNode[0]);
 
         for (int i = 0; i < stateNode.length; i++) {
-            stateNode[i].index = i;
+            stateNode[i].setIndex(i);
         }
         // make itself known
-        for (StateNode state : stateNode) {
-            state.state = this;
+        for (xbeast.StateNode state : stateNode) {
+            state.setState(this);
         }
 
         nrOfStateNodes = stateNode.length;
         // allocate memory for StateNodes and a copy.
-        stateNodeMem = new StateNode[nrOfStateNodes * 2];
+        stateNodeMem = new xbeast.StateNode[nrOfStateNodes * 2];
         for (int i = 0; i < nrOfStateNodes; i++) {
             stateNodeMem[i] = stateNode[i];
             stateNodeMem[nrOfStateNodes + i] = stateNodeMem[i].copy();
@@ -222,7 +222,7 @@ public class State extends BEASTObject {
      * changing it. To change a StateNode, say from an Operator,
      * getEditableStateNode() should be called. *
      */
-    public StateNode getStateNode(final int _id) {
+    public xbeast.StateNode getStateNode(final int _id) {
         return stateNode[_id];
     }
 
@@ -235,7 +235,7 @@ public class State extends BEASTObject {
      * change the particular StateNode through the Input.get(Operator)
      * method on the input associated with this StateNode.
      */
-    protected StateNode getEditableStateNode(int _id, Object operator) {
+    public xbeast.StateNode getEditableStateNode(int _id, Object operator) {
         for (int i = 0; i < nrOfChangedStateNodes; i++) {
             if (changeStateNodes[i] == _id) {
                 return stateNode[_id];
@@ -356,7 +356,7 @@ public class State extends BEASTObject {
     public String toXML(final long sample) {
         final StringBuilder buf = new StringBuilder();
         buf.append("<itsabeastystatewerein version='2.0' sample='").append(sample).append("'>\n");
-        for (final StateNode node : stateNode) {
+        for (final xbeast.StateNode node : stateNode) {
             buf.append(node.toXML());
         }
         buf.append("</itsabeastystatewerein>\n");
@@ -382,7 +382,7 @@ public class State extends BEASTObject {
                     while (!stateNode[stateNodeIndex].getId().equals(id)) {
                         stateNodeIndex++;
                     }
-                    final StateNode stateNode2 = stateNode[stateNodeIndex].copy();
+                    final xbeast.StateNode stateNode2 = stateNode[stateNodeIndex].copy();
                     stateNode2.fromXML(child);
                     stateNode[stateNodeIndex].assignFromFragile(stateNode2);
                 }
@@ -426,7 +426,7 @@ public class State extends BEASTObject {
 	                    }
 	                }
 	                if (stateNodeIndex < stateNode.length) {
-		                final StateNode stateNode2 = stateNode[stateNodeIndex].copy();
+		                final xbeast.StateNode stateNode2 = stateNode[stateNodeIndex].copy();
 		                stateNode2.fromXML(child);
 		                stateNode[stateNodeIndex].assignFromFragile(stateNode2);
 	                }
@@ -443,7 +443,7 @@ public class State extends BEASTObject {
             return "";
         }
         final StringBuilder buf = new StringBuilder();
-        for (final StateNode node : stateNode) {
+        for (final xbeast.StateNode node : stateNode) {
             buf.append(node.toString());
             buf.append("\n");
         }
@@ -458,7 +458,7 @@ public class State extends BEASTObject {
      * trees mark all their nodes as isDirty.
      */
     public void setEverythingDirty(final boolean isDirty) {
-        for (final StateNode node : stateNode) {
+        for (final xbeast.StateNode node : stateNode) {
             node.setEverythingDirty(isDirty);
         }
 

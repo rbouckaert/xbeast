@@ -1775,9 +1775,9 @@ public class BeautiDoc extends BEASTObject implements RequiredInputProvider {
             taboo.add(doc.pluginmap.get("SpeciesTreeLoggerX"));
         }
         // add trees
-        for (StateNode node : mcmc.startStateInput.get().stateNodeInput.get()) {
+        for (xbeast.StateNode node : mcmc.startStateInput.get().stateNodeInput.get()) {
             if (node instanceof Tree) {
-                taboo.add(node);
+                taboo.add((Tree)node);
             }
         }
         // add MRCAPriors

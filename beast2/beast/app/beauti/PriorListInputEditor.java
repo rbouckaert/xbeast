@@ -286,7 +286,7 @@ public class PriorListInputEditor extends ListInputEditor {
 	            List<Tree> trees = new ArrayList<>();
 	            getDoc().scrubAll(true, false);
 	            State state = (State) doc.pluginmap.get("state");
-	            for (StateNode node : state.stateNodeInput.get()) {
+	            for (xbeast.StateNode node : state.stateNodeInput.get()) {
 	                if (node instanceof Tree) { // && ((Tree) node).m_initial.get() != null) {
 	                    trees.add((Tree) node);
 	                }

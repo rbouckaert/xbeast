@@ -128,9 +128,9 @@ public class StateNodeInitialiserListInputEditor extends ListInputEditor {
         // 0. collect state node info
         List<StateNodeInitialiser> inits = ((MCMC)doc.mcmc.get()).initialisersInput.get();
         State state = ((MCMC)doc.mcmc.get()).startStateInput.get();
-        List<StateNode> stateNodes = state.stateNodeInput.get();
+        List<xbeast.StateNode> stateNodes = state.stateNodeInput.get();
         List<Tree> trees = new ArrayList<>();
-        for (StateNode s: stateNodes) {
+        for (xbeast.StateNode s: stateNodes) {
         	if (s instanceof Tree) {
         		trees.add((Tree) s);
         	}

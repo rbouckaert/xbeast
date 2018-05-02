@@ -67,7 +67,7 @@ public class TreeWithMetaDataLogger extends BEASTObject implements Loggable {
         List<Function> metadata = parameterInput.get();
         for (int i = 0; i < metadata.size(); i++) {
         	if (metadata.get(i) instanceof StateNode) {
-        		metadata.set(i, ((StateNode) metadata.get(i)).getCurrent());
+        		metadata.set(i, (Function) ((xbeast.StateNode) metadata.get(i)).getCurrent());
         	}
         }
         BranchRateModel.Base branchRateModel = clockModelInput.get();

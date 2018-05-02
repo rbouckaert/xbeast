@@ -36,13 +36,13 @@ public class StrictClockModel extends BranchRateModel.Base {
     }
 
     @Override
-    protected void restore() {
+    public void restore() {
         mu = muParameter.getValue();
         super.restore();
     }
 
     @Override
-    protected void store() {
+    public void store() {
         mu = muParameter.getValue();
         super.store();
     }

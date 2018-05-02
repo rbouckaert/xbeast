@@ -429,7 +429,7 @@ public abstract class GeneralParameterList<T> extends StateNode {
     }
 
     @Override
-    protected void store() {
+    public void store() {
         pListStored.clear();
         for (QuietParameter param : pList)
             pListStored.add(param.copy());

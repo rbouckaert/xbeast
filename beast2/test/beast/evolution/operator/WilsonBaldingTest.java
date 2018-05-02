@@ -221,7 +221,7 @@ public class WilsonBaldingTest {
 		@Override
 		public void initAndValidate() {
 
-			List<BEASTObject> loggers = loggersInput.get();
+			List<xbeast.Loggable> loggers = loggersInput.get();
 			final int nLoggers = loggers.size();
 			if (nLoggers == 0) {
 				throw new IllegalArgumentException("Logger with nothing to log specified");

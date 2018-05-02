@@ -28,7 +28,7 @@ public abstract class CalculationNode extends BEASTObject {
      * intermediate results of calculations. Input values should not
      * be accessed because some StateNodes may have been changed.
      */
-    protected void store() {
+    public void store() {
         isDirty = false;
     }
 
@@ -92,7 +92,7 @@ public abstract class CalculationNode extends BEASTObject {
      * <p/>
      * This is called when a proposal is rejected
      */
-    protected void restore() {
+    public void restore() {
         isDirty = false;
     }
 
@@ -101,7 +101,7 @@ public abstract class CalculationNode extends BEASTObject {
      * <p/>
      * This is called when a proposal is accepted
      */
-    protected void accept() {
+    public void accept() {
         isDirty = false;
     }
 

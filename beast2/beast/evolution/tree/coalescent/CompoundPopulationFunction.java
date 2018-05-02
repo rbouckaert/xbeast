@@ -530,7 +530,7 @@ public class CompoundPopulationFunction extends PopulationFunction.Abstract impl
     }
 
     @Override
-    protected void store() {
+    public void store() {
         super.store();
     }
 
@@ -567,14 +567,14 @@ public class CompoundPopulationFunction extends PopulationFunction.Abstract impl
     }
 
     @Override
-    protected void restore() {
+    public void restore() {
         shadow.reject();
         shadow.reset();
         super.restore();
     }
 
     @Override
-    protected void accept() {
+    public void accept() {
         shadow.accept();
         shadow.reset();
         super.accept();

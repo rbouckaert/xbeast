@@ -14,7 +14,7 @@ public interface Variable<V> extends Statistic, StateNode {
     default public String getVariableName() {
     	return getID();
     }
-
+    
     public V getValue(int index);
 
     public void setValue(int index, V value);

@@ -31,7 +31,10 @@ import dr.inference.model.Parameter;
 import dr.inference.model.Variable;
 import dr.inferencexml.operators.ScaleOperatorParser;
 import dr.math.MathUtils;
+import xbeast.StateNode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import beast.core.Param;
@@ -87,6 +90,13 @@ public class ScaleOperator extends AbstractCoercableOperator {
     public void setOptimise(CoercionMode mode){throw new RuntimeException("Not implemented yet");}
 //    public double getWeight() {return weight;}
 //    public void setWeight(double weight){throw new RuntimeException("Not implemented yet");}
+    
+    @Override
+    public List<StateNode> listStateNodes() {
+    	List<StateNode> list = new ArrayList<>();
+    	list.add(variable);
+    	return list;
+    }
     
     
     public ScaleOperator(Variable<Double> variable, boolean scaleAll, int degreesOfFreedom, double scale,

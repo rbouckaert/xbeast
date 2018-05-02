@@ -79,7 +79,7 @@ public class TreeIntervals extends CalculationNode implements IntervalList {
     }
 
     @Override
-    protected void restore() {
+    public void restore() {
         //intervalsKnown = false;
         double[] tmp = storedIntervals;
         storedIntervals = intervals;
@@ -96,7 +96,7 @@ public class TreeIntervals extends CalculationNode implements IntervalList {
     }
 
     @Override
-    protected void store() {
+    public void store() {
         System.arraycopy(lineageCounts, 0, storedLineageCounts, 0, lineageCounts.length);
         System.arraycopy(intervals, 0, storedIntervals, 0, intervals.length);
         storedIntervalCount = intervalCount;

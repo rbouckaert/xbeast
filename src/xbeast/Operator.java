@@ -15,6 +15,11 @@ import beast.core.util.Evaluator;
 @Description("Proposes a move in state space.")
 public interface Operator extends Identifiable {
 	
+    @Override
+    default String getID() {
+    	return getClass().getName() + hashCode();
+    }
+
     /**
      * Implement this for proposing a new State.
      * The proposal is responsible for keeping the State valid,
