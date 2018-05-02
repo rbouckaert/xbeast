@@ -130,6 +130,12 @@ public interface Variable<V> extends xbeast.Variable<V> {
             return id;
         }
 
+        
+        @Override
+        public Collection<VariableListener> getVariableListeners() {
+        	return listeners;
+        }
+        
         protected List<VariableListener> listeners = new ArrayList<VariableListener>();
 
         protected String id;

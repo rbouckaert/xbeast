@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
@@ -15,6 +16,7 @@ import beast.math.distributions.Prior;
 import beast.util.PackageManager;
 import dr.inference.loggers.LogColumn;
 import dr.inference.model.Parameter;
+import dr.inference.model.VariableListener;
 import dr.inference.operators.ScaleOperator;
 import junit.framework.TestCase;
 
@@ -386,5 +388,158 @@ public class InterfaceImplementationTest extends TestCase {
         		"\nNo proper getColumns() implementation for: " + objectsWithoutGetColumns.toString(), 
         		objectsWithoutGetColumns.size() + objectsWithoutInit.size() + objectsWithoutLog.size() == 0);
     } // testOperatorMethods
+    
+    
+    
+    class VariableMisFit implements xbeast.Variable<Double> {
 
+		@Override
+		public int getDimension() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public Double getValue(int index) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setValue(int index, Double value) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public Double[] getValues() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void addVariableListener(VariableListener listener) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public Collection<VariableListener> getVariableListeners() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void removeVariableListener(VariableListener listener) {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+    }
+
+    public void testVariableMisFit() {
+    	VariableMisFit o = new VariableMisFit();
+    	try {
+    		o.getDimension();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.store();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.restore();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.setUpper(0.0);
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.setLower(0.0);
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    }
+
+    /**
+     * Check all plug-ins have a proper setID and getID implementation
+     */
+    @Test
+    public void testVariableMethods() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream out = null;
+		try {
+			out = new PrintStream(baos, true, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+        final List<String> objectNames = PackageManager.find(xbeast.Variable.class, PackageManager.IMPLEMENTATION_DIR);
+        final List<String> objectsWithoutGetDimension = new ArrayList<String>();
+        final List<String> objectsWithoutStore = new ArrayList<String>();
+        final List<String> objectsWithoutRestore = new ArrayList<String>();
+        final List<String> objectsSetUpper = new ArrayList<String>();
+        final List<String> objectsSetLower = new ArrayList<String>();
+        for (final String beastObjectName : objectNames) {
+            try {
+                final Class<?> objectClass = beast.util.PackageManager.forName(beastObjectName);
+                try {
+                	xbeast.Variable o = (xbeast.Variable) objectClass.newInstance();
+                	try {
+                		o.getDimension();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutGetDimension.add(beastObjectName);
+                	}
+                	try {
+                		o.store();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutStore.add(beastObjectName);
+                	}
+                	try {
+                		o.restore();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutRestore.add(beastObjectName);
+                	}
+                	try {
+                		o.setUpper(0);
+                	} catch (StackOverflowError e) {
+                		objectsSetUpper.add(beastObjectName);
+                	}
+                	try {
+                		o.setLower(0);
+                	} catch (StackOverflowError e) {
+                		objectsSetLower.add(beastObjectName);
+                	}
+                } catch (InstantiationException | IllegalAccessException e) {
+                	// ignore -- these classes cannot be tested
+                }
+            } catch (Exception e) {
+            }
+        }
+        assertTrue("No proper getDimension() implementation for: " + objectsWithoutGetDimension.toString() +
+        		"\nNo proper store() implementation for: " + objectsWithoutStore.toString() +
+        		"\nNo proper restore() implementation for: " + objectsWithoutRestore.toString() + 
+        		"\nNo proper setUpper(V) implementation for: " + objectsSetUpper.toString() +
+        		"\nNo proper setLower(V) implementation for: " + objectsSetLower.toString(),
+        		objectsWithoutGetDimension.size() + objectsWithoutStore.size() + objectsWithoutRestore.size() +
+        		objectsSetUpper.size() + objectsSetLower.size() == 0
+        		);
+    } // testVariableMethods
+    
+    
 } // class InterfaceImplementationTest

@@ -2,7 +2,6 @@ package xbeast;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.List;
 
 import dr.inference.model.Bounds;
 import dr.inference.model.VariableListener;

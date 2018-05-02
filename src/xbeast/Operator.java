@@ -3,7 +3,7 @@ package xbeast;
 import beast.core.Description;
 
 @Description("Proposes a move in state space.")
-public interface Operator {
+public interface Operator extends Identifiable {
 	
 	 /**
      * Implement this for proposing a new State.
