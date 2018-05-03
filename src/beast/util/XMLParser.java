@@ -870,6 +870,11 @@ public class XMLParser {
     
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private BEASTInterface useAnnotatedConstructor(Node node, String _id, String clazzName, List<NameValuePair> inputInfo) throws XMLParserException {
+		
+		if (clazzName.startsWith("dr")) {
+			int h =3;
+			h++;
+		}
 		Class<?> clazz = null;
 		try {
 			clazz = Class.forName(clazzName);
@@ -926,11 +931,6 @@ public class XMLParser {
 						}
 		    		}
 		    		for (int i = offset; i < types.length; i++) {
-		    			if (clazzName.contains("MCMC")) {
-		    				int h = 3;
-		    				h++;
-		    			}
-
 		    			Param param = paramAnnotations.get(i - offset);
 		    			Type type = types[i];
 		    			if (type.getTypeName().equals("java.util.List")) {
@@ -1170,7 +1170,11 @@ public class XMLParser {
             // for non-list inputs, this should be true if the value was not already set before
             // for list inputs this is always true.
             if (input.get() == input.defaultValue) {
-                beastObject.setInputValue(name, beastObject2);
+            	if (beastObject2 instanceof VirtualBEASTObject) {
+            		beastObject.setInputValue(name, ((VirtualBEASTObject)beastObject2).getObject());
+            	} else {
+            		beastObject.setInputValue(name, beastObject2);
+            	}
             } else {
                 throw new XMLParserException(node, "\nMultiple entries for input \"" + input.getName() + "\" but only single entry expected "
                 		+ "in element \"" + node.getNodeName() + "\"", 130);

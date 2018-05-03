@@ -1,5 +1,7 @@
 package test.xbeast.core;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,6 +13,9 @@ import beast.core.Logger;
 import beast.core.MCMC;
 import beast.math.distributions.Normal;
 import beast.math.distributions.Prior;
+import beast.util.XMLParser;
+import beast.util.XMLParserException;
+import beast.util.XMLProducer;
 import dr.inference.model.Parameter;
 import dr.inference.operators.ScaleOperator;
 import junit.framework.TestCase;
@@ -18,7 +23,7 @@ import junit.framework.TestCase;
 public class ParameterMCMCTest extends TestCase {
 	
 	@Test
-	public void testMCMC() throws IOException, SAXException, ParserConfigurationException {
+	public void testMCMC() throws IOException, SAXException, ParserConfigurationException, XMLParserException {
 		// run MCMC 2 on parameter 1 with operator 1 and prior 2
     	Parameter.Default x1 = new Parameter.Default(new double[]{2.0});
     	x1.setID("x1");
@@ -47,6 +52,15 @@ public class ParameterMCMCTest extends TestCase {
     	MCMC mcmc = new MCMC();
     	mcmc.setID("mcmc");
     	mcmc.initByName("chainLength", 1000L, "operator", operator, "distribution", prior, "logger", logger);
+
+//    	XMLProducer producer = new XMLProducer();
+//        FileWriter outfile = new FileWriter(new File("/tmp/testMCMC.xml"));
+//        outfile.write(producer.toXML(mcmc));
+//        outfile.close();
+//
+//        XMLParser parser = new XMLParser();
+//        mcmc = (MCMC) parser.parseFile(new File("/tmp/testMCMC.xml"));
+
     	mcmc.run();
 	}
 

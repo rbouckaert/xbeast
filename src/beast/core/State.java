@@ -527,6 +527,15 @@ public class State extends BEASTObject implements xbeast.State {
                         throw new RuntimeException("DEVELOPER ERROR: output of StateNode (" + stateNode[i].getId() + ") should be a CalculationNode, but " + beastObject.getClass().getName() + " is not.");
                     }
                 }
+            } else if (BEASTObjectStore.hasAnnotations(stateNode[i])) {
+                for (BEASTInterface beastObject : outputMap.get(BEASTObjectStore.INSTANCE.getBEASTObject(stateNode[i]))) {
+                    if (beastObject instanceof CalculationNode) {
+                        stateNodeOutputs[i].add((CalculationNode) beastObject);
+                    } else {
+                        throw new RuntimeException("DEVELOPER ERROR: output of StateNode (" + stateNode[i].getId() + ") should be a CalculationNode, but " + beastObject.getClass().getName() + " is not.");
+                    }
+                }
+
             } else {
                 Log.warning.println("\nWARNING: StateNode (" + stateNode[i].getId() + ") found that has no effect on posterior!\n");
             }

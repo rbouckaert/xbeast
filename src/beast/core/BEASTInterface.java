@@ -370,10 +370,16 @@ public interface BEASTInterface extends xbeast.Identifiable {
         			for (final Object o : list) {
         				if (o instanceof BEASTInterface) {
         					beastObjects.add((BEASTInterface) o);
+        				} else if (BEASTObjectStore.INSTANCE.getBEASTObject(o) != null) {
+            				beastObjects.add((BEASTInterface) BEASTObjectStore.INSTANCE.getBEASTObject(o));        						
         				}
         			}
-        		} else if (input.get() != null && input.get() instanceof BEASTInterface) {
-        			beastObjects.add((BEASTInterface) input.get());
+        		} else if (input.get() != null) {
+        			if (input.get() instanceof BEASTInterface) {
+        				beastObjects.add((BEASTInterface) input.get());
+    				} else if (BEASTObjectStore.INSTANCE.getBEASTObject(input.get()) != null) {
+        				beastObjects.add((BEASTInterface) BEASTObjectStore.INSTANCE.getBEASTObject(input.get()));        						
+    				}        				
         		}
         	}
         }

@@ -28,6 +28,25 @@ public class BEASTObjectStore {
 		return vbo;
 	}
 	
+	public static boolean hasAnnotations(Object o) {
+	    Constructor<?>[] allConstructors = o.getClass().getDeclaredConstructors();
+	    boolean hasID = false;
+	    boolean hasName = false;
+	    for (Constructor<?> ctor : allConstructors) {
+	    	Annotation[][] annotations = ctor.getParameterAnnotations();
+	    	List<Param> paramAnnotations = new ArrayList<>();
+	    	int optionals = 0;
+	    	for (Annotation [] a0 : annotations) {
+		    	for (Annotation a : a0) {
+		    		if (a instanceof Param) {
+		    			return true;
+		    		}
+	    		}
+	    	}
+	    }
+		return false;
+	}
+
 	public BEASTObject getBEASTObject(Object o) {
 		BEASTObject vbo = objectStore.get(o);
 		if (vbo == null) {

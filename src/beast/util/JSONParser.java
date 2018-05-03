@@ -1291,9 +1291,17 @@ public class JSONParser {
 			// already set before
 			// for list inputs this is always true.
 			if (input.get() == input.defaultValue) {
-				beastObject.setInputValue(name, value);
+            	if (value instanceof VirtualBEASTObject) {
+            		beastObject.setInputValue(name, ((VirtualBEASTObject)value).getObject());
+            	} else {
+            		beastObject.setInputValue(name, value);
+            	}
 			} else if (input.getType().isPrimitive() && input.defaultValue == null) {
-				beastObject.setInputValue(name, value);
+            	if (value instanceof VirtualBEASTObject) {
+            		beastObject.setInputValue(name, ((VirtualBEASTObject)value).getObject());
+            	} else {
+            		beastObject.setInputValue(name, value);
+            	}
 			} else {
 				throw new IOException("Multiple entries for non-list input " + input.getName());
 			}
