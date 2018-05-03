@@ -43,6 +43,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import beast.core.util.Log;
+import dr.inference.model.Variable;
+import dr.inference.model.Variable.ChangeType;
+import dr.inference.model.VariableListener;
 
 
 
@@ -51,7 +54,7 @@ import beast.core.util.Log;
         "maintains values of a set of StateNodes, such as parameters and trees. " +
         "Furthermore, the state manages which parts of the model need to be stored/restored " +
         "and notified that recalculation is appropriate.")
-public class State extends BEASTObject implements xbeast.State {
+public class State extends BEASTObject implements xbeast.State, VariableListener {
 
     public final Input<List<xbeast.StateNode>> stateNodeInput =
             new Input<>("stateNode", "anything that is part of the state", new ArrayList<>());
@@ -84,7 +87,7 @@ public class State extends BEASTObject implements xbeast.State {
     /**
      * pointers to memory allocated to stateNodes and storedStateNodes *
      */
-    private xbeast.StateNode[] stateNodeMem;
+    //private xbeast.StateNode[] stateNodeMem;
 
     /**
      * File name used for storing the state, either periodically or at the end of an MCMC chain
@@ -200,10 +203,17 @@ public class State extends BEASTObject implements xbeast.State {
 
         nrOfStateNodes = stateNode.length;
         // allocate memory for StateNodes and a copy.
-        stateNodeMem = new xbeast.StateNode[nrOfStateNodes * 2];
-        for (int i = 0; i < nrOfStateNodes; i++) {
-            stateNodeMem[i] = stateNode[i];
-            stateNodeMem[nrOfStateNodes + i] = stateNodeMem[i].copy();
+        //stateNodeMem = new xbeast.StateNode[nrOfStateNodes * 2];
+        //for (int i = 0; i < nrOfStateNodes; i++) {
+        //    stateNodeMem[i] = stateNode[i];
+        //    stateNodeMem[nrOfStateNodes + i] = stateNodeMem[i].copy();
+        //}
+        
+        // make itself known
+        for (xbeast.StateNode state : stateNode) {
+        	if (state instanceof xbeast.Variable) {
+        		((xbeast.Variable) state).addVariableListener(this);
+        	}
         }
 
         // set up data structure for encoding which StateNodes change by an operation
@@ -638,6 +648,12 @@ public class State extends BEASTObject implements xbeast.State {
 
         return calcNodes;
     } // calculateCalcNodePath
+
+	@Override
+	public void variableChangedEvent(Variable variable, int index, ChangeType type) {
+		int i = variable.getIndex();
+		getEditableStateNode(i, null);
+	}
 
 
 //    public double robustlyCalcPosterior(final Distribution posterior) {

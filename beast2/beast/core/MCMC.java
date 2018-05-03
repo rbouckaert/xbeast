@@ -461,6 +461,9 @@ public class MCMC extends beast.core.Runnable {
         if (printDebugInfo) System.err.print("\n" + sampleNr + " " + operator.getName()+ ":");
 
         final Distribution evaluatorDistribution = operator.getEvaluatorDistribution();
+        for (xbeast.StateNode s : operator.listStateNodes()) {
+        	s.store();
+        }
         Evaluator evaluator = null;
 
         if (evaluatorDistribution != null) {
