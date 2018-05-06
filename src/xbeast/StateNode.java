@@ -18,7 +18,7 @@ import org.w3c.dom.Node;
  * @author Alexei Drummond
  */
 
-public interface StateNode extends Identifiable {
+public interface StateNode extends Identifiable, Model {
 
 	/**
 	 * the index is used to identify this stateNode in the State 

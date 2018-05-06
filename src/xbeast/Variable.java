@@ -99,6 +99,10 @@ public interface Variable<V> extends Statistic, StateNode {
     default void acceptVariableValues() {
     }
     
+    @Override
+    default public void accept() {
+    	acceptVariableValues();
+    }
 
     /**
      * @return the bounds on this parameter

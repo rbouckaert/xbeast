@@ -320,6 +320,10 @@ public class State extends BEASTObject implements xbeast.State, VariableListener
     }
 
     public void acceptCalculationNodes() {
+        for (int i = 0; i < nrOfChangedStateNodes; i++) {
+            stateNode[changeStateNodes[i]].accept();
+        }
+
         final List<CalculationNode> currentSetOfCalculationNodes = getCurrentCalculationNodes();
         for (final CalculationNode calculationNode : currentSetOfCalculationNodes) {
             calculationNode.accept();
