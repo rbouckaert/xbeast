@@ -245,6 +245,7 @@
             <batchtest fork="yes" todir="${report}">
                 <fileset dir="beast2/">
                     <include name="test/**/*Test.java" />
+                    <exclude name="test/beast/app/BeautiTest.java"/>
                     <exclude name="test/beast/beast2vs1/**/*Test.java"/>
                     <exclude name="test/beast/app/beauti/**/*Test.java"/>
                 </fileset>

@@ -40,7 +40,7 @@ public interface Function extends xbeast.Statistic {
         return values;
     }
     
-    @Description("")
+    @Description("Function that does not change over time")
     public class Constant extends BEASTObject implements Function {
     	private double [] values;
     	private String[] names;

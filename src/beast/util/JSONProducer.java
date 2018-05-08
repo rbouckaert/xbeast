@@ -22,6 +22,8 @@ import beast.core.BEASTInterface;
 import beast.core.BEASTObjectStore;
 import beast.core.Input;
 import beast.core.parameter.Parameter;
+import beast.evolution.alignment.Alignment;
+import beast.evolution.operators.ScaleOperator;
 
 
 
@@ -118,9 +120,9 @@ public class JSONProducer {
     } // toJSON
 
     private void findPriorityBeastObjects(Object beastObject, List<BEASTInterface> priorityBeastObjects) throws IllegalArgumentException, IllegalAccessException {
-//    	if (beastObject.getClass().equals(Alignment.class)) {
-//    		priorityBeastObjects.add(beastObject);
-//    	}
+    	if (beastObject.getClass().equals(Alignment.class)) {
+    		priorityBeastObjects.add((Alignment) beastObject);
+    	}
 //    	if (beastObject instanceof TraitSet) {
 //    		priorityBeastObjects.add(beastObject);
 //    	}
@@ -213,11 +215,16 @@ public class JSONProducer {
         	//}
         }
 
+        
+        if (beastObject instanceof ScaleOperator) {
+        	int h = 3;
+        	h++;
+        }
         if (!skipInputs) {
             // process inputs of this beastObject
             // first, collect values as attributes
             List<Input<?>> inputs = BEASTObjectStore.listInputs(beastObject);
-            Collections.sort(inputs, (a,b) -> {return a.getName().compareTo(b.getName());});
+            //Collections.sort(inputs, (a,b) -> {return a.getName().compareTo(b.getName());});
             //List<InputType> inputs = XMLParserUtils.listInputs(beastObject.getClass(), beastObject);
             for (Input<?> input : inputs) {
             	StringBuffer buf2 = new StringBuffer();
@@ -329,11 +336,11 @@ public class JSONProducer {
                     		buf2.append(",\n");
                     	}
                     	StringBuffer buf3 = new StringBuffer();
-                    	//if (o2 instanceof BEASTInterface) {
-                    	beastObjectToJSON(o2, input.getType(), buf3, null, false);
-                    	//} else {
-                    	//	buf2.append(o2.toString());
-                    	//}
+                    	if (BEASTObjectStore.isPrimitive(o2)) {
+                    		buf2.append(o2.toString());
+                    	} else {
+                    		beastObjectToJSON(o2, input.getType(), buf3, null, false);
+                    	}
                         buf2.append(buf3);
                         needsComma = oldLen < buf2.length();
                     }
@@ -413,7 +420,7 @@ public class JSONProducer {
             			Parameter.Base parameter = (Parameter.Base) value;
             			boolean isInState = false;
             			for (Object o : parameter.getOutputs()) {
-            				if (o.getClass().getName().equals("State")) {
+            				if (o.getClass().getSimpleName().equals("State")) {
             					isInState = true;
             					break;
             				}

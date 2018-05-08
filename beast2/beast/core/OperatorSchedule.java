@@ -375,6 +375,7 @@ public class OperatorSchedule extends BEASTObject {
 	            }
 	        }
 	    }
+        reweightOperators();
         showOperatorRates(System.err);
     }
 

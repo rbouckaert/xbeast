@@ -87,7 +87,9 @@ public class BEASTObjectStore {
 		// The value is primitive if there are no @Param annotations, and 
 		// no newInstance() method and has no @Description annotation. 
 		// Any primitive object (int, short, boolean, etc) is certainly primitive.
-		if (value.getClass().isPrimitive()) {
+		if (value.getClass().isPrimitive() || Number.class.isAssignableFrom(value.getClass()) 
+				|| value.getClass() == Boolean.class || value.getClass() == String.class
+				|| value.getClass().isEnum()) {
 			return true;
 		}
 		

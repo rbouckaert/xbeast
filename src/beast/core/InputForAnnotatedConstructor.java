@@ -78,7 +78,7 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 
 		if (param.optional()) {
 			String defaultValue = param.defaultValue();
-//			try {
+			try {
 				this.defaultValue = (T) fromString(defaultValue, this.theClass);
 
 				methodName = "default" + 
@@ -98,10 +98,16 @@ public class InputForAnnotatedConstructor<T> extends Input<T> {
 					// ignore
 				}
 				
-				//			} catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+			} catch (RuntimeException e) {
+				if (defaultValue.equals("")) {
+					// ignore failure to find default value
+					// if the annotation sets it to an empty String.
+				} else {
+					throw e;
+				}
 //				e.printStackTrace();
 //				throw new IllegalArgumentException(e.getMessage());
-//			}
+			}
 		}
 		
 	}

@@ -885,13 +885,17 @@ public class XMLProducer extends XMLParser {
             Collections.sort(inputs, (a,b) -> {return a.getName().compareTo(b.getName());});
             for (Input<?> input : inputs) {
             	Object value = input.get();
-                inputToXML(input, value, beastObject, buf, true);
+            	if (value != null) {
+            		inputToXML(input, value, beastObject, buf, true);
+            	}
             }
             // next, collect values as input elements
             StringBuffer buf2 = new StringBuffer();
             for (Input input : inputs) {
             	Object value = input.get();
-                inputToXML(input, value, beastObject, buf2, false);
+            	if (value != null) {
+            		inputToXML(input, value, beastObject, buf2, false);
+            	}
             }
             if (buf2.length() == 0) {
                 // if nothing was added by the inputs, close element

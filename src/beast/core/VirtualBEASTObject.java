@@ -10,6 +10,7 @@ import java.util.Map;
 
 import beast.core.util.Log;
 
+@Description("BEAST Object that encapsulates an object that does not implement BEASTInterface")
 public class VirtualBEASTObject extends BEASTObject {
 	Object o;
 

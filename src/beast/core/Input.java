@@ -738,7 +738,7 @@ public class Input<T> {
 						} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 								| InvocationTargetException e) {
 							e.printStackTrace();
-							throw new RuntimeException("User ofString constructor failed: " + e.getMessage());
+							throw new RuntimeException("Use of String constructor failed: " + e.getMessage());
 						}
 			    		arg = o;
 			    		break;

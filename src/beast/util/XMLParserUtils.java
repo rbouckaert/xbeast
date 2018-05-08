@@ -319,6 +319,9 @@ public class XMLParserUtils {
      * find closest matching class to named class *
      */
     static String guessClass(final String classname) {
+    	if (classname == null) {
+    		return "<<no spec attribute specified>>";
+    	}
         String name = classname;
         if (classname.contains(".")) {
             name = classname.substring(classname.lastIndexOf('.') + 1);
