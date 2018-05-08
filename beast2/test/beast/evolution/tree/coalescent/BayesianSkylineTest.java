@@ -3,6 +3,7 @@ package test.beast.evolution.tree.coalescent;
 
 import org.junit.Test;
 
+import beast.core.parameter.RealParameter;
 import beast.evolution.tree.Tree;
 import beast.evolution.tree.coalescent.BayesianSkyline;
 import beast.evolution.tree.coalescent.TreeIntervals;
@@ -28,7 +29,7 @@ public class BayesianSkylineTest extends TestCase {
 
         BayesianSkyline skyline = new BayesianSkyline();
         //skyline.init(popSize, groupSize, intervals);
-        skyline.initByName("popSizes", "1.0 2.0",
+        skyline.initByName("popSizes", new RealParameter("1.0 2.0"),
                 "groupSizes", "2 2",
                 "treeIntervals", intervals);
 

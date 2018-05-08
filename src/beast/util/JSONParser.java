@@ -1235,26 +1235,23 @@ public class JSONParser {
 						element.put("idref", IDRef);
 						BEASTInterface beastObject = createObject(element, BEAST_OBJECT_CLASS);
 						map.add(new NameValuePair(name, beastObject));
-						//setInput(node, parent, name, beastObject);
 					} else {
 						map.add(new NameValuePair(name, value));
-						//setInput(node, parent, name, value);
 					}
 				} else if (o instanceof Number) {
-					map.add(new NameValuePair(name, o));
-					//parent.setInputValue(name, o);
+					// Don't store o itself but o.toString() and let 
+					// Input.setStringValue take care of conversion between 
+					// various kinds of Number, e.g Integer and Long
+					map.add(new NameValuePair(name, o.toString())); 
 				} else if (o instanceof Boolean) {
 					map.add(new NameValuePair(name, o));
-					//parent.setInputValue(name, o);
 				} else if (o instanceof JSONObject) {
 					JSONObject child = (JSONObject) o;
 					String className = getClassName(child, name);//, inputs);
 					BEASTInterface childItem = createObject(child, className);
 					if (childItem != null) {
 						map.add(new NameValuePair(name, childItem));
-						//setInput(node, parent, name, childItem);
 					}
-					// childElements++;
 				} else if (o instanceof JSONArray) {
 					JSONArray list = (JSONArray) o;
 					
@@ -1263,15 +1260,13 @@ public class JSONParser {
 						Object o2 = list.get(i);
 						if (o2 instanceof JSONObject) {
 							JSONObject child = (JSONObject) o2;
-							String className = getClassName(child, name);//, inputs);
+							String className = getClassName(child, name);
 							BEASTInterface childItem = createObject(child, className);
 							if (childItem != null) {
 								r.add(childItem);
-								//setInput(node, parent, name, childItem);
 							}
 						} else {
 							r.add(o2);
-							//parent.setInputValue(name, o2);									
 						}
 					}
 					map.add(new NameValuePair(name, r));

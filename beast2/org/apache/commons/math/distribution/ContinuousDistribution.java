@@ -50,5 +50,7 @@ public interface ContinuousDistribution extends Distribution {
      */
     double density(double x);
 
-    double logDensity(double x);// {return Math.log(density(x));
+    default double logDensity(double x) {
+    	return Math.log(density(x));
+    }
 }

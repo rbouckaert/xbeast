@@ -1,10 +1,10 @@
-<!-- Build BEAST 2. It is also used by Hudson BEAST_2 project. JUnit test is available for this build. -->
-<project basedir="." default="build_jar_all_BEAST" name="BUILD_BEAST_2">
+<!-- Build BEAST 2. It is also used by Hudson X_BEAST project. JUnit test is available for this build. -->
+<project basedir="." default="build_jar_all_BEAST" name="BUILD_X_BEAST">
     <description>
-        Build BEAST 2.
-        Also used by Hudson BEAST_2 project.
+        Build X-BEAST.
+        Also used by Hudson X-BEAST project.
         JUnit test is available for this build.
-        $Id: build_BEAST_2.xml $
+        $Id: build_X_BEAST.xml $
     </description>
 
     <!-- set global properties for this build -->
@@ -177,6 +177,7 @@
             <zipgroupfileset dir="${lib2}" includes="beagle.jar" />
             <zipgroupfileset dir="${lib2}" includes="colt.jar" />
             <zipgroupfileset dir="${lib2}" includes="commons-math3-3.1.1.jar" />
+
         </jar>
         <jar jarfile="${dist}/launcher.jar">
             <fileset dir="${build}">
@@ -235,18 +236,26 @@
         <junit printsummary="yes" failureproperty="junitfailed">
             <!--showoutput='yes'-->
             <classpath>
-                <path refid="classpath" />
                 <path location="${build}" />
+                <path refid="classpath" />
             </classpath>
 
             <formatter type="xml" />
 
             <batchtest fork="yes" todir="${report}">
-                <fileset dir="${src}">
+                <fileset dir="beast2/">
                     <include name="test/**/*Test.java" />
                     <exclude name="test/beast/beast2vs1/**/*Test.java"/>
                     <exclude name="test/beast/app/beauti/**/*Test.java"/>
                 </fileset>
+                <fileset dir="${src}">
+                    <include name="test/**/*Test.java" />
+                </fileset>
+                <!--
+                <fileset dir="beast1/">
+                    <include name="test/**/*Test.java" />
+                </fileset>
+                -->
             </batchtest>
         </junit>
         <echo message="JUnit test finished." />
@@ -1236,7 +1245,7 @@
 
         <delete file="${release_dir}/${BEAST_name}_v${version}_SDK.zip" />
 
-        <copy file="doc/slides/sdk.pdf" tofile="${common_dir}/Beast_2_Getting_Started.pdf" />
+        <copy file="doc/slides/sdk.pdf" tofile="${common_dir}/X_BEAST_Getting_Started.pdf" />
 
         <zip destfile="${release_dir}/${BEAST_name}_v${version}_SDK.zip">
             <fileset dir="${common_dir}">
@@ -1251,7 +1260,7 @@
         </zip>
 
         <!-- clean up -->
-        <delete file="${common_dir}/Beast_2_Getting_Started.pdf" />
+        <delete file="${common_dir}/X_BEAST_Getting_Started.pdf" />
 
         <echo message="SDK release is finished." />
     </target>

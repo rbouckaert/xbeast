@@ -341,7 +341,7 @@ public class TreeLikelihoodTest extends TestCase {
         freqs.initByName("data", data);
 
         GeneralSubstitutionModel gsm = new GeneralSubstitutionModel();
-        gsm.initByName("rates", "1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0", "frequencies", freqs);
+        gsm.initByName("rates", new RealParameter("1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0"), "frequencies", freqs);
 
         SiteModel siteModel = new SiteModel();
         siteModel.initByName("mutationRate", "1.0", "gammaCategoryCount", 1,
@@ -371,7 +371,7 @@ public class TreeLikelihoodTest extends TestCase {
         freqs.initByName("data", data);
 
         GeneralSubstitutionModel gsm = new GeneralSubstitutionModel();
-        gsm.initByName("rates", "1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0", "frequencies", freqs);
+        gsm.initByName("rates", new RealParameter("1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0"), "frequencies", freqs);
 
         SiteModel siteModel = new SiteModel();
         siteModel.initByName("mutationRate", "1.0", "gammaCategoryCount", 4,
@@ -400,7 +400,7 @@ public class TreeLikelihoodTest extends TestCase {
         freqs.initByName("data", data);
 
         GeneralSubstitutionModel gsm = new GeneralSubstitutionModel();
-        gsm.initByName("rates", "1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0", "frequencies", freqs);
+        gsm.initByName("rates", new RealParameter("1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0"), "frequencies", freqs);
 
         SiteModel siteModel = new SiteModel();
         siteModel.initByName("mutationRate", "1.0", "gammaCategoryCount", 4,
@@ -747,7 +747,7 @@ public class TreeLikelihoodTest extends TestCase {
         Frequencies freqs = new Frequencies();
         freqs.initByName("frequencies", frequencies);
         GeneralSubstitutionModel gsm = new GeneralSubstitutionModel();
-        gsm.initByName("rates", "1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0", "frequencies", freqs);
+        gsm.initByName("rates", new RealParameter("1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0"), "frequencies", freqs);
 
         SiteModel siteModel = new SiteModel();
         siteModel.initByName("mutationRate", "1.0", "gammaCategoryCount", 1, "substModel", gsm);

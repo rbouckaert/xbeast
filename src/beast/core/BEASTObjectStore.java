@@ -112,6 +112,11 @@ public class BEASTObjectStore {
 	}
 	
 	public static boolean isPrimitiveType(String typeName) {
+		if (typeName.equals("int") || typeName.equals("long") || typeName.equals("short") || 
+				typeName.equals("char") || typeName.equals("boolean") || typeName.equals("byte") || 
+				typeName.equals("double") || typeName.equals("float")) {
+			return true;
+		}
 		try {
 			Class clazz = Class.forName(typeName);
 

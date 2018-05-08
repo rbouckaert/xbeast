@@ -393,11 +393,11 @@ public class InterfaceImplementationTest extends TestCase {
     
     class VariableMisFit implements xbeast.Variable<Double> {
 
-		@Override
-		public int getDimension() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
+//		@Override
+//		public int getDimension() {
+//			// TODO Auto-generated method stub
+//			return 0;
+//		}
 
 		@Override
 		public Double getValue(int index) {

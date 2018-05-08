@@ -1051,13 +1051,16 @@ public class XMLProducer extends XMLParser {
 	            	buf2.append("\"");
 	            	buf.append(buf2);
                 } else {
-	            	for (Object o2 : (Object []) value) {
-                    	StringBuffer buf3 = new StringBuffer();
-                    	if (!BEASTObjectStore.isPrimitive(o2)) {
-                    		beastObjectToXML(o2, buf3, input.getName(), false);
-	                        buf.append(buf3);
-                    	}
-	            	}
+	            	Class type = value.getClass().getComponentType();
+                	if (!type.isPrimitive()) {
+		            	for (Object o2 : (Object []) value) {
+	                    	StringBuffer buf3 = new StringBuffer();
+	                    	if (!BEASTObjectStore.isPrimitive(o2)) {
+	                    		beastObjectToXML(o2, buf3, input.getName(), false);
+		                        buf.append(buf3);
+	                    	}
+		            	}
+                	}
                 }
             	return;
             } else if (value instanceof BEASTInterface) {

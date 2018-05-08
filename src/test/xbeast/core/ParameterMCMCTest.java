@@ -13,6 +13,7 @@ import beast.core.Logger;
 import beast.core.MCMC;
 import beast.math.distributions.Normal;
 import beast.math.distributions.Prior;
+import beast.util.Randomizer;
 import beast.util.XMLParser;
 import beast.util.XMLParserException;
 import beast.util.XMLProducer;
@@ -37,19 +38,23 @@ public class ParameterMCMCTest extends TestCase {
 	
 	    	ScaleOperator operator = new ScaleOperator(x1, 0.75);
 	    	operator.setID("scaleOperator");
-	        	x1.addBounds(0.0, Double.POSITIVE_INFINITY);
-	    	operator.proposal();
-	    	double v = x1.getArrayValue();
-	    	assertNotSame(v, 2.0);
-	    	operator.accept();
-	    	operator.proposal();
-	    	assertNotSame(x1.getValue(0), v);
-	    	operator.accept();
+	        x1.addBounds(0.0, Double.POSITIVE_INFINITY);
+//	    	operator.proposal();
+//	    	double v = x1.getArrayValue();
+//	    	assertNotSame(v, 2.0);
+//	    	operator.accept();
+//	    	operator.proposal();
+//	    	assertNotSame(x1.getValue(0), v);
+//	    	operator.accept();
 	
 	    	Logger logger = new Logger();
 	    	logger.setID("screenlog");
-	    	logger.initByName("log", x1, "log", prior, "logEvery", 100, "mode", Logger.LOGMODE.compound);
+	    	logger.initByName("log", x1, "log", prior, "logEvery", 100, "mode", Logger.LOGMODE.compound,
+	    			"fileName", "/tmp/x.log"
+	    			);
 	    	
+	    	Randomizer.setSeed(123);	
+	    	Logger.FILE_MODE = Logger.FILE_MODE.overwrite;
 	    	MCMC mcmc = new MCMC();
 	    	mcmc.setID("mcmc");
 	    	mcmc.initByName("chainLength", 100000L, "operator", operator, "distribution", prior, "logger", logger);

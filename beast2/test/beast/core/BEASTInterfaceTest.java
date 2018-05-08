@@ -109,7 +109,7 @@ public class BEASTInterfaceTest extends TestCase {
 		beasti2.getPredecessors(predecessors);
 		assertEquals(1, predecessors.size());
 		beasti.getPredecessors(predecessors);
-		assertEquals(2, predecessors.size());
+		assertEquals(3, predecessors.size());
 		assertEquals(beasti, predecessors.get(1));
 		assertEquals(beasti2, predecessors.get(0));
 		
@@ -122,7 +122,7 @@ public class BEASTInterfaceTest extends TestCase {
 		assertEquals(false, b);
 		
 		List<BEASTInterface> beastObjbects = beasti.listActiveBEASTObjects();
-		assertEquals(1, beastObjbects.size());
+		assertEquals(2, beastObjbects.size());
 		assertEquals(beasti2, beastObjbects.get(0));
 		beastObjbects = beasti2.listActiveBEASTObjects();
 		assertEquals(0, beastObjbects.size());
