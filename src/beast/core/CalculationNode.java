@@ -11,7 +11,7 @@ package beast.core;
  * @author Andrew Rambaut
  */
 @Description("BEASTObject that performs calculations based on the State.")
-public abstract class CalculationNode extends BEASTObject {
+public abstract class CalculationNode extends BEASTObject implements xbeast.Model {
 
     //=================================================================
     // The API of CalculationNode. These 3 functions (store/restore/requireCalculation)

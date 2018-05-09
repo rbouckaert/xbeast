@@ -18,17 +18,39 @@ public interface Model extends Identifiable, Serializable {
 //     */
 //    void removeModelListener(ModelListener listener);
 //
-//	/**
-//	 * This function should be called to store the state of the
-//	 * entire model. This makes the model state invalid until either
-//	 * an acceptModelState or restoreModelState is called.
-//	 */
-//	void storeModelState();
-//
-//	/**
-//	 * This function should be called to restore the state of the entire model.
-//	 */
-//	void restoreModelState();
+	/**
+	 * This function should be called to store the state of the
+	 * entire model. This makes the model state invalid until either
+	 * an acceptModelState or restoreModelState is called.
+	 */
+	default void storeModelState() {
+		store();
+	}
+	
+	default void store() {
+		try {
+			storeModelState();
+		} catch (StackOverflowError e) {
+			System.err.println("Programmer error: store() is not implemented in class " + this.getClass().getName()+ "!");
+			throw e;
+ 		}
+	}
+
+	/**
+	 * This function should be called to restore the state of the entire model.
+	 */
+	default void restoreModelState() {
+		restore();
+	}
+	
+	default void restore() {
+		try {
+			restoreModelState();
+		} catch (StackOverflowError e) {
+			System.err.println("Programmer error: restore() is not implemented in class " + this.getClass().getName()+ "!");
+			throw e;
+ 		}
+	}
 
 	/**
 	 * This function should be called to accept the state of the entire model
@@ -38,7 +60,7 @@ public interface Model extends Identifiable, Serializable {
 	}
 	default void accept() {
 		try {
-		acceptModelState();
+			acceptModelState();
 		} catch (StackOverflowError e) {
 			System.err.println("Programmer error: accept() is not implemented in class " + this.getClass().getName()+ "!");
 			throw e;

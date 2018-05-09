@@ -34,7 +34,7 @@ import beast.core.*;
 
 @Description("Probabilistic representation that can produce " +
         "a log probability for instance for running an MCMC chain.")
-public abstract class Distribution extends CalculationNode implements Loggable, Function {
+public abstract class Distribution extends CalculationNode implements Loggable, Function, xbeast.Likelihood {
 
     /**
      * current and stored log probability/log likelihood/log distribution *
@@ -255,4 +255,20 @@ public abstract class Distribution extends CalculationNode implements Loggable, 
         }
     }
 
+    @Override
+    public void makeDirty() {
+    	checkDirtiness();
+    }
+
+    @Override
+    public void setUsed() {
+		this.isUsed = true;
+	}
+
+    @Override
+    public boolean isUsed() {
+		return isUsed;
+	}
+    
+    private boolean isUsed = false;
 } // class Distribution

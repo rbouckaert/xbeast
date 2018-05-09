@@ -211,9 +211,6 @@ public class InterfaceImplementationTest extends TestCase {
     	}    	
     }
 
-    /**
-     * Check all plug-ins have a proper setID and getID implementation
-     */
     @Test
     public void testOperatorMethods() {
         final List<String> objectNames = PackageManager.find(xbeast.Operator.class, PackageManager.IMPLEMENTATION_DIR);
@@ -340,9 +337,6 @@ public class InterfaceImplementationTest extends TestCase {
 //    	}
     }
 
-    /**
-     * Check all plug-ins have a proper setID and getID implementation
-     */
     @Test
     public void testLoggableMethods() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -476,9 +470,6 @@ public class InterfaceImplementationTest extends TestCase {
     	}
     }
 
-    /**
-     * Check all plug-ins have a proper setID and getID implementation
-     */
     @Test
     public void testVariableMethods() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -540,6 +531,182 @@ public class InterfaceImplementationTest extends TestCase {
         		objectsSetUpper.size() + objectsSetLower.size() == 0
         		);
     } // testVariableMethods
+    
+
+    class ModelMisfit implements xbeast.Model {
+    	
+    }
+    
+    public void testModelMisfit() {
+    	ModelMisfit o = new ModelMisfit();
+    	try {
+    		o.store();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.restore();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.accept();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    }
+
+    @Test
+    public void testModelMethods() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream out = null;
+		try {
+			out = new PrintStream(baos, true, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+        final List<String> objectNames = PackageManager.find(xbeast.Model.class, PackageManager.IMPLEMENTATION_DIR);
+        final List<String> objectsWithoutAccept = new ArrayList<String>();
+        final List<String> objectsWithoutStore = new ArrayList<String>();
+        final List<String> objectsWithoutRestore = new ArrayList<String>();
+        for (final String beastObjectName : objectNames) {
+            try {
+                final Class<?> objectClass = beast.util.PackageManager.forName(beastObjectName);
+                try {
+                	xbeast.Model o = (xbeast.Model) objectClass.newInstance();
+                	try {
+                		o.accept();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutAccept.add(beastObjectName);
+                	}
+                	try {
+                		o.store();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutStore.add(beastObjectName);
+                	}
+                	try {
+                		o.restore();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutRestore.add(beastObjectName);
+                	}
+                } catch (InstantiationException | IllegalAccessException e) {
+                	// ignore -- these classes cannot be tested
+                }
+            } catch (Exception e) {
+            }
+        }
+        assertTrue("No proper accept() implementation for: " + objectsWithoutAccept.toString() +
+        		"\nNo proper store() implementation for: " + objectsWithoutStore.toString() +
+        		"\nNo proper restore() implementation for: " + objectsWithoutRestore.toString(),
+        		objectsWithoutAccept.size() + objectsWithoutStore.size() + objectsWithoutRestore.size() == 0
+        		);
+    } // testModelMethods
+    
+    
+    class LikelihoodMisFit implements xbeast.Likelihood {
+
+		@Override
+		public void makeDirty() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean isUsed() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void setUsed() {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+    }
+    
+    public void testLikelihoodMisFit() {
+    	LikelihoodMisFit o = new LikelihoodMisFit();
+    	try {
+    		o.calculateLogP();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.getCurrentLogP();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    	try {
+    		o.isDirtyCalculation();
+    		// should never get here
+    		assert(false);
+    	} catch (StackOverflowError e) {
+    		// OK this is expected
+    	}
+    }
+
+    @Test
+    public void testLikelihoodMethods() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream out = null;
+		try {
+			out = new PrintStream(baos, true, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+        final List<String> objectNames = PackageManager.find(xbeast.Likelihood.class, PackageManager.IMPLEMENTATION_DIR);
+        final List<String> objectsWithoutGetCurrentLogP = new ArrayList<String>();
+        final List<String> objectsWithoutCalculateLogP = new ArrayList<String>();
+        final List<String> objectsWithoutIsDirtyCalculation = new ArrayList<String>();
+        for (final String beastObjectName : objectNames) {
+            try {
+                final Class<?> objectClass = beast.util.PackageManager.forName(beastObjectName);
+                try {
+                	xbeast.Likelihood o = (xbeast.Likelihood) objectClass.newInstance();
+                	try {
+                		o.getCurrentLogP();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutGetCurrentLogP.add(beastObjectName);
+                	}
+                	try {
+                		o.calculateLogP();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutCalculateLogP.add(beastObjectName);
+                	}
+                	try {
+                		o.isDirtyCalculation();
+                	} catch (StackOverflowError e) {
+                		objectsWithoutIsDirtyCalculation.add(beastObjectName);
+                	}
+                } catch (InstantiationException | IllegalAccessException e) {
+                	// ignore -- these classes cannot be tested
+                }
+            } catch (Exception e) {
+            }
+        }
+        assertTrue("No proper getCurrentLogP() implementation for: " + objectsWithoutGetCurrentLogP.toString() +
+        		"\nNo proper calculateLogP() implementation for: " + objectsWithoutIsDirtyCalculation.toString() +
+        		"\nNo proper isDirtyCalculation() implementation for: " + objectsWithoutIsDirtyCalculation.toString(),
+        		objectsWithoutGetCurrentLogP.size() + objectsWithoutIsDirtyCalculation.size() + 
+        		objectsWithoutIsDirtyCalculation.size() == 0
+        		);
+    } // testLikelihoodMethods
+    
+    
+    
     
     
 } // class InterfaceImplementationTest
