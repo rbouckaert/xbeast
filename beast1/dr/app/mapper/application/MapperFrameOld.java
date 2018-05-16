@@ -678,10 +678,10 @@ public class MapperFrameOld extends DocumentFrame {
                 JOptionPane.showMessageDialog(this, "Unable to open file: File not found",
                         "Unable to open file",
                         JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ioex) {
-                JOptionPane.showMessageDialog(this, "File I/O Error: " + ioex,
-                        "File I/O Error",
-                        JOptionPane.ERROR_MESSAGE);
+//            } catch (IOException ioex) {
+//                JOptionPane.showMessageDialog(this, "File I/O Error: " + ioex,
+//                        "File I/O Error",
+//                        JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Fatal exception: " + ex,
                         "Error reading file",
