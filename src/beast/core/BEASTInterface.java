@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import beast.core.util.Log;
+
 public interface BEASTInterface extends xbeast.Identifiable {
 	final static String DEFEAULT_DESCRIPTION = "Not documented!!!";
 	/**
@@ -475,8 +477,14 @@ public interface BEASTInterface extends xbeast.Identifiable {
      * @throws IllegalArgumentException when validation fails
      */
     default public void validateInputs() {
-        for (final Input<?> input : listInputs()) {
-            input.validate();
+        try {
+            for (final Input<?> input : listInputs()) {
+                input.validate();
+            }
+        } catch (IllegalArgumentException ex) {               
+        	Log.err.println("Validation error when initializing object " +        	                   
+        			this.getClass().getName() + " (id " + getID() + "):");
+           throw ex;
         }
     }
 

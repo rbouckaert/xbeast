@@ -9,7 +9,6 @@ import beast.core.Function;
 import beast.core.Input;
 import beast.core.Input.Validate;
 import beast.core.parameter.RealParameter;
-import xbeast.Statistic;
 
 
 
@@ -62,7 +61,7 @@ public class Dirichlet extends ParametricDistribution {
 
 
     @Override
-    public double calcLogP(Statistic pX) {
+    public double calcLogP(Function pX) {
         Double[] alpha = alphaInput.get().getValues();
         if (alphaInput.get().getDimension() != pX.getDimension()) {
             throw new IllegalArgumentException("Dimensions of alpha and x should be the same, but dim(alpha)=" + alphaInput.get().getDimension()
