@@ -237,6 +237,10 @@ public class XMLParser {
 
 
     public Runnable parseFile(final File file) throws SAXException, IOException, ParserConfigurationException, XMLParserException {
+    	return parseFile(file, false);
+    }
+    
+    public Runnable parseFile(final File file, boolean sampleFromPrior) throws SAXException, IOException, ParserConfigurationException, XMLParserException {
         // parse the XML file into a DOM document
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         //factory.setValidating(true);
@@ -263,6 +267,11 @@ public class XMLParser {
                 		parserDefinitions.get(name));
         	}
         }
+
+		if (sampleFromPrior) {
+			Element runElement = (Element) doc.getElementsByTagName(RUN_ELEMENT).item(0);
+	        runElement.setAttribute("sampleFromPrior", "true");
+		}
 
         IDMap = new HashMap<>();
         likelihoodMap = new HashMap<>();

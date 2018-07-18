@@ -134,6 +134,10 @@ public class JSONParser {
 	}
 
 	public Runnable parseFile(File file) throws IOException, JSONException, JSONParserException {
+		return parseFile(file, false);
+	}
+	
+	public Runnable parseFile(File file, boolean sampleFromPrior) throws IOException, JSONException, JSONParserException {
 		// parse the JSON file into a JSONObject
 		
 		// first get rid of comments: remove all text on lines starting with space followed by //
@@ -150,7 +154,13 @@ public class JSONParser {
 		}
 		fin.close();
 		
-		doc = new JSONObject(buf.toString());
+		String json = buf.toString();
+		if (sampleFromPrior) {
+			// this is rather fragile: relies on main element having id="mcmc"
+			json = json.replaceFirst("id:\\s*\"mcmc\",", "id: \"mcmc\", sampleFromPrior: true,");
+		}
+		
+		doc = new JSONObject(json);
 		processPlates(doc);
 
 		int pointIdx = file.getName().lastIndexOf('.');

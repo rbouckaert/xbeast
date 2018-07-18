@@ -283,6 +283,7 @@ public class BeastMain {
                         new Arguments.Option("version", "Print version and stop"),
                         new Arguments.Option("strictversions", "Use only package versions as specified in the 'required' attribute"),
                         new Arguments.StringOption("D", "DEFINITIONS", "attribute-value pairs to be replaced in the XML, e.g., -D \"arg1=10,arg2=20\""),
+                        new Arguments.Option("sampleFromPrior", "samples from prior for MCMC analysis (by adding sampleFromPrior=\"true\" in the first run element)"),
                 });
 
         try {
@@ -294,7 +295,6 @@ public class BeastMain {
             printUsage(arguments);
             System.exit(1);
         }
-
         if (arguments.hasOption("version")) {
         	Log.info.println((new BEASTVersion2()).getVersionString());
         	System.exit(0);
@@ -524,6 +524,10 @@ public class BeastMain {
         	MCMCargs.add("-strictversions");
         }
         
+        if (arguments.hasOption("sampleFromPrior")) {
+        	MCMCargs.add("-sampleFromPrior");
+        }
+
         if (arguments.hasOption("D")) {
         	MCMCargs.add("-D");
         	MCMCargs.add(arguments.getStringOption("D"));

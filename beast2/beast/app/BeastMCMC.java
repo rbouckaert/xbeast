@@ -116,6 +116,7 @@ public class BeastMCMC {
         int i = 0;
         boolean resume = false;
         boolean useStrictVersions = false;
+        boolean sampleFromPrior = false;
         Map<String, String> parserDefinitions = new HashMap<>();
 
         File beastFile = null;
@@ -172,6 +173,9 @@ public class BeastMCMC {
                     } else if (args[i].equals("-strictversions")) {
                     	useStrictVersions = true;
                         i += 1;
+                    } else if (args[i].equals("-sampleFromPrior")) {
+                    	sampleFromPrior = true;
+                    	i += 1;
                     }
                     if (i == old) {
                         if (i == args.length - 1) {
@@ -302,10 +306,10 @@ public class BeastMCMC {
         // parse xml
         Randomizer.setSeed(m_nSeed);
         if (beastFile.getPath().toLowerCase().endsWith(".json")) {
-            m_runnable = new JSONParser(parserDefinitions).parseFile(beastFile);
+            m_runnable = new JSONParser(parserDefinitions).parseFile(beastFile, sampleFromPrior);
         } else {        	
         	try {
-				m_runnable = new XMLParser(parserDefinitions).parseFile(beastFile);
+				m_runnable = new XMLParser(parserDefinitions).parseFile(beastFile, sampleFromPrior);
 			} catch (SAXException | ParserConfigurationException e) {
 				throw new IllegalArgumentException(e);
 			}

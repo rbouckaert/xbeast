@@ -38,6 +38,8 @@ import beast.app.util.Utils6;
 import beast.core.BEASTInterface;
 import beast.core.BEASTObjectStore;
 import beast.core.util.Log;
+import beast.util.PackageManager.DependencyResolutionException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -2188,7 +2190,9 @@ public class PackageManager {
         
         // install packages that can be updated
         try {
-			prepareForInstall(packagesToInstall, false, null);
+            populatePackagesToInstall(packageMap, packagesToInstall);
+
+            prepareForInstall(packagesToInstall, false, null);
 
 	        if (getToDeleteListFile().exists()) {
 	        	if (useGUI) {
@@ -2205,12 +2209,23 @@ public class PackageManager {
 	        for (String packageName : dirList.keySet()) {
 	        	Log.info("Installed " + packageName + " in " + dirList.get(packageName));
 	        }
+		} catch (DependencyResolutionException e) {
+	        if (useGUI) {
+				JOptionPane.showMessageDialog(null, "Install failed because: " + e.getMessage());
+			} else {
+				Log.err("Install failed because " + e.getMessage());
+			}
+			e.printStackTrace();			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+	        if (useGUI) {
+				JOptionPane.showMessageDialog(null, "Install failed because: " + e.getMessage());
+			} else {
+				Log.err("Install failed because " + e.getMessage());
+			}
 			e.printStackTrace();
 		}
     }
-
+    
     public static String getBeastPacakgePathProperty() {
     	if (System.getProperty("BEAST_PACKAGE_PATH") != null) {
     		return System.getProperty("BEAST_PACKAGE_PATH");
