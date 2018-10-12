@@ -157,6 +157,17 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
             setRoot(parseNewick(newickInput.get()));
         }
 
+        // check if all labels are in the Newick tree
+        if (labels != null) {
+        	boolean [] done = new boolean[labels.size()];
+        	checkAllLabelsAreCovered(getRoot(), done);
+            for (int i = 0; i < done.length; i++) {
+            	if (!done[i]) {
+            		Log.warning("WARNING: Taxon " + labels.get(i) + " was not found in the Newick tree");
+            	}
+            }        	
+        }
+
         super.initAndValidate();
         m_sTaxaNames = null;
 
@@ -227,6 +238,19 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
 
         initStateNodes();
     } // init
+
+    private void checkAllLabelsAreCovered(Node node, boolean[] done) {
+    	if (node.isLeaf()) {
+			int i = labels.indexOf(node.getID());
+			if (i >=0 && i < done.length) {
+				done[i] = true;
+			}
+    	} else {
+    		for (Node child : node.getChildren()) {
+    			checkAllLabelsAreCovered(child, done);
+    		}
+    	}
+	}
 
     public TreeParser() {
     }
@@ -487,8 +511,17 @@ public class TreeParser extends Tree implements StateNodeInitialiser {
 
                             value = arrayValues;
                         } catch (NumberFormatException ex) {
-                            throw new TreeParsingException("Encountered vector-valued metadata entry with " +
-                                    "one or more non-numeric elements.");
+                        	//throw new TreeParsingException("Encountered vector-valued metadata entry with " +
+                        	//              "one or more non-numeric elements.");
+                        	
+                        	// it is a non-numerical vector -- store as String
+                            List<NewickParser.AttribValueContext> elementContexts = attribctx.attribValue().vector().attribValue();
+
+                            String[] arrayValues = new String[elementContexts.size()];
+                            for (int i = 0; i < elementContexts.size(); i++)
+                                arrayValues[i] = elementContexts.get(i).getText();
+
+                            value = arrayValues;
                         }
 
                     } else
