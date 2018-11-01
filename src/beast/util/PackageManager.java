@@ -83,7 +83,7 @@ public class PackageManager {
 
     public enum UpdateStatus {AUTO_CHECK_AND_ASK, AUTO_UPDATE, DO_NOT_CHECK};
 
-    public final static String[] IMPLEMENTATION_DIR = {"beast", "snap"};
+    public final static String[] IMPLEMENTATION_DIR = {"beast", "snap", "jags"};
     public final static String TO_DELETE_LIST_FILE = "toDeleteList";
     public final static String TO_INSTALL_LIST_FILE = "toInstallList";
     public final static String BEAST_PACKAGE_NAME = "BEAST";

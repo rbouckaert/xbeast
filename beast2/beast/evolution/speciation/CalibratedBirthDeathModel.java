@@ -171,7 +171,7 @@ public class CalibratedBirthDeathModel extends SpeciesTreeDistribution {
                 final TaxonSet ti = taxaSets.get(i);
                 if (ti.containsAny(tk)) {
                     if (!(ti.containsAll(tk) || tk.containsAll(ti))) {
-                        throw new IllegalArgumentException("Overlapping taxaSets??");
+                        throw new IllegalArgumentException("Overlapping taxaSets " + tk.getID() + "  and " + ti.getID() + "??");
                     }
                 }
             }

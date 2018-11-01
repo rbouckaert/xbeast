@@ -157,7 +157,6 @@
             </fileset>
 
             <zipgroupfileset dir="${lib1}" includes="beagle.jar"/>
-            <zipgroupfileset dir="${lib1}" includes="beagle.jar"/>
             <zipgroupfileset dir="${lib1}" includes="commons-math-2.2.jar"/>
             <zipgroupfileset dir="${lib1}" includes="EJML-core-0.30.jar"/>
             <zipgroupfileset dir="${lib1}" includes="EJML-dense64-0.30.jar"/>

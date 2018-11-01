@@ -99,7 +99,7 @@ public class InputTypeTest extends TestCase {
 			    			boolean isList = false;
 							String typeName = types[i + offset].getTypeName();
 							if (typeName.endsWith("[]")) {
-								failingInputs.add(_class.getName() + " constructor has arrray as argument, should be a List\n");
+								//failingInputs.add(_class.getName() + " constructor has arrray as argument, should be a List\n");
 							} else {
 								switch (typeName) {
 								case "int" : type = Integer.class; break;

@@ -4,7 +4,7 @@ import java.util.Random;
 
 @Description("Entry point for running a Beast task, for instance an MCMC or other probabilistic " +
         "analysis, a simulation, etc.")
-public abstract class Runnable extends BEASTObject {	
+public abstract class Runnable extends BEASTObject implements xbeast.evolution.Runnable {	
 	
 	/** entry point for anything runnable **/
 	abstract public void run() throws Exception;
