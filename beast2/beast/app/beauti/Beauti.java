@@ -213,7 +213,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
             if (docStatus != DOC_STATUS.DIRTY) {
                 if (docStatus == DOC_STATUS.NO_DOCUMENT)
                     JOptionPane.showMessageDialog(null,
-                            "There is no data to save to file");
+                            "The model is empty, there is nothing to save. Set up a model (by importing data) before saving.");
 
                 return;
             }
@@ -250,7 +250,7 @@ public class Beauti extends JTabbedPane implements BeautiDocListener {
     boolean saveAs() {
         if (doc.validateModel() == DOC_STATUS.NO_DOCUMENT) {
             JOptionPane.showMessageDialog(null,
-                    "There is no data to save to file");
+                    "The model is empty, there is nothing to save. Set up a model (by importing data) before saving.");
             return false;
         }
         String fileSep = System.getProperty("file.separator");
