@@ -327,7 +327,7 @@ public class BeastLauncher {
 		return version;
 	}
 
-	private static String getPath() {
+	public static String getPath() {
 		StringBuilder buf = new StringBuilder();
 		buf.append("\"");
 		buf.append(sanitise(System.getProperty("java.library.path")));
