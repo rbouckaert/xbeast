@@ -790,7 +790,7 @@ public class XMLProducer extends XMLParser {
      */
     @SuppressWarnings("rawtypes")
     void beastObjectToXML(Object beastObject, StringBuffer buf, String name, boolean isTopLevel) throws ClassNotFoundException {
-        // determine element name, default is input, otherswise find one of the defaults
+        // determine element name, default is input, otherwise find one of the defaults
         String elementName = "input";
         for (String key : element2ClassMap.keySet()) {
         	String className = element2ClassMap.get(key);

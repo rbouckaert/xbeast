@@ -203,7 +203,7 @@ public class NodeReheight extends TreeOperator {
     }
 
     /**
-     * construct tree top down by joining heighest left and right nodes *
+     * construct tree top down by joining highest left and right nodes *
      */
 
 
