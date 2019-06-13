@@ -177,6 +177,7 @@ public class Application {
 		try {
 			List<Input<?>> inputs = myBeastObject.listInputs();
 			buf.append("Usage: " + myBeastObject.getClass().getName() + "\n");
+			buf.append(myBeastObject.getDescriptionString() + "\n");
 			for (Input<?> input : inputs) {
 				buf.append("-" + input.getName() + " ");
 				try {
